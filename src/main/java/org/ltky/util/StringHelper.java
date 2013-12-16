@@ -1,0 +1,82 @@
+package org.ltky.util;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetEncoder;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * lukkarimaatti
+ * Created with IntelliJ IDEA.
+ * User: laastine
+ * Date: 6.12.2013
+ */
+public class StringHelper {
+    private static final Logger logger = Logger.getLogger(StringHelper.class);
+    private static CharsetEncoder encoder = Charset.forName("UTF-8").newEncoder();
+
+    /**
+     * Change encoding of given string
+     *
+     * @param text
+     * @param sourceEncoding
+     * @param destEncoding
+     * @return
+     */
+    public String changeEncoding(String text, String sourceEncoding, String destEncoding) {
+        final Charset windowsCharset = Charset.forName(sourceEncoding);
+        final Charset utfCharset = Charset.forName(destEncoding);
+        final CharBuffer windowsEncoded = windowsCharset.decode(ByteBuffer.wrap(text.getBytes()));
+        return new String(utfCharset.encode(windowsEncoded).array());
+    }
+
+    /**
+     * Extract certain pattern from given string
+     *
+     * @param courseAction
+     * @param pattern
+     * @return
+     * @throws IllegalStateException
+     */
+    public String extractPattern(String courseAction, String pattern) throws IllegalStateException {
+        String resultSet = "";
+        Pattern p = Pattern.compile(pattern);
+        Matcher matcher = p.matcher(courseAction);
+        while (matcher.find()) {
+            resultSet = matcher.group();
+        }
+        if (resultSet == null || resultSet.length() == 0) {
+            logger.trace("Couldn't find pattern=" + pattern + " from " + courseAction);
+            return null;
+        }
+        return resultSet;
+    }
+
+    /**
+     * Check that given String is printable with UTF-8 encoding
+     *
+     * @param v
+     * @return
+     */
+    public static boolean isPrintable(String v) {
+        return encoder.canEncode(v);
+    }
+
+    /**
+     * Write content of toFile to file which name is fileName
+     *
+     * @param toFile
+     * @param fileName
+     * @throws java.io.IOException
+     */
+    public void writeToFile(String toFile, String fileName) throws IOException {
+        FileUtils.write(new File(fileName), toFile, "ISO-8859-1");
+    }
+}

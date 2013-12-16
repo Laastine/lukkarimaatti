@@ -1,0 +1,61 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+
+    <context:component-scan base-package="org.ltky"/>
+
+    <context:annotation-config />
+
+    <bean id="corsFilter" class="org.ltky.service.CORSFilter"/>
+
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
+
+    <util:properties id="lukkariProperties" location="classpath:properties/parser.properties"/>
+<!--
+    <bean id="runMeTask" class="org.ltky.timer.FetchJob"/>
+-->
+    <!-- Spring Quartz -->
+    <!--
+    <bean courseName="runMeJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property courseName="jobClass" value="org.ltky.timer.RunJob"/>
+        <property courseName="jobDataAsMap">
+            <map>
+                <entry key="runMeTask" value-ref="runMeTask"/>
+            </map>
+        </property>
+    </bean>
+-->
+    <!-- Cron Trigger, run every 45 min -->
+    <!--
+    <bean id="cronTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property courseName="jobDetail" ref="runMeJob"/>
+        <property courseName="cronExpression" value="45 * * * * ?"/>
+    </bean>
+
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property courseName="jobDetails">
+            <list>
+                <ref bean="runMeJob"/>
+            </list>
+        </property>
+
+        <property courseName="triggers">
+            <list>
+                <ref bean="cronTrigger"/>
+            </list>
+        </property>
+    </bean>
+    -->
+
+</beans>

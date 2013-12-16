@@ -1,0 +1,7 @@
+*.txt
+.idea/
+target/
+logs/
+.idea/
+*.iml
+src/main/resources/properties/database.properties

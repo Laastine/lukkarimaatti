@@ -11,6 +11,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 /**
  * lukkarimaatti
@@ -18,7 +19,7 @@ import javax.ws.rs.core.MediaType;
  * User: laastine
  * Date: 14.12.2013
  */
-@Path("/code")
+@Path("/")
 public class CourseRestService {
     private static final Logger logger = Logger.getLogger(CourseRestService.class);
     private final ApplicationContext applicationContext = new ClassPathXmlApplicationContext("config/BeanLocations.xml");
@@ -26,22 +27,20 @@ public class CourseRestService {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/{code}")
-    public Course getCodeInJSON(@PathParam("code") String code) {
+    @Path("/code/{code}")
+    public List<Course> getCodeInJSON(@PathParam("code") String code) {
         logger.debug("getCodeInJSON");
-        Course course = courseDao.findByCourseCode(code);
-        logger.debug(course);
-        return course;
+        List<Course> courseList = courseDao.findByCourseCode(code);
+        return courseList;
     }
-/*
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/{courseName}")
-    public Course getNameInJSON(@PathParam("courseName") String courseName) {
+    @Path("/name/{courseName}")
+    public List<Course> getNameInJSON(@PathParam("courseName") String courseName) {
         logger.debug("getNameInJSON");
-        Course course = courseDao.findByCourseName(courseName);
-        logger.debug(course);
-        return course;
+        List<Course> courseList = courseDao.findByCourseName(courseName);
+        return courseList;
     }
-*/
+
 }

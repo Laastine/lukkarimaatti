@@ -5,3 +5,4 @@ logs/
 .idea/
 *.iml
 src/main/resources/properties/database.properties
+deploy.sh

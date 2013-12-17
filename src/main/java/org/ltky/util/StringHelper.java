@@ -2,6 +2,7 @@ package org.ltky.util;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.mozilla.universalchardet.UniversalDetector;
 
 import java.io.File;
 import java.io.IOException;
@@ -60,6 +61,15 @@ public class StringHelper {
             return null;
         }
         return resultSet;
+    }
+
+    public String checkEncoding(String input) {
+        UniversalDetector detector = new UniversalDetector(null);
+        detector.handleData(input.getBytes(), 0, input.length());
+        detector.dataEnd();
+        String encoding = detector.getDetectedCharset();
+        detector.reset();
+        return encoding;
     }
 
     /**

@@ -16,7 +16,8 @@ public class Parser {
     private ParserConfiguration parserConfiguration = ParserConfiguration.getInstance();
     private static final Logger logger = Logger.getLogger(Parser.class);
 
-    public Map<String, String> fetchStuff(String uniURL) throws IOException {
+    public Map<String, String> fetchStuff() throws IOException {
+        String uniURL = parserConfiguration.getUniURL();
         logger.info("Fetching: " + uniURL);
         final Map<String, String> dependencies = new LinkedHashMap<String, String>();
         dependencies.put(parserConfiguration.getEnte(), "ente");
@@ -36,16 +37,16 @@ public class Parser {
         if (logger.isDebugEnabled()) {
             logger.debug("startMark=" + startMark + ", endMark=" + endMark);
         }
-        String linkList = StringUtils.substringBetween(fetchFromWeb(parserConfiguration.getUniURL()), startMark, endMark);
+        String linkList = StringUtils.substringBetween(fetchFromWeb(uniURL), startMark, endMark);
         String prefix = "https://uni.lut.fi";
         String link = "";
         File dir = new File(parserConfiguration.getFolder());
         dir.mkdir();
         Set set = dependencies.entrySet();
-        Iterator iterator = set.iterator();
-        for (int i = 0; i < dependencies.size(); i++) {
-            Map.Entry me = (Map.Entry) iterator.next();
-            String departments = me.toString();
+            Iterator iterator = set.iterator();
+            for (int i = 0; i < dependencies.size(); i++) {
+                Map.Entry me = (Map.Entry) iterator.next();
+                String departments = me.toString();
             //logger.debug("values=" + me.getKey());
             departments = departments.substring(StringUtils.indexOfAny(departments, "=") + 1, departments.length());
             Pattern pattern = Pattern.compile("<a href=.+" + me.getKey());

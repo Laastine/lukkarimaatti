@@ -1,5 +1,7 @@
 package org.ltky.model;
 
+import org.ltky.util.StringHelper;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
@@ -116,8 +118,10 @@ public class Course implements Serializable {
 
     @Override
     public String toString() {
-        return "Course [courseId="+courseId+", courseCode="+courseCode+", courseName="+courseName+
+        String course = "Course [courseId="+courseId+", courseCode="+courseCode+", courseName="+courseName+
                 ", weekNumber="+ weekNumber +", weekDay="+weekDay+", period="+period+", timeOfDay="+timeOfDay+
                 ", classroom="+classroom+", type="+type+", department="+department+"]";
+        String encoding = new StringHelper().checkEncoding(courseId+courseCode+courseName+weekNumber+weekDay+period+timeOfDay+classroom+type+department+courseId+courseCode+courseName+weekNumber+weekDay+period+timeOfDay+classroom+type+department+courseId+courseCode+courseName+weekNumber+weekDay+period+timeOfDay+classroom+type+department+courseId+courseCode+courseName+weekNumber+weekDay+period+timeOfDay+classroom+type+department+courseId+courseCode+courseName+weekNumber+weekDay+period+timeOfDay+classroom+type+department);
+        return course+"|"+encoding;
     }
 }

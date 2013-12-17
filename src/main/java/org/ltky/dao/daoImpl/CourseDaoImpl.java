@@ -1,7 +1,12 @@
 package org.ltky.dao.daoImpl;
 
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.ltky.dao.CourseDao;
 import org.ltky.model.Course;
+import org.ltky.util.StringHelper;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import java.util.List;
@@ -39,5 +44,12 @@ public class CourseDaoImpl extends HibernateDaoSupport implements CourseDao {
 
     public List<Course> findByDepartment(String department) {
         return getHibernateTemplate().find("from Course where DEPARTMENT=?", department);
+    }
+
+    public List<String> findByCourseCodes(String courseCode) {
+        final String hql = "SELECT C.courseCode FROM Course C WHERE C.courseCode like :courseCode";
+        Query query = getSession().createQuery(hql);
+        List list = query.setParameter("courseCode", courseCode+"%").list();
+        return list;
     }
 }

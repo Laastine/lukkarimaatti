@@ -43,4 +43,22 @@ public class CourseRestService {
         return courseList;
     }
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/department/{department}")
+    public List<Course> getDepartmentInJSON(@PathParam("department") String department) {
+        logger.debug("getDepartmentInJSON");
+        List<Course> departmentCourseList = courseDao.findByDepartment(department);
+        return departmentCourseList;
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/codes/{codes}")
+    public List<String> getCourseCodes(@PathParam("codes") String codes) {
+        logger.debug("getCourseCodes");
+        List<String> codeList = courseDao.findByCourseCodes(codes);
+        return codeList;
+    }
+
 }

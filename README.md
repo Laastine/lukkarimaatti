@@ -8,7 +8,7 @@ hostname:port/lukkarimaatti/rest/codes/code
 e.g. hostname:port/lukkarimaatti/rest/codes/CT
 
 Course department search
-<hostname:port>/lukkarimaatti/rest/department/<department>
+hostname:port/lukkarimaatti/rest/department/<department>
 e.g. hostname:port/lukkarimaatti/rest/department/tite
 (ente/ymte/kete/kote/sate/tite/tuta/kati/mafy/kike/kv)
 

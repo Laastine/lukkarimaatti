@@ -9,6 +9,9 @@ import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -67,6 +70,10 @@ public class StringHelper {
      */
     public static boolean isPrintable(String v) {
         return encoder.canEncode(v);
+    }
+
+    public <T> List<T> removeDuplicates(List<T> list) {
+        return new ArrayList<>(new LinkedHashSet<>(list));
     }
 
     /**

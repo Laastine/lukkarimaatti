@@ -2,6 +2,24 @@ Lukkarimaatti RESTful backend
 
 Hobby project to offer course data to lukkarimaatti frontend.
 
+Usage:
+Course code search
+hostname:port/lukkarimaatti/rest/codes/code
+e.g. hostname:port/lukkarimaatti/rest/codes/CT
+
+Course department search
+hostname:port/lukkarimaatti/rest/department/<department>
+e.g. hostname:port/lukkarimaatti/rest/department/tite
+(ente/ymte/kete/kote/sate/tite/tuta/kati/mafy/kike/kv)
+
+Course course name search
+hostname:port/lukkarimaatti/rest/name/courseName
+e.g. hostname:port/lukkarimaatti/rest/courseName/Pattern Recognition
+
+Course code search
+hostname:port/lukkarimaatti/rest/code/code
+e.g. hostname:port/lukkarimaatti/code/code/CT50A6000
+
 Dependencies:
 Information is retrieved from uni.lut.fi, the official LUT teaching schedule info site.
 Maven for building a package.

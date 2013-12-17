@@ -3,6 +3,7 @@ package org.ltky.web.rest;
 import org.apache.log4j.Logger;
 import org.ltky.dao.CourseDao;
 import org.ltky.model.Course;
+import org.ltky.util.StringHelper;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -57,8 +58,6 @@ public class CourseRestService {
     @Path("/codes/{codes}")
     public List<String> getCourseCodes(@PathParam("codes") String codes) {
         logger.debug("getCourseCodes");
-        List<String> codeList = courseDao.findByCourseCodes(codes);
-        return codeList;
+        return new StringHelper().removeDuplicates(courseDao.findCourseCodes(codes));
     }
-
 }

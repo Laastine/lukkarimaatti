@@ -40,6 +40,13 @@
             <version>3.2.1</version>
         </dependency>
 
+        <!-- Google guava-->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>15.0</version>
+        </dependency>
+
         <!-- jstl -->
         <dependency>
             <groupId>jstl</groupId>

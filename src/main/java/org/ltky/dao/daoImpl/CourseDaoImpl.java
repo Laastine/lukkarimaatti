@@ -46,7 +46,7 @@ public class CourseDaoImpl extends HibernateDaoSupport implements CourseDao {
         return getHibernateTemplate().find("from Course where DEPARTMENT=?", department);
     }
 
-    public List<String> findByCourseCodes(String courseCode) {
+    public List<String> findCourseCodes(String courseCode) {
         final String hql = "SELECT C.courseCode FROM Course C WHERE C.courseCode like :courseCode";
         Query query = getSession().createQuery(hql);
         List list = query.setParameter("courseCode", courseCode+"%").list();

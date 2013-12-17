@@ -18,7 +18,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class DBTest {
     private static final Logger logger = Logger.getLogger(DBTest.class);
 
-    @Test
+    //@Test
     public void saveCoursesTest() {
         logger.debug("saveCoursesTest");
         try {

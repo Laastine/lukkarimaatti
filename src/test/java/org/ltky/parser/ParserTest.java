@@ -3,6 +3,7 @@ package org.ltky.parser;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
+import org.ltky.util.StringHelper;
 
 /**
  * parser
@@ -13,13 +14,28 @@ import org.junit.Test;
 public class ParserTest {
     private static final Logger logger = Logger.getLogger(ParserTest.class);
 
-    @Test
+    //@Test
     public void parserTest() {
         ParserConfiguration config = ParserConfiguration.getInstance();
         try {
-            Assert.assertNotNull(new Parser().fetchStuff(config.getUniURL()));
+            Assert.assertNotNull(new Parser().fetchStuff());
         } catch (Exception e) {
             logger.error("Error while fetching stuff from " + config.getUniURL(), e);
+        }
+    }
+
+
+    //@Test
+    public void checkEncoding() {
+        StringHelper stringHelper = new StringHelper();
+        try {
+            //Check encoding of first given department
+            logger.info(
+                    "checkEncoding gives=" + stringHelper.checkEncoding(
+                            new Parser().fetchStuff().entrySet().iterator().next().getValue()
+                    ));
+        } catch (Exception e) {
+            logger.error("test error", e);
         }
     }
 }

@@ -56,8 +56,8 @@ public class CourseRestService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/codes/{codes}")
-    public List<String> getCourseCodes(@PathParam("codes") String codes) {
-        logger.debug("getCourseCodes");
+    public List<String> getLikeCourseCodes(@PathParam("codes") String codes) {
+        logger.debug("getLikeCourseCodes");
         return new StringHelper().removeDuplicates(courseDao.findCourseCodes(codes));
     }
 }

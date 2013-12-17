@@ -32,7 +32,7 @@ public class FetchJob {
      */
     public FetchJob() {
         try {
-            map = new Parser().fetchStuff(config.getUniURL());
+            map = new Parser().fetchStuff();
         } catch (IOException e) {
             logger.error("Malformed UNI URL", e);
         }

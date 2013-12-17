@@ -29,18 +29,15 @@ public class CourseDaoImpl extends HibernateDaoSupport implements CourseDao {
         getHibernateTemplate().delete(course);
     }
 
-    public Course findByCourseCode(String courseCode) {
-        List list = getHibernateTemplate().find("from Course where COURSE_CODE=?", courseCode);
-        return (Course) list.get(0);
+    public List<Course> findByCourseCode(String courseCode) {
+        return getHibernateTemplate().find("from Course where COURSE_CODE=?", courseCode);
     }
 
-    public Course findByCourseName(String courseName) {
-        List list = getHibernateTemplate().find("from Course where COURSE_NAME=?", courseName);
-        return (Course) list.get(0);
+    public List<Course> findByCourseName(String courseName) {
+        return getHibernateTemplate().find("from Course where COURSE_NAME=?", courseName);
     }
 
     public List<Course> findByDepartment(String department) {
-        List<Course> list = getHibernateTemplate().find("from Course where DEPARTMENT=?", department);
-        return list;
+        return getHibernateTemplate().find("from Course where DEPARTMENT=?", department);
     }
 }

@@ -19,9 +19,9 @@ public interface CourseDao {
 
     void delete(Course course);
 
-    Course findByCourseCode(String courseCode);
+    List<Course> findByCourseCode(String courseCode);
 
-    Course findByCourseName(String courseName);
+    List<Course> findByCourseName(String courseName);
 
     List<Course> findByDepartment(String department);
 }

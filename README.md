@@ -10,7 +10,7 @@ e.g. hostname:port/lukkarimaatti/rest/codes/CT
 
 <b>Course code search</b><br>
 hostname:port/lukkarimaatti/rest/code/code<br>
-e.g. hostname:port/lukkarimaatti/code/code/CT50A6000
+e.g. hostname:port/lukkarimaatti/rest/code/CT50A6000
 
 <b>Course department search</b><br>
 hostname:port/lukkarimaatti/rest/department/<department><br>

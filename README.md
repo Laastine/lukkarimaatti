@@ -17,10 +17,6 @@ hostname:port/lukkarimaatti/rest/department/<department><br>
 e.g. hostname:port/lukkarimaatti/rest/department/tite<br>
 (ente/ymte/kete/kote/sate/tite/tuta/kati/mafy/kike/kv)
 
-<b>Course course name search</b><br>
-hostname:port/lukkarimaatti/rest/name/courseName<br>
-e.g. hostname:port/lukkarimaatti/rest/courseName/Pattern Recognition
-
 
 <h3>Dependencies:</h3>
 Information is retrieved from uni.lut.fi, the official LUT teaching schedule info site.

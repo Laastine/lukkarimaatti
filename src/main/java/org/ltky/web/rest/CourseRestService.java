@@ -2,7 +2,7 @@ package org.ltky.web.rest;
 
 import org.apache.log4j.Logger;
 import org.ltky.dao.CourseDao;
-import org.ltky.model.Course;
+import org.ltky.entity.Course;
 import org.ltky.util.StringHelper;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -14,6 +14,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
+
+//TODO: org.hibernate.hql.internal.ast.QuerySyntaxException: COURSE is not mapped [from COURSE WHERE COURSE_CODE = :courseCode]
+
 /**
  * lukkarimaatti
  * Created with IntelliJ IDEA.
@@ -23,7 +26,7 @@ import java.util.List;
 @Path("/")
 public class CourseRestService {
     private static final Logger logger = Logger.getLogger(CourseRestService.class);
-    private final ApplicationContext applicationContext = new ClassPathXmlApplicationContext("config/BeanLocations.xml");
+    private final ApplicationContext applicationContext = new ClassPathXmlApplicationContext("hibernate/hibernateConfig.xml");
     private final CourseDao courseDao = (CourseDao) applicationContext.getBean("courseDao");
 
     @GET

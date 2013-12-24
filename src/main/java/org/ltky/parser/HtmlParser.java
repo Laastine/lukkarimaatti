@@ -5,7 +5,7 @@ import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import org.ltky.model.Course;
+import org.ltky.entity.Course;
 import org.ltky.util.CoursePattern;
 import org.ltky.util.StringHelper;
 
@@ -52,7 +52,7 @@ public class HtmlParser {
             Elements rowItems = tableRowElements.get(i).select("td");
             for (int j = 0; j < rowItems.size(); j++) {
                 String tmp = rowItems.get(j).text();
-                if (!tmp.isEmpty() & new StringHelper().isPrintable(tmp)) {
+                if (!tmp.isEmpty()) {
                     //logger.debug("row=" + tmp);
                     resultList.add(tmp);
                 }

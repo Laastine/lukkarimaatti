@@ -11,7 +11,7 @@ import org.ltky.util.StringHelper;
  * User: laastine
  * Date: 27.11.2013
  */
-public class ParserTest {
+class ParserTest {
     private static final Logger logger = Logger.getLogger(ParserTest.class);
 
     //@Test

@@ -24,19 +24,19 @@ import java.util.regex.Pattern;
  */
 public class StringHelper {
     private static final Logger logger = Logger.getLogger(StringHelper.class);
-    private static CharsetEncoder encoder = Charset.forName("UTF-8").newEncoder();
+    private static final CharsetEncoder encoder = Charset.forName("UTF-8").newEncoder();
 
     /**
      * Change encoding of given string
      *
+     *
+     *
      * @param text
-     * @param sourceEncoding
-     * @param destEncoding
      * @return
      */
-    public String changeEncoding(String text, String sourceEncoding, String destEncoding) {
-        final Charset windowsCharset = Charset.forName(sourceEncoding);
-        final Charset utfCharset = Charset.forName(destEncoding);
+    public String changeEncoding(String text) {
+        final Charset windowsCharset = Charset.forName("cp1252");
+        final Charset utfCharset = Charset.forName("UTF-8");
         final CharBuffer windowsEncoded = windowsCharset.decode(ByteBuffer.wrap(text.getBytes()));
         return new String(utfCharset.encode(windowsEncoded).array());
     }

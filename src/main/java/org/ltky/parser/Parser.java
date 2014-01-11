@@ -4,7 +4,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -13,13 +12,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Parser {
-    private ParserConfiguration parserConfiguration = ParserConfiguration.getInstance();
+    private final ParserConfiguration parserConfiguration = ParserConfiguration.getInstance();
     private static final Logger logger = Logger.getLogger(Parser.class);
 
     public Map<String, String> fetchStuff() throws IOException {
         String uniURL = parserConfiguration.getUniURL();
         logger.info("Fetching: " + uniURL);
-        final Map<String, String> dependencies = new LinkedHashMap<String, String>();
+        final Map<String, String> dependencies = new LinkedHashMap<>();
         dependencies.put(parserConfiguration.getEnte(), "ente");
         dependencies.put(parserConfiguration.getYmte(), "ymte");
         dependencies.put(parserConfiguration.getKete(), "kete");
@@ -33,15 +32,13 @@ public class Parser {
         dependencies.put(parserConfiguration.getKv(), "kv");
         String startMark = parserConfiguration.getStartTag();
         String endMark = parserConfiguration.getEndTag();
-        Map<String, String> resultSet = new HashMap();
+        Map<String, String> resultSet = new HashMap<>();
         if (logger.isDebugEnabled()) {
             logger.debug("startMark=" + startMark + ", endMark=" + endMark);
         }
         String linkList = StringUtils.substringBetween(fetchFromWeb(uniURL), startMark, endMark);
         String prefix = "https://uni.lut.fi";
         String link = "";
-        File dir = new File(parserConfiguration.getFolder());
-        dir.mkdir();
         Set set = dependencies.entrySet();
             Iterator iterator = set.iterator();
             for (int i = 0; i < dependencies.size(); i++) {
@@ -76,7 +73,7 @@ public class Parser {
      * @return
      * @throws IOException
      */
-    public String fetchFromWeb(String fromUrl) throws IOException {
+    String fetchFromWeb(String fromUrl) throws IOException {
         String content = "";
         String inputLine;
         URL url = new URL(fromUrl);

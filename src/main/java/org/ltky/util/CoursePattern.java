@@ -7,84 +7,71 @@ package org.ltky.util;
  * Date: 29.11.2013
  */
 public class CoursePattern {
-    private final String titePattern = "C[TS]{1}[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
-    private final String ymteEntePattern = "BH[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
-    private final String tutaPattern = "CS[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
-    private final String satePattern = "BL[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
-    private final String mafyPattern = "BM[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
-    private final String kikePattern = "FV[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
-    private final String kotePattern = "BK[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
-    private final String ketePattern = "BJ[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
-    private final String katiPattern = "A1[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
-    private final String kvPattern = "A3[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
-    private final String weekDays = "(ma|ti|ke|to|pe|la|su)";
-    private final String timeOfDay = "[0-9]{1,2}";
-    private final String coursePattern = "^(CT|CS|BH|BL|BM|FV|BK|BJ|A1|A3){1}[0-9]{2}A[0-9]{4} - [A-ZÄÖ]{1}";
-    private final String weekNumber = "[0-9,\\- ]+";
-    private final String courseTypePattern = "/[A-Z+]";
-    private final String classRoom = "[A-Z0-9a-zÄäÖö,.\\- *]+";
+    public String getKikeTeacher() {
+        return "[A-Za-zÄäÖöÅå,\\- ]+";
+    }
 
     public String getClassRoom() {
-        return classRoom;
+        return "[A-Z0-9a-zÄäÖö,.\\- *]+";
     }
 
     public String getTimeOfDay() {
-        return timeOfDay;
+        return "[0-9]{1,2}";
     }
 
     public String getCoursePattern() {
-        return coursePattern;
+        return "^(CT|CS|BH|BL|BM|FV|BK|BJ|A1|A3){1}[0-9]{2}A[0-9]{4} - [A-ZÄÖ]{1}";
     }
 
     public String getCourseTypePattern() {
-        return courseTypePattern;
+        return "/[A-Z+]";
     }
 
     public String getWeekNumber() {
-        return weekNumber;
+        return "[0-9,\\- ]?";
     }
 
     public String getWeekDays() {
-        return weekDays;
+        return "(ma|ti|ke|to|pe|la|su)";
     }
 
     public String getKvPattern() {
-        return kvPattern;
+        return "A3[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
     }
 
     public String getTitePattern() {
-        return titePattern;
+        return "C[TS]{1}[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
     }
 
     public String getKatiPattern() {
-        return katiPattern;
+        return "A1[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
     }
 
     public String getKetePattern() {
-        return ketePattern;
+        return "BJ[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
     }
 
     public String getKotePattern() {
-        return kotePattern;
+        return "BK[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
     }
 
     public String getKikePattern() {
-        return kikePattern;
+        return "FV[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
     }
 
     public String getMafyPattern() {
-        return mafyPattern;
+        return "BM[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
     }
 
     public String getSatePattern() {
-        return satePattern;
+        return "BL[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
     }
 
     public String getTutaPattern() {
-        return tutaPattern;
+        return "CS[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
     }
 
     public String getYmteEntePattern() {
-        return ymteEntePattern;
+        return "BH[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
     }
 }

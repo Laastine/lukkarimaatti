@@ -24,7 +24,7 @@ import java.util.List;
  * Date: 14.12.2013
  */
 @Path("/")
-public class CourseRestService {
+class CourseRestService {
     private static final Logger logger = Logger.getLogger(CourseRestService.class);
     private final ApplicationContext applicationContext = new ClassPathXmlApplicationContext("hibernate/hibernateConfig.xml");
     private final CourseDao courseDao = (CourseDao) applicationContext.getBean("courseDao");
@@ -35,15 +35,6 @@ public class CourseRestService {
     public List<Course> getCodeInJSON(@PathParam("code") String code) {
         logger.debug("getCodeInJSON");
         List<Course> courseList = courseDao.findByCourseCode(code);
-        return courseList;
-    }
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/name/{courseName}")
-    public List<Course> getNameInJSON(@PathParam("courseName") String courseName) {
-        logger.debug("getNameInJSON");
-        List<Course> courseList = courseDao.findByCourseName(courseName);
         return courseList;
     }
 
@@ -61,6 +52,7 @@ public class CourseRestService {
     @Path("/codes/{codes}")
     public List<String> getLikeCourseCodes(@PathParam("codes") String codes) {
         logger.debug("getLikeCourseCodes");
-        return new StringHelper().removeDuplicates(courseDao.findCourseCodes(codes));
+        List <String> list = new StringHelper().removeDuplicates(courseDao.findCourseCodes(codes));
+        return list;
     }
 }

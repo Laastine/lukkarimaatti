@@ -10,7 +10,7 @@ import org.junit.Test;
  * User: laastine
  * Date: 26.11.2013
  */
-public class LoadConfigTest {
+class LoadConfigTest {
     private static final Logger logger = Logger.getLogger(LoadConfigTest.class);
 
     //@Test

@@ -7,7 +7,6 @@ import org.ltky.parser.ParserTask;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
@@ -23,7 +22,7 @@ import java.util.concurrent.Executors;
 public class FetchJob {
     private static final Logger logger = Logger.getLogger(FetchJob.class);
     final ParserConfiguration config = ParserConfiguration.getInstance();
-    Map<String, String> map;
+    private Map<String, String> map;
     @Resource
     Properties lukkariProperties;
 

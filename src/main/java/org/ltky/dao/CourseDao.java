@@ -1,7 +1,6 @@
 package org.ltky.dao;
 
 import org.ltky.entity.Course;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -19,7 +18,7 @@ public interface CourseDao {
 
     void delete(Course course);
 
-    List<Course> findByCourseCode(String courseCode);
+    List findByCourseCode(String courseCode);
 
     List<Course> findByDepartment(String department);
 

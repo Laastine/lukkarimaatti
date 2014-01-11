@@ -15,7 +15,7 @@ import java.util.Date;
  * User: laastine
  * Date: 26.11.2013
  */
-public class RunJob extends QuartzJobBean {
+class RunJob extends QuartzJobBean {
     private static final Logger logger = Logger.getLogger(RunJob.class);
 
     private FetchJob fetchJob;

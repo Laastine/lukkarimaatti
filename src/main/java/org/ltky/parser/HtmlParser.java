@@ -9,7 +9,6 @@ import org.ltky.entity.Course;
 import org.ltky.util.CoursePattern;
 import org.ltky.util.StringHelper;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,22 +18,17 @@ import java.util.List;
  * User: laastine
  * Date: 28.11.2013
  */
-public class HtmlParser {
+class HtmlParser {
     private static final Logger logger = Logger.getLogger(HtmlParser.class);
-    private ArrayList<String> html;
-    private String department;
-    private ArrayList<String> resultList = new ArrayList<>();
-    private ParserConfiguration config = ParserConfiguration.getInstance();
+    private final String department;
+    private final ArrayList<String> resultList = new ArrayList<>();
+    private final ParserConfiguration config = ParserConfiguration.getInstance();
     private final StringHelper stringHelper = new StringHelper();
     private final CoursePattern coursePattern = new CoursePattern();
 
-    public HtmlParser(String html, String department) throws Exception {
-        try {
-            this.department = department;
-            this.html = stripHtmlTags(html);
-        } catch (Exception e) {
-            throw e;
-        }
+    public HtmlParser(String html, String department) {
+        this.department = department;
+        stripHtmlTags(html);
     }
 
     /**
@@ -44,8 +38,8 @@ public class HtmlParser {
      * @return
      * @throws IllegalStateException
      */
-    private ArrayList<String> stripHtmlTags(String html) throws IllegalStateException, UnsupportedEncodingException {
-        Document doc = Jsoup.parse(stringHelper.changeEncoding(html, "cp1252", "UTF-8"));
+    private ArrayList<String> stripHtmlTags(String html) throws IllegalStateException {
+        Document doc = Jsoup.parse(stringHelper.changeEncoding(html));
         Elements tableElements = doc.select("table");
         Elements tableRowElements = tableElements.select(":not(thead) tr");
         for (int i = 0; i < tableRowElements.size(); i++) {
@@ -67,9 +61,9 @@ public class HtmlParser {
      * @param coursesList
      * @return
      */
-    public List<Course> formatEachEducationEvent(ArrayList<String> coursesList) throws Exception {
+    public List<Course> formatEachEducationEvent(ArrayList<String> coursesList) {
         Course course = new Course();
-        ArrayList<Course> resultSet = new ArrayList();
+        List<Course> resultSet = new ArrayList<>();
         for (int i = 0; i < coursesList.size(); i++) {
             if (findUselessLine(coursesList.get(i))) {
                 //Skip the line
@@ -77,11 +71,22 @@ public class HtmlParser {
                 if (course.getCourseCode().isEmpty() && course.getCourseName().isEmpty()) {
                     course = findNameAndCode(coursesList.get(i), course);
                 }
-            } else if (stringHelper.extractPattern(coursesList.get(i), coursePattern.getWeekNumber()) != null) {        //Set weekNumber
+            } if (department.equals("kike") && course.getTeacher().isEmpty()) {
+                if(stringHelper.extractPattern(coursesList.get(i), coursePattern.getKikeTeacher()) != null) {
+                    if(course.getTeacher().isEmpty()) {
+                        course = findTeacher(coursesList.get(i), course);
+                    }
+                }
+            } else {
+                course.setTeacher("");
+            }
+            if (stringHelper.extractPattern(coursesList.get(i), coursePattern.getWeekNumber()) != null) {        //Set weekNumber
                 if (course.getWeekNumber().isEmpty()) {
                     course = findWeek(coursesList.get(i), course);
                 }
-            } else if (stringHelper.extractPattern(coursesList.get(i), coursePattern.getWeekDays()) != null) {          //Set weekDay, timeOfDay and classroom
+            }
+
+            else if (stringHelper.extractPattern(coursesList.get(i), coursePattern.getWeekDays()) != null) {          //Set weekDay, timeOfDay and classroom
                 if (course.getWeekDay().isEmpty()) {
                     course = findCourseTimeAndPlace(coursesList.get(i), coursesList.get(i + 1), coursesList.get(i + 2), coursesList.get(i + 3), course);
                     resultSet.add(course);
@@ -102,12 +107,14 @@ public class HtmlParser {
      * @return
      */
     private boolean findUselessLine(String line) {
-        if (line == null | line.isEmpty() | line.equals("Periodi") |
-                line.equals("Vko") | line.equals("Klo") | line.equals("Sali")) {
-            return true;
-        } else {
-            return false;
-        }
+        return line == null | line.isEmpty() | line.equals("Periodi") |
+                line.equals("Vko") | line.equals("Klo") | line.equals("Sali");
+    }
+
+    private Course findTeacher(String teacher, Course course) {
+        course.setTeacher(stringHelper.extractPattern(teacher, coursePattern.getKikeTeacher()));
+        logger.debug("KIKE teacher="+course.getTeacher());
+        return course;
     }
 
     private Course findCourseTimeAndPlace(String weekDay, String startTime, String endTime, String classRoom, Course course) {
@@ -148,7 +155,7 @@ public class HtmlParser {
         //logger.debug(courseCodeAndNamePair[0] + " " + courseCodeAndNamePair[1]);
         return course;
     }
-
+    
     public ArrayList<String> getResultList() {
         return resultList;
     }

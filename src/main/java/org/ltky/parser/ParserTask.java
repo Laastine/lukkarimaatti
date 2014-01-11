@@ -3,6 +3,7 @@ package org.ltky.parser;
 import org.apache.log4j.Logger;
 import org.ltky.dao.CourseDao;
 import org.ltky.entity.Course;
+import org.ltky.validator.CourseValidator;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -40,7 +41,9 @@ public class ParserTask implements Runnable {
             htmlParser.formatEachEducationEvent(htmlParser.getResultList());
             for (Course c : htmlParser.formatEachEducationEvent(htmlParser.getResultList())) {
                 logger.debug("Saving="+c.toString());
-                courseDao.saveOrUpdate(c);
+                if(CourseValidator.validateCourse(c)) {
+                    courseDao.saveOrUpdate(c);
+                }
             }
         } catch (Exception e) {
             logger.error("HtmlParser error", e);

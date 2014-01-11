@@ -29,7 +29,7 @@ public class CourseDaoImpl implements CourseDao {
         this.sessionFactory = sessionFactory;
     }
 
-    public Session getCurrentSession() {
+    Session getCurrentSession() {
         return sessionFactory.getCurrentSession();
     }
 
@@ -45,22 +45,19 @@ public class CourseDaoImpl implements CourseDao {
         //return getSession().find("from Course where COURSE_CODE=?", courseCode);
         final String hql = "from Course WHERE courseCode = :courseCode";
         Query query = getCurrentSession().createQuery(hql);
-        List list = query.setParameter("courseCode", courseCode).list();
-        return list;
+        return query.setParameter("courseCode", courseCode).list();
     }
 
     public List<Course> findByDepartment(String department) {
         //return getSession().find("from Course where DEPARTMENT=?", department);
         final String hql = "FROM Course WHERE department = :department";
         Query query = getCurrentSession().createQuery(hql);
-        List list = query.setParameter("department", department).list();
-        return list;
+        return query.setParameter("department", department).list();
     }
 
     public List<String> findCourseCodes(String courseCode) {
         final String hql = "SELECT C.courseCode FROM Course C WHERE C.courseCode like :courseCode";
         Query query = getCurrentSession().createQuery(hql);
-        List list = query.setParameter("courseCode", courseCode + "%").list();
-        return list;
+        return query.setParameter("courseCode", courseCode + "%").list();
     }
 }

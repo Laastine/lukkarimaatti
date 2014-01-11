@@ -50,6 +50,9 @@ public class Course implements Serializable {
     @Column(name = "DEPARTMENT")
     @XmlElement(name = "department")
     private String department = "";
+    @Column(name =  "TEACHER")
+    @XmlElement(name= "teacher")
+    private String teacher = "";
 
     public Integer getCourseId() {
         return courseId;
@@ -131,9 +134,17 @@ public class Course implements Serializable {
         this.weekDay = weekDay;
     }
 
+    public String getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(String teacher) {
+        this.teacher = teacher;
+    }
+
     @Override
     public String toString() {
-        String course = "Course [courseId="+courseId+", courseCode="+courseCode+", courseName="+courseName+
+        String course = "[courseId="+courseId+", courseCode="+courseCode+", courseName="+courseName+
                 ", weekNumber="+ weekNumber +", weekDay="+weekDay+", period="+period+", timeOfDay="+timeOfDay+
                 ", classroom="+classroom+", type="+type+", department="+department+"]";
         String encoding = new StringHelper().checkEncoding(courseId+courseCode+courseName+weekNumber+weekDay+period+timeOfDay+classroom+type+department+courseId+courseCode+courseName+weekNumber+weekDay+period+timeOfDay+classroom+type+department+courseId+courseCode+courseName+weekNumber+weekDay+period+timeOfDay+classroom+type+department+courseId+courseCode+courseName+weekNumber+weekDay+period+timeOfDay+classroom+type+department+courseId+courseCode+courseName+weekNumber+weekDay+period+timeOfDay+classroom+type+department);

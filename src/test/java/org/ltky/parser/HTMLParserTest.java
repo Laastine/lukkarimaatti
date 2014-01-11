@@ -5,11 +5,8 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.ltky.util.CoursePattern;
-import org.ltky.util.StringHelper;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -18,13 +15,13 @@ import java.util.Map;
  * User: laastine
  * Date: 29.11.2013
  */
-public class HTMLParserTest {
+class HTMLParserTest {
     private static final Logger logger = Logger.getLogger(HTMLParserTest.class);
     @Rule
     public ExpectedException thrown = ExpectedException.none();
     private Map<String, String> map;
 
-    public HTMLParserTest() {
+    private HTMLParserTest() {
         try {
             map = new Parser().fetchStuff();
         } catch (IOException e) {

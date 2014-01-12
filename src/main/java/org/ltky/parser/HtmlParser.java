@@ -71,22 +71,19 @@ class HtmlParser {
                 if (course.getCourseCode().isEmpty() && course.getCourseName().isEmpty()) {
                     course = findNameAndCode(coursesList.get(i), course);
                 }
-            } if (department.equals("kike") && course.getTeacher().isEmpty()) {
+            } else if (department.equals("kike") && course.getTeacher().isEmpty()) {
                 if(stringHelper.extractPattern(coursesList.get(i), coursePattern.getKikeTeacher()) != null) {
                     if(course.getTeacher().isEmpty()) {
                         course = findTeacher(coursesList.get(i), course);
+                    } else {
+                        course.setTeacher("unknown");
                     }
                 }
-            } else {
-                course.setTeacher("");
-            }
-            if (stringHelper.extractPattern(coursesList.get(i), coursePattern.getWeekNumber()) != null) {        //Set weekNumber
+            } else if (stringHelper.extractPattern(coursesList.get(i), coursePattern.getWeekNumber()) != null) {        //Set weekNumber
                 if (course.getWeekNumber().isEmpty()) {
                     course = findWeek(coursesList.get(i), course);
                 }
-            }
-
-            else if (stringHelper.extractPattern(coursesList.get(i), coursePattern.getWeekDays()) != null) {          //Set weekDay, timeOfDay and classroom
+            } else if (stringHelper.extractPattern(coursesList.get(i), coursePattern.getWeekDays()) != null) {          //Set weekDay, timeOfDay and classroom
                 if (course.getWeekDay().isEmpty()) {
                     course = findCourseTimeAndPlace(coursesList.get(i), coursesList.get(i + 1), coursesList.get(i + 2), coursesList.get(i + 3), course);
                     resultSet.add(course);

@@ -15,42 +15,41 @@ public class CourseValidator {
     private static final int MIN = 0;
 
     public static boolean validateCourse(Course course) {
-        if (!investigateLength(course.getCourseCode(), "courseCode", 32)) {
+        if (course.getCourseCode() == null | !investigateLength(course.getCourseCode(),32)) {
             return false;
         }
-        if (!investigateLength(course.getCourseName(), "courseName", 256)) {
+        if (course.getCourseName() == null | !investigateLength(course.getCourseName(), 256)) {
             return false;
         }
-        if (!investigateLength(course.getPeriod(), "period", 64)) {
+        if (!investigateLength(course.getPeriod(), 64)) {
             return false;
         }
-        if (!investigateLength(course.getWeekNumber(), "weekNumber", 16)) {
+        if (course.getWeekNumber() == null | !investigateLength(course.getWeekNumber(), 16)) {
             return false;
         }
-        if (!investigateLength(course.getWeekDay(), "weekDay", 4)) {
+        if (!investigateLength(course.getWeekDay(), 4)) {
             return false;
         }
-        if (!investigateLength(course.getTimeOfDay(), "timeOfDay", 32)) {
+        if (course.getTimeOfDay() == null | !investigateLength(course.getTimeOfDay(), 32)) {
             return false;
         }
-        if (!investigateLength(course.getClassroom(), "classroom", 64)) {
+        if (!investigateLength(course.getClassroom(),64)) {
             return false;
         }
-        if (!investigateLength(course.getType(), "type", 4)) {
+        if (!investigateLength(course.getType(), 4)) {
             return false;
         }
-        if (!investigateLength(course.getDepartment(), "department", 4)) {
+        if (!investigateLength(course.getDepartment(),4)) {
             return false;
         }
-        if (!investigateLength(course.getTeacher(), "teacher", 64)) {
+        if (!investigateLength(course.getTeacher(), 64)) {
             return false;
         }
         logger.debug(course.getCourseCode() + " " + course.getCourseName() + " is a valid course");
         return true;
     }
 
-    private static boolean investigateLength(String courseData, String attribute, int max) {
-        logger.warn("Length error in " + attribute + ". Length is " + courseData.length());
+    private static boolean investigateLength(String courseData, int max) {
         return courseData.length() >= CourseValidator.MIN && courseData.length() <= max;
     }
 }

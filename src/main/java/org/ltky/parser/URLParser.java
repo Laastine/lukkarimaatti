@@ -11,10 +11,15 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Parser {
+public class URLParser {
     private final ParserConfiguration parserConfiguration = ParserConfiguration.getInstance();
-    private static final Logger logger = Logger.getLogger(Parser.class);
+    private static final Logger logger = Logger.getLogger(URLParser.class);
 
+    /**
+     * Parse each departments url
+     * @return
+     * @throws IOException
+     */
     public Map<String, String> fetchStuff() throws IOException {
         String uniURL = parserConfiguration.getUniURL();
         logger.info("Fetching: " + uniURL);
@@ -61,7 +66,7 @@ public class Parser {
             if (logger.isDebugEnabled()) {
                 logger.debug(parserConfiguration.getFolder() + "/" + departments + ".htm");
             }
-            resultSet.put(departments, fetchFromWeb(link));
+            resultSet.put(departments, link);
         }
         return resultSet;
     }

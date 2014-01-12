@@ -2,7 +2,6 @@ package org.ltky.parser;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;
-import org.junit.Test;
 import org.ltky.util.StringHelper;
 
 /**
@@ -18,7 +17,7 @@ class ParserTest {
     public void parserTest() {
         ParserConfiguration config = ParserConfiguration.getInstance();
         try {
-            Assert.assertNotNull(new Parser().fetchStuff());
+            Assert.assertNotNull(new URLParser().fetchStuff());
         } catch (Exception e) {
             logger.error("Error while fetching stuff from " + config.getUniURL(), e);
         }
@@ -32,7 +31,7 @@ class ParserTest {
             //Check encoding of first given department
             logger.info(
                     "checkEncoding gives=" + stringHelper.checkEncoding(
-                            new Parser().fetchStuff().entrySet().iterator().next().getValue()
+                            new URLParser().fetchStuff().entrySet().iterator().next().getValue()
                     ));
         } catch (Exception e) {
             logger.error("test error", e);

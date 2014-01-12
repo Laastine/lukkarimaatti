@@ -9,6 +9,9 @@ import org.ltky.entity.Course;
 import org.ltky.util.CoursePattern;
 import org.ltky.util.StringHelper;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,20 +29,24 @@ class HtmlParser {
     private final StringHelper stringHelper = new StringHelper();
     private final CoursePattern coursePattern = new CoursePattern();
 
-    public HtmlParser(String html, String department) {
+    public HtmlParser(String url, String department) throws IOException {
         this.department = department;
-        stripHtmlTags(html);
+        stripHtmlTags(url);
     }
 
     /**
      * Parse HTML table values with UTF-8 encoding
      *
-     * @param html
+     * @param url
      * @return
      * @throws IllegalStateException
      */
-    private ArrayList<String> stripHtmlTags(String html) throws IllegalStateException {
-        Document doc = Jsoup.parse(stringHelper.changeEncoding(html));
+    private void stripHtmlTags(String url) throws IllegalStateException, IOException {
+        final StringHelper stringHelper = new StringHelper();
+        Document doc = Jsoup.parse(
+                new URL(url).openStream(),
+                "cp1252",   //Set to null to determine from http-equiv meta tag, if present, or fall back to UTF-8
+                url);
         Elements tableElements = doc.select("table");
         Elements tableRowElements = tableElements.select(":not(thead) tr");
         for (int i = 0; i < tableRowElements.size(); i++) {
@@ -48,11 +55,10 @@ class HtmlParser {
                 String tmp = rowItems.get(j).text();
                 if (!tmp.isEmpty()) {
                     //logger.debug("row=" + tmp);
-                    resultList.add(tmp);
+                    resultList.add(new String(tmp.getBytes("cp1252"), "UTF-8"));
                 }
             }
         }
-        return resultList;
     }
 
     /**
@@ -104,8 +110,10 @@ class HtmlParser {
      * @return
      */
     private boolean findUselessLine(String line) {
-        return line == null | line.isEmpty() | line.equals("Periodi") |
-                line.equals("Vko") | line.equals("Klo") | line.equals("Sali");
+        if(line == null)
+            return true;
+        else
+            return line.isEmpty() | line.equals("Periodi") | line.equals("Vko") | line.equals("Klo") | line.equals("Sali");
     }
 
     private Course findTeacher(String teacher, Course course) {

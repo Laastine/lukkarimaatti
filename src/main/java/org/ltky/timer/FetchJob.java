@@ -1,8 +1,7 @@
 package org.ltky.timer;
 
 import org.apache.log4j.Logger;
-import org.ltky.parser.Parser;
-import org.ltky.parser.ParserConfiguration;
+import org.ltky.parser.URLParser;
 import org.ltky.parser.ParserTask;
 
 import javax.annotation.Resource;
@@ -21,7 +20,6 @@ import java.util.concurrent.Executors;
  */
 public class FetchJob {
     private static final Logger logger = Logger.getLogger(FetchJob.class);
-    final ParserConfiguration config = ParserConfiguration.getInstance();
     private Map<String, String> map;
     @Resource
     Properties lukkariProperties;
@@ -31,7 +29,7 @@ public class FetchJob {
      */
     public FetchJob() {
         try {
-            map = new Parser().fetchStuff();
+            map = new URLParser().fetchStuff();
         } catch (IOException e) {
             logger.error("Malformed UNI URL", e);
         }
@@ -53,5 +51,9 @@ public class FetchJob {
         while (!executor.isTerminated()) {
         }
         logger.info("Finished all threads");
+    }
+
+    public void encodingTest() {
+
     }
 }

@@ -15,8 +15,6 @@ import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 
-//TODO: org.hibernate.hql.internal.ast.QuerySyntaxException: COURSE is not mapped [from COURSE WHERE COURSE_CODE = :courseCode]
-
 /**
  * lukkarimaatti
  * Created with IntelliJ IDEA.
@@ -24,7 +22,7 @@ import java.util.List;
  * Date: 14.12.2013
  */
 @Path("/")
-class CourseRestService {
+public class CourseRestService {
     private static final Logger logger = Logger.getLogger(CourseRestService.class);
     private final ApplicationContext applicationContext = new ClassPathXmlApplicationContext("hibernate/hibernateConfig.xml");
     private final CourseDao courseDao = (CourseDao) applicationContext.getBean("courseDao");
@@ -52,7 +50,7 @@ class CourseRestService {
     @Path("/codes/{codes}")
     public List<String> getLikeCourseCodes(@PathParam("codes") String codes) {
         logger.debug("getLikeCourseCodes");
-        List <String> list = new StringHelper().removeDuplicates(courseDao.findCourseCodes(codes));
-        return list;
+        List <String> courseCodesList = new StringHelper().removeDuplicates(courseDao.findCourseCodes(codes));
+        return courseCodesList;
     }
 }

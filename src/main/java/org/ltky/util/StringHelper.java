@@ -28,15 +28,19 @@ public class StringHelper {
 
     /**
      * Change encoding of given string
-     *
-     *
-     *
      * @param text
      * @return
      */
     public String changeEncoding(String text) {
         final Charset windowsCharset = Charset.forName("cp1252");
         final Charset utfCharset = Charset.forName("UTF-8");
+        final CharBuffer windowsEncoded = windowsCharset.decode(ByteBuffer.wrap(text.getBytes()));
+        return new String(utfCharset.encode(windowsEncoded).array());
+    }
+
+    public String changeEncoding1(String text) {
+        final Charset windowsCharset = Charset.forName("UTF-8");
+        final Charset utfCharset = Charset.forName("cp1252");
         final CharBuffer windowsEncoded = windowsCharset.decode(ByteBuffer.wrap(text.getBytes()));
         return new String(utfCharset.encode(windowsEncoded).array());
     }

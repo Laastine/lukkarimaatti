@@ -15,15 +15,15 @@ import java.util.Map;
  * User: laastine
  * Date: 29.11.2013
  */
-class HTMLParserTest {
+public class HTMLParserTest {
     private static final Logger logger = Logger.getLogger(HTMLParserTest.class);
     @Rule
     public ExpectedException thrown = ExpectedException.none();
     private Map<String, String> map;
 
-    private HTMLParserTest() {
+    private void HTMLParserTest() {
         try {
-            map = new Parser().fetchStuff();
+            map = new URLParser().fetchStuff();
         } catch (IOException e) {
             logger.error(e);
         }
@@ -31,6 +31,7 @@ class HTMLParserTest {
 
     //@Test
     public void testCourseData() {
+        HTMLParserTest();
         try {
             Assert.assertNotNull(map);
             HtmlParser htmlParser = new HtmlParser(map.get("tite"), "tite");

@@ -71,7 +71,11 @@ public class CoursePattern {
         return "CS[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
     }
 
-    public String getYmteEntePattern() {
+    public String getYmtePattern() {
+        return "BH60A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
+    }
+
+    public String getEntePattern() {
         return "BH[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
     }
 }

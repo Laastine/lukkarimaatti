@@ -45,19 +45,22 @@ public class CourseDaoImpl implements CourseDao {
         //return getSession().find("from Course where COURSE_CODE=?", courseCode);
         final String hql = "from Course WHERE courseCode = :courseCode";
         Query query = getCurrentSession().createQuery(hql);
-        return query.setParameter("courseCode", courseCode).list();
+        List<Course> list = query.setParameter("courseCode", courseCode).list();
+        return list;
     }
 
     public List<Course> findByDepartment(String department) {
         //return getSession().find("from Course where DEPARTMENT=?", department);
         final String hql = "FROM Course WHERE department = :department";
         Query query = getCurrentSession().createQuery(hql);
-        return query.setParameter("department", department).list();
+        List<Course> list = query.setParameter("department", department).list();
+        return list;
     }
 
     public List<String> findCourseCodes(String courseCode) {
         final String hql = "SELECT C.courseCode FROM Course C WHERE C.courseCode like :courseCode";
         Query query = getCurrentSession().createQuery(hql);
-        return query.setParameter("courseCode", courseCode + "%").list();
+        List<String> list = query.setParameter("courseCode", courseCode + "%").list();
+        return list;
     }
 }

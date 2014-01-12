@@ -16,9 +16,12 @@
 
     <context:annotation-config/>
 
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
+
     <mvc:annotation-driven />
 
     <util:properties id="lukkariProperties" location="classpath:properties/parser.properties"/>
+
 
     <!--
         <bean id="runMeTask" class="org.ltky.timer.FetchJob"/>

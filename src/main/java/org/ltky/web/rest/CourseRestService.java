@@ -28,7 +28,7 @@ public class CourseRestService {
     private final CourseDao courseDao = (CourseDao) applicationContext.getBean("courseDao");
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Path("/code/{code}")
     public List<Course> getCodeInJSON(@PathParam("code") String code) {
         logger.debug("getCodeInJSON");
@@ -37,7 +37,7 @@ public class CourseRestService {
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Path("/department/{department}")
     public List<Course> getDepartmentInJSON(@PathParam("department") String department) {
         logger.debug("getDepartmentInJSON");
@@ -46,7 +46,7 @@ public class CourseRestService {
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Path("/codes/{codes}")
     public List<String> getLikeCourseCodes(@PathParam("codes") String codes) {
         logger.debug("getLikeCourseCodes");

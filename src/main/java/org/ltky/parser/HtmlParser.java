@@ -10,7 +10,6 @@ import org.ltky.util.CoursePattern;
 import org.ltky.util.StringHelper;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +27,7 @@ class HtmlParser {
     private final ParserConfiguration config = ParserConfiguration.getInstance();
     private final StringHelper stringHelper = new StringHelper();
     private final CoursePattern coursePattern = new CoursePattern();
+    private static final String UNKNOWN = "?";
 
     public HtmlParser(String url, String department) throws IOException {
         this.department = department;
@@ -78,8 +78,8 @@ class HtmlParser {
                     course = findNameAndCode(coursesList.get(i), course);
                 }
             } else if (department.equals("kike") && course.getTeacher().isEmpty()) {
-                if(stringHelper.extractPattern(coursesList.get(i), coursePattern.getKikeTeacher()) != null) {
-                    if(course.getTeacher().isEmpty()) {
+                if (stringHelper.extractPattern(coursesList.get(i), coursePattern.getKikeTeacher()) != null) {
+                    if (course.getTeacher().isEmpty()) {
                         course = findTeacher(coursesList.get(i), course);
                     } else {
                         course.setTeacher("unknown");
@@ -110,28 +110,33 @@ class HtmlParser {
      * @return
      */
     private boolean findUselessLine(String line) {
-        if(line == null)
+        if (line == null)
             return true;
         else
             return line.isEmpty() | line.equals("Periodi") | line.equals("Vko") | line.equals("Klo") | line.equals("Sali");
     }
 
     private Course findTeacher(String teacher, Course course) {
-        course.setTeacher(stringHelper.extractPattern(teacher, coursePattern.getKikeTeacher()));
-        logger.debug("KIKE teacher="+course.getTeacher());
+        if (stringHelper.extractPattern(teacher, coursePattern.getKikeTeacher()) != null) {
+            course.setTeacher(teacher);
+        } else {
+            course.setTeacher(UNKNOWN);
+        }
+        logger.debug("KIKE teacher=" + course.getTeacher());
         return course;
     }
 
     private Course findCourseTimeAndPlace(String weekDay, String startTime, String endTime, String classRoom, Course course) {
-        //logger.debug("Set weekDay=" + weekDay);
-        course.setWeekDay(stringHelper.extractPattern(weekDay, coursePattern.getWeekDays()));
-        //logger.debug("Set timeOfDay="+startTime+"-"+endTime);
-        course.setTimeOfDay(stringHelper.extractPattern(startTime, coursePattern.getTimeOfDay()) + //Set timeOfDay
-                "-" + stringHelper.extractPattern(endTime, coursePattern.getTimeOfDay()));
-        if (!classRoom.isEmpty() & classRoom != null) {
-            course.setClassroom(classRoom);                                                //Set classRoom
+        if (stringHelper.extractPattern(weekDay, coursePattern.getWeekDays()) != null)
+            course.setWeekDay(weekDay);
+        else
+            course.setWeekDay(UNKNOWN);
+        if (stringHelper.extractPattern(startTime, coursePattern.getTimeOfDay()) != null & stringHelper.extractPattern(endTime, coursePattern.getTimeOfDay()) != null)
+            course.setTimeOfDay(startTime + "-" + endTime);    //Set timeOfDay
+        if (!classRoom.isEmpty() & classRoom != null & stringHelper.extractPattern(classRoom, coursePattern.getClassRoom()) != null) {
+            course.setClassroom(classRoom);     //Set classRoom
         } else {
-            course.setClassroom("?");
+            course.setClassroom(UNKNOWN);
         }
         course.setDepartment(this.department);
         if (logger.isDebugEnabled()) {
@@ -144,7 +149,7 @@ class HtmlParser {
         //logger.debug("Set weekNumber="+weekNumber);
         course.setWeekNumber(stringHelper.extractPattern(weekNumber, coursePattern.getWeekNumber()));
         if (course.getWeekNumber() != null & !course.getWeekNumber().isEmpty()) {
-            logger.debug("Period data="+weekNumber);
+            logger.debug("Period data=" + weekNumber);
             course.setPeriod(parsePeriod(course.getWeekNumber()));          //Set period
             return course;
         } else {
@@ -160,7 +165,7 @@ class HtmlParser {
         //logger.debug(courseCodeAndNamePair[0] + " " + courseCodeAndNamePair[1]);
         return course;
     }
-    
+
     public ArrayList<String> getResultList() {
         return resultList;
     }
@@ -195,20 +200,15 @@ class HtmlParser {
         int period3 = Integer.valueOf(config.getPeriod3());
         int period4 = Integer.valueOf(config.getPeriod4());
         if ((period3 <= weeks) & (weeks < period4)) {
-            logger.debug(weeks + "=3");
             return "3";
         } else if ((period4 <= weeks) & (weeks < period1)) {
-            logger.debug(weeks + "=4");
             return "4";
         } else if ((period1 <= weeks) & (weeks < period2)) {
-            logger.debug(weeks + "=1");
             return "1";
         } else if ((period2 <= weeks) & (weeks < 52)) {
-            logger.debug(weeks + "=2");
             return "2";
         } else {
-            logger.debug(weeks + "=?");
-            return "?";
+            return UNKNOWN;
         }
     }
 }

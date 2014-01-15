@@ -17,6 +17,7 @@ public class URLParser {
 
     /**
      * Parse each departments url
+     *
      * @return
      * @throws IOException
      */
@@ -45,15 +46,15 @@ public class URLParser {
         String prefix = "https://uni.lut.fi";
         String link = "";
         Set set = dependencies.entrySet();
-            Iterator iterator = set.iterator();
-            for (int i = 0; i < dependencies.size(); i++) {
-                Map.Entry me = (Map.Entry) iterator.next();
-                String departments = me.toString();
+        Iterator iterator = set.iterator();
+        for (int i = 0; i < dependencies.size(); i++) {
+            Map.Entry me = (Map.Entry) iterator.next();
+            String department = me.toString();
             //logger.debug("values=" + me.getKey());
-            departments = departments.substring(StringUtils.indexOfAny(departments, "=") + 1, departments.length());
+            department = department.substring(StringUtils.indexOfAny(department, "=") + 1, department.length());
             Pattern pattern = Pattern.compile("<a href=.+" + me.getKey());
             Matcher matcher = pattern.matcher(linkList);
-            while (matcher.find()) {
+            if (matcher.find()) {
                 String tmp = matcher.group();
                 if (StringUtils.contains(tmp, "\" target=")) {
                     link = prefix + StringUtils.substringBetween(tmp, "<a href=\"", "\" target=");
@@ -61,12 +62,11 @@ public class URLParser {
                     link = prefix + StringUtils.substringBetween(tmp, "<a href=\"", "\"><br ");
                 }
             }
-            linkList = StringUtils.substringAfter(linkList, "</a>");
-            logger.debug("link=" + link);
+            linkList = StringUtils.substringAfter(linkList, "10304");
             if (logger.isDebugEnabled()) {
-                logger.debug(parserConfiguration.getFolder() + "/" + departments + ".htm");
+                logger.debug("Department=" + department + ", link=" + link);
             }
-            resultSet.put(departments, link);
+            resultSet.put(department, link);
         }
         return resultSet;
     }

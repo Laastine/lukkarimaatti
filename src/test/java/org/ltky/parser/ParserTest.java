@@ -2,7 +2,10 @@ package org.ltky.parser;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;
+import org.junit.Test;
 import org.ltky.util.StringHelper;
+
+import java.util.Map;
 
 /**
  * parser
@@ -10,14 +13,19 @@ import org.ltky.util.StringHelper;
  * User: laastine
  * Date: 27.11.2013
  */
-class ParserTest {
+public class ParserTest {
     private static final Logger logger = Logger.getLogger(ParserTest.class);
 
     //@Test
     public void parserTest() {
         ParserConfiguration config = ParserConfiguration.getInstance();
+        URLParser parser = new URLParser();
         try {
-            Assert.assertNotNull(new URLParser().fetchStuff());
+            Map<String, String> map = parser.fetchStuff();
+            //Assert.assertNotNull(map);
+            for(String s : map.keySet()) {
+                logger.debug("Department="+s);
+            }
         } catch (Exception e) {
             logger.error("Error while fetching stuff from " + config.getUniURL(), e);
         }

@@ -37,8 +37,8 @@ public class ParserTask implements Runnable {
      */
     private void processCommand() {
         try {
-            HtmlParser htmlParser = new HtmlParser(departmentData, department);
-            htmlParser.formatEachEducationEvent(htmlParser.getResultList());
+            final HtmlParser htmlParser = new HtmlParser(departmentData, department);
+            logger.debug("getResultList="+htmlParser.formatEachEducationEvent(htmlParser.getResultList()).size());
             for (Course c : htmlParser.formatEachEducationEvent(htmlParser.getResultList())) {
                 logger.debug("Saving="+c.toString());
                 if(CourseValidator.validateCourse(c)) {

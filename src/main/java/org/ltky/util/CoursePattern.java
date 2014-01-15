@@ -8,7 +8,7 @@ package org.ltky.util;
  */
 public class CoursePattern {
     public String getKikeTeacher() {
-        return "[A-Za-zÄäÖöÅå,\\- ]+";
+        return "^[A-ZÄÖÅ][A-Za-zÄäÖöÅå,\\- ]+";
     }
 
     public String getClassRoom() {
@@ -16,7 +16,7 @@ public class CoursePattern {
     }
 
     public String getTimeOfDay() {
-        return "[0-9]{1,2}";
+        return "^([0-1]?[0-9]|2[0-3])$";
     }
 
     public String getCoursePattern() {
@@ -28,7 +28,7 @@ public class CoursePattern {
     }
 
     public String getWeekNumber() {
-        return "[0-9,\\- ]+";
+        return "^[1-9][0-9,\\- ]+";
     }
 
     public String getWeekDays() {

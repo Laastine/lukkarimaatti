@@ -28,7 +28,7 @@ public class CoursePattern {
     }
 
     public String getWeekNumber() {
-        return "([1-9]{0,2}[0-9,\\- ])*";
+        return "^[1-9][0-9,\\- ]+";
     }
 
     public String getWeekDays() {

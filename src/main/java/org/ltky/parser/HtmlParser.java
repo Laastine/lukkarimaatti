@@ -54,7 +54,6 @@ class HtmlParser {
             for (int j = 0; j < rowItems.size(); j++) {
                 String tmp = rowItems.get(j).text();
                 if (!tmp.isEmpty()) {
-                    //logger.debug("row=" + tmp);
                     resultList.add(new String(tmp.getBytes("cp1252"), "UTF-8"));
                 }
             }
@@ -67,7 +66,7 @@ class HtmlParser {
      * @param coursesList
      * @return
      */
-    public List<Course> formatEachEducationEvent(ArrayList<String> coursesList) {
+    public List<Course> formatEachEducationEvent(final ArrayList<String> coursesList) {
         Course course = new Course();
         List<Course> resultSet = new ArrayList<>();
         for (int i = 0; i < coursesList.size(); i++) {
@@ -77,27 +76,26 @@ class HtmlParser {
                 if (course.getCourseCode().isEmpty() && course.getCourseName().isEmpty()) {
                     course = findNameAndCode(coursesList.get(i), course);
                 }
-            } else if (department.equals("kike") && course.getTeacher().isEmpty()) {
-                if (stringHelper.extractPattern(coursesList.get(i), coursePattern.getKikeTeacher()) != null) {
-                    if (course.getTeacher().isEmpty()) {
-                        course = findTeacher(coursesList.get(i), course);
-                    } else {
-                        course.setTeacher("unknown");
-                    }
-                }
             } else if (stringHelper.extractPattern(coursesList.get(i), coursePattern.getWeekNumber()) != null) {        //Set weekNumber
-                if (course.getWeekNumber().isEmpty()) {
                     course = findWeek(coursesList.get(i), course);
-                }
             } else if (stringHelper.extractPattern(coursesList.get(i), coursePattern.getWeekDays()) != null) {          //Set weekDay, timeOfDay and classroom
                 if (course.getWeekDay().isEmpty()) {
                     course = findCourseTimeAndPlace(coursesList.get(i), coursesList.get(i + 1), coursesList.get(i + 2), coursesList.get(i + 3), course);
                     resultSet.add(course);
                     course = new Course();
                 }
-            } else if (coursesList.get(i).equals("____________________________________")) {
+            } else if (department.equals("kike") && course.getTeacher().isEmpty()) {
+                if (stringHelper.extractPattern(coursesList.get(i), coursePattern.getKikeTeacher()) != null) {
+                    if (course.getTeacher().isEmpty()) {
+                        course = findTeacher(coursesList.get(i), course);
+                    }
+                }
+            } else if (coursesList.get(i).equals("____________________________________") &&
+                    coursesList.get(i+1).equals("____________________________________") &&
+                    coursesList.get(i+2).equals("____________________________________")) {
                 //logger.debug("New course" + course.toString());
                 course = new Course();
+                i+=6;   //Jump over irrelevant lines
             }
         }
         return resultSet;
@@ -113,7 +111,7 @@ class HtmlParser {
         if (line == null)
             return true;
         else
-            return line.isEmpty() | line.equals("Periodi") | line.equals("Vko") | line.equals("Klo") | line.equals("Sali");
+            return line.isEmpty() | line.equals("Periodi") | line.equals("Vko") | line.equals("Klo") | line.equals("Sali") | line.equals("?");
     }
 
     private Course findTeacher(String teacher, Course course) {
@@ -140,16 +138,16 @@ class HtmlParser {
         }
         course.setDepartment(this.department);
         if (logger.isDebugEnabled()) {
-            logger.info("Adding course: " + course.toString());
+            logger.info("Adding course=" + course.toString());
         }
         return course;
     }
 
     private Course findWeek(String weekNumber, Course course) {
-        //logger.debug("Set weekNumber="+weekNumber);
+        if(weekNumber.equals("2-7, 11-12, 15"))
+            logger.debug("FOUND="+weekNumber);
         course.setWeekNumber(stringHelper.extractPattern(weekNumber, coursePattern.getWeekNumber()));
         if (course.getWeekNumber() != null & !course.getWeekNumber().isEmpty()) {
-            logger.debug("Period data=" + weekNumber);
             course.setPeriod(parsePeriod(course.getWeekNumber()));          //Set period
             return course;
         } else {
@@ -161,7 +159,7 @@ class HtmlParser {
         String[] courseCodeAndNamePair = StringUtils.splitByWholeSeparator(courseNameAndCode, " - ");
         course.setCourseCode(courseCodeAndNamePair[0]);
         course.setCourseName(courseCodeAndNamePair[1]);
-        course.setType(parseEducationEventType(course.getCourseName()));
+        course.setType(findEducationEventType(course.getCourseName()));
         //logger.debug(courseCodeAndNamePair[0] + " " + courseCodeAndNamePair[1]);
         return course;
     }
@@ -176,7 +174,7 @@ class HtmlParser {
      * @param educationEvent
      * @return
      */
-    private String parseEducationEventType(String educationEvent) {
+    private String findEducationEventType(String educationEvent) {
         return StringUtils.substringAfter(educationEvent, "/");
     }
 

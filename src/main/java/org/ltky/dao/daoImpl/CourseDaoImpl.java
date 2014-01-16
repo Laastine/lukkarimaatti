@@ -37,8 +37,10 @@ public class CourseDaoImpl implements CourseDao {
         getCurrentSession().saveOrUpdate(course);
     }
 
-    public void delete(Course course) {
-        getCurrentSession().delete(course);
+    public void delete() {
+        final String hql = "DELETE FROM Course";
+        Query query = getCurrentSession().createQuery(hql);
+        query.executeUpdate();
     }
 
     public List<Course> findByCourseCode(String courseCode) {

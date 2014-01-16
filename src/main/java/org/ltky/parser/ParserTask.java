@@ -7,6 +7,8 @@ import org.ltky.validator.CourseValidator;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.List;
+
 /**
  * lukkarimaatti
  * Created with IntelliJ IDEA.
@@ -39,10 +41,11 @@ public class ParserTask implements Runnable {
         try {
             final HtmlParser htmlParser = new HtmlParser(departmentData, department);
             logger.debug("getResultList="+htmlParser.formatEachEducationEvent(htmlParser.getResultList()).size());
-            for (Course c : htmlParser.formatEachEducationEvent(htmlParser.getResultList())) {
-                logger.debug("Saving="+c.toString());
-                if(CourseValidator.validateCourse(c)) {
-                    courseDao.saveOrUpdate(c);
+            courseDao.delete();          //clean old courses
+            for (Course newCourse : htmlParser.formatEachEducationEvent(htmlParser.getResultList())) {
+                //logger.debug("Saving="+ newCourse.toString());
+                if(CourseValidator.validateCourse(newCourse)) {
+                    courseDao.saveOrUpdate(newCourse);
                 }
             }
         } catch (Exception e) {

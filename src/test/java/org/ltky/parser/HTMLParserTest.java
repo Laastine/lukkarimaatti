@@ -5,6 +5,7 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.ltky.util.StringHelper;
 
 import java.io.IOException;
 import java.util.Map;
@@ -35,6 +36,7 @@ public class HTMLParserTest {
         try {
             Assert.assertNotNull(map);
             HtmlParser htmlParser = new HtmlParser(map.get("tite"), "tite");
+            new StringHelper().writeToFile(htmlParser.getResultList(), "test.txt");
             htmlParser.formatEachEducationEvent(htmlParser.getResultList());
         } catch (Exception e) {
             logger.error("test error", e);

@@ -144,10 +144,8 @@ public class Course implements Serializable {
 
     @Override
     public String toString() {
-        String course = "[courseId="+courseId+", courseCode="+courseCode+", courseName="+courseName+
+        return "[courseCode="+courseCode+", courseName="+courseName+
                 ", weekNumber="+ weekNumber +", weekDay="+weekDay+", period="+period+", timeOfDay="+timeOfDay+
                 ", classroom="+classroom+", type="+type+", department="+department+"]";
-        String encoding = new StringHelper().checkEncoding(courseId+courseCode+courseName+weekNumber+weekDay+period+timeOfDay+classroom+type+department+courseId+courseCode+courseName+weekNumber+weekDay+period+timeOfDay+classroom+type+department+courseId+courseCode+courseName+weekNumber+weekDay+period+timeOfDay+classroom+type+department+courseId+courseCode+courseName+weekNumber+weekDay+period+timeOfDay+classroom+type+department+courseId+courseCode+courseName+weekNumber+weekDay+period+timeOfDay+classroom+type+department);
-        return course+"|"+encoding;
     }
 }

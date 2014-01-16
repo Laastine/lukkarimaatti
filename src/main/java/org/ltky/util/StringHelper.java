@@ -100,4 +100,11 @@ public class StringHelper {
     public void writeToFile(String toFile, String fileName) throws IOException {
         FileUtils.write(new File(fileName), toFile, "ISO-8859-1");
     }
+
+    public void writeToFile(ArrayList<String> toFile, String fileName) throws IOException {
+        String tmp = "";
+        for(String s : toFile)
+            tmp += s+"\n";
+        FileUtils.write(new File(fileName), tmp, "ISO-8859-1");
+    }
 }

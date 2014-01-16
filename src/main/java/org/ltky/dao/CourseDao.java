@@ -16,7 +16,7 @@ import java.util.List;
 public interface CourseDao {
     void saveOrUpdate(Course course);
 
-    void delete(Course course);
+    void delete();
 
     List findByCourseCode(String courseCode);
 

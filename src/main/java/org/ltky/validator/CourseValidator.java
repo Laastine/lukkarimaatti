@@ -15,10 +15,10 @@ public class CourseValidator {
     private static final int MIN = 0;
 
     public static boolean validateCourse(Course course) {
-        if (course.getCourseCode() == null | !investigateLength(course.getCourseCode(),32)) {
+        if (course.getCourseCode() == null | course.getCourseCode().isEmpty() | !investigateLength(course.getCourseCode(),32)) {
             return false;
         }
-        if (course.getCourseName() == null | !investigateLength(course.getCourseName(), 256)) {
+        if (course.getCourseName() == null | course.getCourseName().isEmpty() | !investigateLength(course.getCourseName(), 256)) {
             return false;
         }
         if (!investigateLength(course.getPeriod(), 64)) {

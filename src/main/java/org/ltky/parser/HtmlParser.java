@@ -74,7 +74,7 @@ class HtmlParser {
                 //Skip the line
             } else if (stringHelper.extractPattern(coursesList.get(i), coursePattern.getCoursePattern()) != null) {     //Set courseCode and courseName
                 if (course.getCourseCode().isEmpty() && course.getCourseName().isEmpty()) {
-                    course = findNameAndCode(coursesList.get(i), course);
+                    course = findNameAndCode(coursesList.get(i), coursesList.get(i+1), course);
                 }
             } else if (stringHelper.extractPattern(coursesList.get(i), coursePattern.getWeekNumber()) != null) {        //Set weekNumber
                     course = findWeek(coursesList.get(i), course);
@@ -83,12 +83,6 @@ class HtmlParser {
                     course = findCourseTimeAndPlace(coursesList.get(i), coursesList.get(i + 1), coursesList.get(i + 2), coursesList.get(i + 3), course);
                     resultSet.add(course);
                     course = new Course();
-                }
-            } else if (department.equals("kike") && course.getTeacher().isEmpty()) {
-                if (stringHelper.extractPattern(coursesList.get(i), coursePattern.getKikeTeacher()) != null) {
-                    if (course.getTeacher().isEmpty()) {
-                        course = findTeacher(coursesList.get(i), course);
-                    }
                 }
             } else if (coursesList.get(i).equals("____________________________________") &&
                     coursesList.get(i+1).equals("____________________________________") &&
@@ -155,11 +149,18 @@ class HtmlParser {
         }
     }
 
-    private Course findNameAndCode(String courseNameAndCode, Course course) {
+    private Course findNameAndCode(String courseNameAndCode, String teacher, Course course) {
         String[] courseCodeAndNamePair = StringUtils.splitByWholeSeparator(courseNameAndCode, " - ");
         course.setCourseCode(courseCodeAndNamePair[0]);
         course.setCourseName(courseCodeAndNamePair[1]);
         course.setType(findEducationEventType(course.getCourseName()));
+
+        if (department.equals("kike") && course.getTeacher().isEmpty()) {
+            if (stringHelper.extractPattern(teacher, coursePattern.getKikeTeacher()) != null) {
+                    course = findTeacher(teacher, course);
+            }
+        }
+
         //logger.debug(courseCodeAndNamePair[0] + " " + courseCodeAndNamePair[1]);
         return course;
     }

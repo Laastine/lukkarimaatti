@@ -8,6 +8,10 @@ Hobby project to offer course data to lukkarimaatti frontend.
 hostname:port/lukkarimaatti/rest/codes/code<br>
 e.g. hostname:port/lukkarimaatti/rest/codes/CT
 
+<b>Course course name search</b><br>
+hostname:port/lukkarimaatti/rest/name/courseName<br>
+e.g. hostname:port/lukkarimaatti/rest/courseName/Pattern Recognition
+
 <b>Course code search</b><br>
 hostname:port/lukkarimaatti/rest/code/code<br>
 e.g. hostname:port/lukkarimaatti/rest/code/CT50A6000

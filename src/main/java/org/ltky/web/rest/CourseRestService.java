@@ -29,18 +29,36 @@ public class CourseRestService {
     @GET
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Path("/code/{code}")
-    public List<Course> getCodeInJSON(@PathParam("code") String code) {
-        logger.debug("getCodeInJSON");
+    public List<Course> getCourseCode(@PathParam("code") String code) {
+        logger.debug("getCourseCode");
         List<Course> courseList = courseDao.findByCourseCode(code);
         return courseList;
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    @Path("/codes/{codes}")
+    public List<String> getLikeCourseCodes(@PathParam("codes") String codes) {
+        logger.debug("getLikeCourseCodes");
+        List<String> courseCodesList = new StringHelper().removeDuplicates(courseDao.findCourseCodes(codes));
+        return courseCodesList;
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Path("/name/{courseName}")
-    public List<Course> getNameInJSON(@PathParam("courseName") String courseName) {
-        logger.debug("getNameInJSON");
+    public List<Course> getCourseName(@PathParam("courseName") String courseName) {
+        logger.debug("getCourseName");
         List<Course> courseList = courseDao.findByCourseName(courseName);
+        return courseList;
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    @Path("/names/{courseNames}")
+    public List<Course> getCourseNames(@PathParam("courseNames") String courseNames) {
+        logger.debug("getCourseNames");
+        List<Course> courseList = courseDao.findCourseNames(courseNames);
         return courseList;
     }
 
@@ -51,14 +69,5 @@ public class CourseRestService {
         logger.debug("getDepartmentInJSON");
         List<Course> departmentCourseList = courseDao.findByDepartment(department);
         return departmentCourseList;
-    }
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    @Path("/codes/{codes}")
-    public List<String> getLikeCourseCodes(@PathParam("codes") String codes) {
-        logger.debug("getLikeCourseCodes");
-        List<String> courseCodesList = new StringHelper().removeDuplicates(courseDao.findCourseCodes(codes));
-        return courseCodesList;
     }
 }

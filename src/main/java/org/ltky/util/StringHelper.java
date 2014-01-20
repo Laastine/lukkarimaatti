@@ -76,18 +76,8 @@ public class StringHelper {
         return encoding;
     }
 
-    /**
-     * Check that given String is printable with UTF-8 encoding
-     *
-     * @param v
-     * @return
-     */
-    public static boolean isPrintable(String v) {
-        return encoder.canEncode(v);
-    }
-
     public <T> List<T> removeDuplicates(List<T> list) {
-        return new ArrayList<>(new LinkedHashSet<>(list));
+        return new ArrayList<T>(new LinkedHashSet<T>(list));
     }
 
     /**

@@ -43,7 +43,6 @@ public class ParserTask implements Runnable {
             logger.debug("getResultList="+htmlParser.formatEachEducationEvent(htmlParser.getResultList()).size());
             courseDao.delete();          //clean old courses
             for (Course newCourse : htmlParser.formatEachEducationEvent(htmlParser.getResultList())) {
-                //logger.debug("Saving="+ newCourse.toString());
                 if(CourseValidator.validateCourse(newCourse)) {
                     courseDao.saveOrUpdate(newCourse);
                 }

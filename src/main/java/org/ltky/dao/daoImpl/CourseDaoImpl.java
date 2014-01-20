@@ -44,25 +44,9 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     public List<Course> findByCourseCode(String courseCode) {
-        //return getSession().find("from Course where COURSE_CODE=?", courseCode);
-        final String hql = "from Course WHERE courseCode = :courseCode";
+        final String hql = "FROM Course WHERE courseCode = :courseCode";
         Query query = getCurrentSession().createQuery(hql);
         List<Course> list = query.setParameter("courseCode", courseCode).list();
-        return list;
-    }
-
-    public List<Course> findByCourseName(String courseName) {
-        final String hql = "from Course WHERE courseName = :courseName";
-        Query query = getCurrentSession().createQuery(hql);
-        List<Course> list = query.setParameter("courseName", courseName).list();
-        return list;
-    }
-
-    public List<Course> findByDepartment(String department) {
-        //return getSession().find("from Course where DEPARTMENT=?", department);
-        final String hql = "FROM Course WHERE department = :department";
-        Query query = getCurrentSession().createQuery(hql);
-        List<Course> list = query.setParameter("department", department).list();
         return list;
     }
 
@@ -70,6 +54,27 @@ public class CourseDaoImpl implements CourseDao {
         final String hql = "SELECT C.courseCode FROM Course C WHERE C.courseCode like :courseCode";
         Query query = getCurrentSession().createQuery(hql);
         List<String> list = query.setParameter("courseCode", courseCode + "%").list();
+        return list;
+    }
+
+    public List<Course> findByCourseName(String courseName) {
+        final String hql = "FROM Course WHERE courseName = :courseName";
+        Query query = getCurrentSession().createQuery(hql);
+        List<Course> list = query.setParameter("courseName", courseName).list();
+        return list;
+    }
+
+    public List<Course> findCourseNames(String courseName) {
+        final String hql = "FROM Course C WHERE C.courseName like :courseName";
+        Query query = getCurrentSession().createQuery(hql);
+        List<Course> list = query.setParameter("courseName", courseName + "%").list();
+        return list;
+    }
+
+    public List<Course> findByDepartment(String department) {
+        final String hql = "FROM Course WHERE department = :department";
+        Query query = getCurrentSession().createQuery(hql);
+        List<Course> list = query.setParameter("department", department).list();
         return list;
     }
 }

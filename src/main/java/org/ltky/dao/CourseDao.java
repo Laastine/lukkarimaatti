@@ -20,6 +20,8 @@ public interface CourseDao {
 
     List findByCourseCode(String courseCode);
 
+    List<Course> findByCourseName(String courseName);
+
     List<Course> findByDepartment(String department);
 
     List<String> findCourseCodes(String code);

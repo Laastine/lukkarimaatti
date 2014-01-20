@@ -150,10 +150,10 @@ class HtmlParser {
     }
 
     private Course findNameAndCode(String courseNameAndCode, String teacher, Course course) {
-        String[] courseCodeAndNamePair = StringUtils.splitByWholeSeparator(courseNameAndCode, " - ");
+        final String[] courseCodeAndNamePair = StringUtils.splitByWholeSeparator(courseNameAndCode, " - ");
         course.setCourseCode(courseCodeAndNamePair[0]);
-        course.setCourseName(courseCodeAndNamePair[1]);
-        course.setType(findEducationEventType(course.getCourseName()));
+        course.setCourseName(StringUtils.substringBefore(courseCodeAndNamePair[1], "/"));
+        course.setType(StringUtils.substringAfterLast(courseCodeAndNamePair[1], "/"));
 
         if (department.equals("kike") && course.getTeacher().isEmpty()) {
             if (stringHelper.extractPattern(teacher, coursePattern.getKikeTeacher()) != null) {
@@ -169,15 +169,6 @@ class HtmlParser {
         return resultList;
     }
 
-    /**
-     * Check education event type
-     *
-     * @param educationEvent
-     * @return
-     */
-    private String findEducationEventType(String educationEvent) {
-        return StringUtils.substringAfter(educationEvent, "/");
-    }
 
     /**
      * Parse period (1-4) from given string

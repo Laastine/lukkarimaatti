@@ -20,37 +20,32 @@
 
     <util:properties id="lukkariProperties" location="classpath:properties/parser.properties"/>
 
+    <bean id="fetchJob" class="org.ltky.timer.FetchJob"/>
 
-    <!--
-        <bean id="runMeTask" class="org.ltky.timer.FetchJob"/>
-    -->
     <!-- Spring Quartz -->
     <!--
-    <bean courseName="runMeJob" class="org.springframework.scheduling.quartz.JobDetailBean">
-        <property courseName="jobClass" value="org.ltky.timer.TimerJobob"/>
-        <property courseName="jobDataAsMap">
+    <bean name="cronJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="org.ltky.timer.CronJob"/>
+        <property name="jobDataAsMap">
             <map>
-                <entry key="runMeTask" value-ref="runMeTask"/>
+                <entry key="fetchJob" value-ref="fetchJob"/>
             </map>
         </property>
     </bean>
--->
-    <!-- Cron Trigger, run every 45 min -->
-    <!--
-    <bean id="cronTrigger"
-          class="org.springframework.scheduling.quartz.CronTriggerBean">
-        <property courseName="jobDetail" ref="runMeJob"/>
-        <property courseName="cronExpression" value="45 * * * * ?"/>
+
+    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="cronJob"/>
+        <property name="cronExpression" value="00 6,18 * * * ?"/>
     </bean>
 
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-        <property courseName="jobDetails">
+        <property name="jobDetails">
             <list>
-                <ref bean="runMeJob"/>
+                <ref bean="cronJob"/>
             </list>
         </property>
 
-        <property courseName="triggers">
+        <property name="triggers">
             <list>
                 <ref bean="cronTrigger"/>
             </list>

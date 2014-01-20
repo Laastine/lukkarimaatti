@@ -53,7 +53,4 @@ public class FetchJob {
         logger.info("Finished all threads");
     }
 
-    public void encodingTest() {
-
-    }
 }

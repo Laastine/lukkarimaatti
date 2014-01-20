@@ -14,7 +14,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-
 /**
  * lukkarimaatti
  * Created with IntelliJ IDEA.
@@ -38,6 +37,15 @@ public class CourseRestService {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    @Path("/name/{courseName}")
+    public List<Course> getNameInJSON(@PathParam("courseName") String courseName) {
+        logger.debug("getNameInJSON");
+        List<Course> courseList = courseDao.findByCourseName(courseName);
+        return courseList;
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Path("/department/{department}")
     public List<Course> getDepartmentInJSON(@PathParam("department") String department) {
         logger.debug("getDepartmentInJSON");
@@ -50,7 +58,7 @@ public class CourseRestService {
     @Path("/codes/{codes}")
     public List<String> getLikeCourseCodes(@PathParam("codes") String codes) {
         logger.debug("getLikeCourseCodes");
-        List <String> courseCodesList = new StringHelper().removeDuplicates(courseDao.findCourseCodes(codes));
+        List<String> courseCodesList = new StringHelper().removeDuplicates(courseDao.findCourseCodes(codes));
         return courseCodesList;
     }
 }

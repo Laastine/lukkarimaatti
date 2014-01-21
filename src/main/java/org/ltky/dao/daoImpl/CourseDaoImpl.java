@@ -65,7 +65,7 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     public List<Course> findCourseNames(String courseName) {
-        final String hql = "FROM Course C WHERE C.courseName like :courseName";
+        final String hql = "FROM Course C WHERE lower(C.courseName) like lower(:courseName)";
         Query query = getCurrentSession().createQuery(hql);
         List<Course> list = query.setParameter("courseName", courseName + "%").list();
         return list;

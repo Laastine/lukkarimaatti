@@ -10,7 +10,7 @@ import org.ltky.entity.Course;
  * Date: 6.1.2014
  */
 public class CourseValidator {
-    private static final Logger logger = Logger.getLogger(CourseValidator.class);
+    private static final Logger LOGGER = Logger.getLogger(CourseValidator.class);
 
     private static final int MIN = 0;
 
@@ -45,7 +45,8 @@ public class CourseValidator {
         if (!investigateLength(course.getTeacher(), 64)) {
             return false;
         }
-        logger.debug(course.getCourseCode() + " " + course.getCourseName() + " is a valid course");
+        if(LOGGER.isDebugEnabled())
+            LOGGER.debug(course.getCourseCode() + " " + course.getCourseName() + " is a valid course");
         return true;
     }
 

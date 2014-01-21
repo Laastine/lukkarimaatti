@@ -12,6 +12,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,15 +23,17 @@ import java.util.List;
  */
 @Path("/")
 public class CourseRestService {
-    private static final Logger logger = Logger.getLogger(CourseRestService.class);
+    private static final Logger LOGGER = Logger.getLogger(CourseRestService.class);
     private final ApplicationContext applicationContext = new ClassPathXmlApplicationContext("hibernate/hibernateConfig.xml");
     private final CourseDao courseDao = (CourseDao) applicationContext.getBean("courseDao");
+    private static final int MIN = 3;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Path("/code/{code}")
     public List<Course> getCourseCode(@PathParam("code") String code) {
-        logger.debug("getCourseCode");
+        if (LOGGER.isDebugEnabled())
+            LOGGER.debug("getCourseCode");
         List<Course> courseList = courseDao.findByCourseCode(code);
         return courseList;
     }
@@ -39,7 +42,8 @@ public class CourseRestService {
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Path("/codes/{codes}")
     public List<String> getLikeCourseCodes(@PathParam("codes") String codes) {
-        logger.debug("getLikeCourseCodes");
+        if (LOGGER.isDebugEnabled())
+            LOGGER.debug("getLikeCourseCodes");
         List<String> courseCodesList = new StringHelper().removeDuplicates(courseDao.findCourseCodes(codes));
         return courseCodesList;
     }
@@ -48,7 +52,8 @@ public class CourseRestService {
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Path("/name/{courseName}")
     public List<Course> getCourseName(@PathParam("courseName") String courseName) {
-        logger.debug("getCourseName");
+        if (LOGGER.isDebugEnabled())
+            LOGGER.debug("getCourseName");
         List<Course> courseList = courseDao.findByCourseName(courseName);
         return courseList;
     }
@@ -57,16 +62,23 @@ public class CourseRestService {
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Path("/names/{courseNames}")
     public List<Course> getCourseNames(@PathParam("courseNames") String courseNames) {
-        logger.debug("getCourseNames");
-        List<Course> courseList = courseDao.findCourseNames(courseNames);
-        return courseList;
+        if (LOGGER.isDebugEnabled())
+            LOGGER.debug("getCourseNames");
+        if (courseNames.length() > MIN) {
+            List<Course> courseList = courseDao.findCourseNames(courseNames);
+            return courseList;
+        } else {
+            List<Course> courseList = new ArrayList<>();
+            return courseList;
+        }
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Path("/department/{department}")
     public List<Course> getDepartmentInJSON(@PathParam("department") String department) {
-        logger.debug("getDepartmentInJSON");
+        if (LOGGER.isDebugEnabled())
+            LOGGER.debug("getDepartmentInJSON");
         List<Course> departmentCourseList = courseDao.findByDepartment(department);
         return departmentCourseList;
     }

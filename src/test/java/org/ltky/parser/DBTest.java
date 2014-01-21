@@ -26,15 +26,15 @@ import java.util.List;
 //@RunWith(SpringJUnit4ClassRunner.class)
 //@ContextConfiguration(locations = {"/hibernate/hibernateConfig.xml"})
 public class DBTest {
-    private static final Logger logger = Logger.getLogger(DBTest.class);
+    private static final Logger LOGGER = Logger.getLogger(DBTest.class);
 
     @Test
     public void saveCoursesTest() {
-        logger.debug("saveCoursesTest");
+        LOGGER.debug("saveCoursesTest");
         try {
             new FetchJob().fetch();
         } catch (Exception e) {
-            logger.error("Error while saving course data to DB", e);
+            LOGGER.error("Error while saving course data to DB", e);
             Assert.fail("DB failure");
         }
     }
@@ -46,7 +46,7 @@ public class DBTest {
         List<Course> list1 = courseDao.findByCourseCode("CT60A0210");
         List<Course> list2 = courseDao.findByCourseCode("CT50A2602");
         String a = new String(("Käytännön ohjelmointi=" + list1.get(1).getCourseName()).getBytes("UTF-8"), "ISO8859-1");
-        logger.debug(a);
-        //logger.debug("Käyttöjärjestelmät=" + list2.get(1).getCourseName());
+        LOGGER.debug(a);
+        //LOGGER.debug("Käyttöjärjestelmät=" + list2.get(1).getCourseName());
     }
 }

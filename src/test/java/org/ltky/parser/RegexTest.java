@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class RegexTest {
     private final StringHelper stringHelper = new StringHelper();
     private final CoursePattern coursePattern = new CoursePattern();
-    private static final Logger logger = Logger.getLogger(RegexTest.class);
+    private static final Logger LOGGER = Logger.getLogger(RegexTest.class);
     private ArrayList<String> list = new ArrayList<>();
 
     private void init() {
@@ -32,7 +32,7 @@ public class RegexTest {
     public void simpleTest() {
         init();
         for (String s : list) {
-            logger.debug("\n"+s+" = \n"+stringHelper.extractPattern(s, coursePattern.getWeekNumber())+"\n");
+            LOGGER.debug("\n"+s+" = \n"+stringHelper.extractPattern(s, coursePattern.getWeekNumber())+"\n");
         }
         Assert.assertTrue(true);
     }

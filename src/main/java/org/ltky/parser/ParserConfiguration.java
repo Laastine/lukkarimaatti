@@ -36,13 +36,13 @@ public class ParserConfiguration {
 
     private String timer;
     private static ParserConfiguration instance;
-    private static final Logger logger = Logger.getLogger(ParserConfiguration.class);
+    private static final Logger LOGGER = Logger.getLogger(ParserConfiguration.class);
 
     private ParserConfiguration() {
         try {
             loadServletInitParameters();
         } catch (Exception e) {
-            logger.info("Property loading failed ", e);
+            LOGGER.info("Property loading failed ", e);
         }
     }
 
@@ -75,7 +75,7 @@ public class ParserConfiguration {
         period3 = getPropertyOrThrowUp(parserProperties, "period3");
         period4 = getPropertyOrThrowUp(parserProperties, "period4");
         timer = getPropertyOrThrowUp(parserProperties, "timer");
-        logger.info("Config=" + this.toString());
+        LOGGER.info("Config=" + this.toString());
         return this.toString();
     }
 

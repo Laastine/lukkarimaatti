@@ -2,14 +2,9 @@ package org.ltky.util;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-import org.mozilla.universalchardet.UniversalDetector;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetEncoder;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -23,27 +18,7 @@ import java.util.regex.Pattern;
  * Date: 6.12.2013
  */
 public class StringHelper {
-    private static final Logger logger = Logger.getLogger(StringHelper.class);
-    private static final CharsetEncoder encoder = Charset.forName("UTF-8").newEncoder();
-
-    /**
-     * Change encoding of given string
-     * @param text
-     * @return
-     */
-    public String changeEncoding(String text) {
-        final Charset windowsCharset = Charset.forName("cp1252");
-        final Charset utfCharset = Charset.forName("UTF-8");
-        final CharBuffer windowsEncoded = windowsCharset.decode(ByteBuffer.wrap(text.getBytes()));
-        return new String(utfCharset.encode(windowsEncoded).array());
-    }
-
-    public String changeEncoding1(String text) {
-        final Charset windowsCharset = Charset.forName("UTF-8");
-        final Charset utfCharset = Charset.forName("cp1252");
-        final CharBuffer windowsEncoded = windowsCharset.decode(ByteBuffer.wrap(text.getBytes()));
-        return new String(utfCharset.encode(windowsEncoded).array());
-    }
+    private static final Logger LOGGER = Logger.getLogger(StringHelper.class);
 
     /**
      * Extract certain pattern from given string
@@ -61,19 +36,10 @@ public class StringHelper {
             resultSet = matcher.group();
         }
         if (resultSet == null || resultSet.length() == 0) {
-            logger.trace("Couldn't find pattern=" + pattern + " from " + courseAction);
+            LOGGER.trace("Couldn't find pattern=" + pattern + " from " + courseAction);
             return null;
         }
         return resultSet;
-    }
-
-    public String checkEncoding(String input) {
-        UniversalDetector detector = new UniversalDetector(null);
-        detector.handleData(input.getBytes(), 0, input.length());
-        detector.dataEnd();
-        String encoding = detector.getDetectedCharset();
-        detector.reset();
-        return encoding;
     }
 
     public <T> List<T> removeDuplicates(List<T> list) {
@@ -93,8 +59,8 @@ public class StringHelper {
 
     public void writeToFile(ArrayList<String> toFile, String fileName) throws IOException {
         String tmp = "";
-        for(String s : toFile)
-            tmp += s+"\n";
+        for (String s : toFile)
+            tmp += s + "\n";
         FileUtils.write(new File(fileName), tmp, "ISO-8859-1");
     }
 }

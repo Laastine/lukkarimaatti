@@ -21,7 +21,7 @@ import java.util.List;
  * Date: 28.11.2013
  */
 class HtmlParser {
-    private static final Logger logger = Logger.getLogger(HtmlParser.class);
+    private static final Logger LOGGER = Logger.getLogger(HtmlParser.class);
     private final String department;
     private final ArrayList<String> resultList = new ArrayList<>();
     private final ParserConfiguration config = ParserConfiguration.getInstance();
@@ -87,7 +87,6 @@ class HtmlParser {
             } else if (coursesList.get(i).equals("____________________________________") &&
                     coursesList.get(i+1).equals("____________________________________") &&
                     coursesList.get(i+2).equals("____________________________________")) {
-                //logger.debug("New course" + course.toString());
                 course = new Course();
                 i+=6;   //Jump over irrelevant lines
             }
@@ -114,7 +113,6 @@ class HtmlParser {
         } else {
             course.setTeacher(UNKNOWN);
         }
-        logger.debug("KIKE teacher=" + course.getTeacher());
         return course;
     }
 
@@ -131,15 +129,13 @@ class HtmlParser {
             course.setClassroom(UNKNOWN);
         }
         course.setDepartment(this.department);
-        if (logger.isDebugEnabled()) {
-            logger.info("Adding course=" + course.toString());
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.info("Adding course=" + course.toString());
         }
         return course;
     }
 
     private Course findWeek(String weekNumber, Course course) {
-        if(weekNumber.equals("2-7, 11-12, 15"))
-            logger.debug("FOUND="+weekNumber);
         course.setWeekNumber(stringHelper.extractPattern(weekNumber, coursePattern.getWeekNumber()));
         if (course.getWeekNumber() != null & !course.getWeekNumber().isEmpty()) {
             course.setPeriod(parsePeriod(course.getWeekNumber()));          //Set period
@@ -161,7 +157,7 @@ class HtmlParser {
             }
         }
 
-        //logger.debug(courseCodeAndNamePair[0] + " " + courseCodeAndNamePair[1]);
+        //LOGGER.debug(courseCodeAndNamePair[0] + " " + courseCodeAndNamePair[1]);
         return course;
     }
 
@@ -182,7 +178,7 @@ class HtmlParser {
         try {
             weeks = Integer.parseInt(week);
         } catch (Exception e) {
-            logger.error("Couldn't parse=" + week);
+            LOGGER.error("Couldn't parse=" + week);
             return "";
         }
         int period1 = Integer.valueOf(config.getPeriod1());

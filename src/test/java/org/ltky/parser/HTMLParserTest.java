@@ -17,7 +17,7 @@ import java.util.Map;
  * Date: 29.11.2013
  */
 public class HTMLParserTest {
-    private static final Logger logger = Logger.getLogger(HTMLParserTest.class);
+    private static final Logger LOGGER = Logger.getLogger(HTMLParserTest.class);
     @Rule
     public ExpectedException thrown = ExpectedException.none();
     private Map<String, String> map;
@@ -26,7 +26,7 @@ public class HTMLParserTest {
         try {
             map = new URLParser().fetchStuff();
         } catch (IOException e) {
-            logger.error(e);
+            LOGGER.error(e);
         }
     }
 
@@ -39,7 +39,7 @@ public class HTMLParserTest {
             new StringHelper().writeToFile(htmlParser.getResultList(), "test.txt");
             htmlParser.formatEachEducationEvent(htmlParser.getResultList());
         } catch (Exception e) {
-            logger.error("test error", e);
+            LOGGER.error("test error", e);
         }
     }
 }

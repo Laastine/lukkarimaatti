@@ -19,7 +19,7 @@ public class ParserTask implements Runnable {
 
     private final String department;
     private final String departmentData;
-    private static final Logger logger = Logger.getLogger(ParserTask.class);
+    private static final Logger LOGGER = Logger.getLogger(ParserTask.class);
     private final ApplicationContext applicationContext = new ClassPathXmlApplicationContext("hibernate/hibernateConfig.xml");
     private final CourseDao courseDao = (CourseDao) applicationContext.getBean("courseDao");
 
@@ -30,7 +30,7 @@ public class ParserTask implements Runnable {
 
     @Override
     public void run() {
-        logger.info(Thread.currentThread().getName() + " Start, cmd=" + department);
+        LOGGER.info(Thread.currentThread().getName() + " Start, cmd=" + department);
         processCommand();
     }
 
@@ -40,7 +40,8 @@ public class ParserTask implements Runnable {
     private void processCommand() {
         try {
             final HtmlParser htmlParser = new HtmlParser(departmentData, department);
-            logger.debug("getResultList="+htmlParser.formatEachEducationEvent(htmlParser.getResultList()).size());
+            if(LOGGER.isDebugEnabled())
+                LOGGER.debug("getResultList="+htmlParser.formatEachEducationEvent(htmlParser.getResultList()).size());
             courseDao.delete();          //clean old courses
             for (Course newCourse : htmlParser.formatEachEducationEvent(htmlParser.getResultList())) {
                 if(CourseValidator.validateCourse(newCourse)) {
@@ -48,7 +49,7 @@ public class ParserTask implements Runnable {
                 }
             }
         } catch (Exception e) {
-            logger.error("HtmlParser error", e);
+            LOGGER.error("HtmlParser error", e);
         }
     }
 

@@ -27,7 +27,7 @@ e.g. hostname:port/lukkarimaatti/rest/department/tite<br>
 
 
 <h3>Dependencies:</h3>
-Information is retrieved from uni.lut.fi, the official LUT teaching schedule info [site] (https://uni.lut.fi/fi/web/guest/lukujarjestykset).<br>
+Information is retrieved from uni.lut.fi, [the official LUT teaching schedule info site] (https://uni.lut.fi/fi/web/guest/lukujarjestykset).<br>
 Maven for building a package.
 
 

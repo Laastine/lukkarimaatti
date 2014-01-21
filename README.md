@@ -1,6 +1,6 @@
 <h2>Lukkarimaatti RESTful backend</h2>
 
-Hobby project to offer course data to lukkarimaatti frontend.
+Hobby project to offer course data easily readable JSON format over simple REST interface.
 
 
 <h3>Usage:</h3>
@@ -27,19 +27,17 @@ e.g. hostname:port/lukkarimaatti/rest/department/tite<br>
 
 
 <h3>Dependencies:</h3>
-Information is retrieved from uni.lut.fi, the official LUT teaching schedule info site.<br>
+Information is retrieved from uni.lut.fi, the official LUT teaching schedule info [site] (https://uni.lut.fi/fi/web/guest/lukujarjestykset).<br>
 Maven for building a package.
 
 
-<h3>Libraries used:</h3>
-Spring 3.x,
-JSTL 1.2,
-Hibernate 3.x,
-Quartz 1.8.x,
-Jsoup 1.7.x,
-Jersey 1.8
+<h3>Main libraries used:</h3>
+* [Spring 3.x](http://spring.io/)
+* [Hibernate 3.x](http://hibernate.org/)
+* [Quartz 1.8.x](http://quartz-scheduler.org/)
+* [Jsoup 1.7.x](http://jsoup.org/)
+* [Jersey 1.8](https://jersey.java.net/)<br>
 and few handy Apache libs
-
 
 <h3>Build:</h3>
 mvn clean package

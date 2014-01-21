@@ -34,7 +34,6 @@ Maven for building a package.
 <h3>Main libraries used:</h3>
 * [Spring 3.x](http://spring.io/)
 * [Hibernate 3.x](http://hibernate.org/)
-* [Quartz 1.8.x](http://quartz-scheduler.org/)
 * [Jsoup 1.7.x](http://jsoup.org/)
 * [Jersey 1.8](https://jersey.java.net/)<br>
 and few handy Apache libs

@@ -11,7 +11,7 @@ import org.junit.Test;
  * Date: 26.11.2013
  */
 public class LoadConfigTest {
-    private static final Logger logger = Logger.getLogger(LoadConfigTest.class);
+    private static final Logger LOGGER = Logger.getLogger(LoadConfigTest.class);
 
     //@Test
     public void loadTest() {
@@ -19,7 +19,7 @@ public class LoadConfigTest {
         try {
             Assert.assertNotNull(parserConfig.loadServletInitParameters());
         } catch (Exception e) {
-            logger.error("Exception caught", e);
+            LOGGER.error("Exception caught", e);
         }
     }
 }

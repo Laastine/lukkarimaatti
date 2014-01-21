@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 
 public class URLParser {
     private final ParserConfiguration parserConfiguration = ParserConfiguration.getInstance();
-    private static final Logger logger = Logger.getLogger(URLParser.class);
+    private static final Logger LOGGER = Logger.getLogger(URLParser.class);
 
     /**
      * Parse each departments url
@@ -23,7 +23,7 @@ public class URLParser {
      */
     public Map<String, String> fetchStuff() throws IOException {
         String uniURL = parserConfiguration.getUniURL();
-        logger.info("Fetching: " + uniURL);
+        LOGGER.info("Fetching: " + uniURL);
         final Map<String, String> dependencies = new LinkedHashMap<>();
         dependencies.put(parserConfiguration.getEnte(), "ente");
         dependencies.put(parserConfiguration.getYmte(), "ymte");
@@ -39,8 +39,8 @@ public class URLParser {
         String startMark = parserConfiguration.getStartTag();
         String endMark = parserConfiguration.getEndTag();
         Map<String, String> resultSet = new HashMap<>();
-        if (logger.isDebugEnabled()) {
-            logger.debug("startMark=" + startMark + ", endMark=" + endMark);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("startMark=" + startMark + ", endMark=" + endMark);
         }
         String linkList = StringUtils.substringBetween(fetchFromWeb(uniURL), startMark, endMark);
         String prefix = "https://uni.lut.fi";
@@ -50,7 +50,6 @@ public class URLParser {
         for (int i = 0; i < dependencies.size(); i++) {
             Map.Entry me = (Map.Entry) iterator.next();
             String department = me.toString();
-            //logger.debug("values=" + me.getKey());
             department = department.substring(StringUtils.indexOfAny(department, "=") + 1, department.length());
             Pattern pattern = Pattern.compile("<a href=.+" + me.getKey());
             Matcher matcher = pattern.matcher(linkList);
@@ -63,8 +62,8 @@ public class URLParser {
                 }
             }
             linkList = StringUtils.substringAfter(linkList, "10304");
-            if (logger.isDebugEnabled()) {
-                logger.debug("Department=" + department + ", link=" + link);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Department=" + department + ", link=" + link);
             }
             resultSet.put(department, link);
         }

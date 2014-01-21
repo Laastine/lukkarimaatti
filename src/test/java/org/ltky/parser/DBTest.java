@@ -44,9 +44,7 @@ public class DBTest {
         final ApplicationContext applicationContext = new ClassPathXmlApplicationContext("hibernate/hibernateConfig.xml");
         final CourseDao courseDao = (CourseDao) applicationContext.getBean("courseDao");
         List<Course> list1 = courseDao.findByCourseCode("CT60A0210");
-        List<Course> list2 = courseDao.findByCourseCode("CT50A2602");
         String a = new String(("Käytännön ohjelmointi=" + list1.get(1).getCourseName()).getBytes("UTF-8"), "ISO8859-1");
         LOGGER.debug(a);
-        //LOGGER.debug("Käyttöjärjestelmät=" + list2.get(1).getCourseName());
     }
 }

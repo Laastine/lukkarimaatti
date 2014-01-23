@@ -9,8 +9,8 @@ hostname:port/lukkarimaatti/rest/codes/code<br>
 e.g. hostname:port/lukkarimaatti/rest/codes/CT
 
 <b>Course name like-search</b><br>
-hostname:port/lukkarimaatti/rest/names/code<br>
-e.g. hostname:port/lukkarimaatti/rest/names/Pattern
+hostname:port/lukkarimaatti/rest/names/name<br>
+e.g. hostname:port/lukkarimaatti/rest/names/pattern (provide at least 4 characters)
 
 <b>Course course name search</b><br>
 hostname:port/lukkarimaatti/rest/name/courseName<br>

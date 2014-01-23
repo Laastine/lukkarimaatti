@@ -54,7 +54,7 @@ public class FetchJob {
         LOGGER.info("Finished all threads");
     }
 
-    @Scheduled(cron = "00 6 * * * ?")
+    @Scheduled(cron = "00 00 6 * * ?")
     public void runCron() {
         if(LOGGER.isDebugEnabled())
             LOGGER.debug("cron task");

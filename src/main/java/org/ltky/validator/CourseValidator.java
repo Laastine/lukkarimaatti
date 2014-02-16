@@ -15,10 +15,10 @@ public class CourseValidator {
     private static final int MIN = 0;
 
     public static boolean validateCourse(Course course) {
-        if (course.getCourseCode() == null | course.getCourseCode().isEmpty() | !investigateLength(course.getCourseCode(),32)) {
+        if ("".equals(course.getCourseCode()) | !investigateLength(course.getCourseCode(),32)) {
             return false;
         }
-        if (course.getCourseName() == null | course.getCourseName().isEmpty() | !investigateLength(course.getCourseName(), 256)) {
+        if ("".equals(course.getCourseName()) | !investigateLength(course.getCourseName(), 256)) {
             return false;
         }
         if (!investigateLength(course.getPeriod(), 64)) {
@@ -45,8 +45,8 @@ public class CourseValidator {
         if (!investigateLength(course.getTeacher(), 64)) {
             return false;
         }
-        if(LOGGER.isDebugEnabled())
-            LOGGER.debug(course.getCourseCode() + " " + course.getCourseName() + " is a valid course");
+        //if(LOGGER.isDebugEnabled())
+            //LOGGER.debug(course.getCourseCode() + " " + course.getCourseName() + " is a valid course");
         return true;
     }
 

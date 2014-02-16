@@ -39,11 +39,10 @@ public class ParserTask implements Runnable {
      */
     private void processCommand() {
         try {
-            final HtmlParser htmlParser = new HtmlParser(departmentData, department);
-            if(LOGGER.isDebugEnabled())
-                LOGGER.debug("getResultList="+htmlParser.formatEachEducationEvent(htmlParser.getResultList()).size());
+            final HtmlParser htmlParser = new HtmlParser(department);
+            htmlParser.parse(departmentData);
             courseDao.delete();          //clean old courses
-            for (Course newCourse : htmlParser.formatEachEducationEvent(htmlParser.getResultList())) {
+            for (Course newCourse : (htmlParser.getResultList())) {
                 if(CourseValidator.validateCourse(newCourse)) {
                     courseDao.saveOrUpdate(newCourse);
                 }

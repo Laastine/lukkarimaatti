@@ -37,7 +37,6 @@ public class HTMLParserTest {
             Assert.assertNotNull(map);
             HtmlParser htmlParser = new HtmlParser("tite");
             htmlParser.parse(map.get("tite"));
-            new StringHelper().writeToFile(htmlParser.getResultList().toString(), "test.txt");
         } catch (Exception e) {
             LOGGER.error("test error", e);
         }

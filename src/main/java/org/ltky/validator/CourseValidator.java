@@ -10,9 +10,6 @@ import org.ltky.entity.Course;
  * Date: 6.1.2014
  */
 public class CourseValidator {
-    private static final Logger LOGGER = Logger.getLogger(CourseValidator.class);
-
-    private static final int MIN = 0;
 
     public static boolean validateCourse(Course course) {
         if ("".equals(course.getCourseCode()) | !investigateLength(course.getCourseCode(),32)) {
@@ -33,24 +30,22 @@ public class CourseValidator {
         if (course.getTimeOfDay() == null | !investigateLength(course.getTimeOfDay(), 32)) {
             return false;
         }
-        if (!investigateLength(course.getClassroom(),64)) {
+        if (!investigateLength(course.getClassroom(), 64)) {
             return false;
         }
         if (!investigateLength(course.getType(), 4)) {
             return false;
         }
-        if (!investigateLength(course.getDepartment(),4)) {
+        if (!investigateLength(course.getDepartment(), 4)) {
             return false;
         }
         if (!investigateLength(course.getTeacher(), 64)) {
             return false;
         }
-        //if(LOGGER.isDebugEnabled())
-            //LOGGER.debug(course.getCourseCode() + " " + course.getCourseName() + " is a valid course");
         return true;
     }
 
     private static boolean investigateLength(String courseData, int max) {
-        return courseData.length() >= CourseValidator.MIN && courseData.length() <= max;
+        return courseData.length() >= 0 && courseData.length() <= max;
     }
 }

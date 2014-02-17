@@ -40,9 +40,8 @@ public class ParserTask implements Runnable {
     private void processCommand() {
         try {
             final HtmlParser htmlParser = new HtmlParser(department);
-            htmlParser.parse(departmentData);
             courseDao.delete();          //clean old courses
-            for (Course newCourse : (htmlParser.getResultList())) {
+            for (Course newCourse : (htmlParser.parse(departmentData))) {
                 if(CourseValidator.validateCourse(newCourse)) {
                     courseDao.saveOrUpdate(newCourse);
                 }

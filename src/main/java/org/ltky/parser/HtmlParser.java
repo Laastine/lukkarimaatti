@@ -34,9 +34,8 @@ class HtmlParser {
         this.department = department;
     }
 
-    public void parse(String url) throws IOException {
-        parseElementData(getTableElements(url));
-        return;
+    public List<Course> parse(String url) throws IOException {
+        return parseElementData(getTableElements(url));
     }
 
 
@@ -62,6 +61,7 @@ class HtmlParser {
 
     /**
      * Parses (HTML) table <td></td> -element data
+     *
      * @param tableRowElements
      * @return
      * @throws UnsupportedEncodingException
@@ -104,9 +104,8 @@ class HtmlParser {
                     }
                 }
                 if (CourseValidator.validateCourse(course)) {
-                LOGGER.debug("COURSE=" + course);
-                resultList.add(course);
-                course = new Course();
+                    LOGGER.debug("COURSE=" + course);
+                    resultList.add(course);
                 }
 
             }

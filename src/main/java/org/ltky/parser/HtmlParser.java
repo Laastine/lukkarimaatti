@@ -103,11 +103,11 @@ class HtmlParser {
                             break;
                     }
                 }
-                if (CourseValidator.validateCourse(course)) {
-                    LOGGER.debug("COURSE=" + course);
-                    resultList.add(course);
-                }
-
+            }
+            if (CourseValidator.validateCourse(course)) {
+                LOGGER.debug("COURSE=" + course);
+                resultList.add(course);
+                course = new Course();
             }
         }
         return resultList;

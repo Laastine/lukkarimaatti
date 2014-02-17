@@ -25,13 +25,12 @@ import java.util.List;
 class HtmlParser {
     private static final Logger LOGGER = Logger.getLogger(HtmlParser.class);
     private final String department;
-    private final ArrayList<Course> resultList = new ArrayList<>();
     private final ParserConfiguration config = ParserConfiguration.getInstance();
     private final StringHelper stringHelper = new StringHelper();
     private final CoursePattern coursePattern = new CoursePattern();
     private static final String UNKNOWN = "?";
 
-    public HtmlParser(String department) throws IOException {
+    public HtmlParser(String department) {
         this.department = department;
     }
 
@@ -40,14 +39,17 @@ class HtmlParser {
         return;
     }
 
+
     /**
-     * Select table element with class spreadsheet
+     * Select table class=spreadsheet elements from given HMTL
      *
      * @param url
      * @return
      * @throws IllegalStateException
+     * @throws IOException
      */
     private Elements getTableElements(String url) throws IllegalStateException, IOException {
+        Elements rowItems = null;
         Document doc = Jsoup.parse(
                 new URL(url).openStream(),
                 "cp1252",   //Set to null to determine from http-equiv meta tag, if present, or fall back to UTF-8
@@ -60,48 +62,51 @@ class HtmlParser {
 
     /**
      * Parses (HTML) table <td></td> -element data
-     *
      * @param tableRowElements
      * @return
      * @throws UnsupportedEncodingException
      */
     private List parseElementData(Elements tableRowElements) throws UnsupportedEncodingException {
         Course course = new Course();
+        final ArrayList<Course> resultList = new ArrayList();
         for (int i = 0; i < tableRowElements.size(); i++) {
-            //LOGGER.debug(tableRowElements.get(i));
             Elements rowItems = tableRowElements.get(i).select("td");
             for (int elem = 0; elem < rowItems.size(); elem++) {
                 String item = new String(rowItems.get(elem).text().getBytes("cp1252"), "UTF-8");
                 if (!"".equals(item)) {
-                    if (elem == 0) {
-                        if (stringHelper.extractPattern(item, coursePattern.getCoursePattern()) != null) {
-                            course = findNameAndCode(item, new String(rowItems.get(elem + 1).text().getBytes("cp1252"), "UTF-8"), course);
-                        }
-                    } else if (elem == 2 && !"Vko".equals(item)) {
-                        if (stringHelper.extractPattern(item, coursePattern.getWeekNumber()) != null) {
-                            course = findWeek(item, course);
-                        }
-                    } else if (elem == 3) {
-                        if (stringHelper.extractPattern(item, coursePattern.getWeekDays()) != null) {
-                            course.setWeekDay(item);
-                        }
-                    } else if (elem == 4 && !"Klo".equals(item)) {
-                        final String endTime = new String(rowItems.get(elem + 1).text().getBytes("cp1252"), "UTF-8");
-                        if (stringHelper.extractPattern(item, coursePattern.getTimeOfDay()) != null &
-                                stringHelper.extractPattern(endTime, coursePattern.getTimeOfDay()) != null) {
-                            course.setTimeOfDay(item + "-" + endTime);    //Set timeOfDay
-                        }
-                    } else if (elem == 6 && !"Sali".equals(item)) {
-                        course.setClassroom(item);
-                    } else if (elem == 7) {
-                        //Course notes
+                    switch (elem) {
+                        case 0:
+                            if (stringHelper.extractPattern(item, coursePattern.getCoursePattern()) != null) {
+                                course = findNameAndCode(item, new String(rowItems.get(elem + 1).text().getBytes("cp1252"), "UTF-8"), course);
+                                course.setDepartment(department);
+                            }
+                            break;
+                        case 2:
+                            if (stringHelper.extractPattern(item, coursePattern.getWeekNumber()) != null && !"Vko".equals(item))
+                                course = findWeek(item, course);
+                            break;
+                        case 3:
+                            if (stringHelper.extractPattern(item, coursePattern.getWeekDays()) != null)
+                                course.setWeekDay(item);
+                            break;
+                        case 4:
+                            final String endTime = new String(rowItems.get(elem + 1).text().getBytes("cp1252"), "UTF-8");
+                            if (stringHelper.extractPattern(item, coursePattern.getTimeOfDay()) != null &
+                                    stringHelper.extractPattern(endTime, coursePattern.getTimeOfDay()) != null && !"Klo".equals(item))
+                                course.setTimeOfDay(item + "-" + endTime);
+                            break;
+                        case 6:
+                            if (stringHelper.extractPattern(item, coursePattern.getClassRoom()) != null && !"Sali".equals(item))
+                                course.setClassroom(item);
+                            break;
+                        case 7:
+                            break;
                     }
-                    course.setDepartment(department);
                 }
                 if (CourseValidator.validateCourse(course)) {
-                    LOGGER.debug("COURSE=" + course);
-                    resultList.add(course);
-                    course = new Course();
+                LOGGER.debug("COURSE=" + course);
+                resultList.add(course);
+                course = new Course();
                 }
 
             }
@@ -140,10 +145,6 @@ class HtmlParser {
             }
         }
         return course;
-    }
-
-    public ArrayList<Course> getResultList() {
-        return resultList;
     }
 
     /**

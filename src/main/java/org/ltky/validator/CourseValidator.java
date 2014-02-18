@@ -21,7 +21,7 @@ public class CourseValidator {
         if (!investigateLength(course.getPeriod(), 64)) {
             return false;
         }
-        if (course.getWeekNumber() == null | !investigateLength(course.getWeekNumber(), 16)) {
+        if (course.getWeekNumber() == null | !investigateLength(course.getWeekNumber(), 32)) {
             return false;
         }
         if (!investigateLength(course.getWeekDay(), 4)) {

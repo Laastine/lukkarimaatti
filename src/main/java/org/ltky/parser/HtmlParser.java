@@ -99,8 +99,6 @@ class HtmlParser {
                             if (stringHelper.extractPattern(item, coursePattern.getClassRoom()) != null && !"Sali".equals(item))
                                 course.setClassroom(item);
                             break;
-                        case 7:
-                            break;
                     }
                 }
             }

@@ -30,7 +30,7 @@ public class HTMLParserTest {
         }
     }
 
-    @Test
+    //@Test
     public void testCourseData() {
         HTMLParserTest();
         try {

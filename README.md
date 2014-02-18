@@ -23,7 +23,9 @@ e.g. hostname:port/lukkarimaatti/rest/code/CT50A6000
 <b>Course department search</b><br>
 hostname:port/lukkarimaatti/rest/department/<department><br>
 e.g. hostname:port/lukkarimaatti/rest/department/tite<br>
-(ente/ymte/kete/kote/sate/tite/tuta/kati/mafy/kike/kv)
+(ente/ymte/kete/kote/sate/tite/tuta/kati/mafy/kike/kv)<br>
+
+<b>[Test it!](http://54.194.116.194:8085/lukkarimaatti/rest/department/tite)</b>
 
 
 <h3>Dependencies:</h3>

@@ -39,6 +39,7 @@ public class FetchJob {
      * Fetch data for departments
      */
     public void fetch() {
+        getLinks();
         Iterator iterator = map.entrySet().iterator();
         ExecutorService executor = Executors.newFixedThreadPool(map.size());
         while (iterator.hasNext()) {

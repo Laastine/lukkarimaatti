@@ -28,18 +28,28 @@ public class StringHelper {
      * @return
      * @throws IllegalStateException
      */
-    public String extractPattern(String courseAction, String pattern) throws IllegalStateException {
-        String resultSet = "";
+    public boolean extractPattern(String courseAction, String pattern) throws IllegalStateException {
         Pattern p = Pattern.compile(pattern);
         Matcher matcher = p.matcher(courseAction);
+        while (matcher.find())
+            if ("".equals(matcher.group())) {
+                LOGGER.trace("Couldn't find pattern=" + pattern + " from " + courseAction);
+                return false;
+            }
+        return true;
+    }
+
+    public String extractWeek(String week) {
+        String firstWeek = null;
+        Matcher matcher = Pattern.compile("(^[0-9]{2}|^[1-9])").matcher(week);
         while (matcher.find()) {
-            resultSet = matcher.group();
+            firstWeek = matcher.group();
         }
-        if (resultSet == null || resultSet.length() == 0) {
-            LOGGER.trace("Couldn't find pattern=" + pattern + " from " + courseAction);
+        if (firstWeek == null | "".equals(firstWeek)) {
+            LOGGER.trace("Couldn't find pattern week from " + week);
             return null;
         }
-        return resultSet;
+        return firstWeek;
     }
 
     public <T> List<T> removeDuplicates(List<T> list) {

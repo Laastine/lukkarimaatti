@@ -22,6 +22,9 @@ public class HTMLParserTest {
     public ExpectedException thrown = ExpectedException.none();
     private Map<String, String> map;
 
+    private static final String TITE = "tite";
+    private static final String KIKE = "kike";
+
     private void HTMLParserTest() {
         try {
             map = new URLParser().fetchStuff();
@@ -30,13 +33,17 @@ public class HTMLParserTest {
         }
     }
 
-    //@Test
-    public void testCourseData() {
+    @Test
+    public void testDepartmentData() {
+        testCourseData(TITE);
+    }
+
+    private void testCourseData(String department) {
         HTMLParserTest();
         try {
             Assert.assertNotNull(map);
-            HtmlParser htmlParser = new HtmlParser("tite");
-            htmlParser.parse(map.get("tite"));
+            HtmlParser htmlParser = new HtmlParser(department);
+            htmlParser.parse(map.get(department));
         } catch (Exception e) {
             LOGGER.error("test error", e);
         }

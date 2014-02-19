@@ -18,6 +18,7 @@ public class CourseValidator {
         if ("".equals(course.getCourseName()) | !investigateLength(course.getCourseName(), 256)) {
             return false;
         }
+        /*
         if (!investigateLength(course.getPeriod(), 64)) {
             return false;
         }
@@ -42,6 +43,7 @@ public class CourseValidator {
         if (!investigateLength(course.getTeacher(), 64)) {
             return false;
         }
+        */
         return true;
     }
 

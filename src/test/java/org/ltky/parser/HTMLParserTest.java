@@ -33,9 +33,9 @@ public class HTMLParserTest {
         }
     }
 
-    @Test
+    //@Test
     public void testDepartmentData() {
-        testCourseData(TITE);
+        testCourseData(KIKE);
     }
 
     private void testCourseData(String department) {

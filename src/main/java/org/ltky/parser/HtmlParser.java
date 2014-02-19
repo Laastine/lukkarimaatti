@@ -57,6 +57,26 @@ class HtmlParser {
     /**
      * Parses (HTML) table <td></td> -element data
      *
+     * Language lab courses gets handled differently since they have 8 rows instead of normal 7
+     * Language lab:
+     * <td>FV11A2600 - Business English Reading Course: C</td>
+     * <td>Taipale, Jukka</td>  #teacher
+     * <td>Periodi 3</td>       #period
+     * <td>2-8</td>             #weeks
+     * <td>ke</td>              #week day
+     * <td>10</td>              #start time
+     * <td>12</td>              #end time
+     * <td>1406</td>            #classroom
+     *
+     * Normal:
+     * <td>CT50A5700 - Introduction to Computer Graphics/L</td>
+     * <td>Periodi 2</td>       #period
+     * <td>43-49</td>           #weeks
+     * <td>ti</td>              #week day
+     * <td>12</td>              #start time
+     * <td>13</td>              #end time
+     * <td>1217</td>            #classroom
+     *
      * @param tableRowElements
      * @return
      * @throws UnsupportedEncodingException
@@ -77,27 +97,40 @@ class HtmlParser {
                             break;
                         case 1:
                             if (stringHelper.extractPattern(item, coursePattern.getKikeTeacher()) & department.equals("kike") &
-                                    course.getTeacher().isEmpty()) {
+                                    course.getTeacher().isEmpty())
                                 course = findTeacher(item, course);
-                            }
+                            break;
                         case 2:
-                            if (stringHelper.extractPattern(item, coursePattern.getWeekNumber()) &
+                            if (!department.equals("kike") & stringHelper.extractPattern(item, coursePattern.getWeekNumber()) &
                                     !"Vko".equals(item))
                                 course = findWeek(item, course);
                             break;
                         case 3:
-                            if (stringHelper.extractPattern(item, coursePattern.getWeekDays()))
+                            if (!department.equals("kike") & stringHelper.extractPattern(item, coursePattern.getWeekDays()))
                                 course.setWeekDay(item);
+                            else if (department.equals("kike") & stringHelper.extractPattern(item, coursePattern.getWeekNumber()))
+                                course = findWeek(item, course);
                             break;
                         case 4:
                             final String endTime = new String(rowItems.get(elem + 1).text().getBytes("cp1252"), "UTF-8");
-                            if (stringHelper.extractPattern(item, coursePattern.getTimeOfDay()) &
+                            if (!department.equals("kike") & stringHelper.extractPattern(item, coursePattern.getTimeOfDay()) &
                                     stringHelper.extractPattern(endTime, coursePattern.getTimeOfDay()) &
                                     !"Klo".equals(item))
                                 course.setTimeOfDay(item + "-" + endTime);
+                            else if (department.equals("kike") & stringHelper.extractPattern(item, coursePattern.getWeekDays()))
+                                course.setWeekDay(item);
                             break;
                         case 6:
-                            if (stringHelper.extractPattern(item, coursePattern.getClassRoom()) & !"Sali".equals(item))
+                            final String languageLabEndTime = new String(rowItems.get(elem + 1).text().getBytes("cp1252"), "UTF-8");
+                            if (!department.equals("kike") & stringHelper.extractPattern(item, coursePattern.getClassRoom()) & !"Sali".equals(item))
+                                course.setClassroom(item);
+                            else if (department.equals("kike") & stringHelper.extractPattern(item, coursePattern.getTimeOfDay()) &
+                                    stringHelper.extractPattern(languageLabEndTime, coursePattern.getTimeOfDay()) &
+                                    !"Klo".equals(item))
+                                course.setTimeOfDay(item + "-" + languageLabEndTime);
+                            break;
+                        case 7:
+                            if (department.equals("kike") & stringHelper.extractPattern(item, coursePattern.getClassRoom()) & !"Sali".equals(item))
                                 course.setClassroom(item);
                             break;
                     }
@@ -106,6 +139,7 @@ class HtmlParser {
             if (CourseValidator.validateCourse(course)) {
                 LOGGER.debug("COURSE=" + course);
                 resultList.add(course);
+                course = new Course();
             }
         }
         return resultList;

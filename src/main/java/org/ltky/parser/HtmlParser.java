@@ -38,7 +38,6 @@ class HtmlParser {
         return parseElementData(getTableElements(url));
     }
 
-
     /**
      * Select table class=spreadsheet elements from given HMTL
      *
@@ -48,15 +47,11 @@ class HtmlParser {
      * @throws IOException
      */
     private Elements getTableElements(String url) throws IllegalStateException, IOException {
-        Elements rowItems = null;
         Document doc = Jsoup.parse(
                 new URL(url).openStream(),
                 "cp1252",   //Set to null to determine from http-equiv meta tag, if present, or fall back to UTF-8
                 url);
-        Elements tableElements = doc.select("table");
-        Elements plop = tableElements.select(".spreadsheet");
-        Elements tableRowElements = plop.select(":not(thead) tr");
-        return tableRowElements;
+        return doc.select("table").select(".spreadsheet").select(":not(thead) tr");
     }
 
     /**
@@ -67,36 +62,42 @@ class HtmlParser {
      * @throws UnsupportedEncodingException
      */
     private List parseElementData(Elements tableRowElements) throws UnsupportedEncodingException {
-        Course course = new Course();
         final ArrayList<Course> resultList = new ArrayList();
+        Course course = new Course();
         for (int i = 0; i < tableRowElements.size(); i++) {
             Elements rowItems = tableRowElements.get(i).select("td");
             for (int elem = 0; elem < rowItems.size(); elem++) {
                 String item = new String(rowItems.get(elem).text().getBytes("cp1252"), "UTF-8");
                 if (!"".equals(item)) {
+                    course.setDepartment(department);
                     switch (elem) {
                         case 0:
-                            if (stringHelper.extractPattern(item, coursePattern.getCoursePattern()) != null) {
-                                course = findNameAndCode(item, new String(rowItems.get(elem + 1).text().getBytes("cp1252"), "UTF-8"), course);
-                                course.setDepartment(department);
-                            }
+                            if (stringHelper.extractPattern(item, coursePattern.getCoursePattern()))
+                                course = findNameCodeAndType(item, course);
                             break;
+                        case 1:
+                            if (stringHelper.extractPattern(item, coursePattern.getKikeTeacher()) & department.equals("kike") &
+                                    course.getTeacher().isEmpty()) {
+                                course = findTeacher(item, course);
+                            }
                         case 2:
-                            if (stringHelper.extractPattern(item, coursePattern.getWeekNumber()) != null && !"Vko".equals(item))
+                            if (stringHelper.extractPattern(item, coursePattern.getWeekNumber()) &
+                                    !"Vko".equals(item))
                                 course = findWeek(item, course);
                             break;
                         case 3:
-                            if (stringHelper.extractPattern(item, coursePattern.getWeekDays()) != null)
+                            if (stringHelper.extractPattern(item, coursePattern.getWeekDays()))
                                 course.setWeekDay(item);
                             break;
                         case 4:
                             final String endTime = new String(rowItems.get(elem + 1).text().getBytes("cp1252"), "UTF-8");
-                            if (stringHelper.extractPattern(item, coursePattern.getTimeOfDay()) != null &
-                                    stringHelper.extractPattern(endTime, coursePattern.getTimeOfDay()) != null && !"Klo".equals(item))
+                            if (stringHelper.extractPattern(item, coursePattern.getTimeOfDay()) &
+                                    stringHelper.extractPattern(endTime, coursePattern.getTimeOfDay()) &
+                                    !"Klo".equals(item))
                                 course.setTimeOfDay(item + "-" + endTime);
                             break;
                         case 6:
-                            if (stringHelper.extractPattern(item, coursePattern.getClassRoom()) != null && !"Sali".equals(item))
+                            if (stringHelper.extractPattern(item, coursePattern.getClassRoom()) & !"Sali".equals(item))
                                 course.setClassroom(item);
                             break;
                     }
@@ -105,14 +106,13 @@ class HtmlParser {
             if (CourseValidator.validateCourse(course)) {
                 LOGGER.debug("COURSE=" + course);
                 resultList.add(course);
-                course = new Course();
             }
         }
         return resultList;
     }
 
     private Course findTeacher(String teacher, Course course) {
-        if (stringHelper.extractPattern(teacher, coursePattern.getKikeTeacher()) != null) {
+        if (stringHelper.extractPattern(teacher, coursePattern.getKikeTeacher())) {
             course.setTeacher(teacher);
         } else {
             course.setTeacher(UNKNOWN);
@@ -121,7 +121,8 @@ class HtmlParser {
     }
 
     private Course findWeek(String weekNumber, Course course) {
-        course.setWeekNumber(stringHelper.extractPattern(weekNumber, coursePattern.getWeekNumber()));
+        if (stringHelper.extractPattern(weekNumber, coursePattern.getWeekNumber()))
+            course.setWeekNumber(weekNumber);
         if (course.getWeekNumber() != null & !course.getWeekNumber().isEmpty()) {
             course.setPeriod(parsePeriod(course.getWeekNumber()));          //Set period
             return course;
@@ -130,17 +131,11 @@ class HtmlParser {
         }
     }
 
-    private Course findNameAndCode(String courseNameAndCode, String teacher, Course course) {
+    private Course findNameCodeAndType(String courseNameAndCode, Course course) {
         final String[] courseCodeAndNamePair = StringUtils.splitByWholeSeparator(courseNameAndCode, " - ");
         course.setCourseCode(courseCodeAndNamePair[0]);
         course.setCourseName(StringUtils.substringBefore(courseCodeAndNamePair[1], "/"));
         course.setType(StringUtils.substringAfterLast(courseCodeAndNamePair[1], "/"));
-
-        if (department.equals("kike") && course.getTeacher().isEmpty()) {
-            if (stringHelper.extractPattern(teacher, coursePattern.getKikeTeacher()) != null) {
-                course = findTeacher(teacher, course);
-            }
-        }
         return course;
     }
 
@@ -152,12 +147,11 @@ class HtmlParser {
      */
     private String parsePeriod(String week) {
         int weeks;
-        week = stringHelper.extractPattern(week, "(^[0-9]{2}|^[1-9])");
         try {
-            weeks = Integer.parseInt(week);
+            weeks = Integer.parseInt(stringHelper.extractWeek(week));
         } catch (Exception e) {
-            LOGGER.error("Couldn't parse=" + week);
-            return "";
+            LOGGER.trace("Couldn't parse=" + week);
+            return UNKNOWN;
         }
         int period1 = Integer.valueOf(config.getPeriod1());
         int period2 = Integer.valueOf(config.getPeriod2());

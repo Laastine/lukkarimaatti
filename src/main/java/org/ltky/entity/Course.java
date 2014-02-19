@@ -1,7 +1,5 @@
 package org.ltky.entity;
 
-import org.ltky.util.StringHelper;
-
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -50,8 +48,8 @@ public class Course implements Serializable {
     @Column(name = "DEPARTMENT")
     @XmlElement(name = "department")
     private String department = "";
-    @Column(name =  "TEACHER")
-    @XmlElement(name= "teacher")
+    @Column(name = "TEACHER")
+    @XmlElement(name = "teacher")
     private String teacher = "";
 
     public Integer getCourseId() {
@@ -144,8 +142,8 @@ public class Course implements Serializable {
 
     @Override
     public String toString() {
-        return "[courseCode="+courseCode+", courseName="+courseName+
-                ", weekNumber="+ weekNumber +", weekDay="+weekDay+", period="+period+", timeOfDay="+timeOfDay+
-                ", classroom="+classroom+", type="+type+", department="+department+"]";
+        return "[courseCode=" + courseCode + ", courseName=" + courseName + ", teacher=" + teacher +
+                ", weekNumber=" + weekNumber + ", weekDay=" + weekDay + ", period=" + period + ", timeOfDay=" + timeOfDay +
+                ", classroom=" + classroom + ", type=" + type + ", department=" + department + "]";
     }
 }

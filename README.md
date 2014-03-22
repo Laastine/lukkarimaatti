@@ -16,6 +16,10 @@ e.g. hostname:port/lukkarimaatti/rest/names/pattern (provide at least 4 characte
 hostname:port/lukkarimaatti/rest/name/courseName<br>
 e.g. hostname:port/lukkarimaatti/rest/name/Pattern Recognition
 
+<b>All Course course names search</b><br>
+hostname:port/lukkarimaatti/rest/all<br>
+e.g. hostname:port/lukkarimaatti/rest/all
+
 <b>Course code search</b><br>
 hostname:port/lukkarimaatti/rest/code/code<br>
 e.g. hostname:port/lukkarimaatti/rest/code/CT50A6000

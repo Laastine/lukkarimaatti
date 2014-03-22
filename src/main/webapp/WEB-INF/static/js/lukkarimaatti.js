@@ -5,7 +5,7 @@ var lukkarimaatti = (function () {
     selectedCoursesArray = [];
     sidebarList = $("#sidebar_list_of_courses");
     timetable = $('#timetable');
-    username = "John Doe";
+    username = "Oskari Omena";
     logged = true;
     courseNames = null;
     loaded = false;
@@ -53,7 +53,7 @@ var lukkarimaatti = (function () {
             console.log("courseNames=" + document.cookie);
         }
         return data;
-    })();
+    }());
 
     $(document).ready(function () {
         drawTable();
@@ -67,6 +67,7 @@ var lukkarimaatti = (function () {
 
 
     function updateCourseList() {
+        console.log("updateCourseList");
         sidebarList.empty();
         for (var i = 0; i < selectedCourses.length; i++) {
             $('#sidebar_list_of_courses').append('<li id=' + selectedCourses[i] + ' class="list-group-item lukkarimaatti_search_list_item"><span class="design" > </span>' + selectedCourses[i] + '</li>'); //Slow!
@@ -80,7 +81,9 @@ var lukkarimaatti = (function () {
                 var selectedCourseIndex = selectedCourses.indexOf(this.id);
 
                 for (var index = selectedCoursesArray.length - 1; index >= 0; index--) {
-                    if (selectedCoursesArray[index].courseCode === selectedCourses[selectedCourseIndex]) {
+                    if (selectedCoursesArray[index].courseName === selectedCourses[selectedCourseIndex]) {
+                        console.log("1" + selectedCourses[selectedCourseIndex]);
+                        console.log("2" + selectedCoursesArray[index].courseName);
                         selectedCoursesArray.splice(index, 1);
                     }
                 }
@@ -94,6 +97,7 @@ var lukkarimaatti = (function () {
     }
 
     function drawTable() {
+        console.log("drawTable");
         var dates = ["monday", "tuesday", "wednesday", "thursday", "friday"];
         var lectureTimes = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
         timetable.find("> tbody > tr").remove();
@@ -108,7 +112,7 @@ var lukkarimaatti = (function () {
                 var checkItem = lookupForTableItem(dateValue + lectureTimes[lectureIndex]);
 
                 if (checkItem != null) {
-                    tr.append($('<td class="hoverclass" id="' + (checkItem.courseCode) + '">').text(checkItem.courseCode + "/").append($('<p style="margin: 0px">').text(checkItem.courseName)));
+                    tr.append($('<td class="hoverclass" id="' + (checkItem.courseName) + '">').text(checkItem.courseName + "/").append($('<p style="margin: 0px">').text(checkItem.courseName)));
                 } else {
                     tr.append($('<td class="hoverclass" id="XX00Y0000">').text("--"));
                 }
@@ -117,8 +121,9 @@ var lukkarimaatti = (function () {
     }
 
     function downloadCourseInfo(course) {
+        console.log("downloadCourseInfo");
         var items = [];
-        $.getJSON(environment + "/lukkarimaatti/rest/names/"+course, "", function (data) {
+        $.getJSON(environment + "/lukkarimaatti/rest/names/", course, function (data) {
             $.each(data, function (key, val) {
                 items.push(val);
             });
@@ -129,47 +134,55 @@ var lukkarimaatti = (function () {
     }
 
     function lookupForTableItem(position) {
+        console.log("lookupForTableItem" + position);
         for (var i = 0, len = selectedCoursesArray.length; i < len; i++) {
-            if (selectedCoursesArray[i].position.toLowerCase() === position.toLowerCase())
+            if (selectedCoursesArray[i].position.courseName.toLowerCase() === position.toLowerCase()) {
+                console.log("debug=" + typeof selectedCoursesArray[i].position)
                 return selectedCoursesArray[i];
+            }
         }
-        return null;
     }
 
     function login() {
     }
 
     function createCourseObjectFromJsonObject(fetchedItems) {
+        console.log("createCourseObjectFromJsonObject");
         $.each(fetchedItems, function (index, course_to_process) {
             selectedCoursesArray[selectedCoursesArray.length] = JSON.stringify(course_to_process);
-            console.log(selectedCoursesArray);
+            console.log("stringify=" + selectedCoursesArray);
         });
     }
 
     $(function () {
-        $('#courseSearchBox').typeahead({
+        var $searchBox = $('#courseSearchBox').typeahead({
             minLength: 3,
             highlight: true,
-            name: 'courses',
+            name: 'Courses',
             dataType: 'json',
             maxParallelRequests: 3,
             rateLimitWait: 1000,
             remote: {
-                url: environment + '/lukkarimaatti/rest/all',
-                filter: function(parsedResponse) {
-                    console.log("parsedResponse="+parsedResponse);
+                url: environment + '/lukkarimaatti/rest/names/%QUERY',
+                filter: function (parsedResponse) {
+                    // parsedResponse is the array returned from your backend
+                    console.log(parsedResponse);
+
+                    // do whatever processing you need here
                     return parsedResponse;
                 }
             }
         });
         $('form').submit(function (e) {
+            console.log("submit");
             e.preventDefault(); // don't submit the form
-            var $searchBox = $('#courseSearchBox');
             var course = $searchBox.val(); // get the current item
+            console.log("searchBox=" + course);
             var itemInCourseList = selectedCourses.some(function (entry) {
                 return entry === course;
             });
             if (!itemInCourseList) {
+                console.log("!itemInCourseList" + course)
                 selectedCourses.push(course); // add course to the source
                 updateCourseList(); // refresh the list
                 downloadCourseInfo(course);
@@ -182,4 +195,4 @@ var lukkarimaatti = (function () {
             $searchBox.typeahead('setQuery', '');
         });
     });
-})();
+}());

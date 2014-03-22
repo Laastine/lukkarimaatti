@@ -97,22 +97,22 @@ var lukkarimaatti = (function () {
     }
 
     function drawTable() {
-        console.log("drawTable");
         var dates = ["monday", "tuesday", "wednesday", "thursday", "friday"];
         var lectureTimes = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
-        timetable.find("> tbody > tr").remove();
-        var row = timetable.find('> tbody:last');
-        var tr = timetable.find('> tbody:last > tr:last');
 
-        $.each(lectureTimes, function (lectureIndex) {
+        timetable.find("> tbody > tr").remove();
+        jQuery.each(lectureTimes, function (lectureIndex) {
+            var row = timetable.find('> tbody:last');
             row.append('<tr>');
+            var tr = timetable.find('> tbody:last > tr:last');
             tr.append($('<td id="' + lectureTimes[lectureIndex] + '">').text(lectureTimes[lectureIndex] + "-" + (lectureTimes[lectureIndex] + 1)));
-            $.each(dates, function (dateIndex, dateValue) {
+
+            jQuery.each(dates, function (dateIndex, dateValue) {
                 // lookupForTableItem searches courseItem based on time (e.g. we10 == wednesday at 10 a clock) from selectedCoursesArray
                 var checkItem = lookupForTableItem(dateValue + lectureTimes[lectureIndex]);
 
                 if (checkItem != null) {
-                    tr.append($('<td class="hoverclass" id="' + (checkItem.courseName) + '">').text(checkItem.courseName + "/").append($('<p style="margin: 0px">').text(checkItem.courseName)));
+                    tr.append($('<td class="hoverclass" id="' + (checkItem.courseCode) + '">').text(checkItem.courseCode + "/").append($('<p style="margin: 0px">').text(checkItem.courseName)));
                 } else {
                     tr.append($('<td class="hoverclass" id="XX00Y0000">').text("--"));
                 }

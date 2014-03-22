@@ -2,7 +2,7 @@
 
 Hobby project to offer course data easily usable scheduling tool over simple REST interface.
 
-<b>[Test BETA version!](http://54.194.116.194:8085/lukkarimaatti)</b>
+<b>[Test beta version!](http://54.194.116.194:8085/lukkarimaatti)</b>
 
 <h3>Dependencies:</h3>
 Information is retrieved from uni.lut.fi, [the official LUT teaching schedule info site] (https://uni.lut.fi/fi/web/guest/lukujarjestykset).<br>

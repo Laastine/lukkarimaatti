@@ -77,4 +77,12 @@ public class CourseDaoImpl implements CourseDao {
         List<Course> list = query.setParameter("department", department).list();
         return list;
     }
+
+    public List<String> findAllCourseNames() {
+        final String hql = "SELECT C.courseName FROM Course C";
+        Query query = getCurrentSession().createQuery(hql);
+        List<String> list = query.list();
+        return list;
+    }
+
 }

@@ -28,4 +28,6 @@ public interface CourseDao {
 
     List<Course> findByDepartment(String department);
 
+    List<String> findAllCourseNames();
+
 }

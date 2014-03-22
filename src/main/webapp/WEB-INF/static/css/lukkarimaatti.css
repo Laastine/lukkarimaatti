@@ -1,0 +1,55 @@
+.lukkarimaatti_search_list {
+    min-height: 590px;
+    background-color: #eee;
+    border-radius: 4px;
+}
+
+.lukkarimaatti_search_list_item {
+    background-color: #E0E0E0;
+}
+
+.search-button {
+    vertical-align: top;
+}
+
+th, td {
+    overflow: hidden;
+    text-align: center;
+}
+
+th {
+    width: 100px;
+}
+
+th:first-child {
+    width: 20px;
+}
+
+.container-fluid {
+    padding-left: 80px;
+    padding-right: 80px;
+    padding-top: 10px;
+}
+
+.jumbotron {
+    font-size: 14px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.table tbody tr td.hoverclass {
+    font-size: 10px;
+    padding-top: 2px;
+}
+
+.table tbody tr td.hoverclass:hover {
+    background-color: #ddd;
+}
+
+.design {
+    float: right;
+    width: 30px;
+    height: 30px;
+    white-space: nowrap;
+    background: url("../res/ct_icon.png") no-repeat center top;
+}

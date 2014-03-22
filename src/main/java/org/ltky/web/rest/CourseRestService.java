@@ -82,4 +82,14 @@ public class CourseRestService {
         List<Course> departmentCourseList = courseDao.findByDepartment(department);
         return departmentCourseList;
     }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    @Path("/all/")
+    public List<String> getAllCourseCodes() {
+        if (LOGGER.isDebugEnabled())
+            LOGGER.debug("getAllCourseCodes");
+        List<String> allCourseCodesList = courseDao.findAllCourseNames();
+        return allCourseCodesList;  //<--TEST IT
+    }
 }

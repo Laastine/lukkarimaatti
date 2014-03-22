@@ -29,7 +29,7 @@ hostname:port/lukkarimaatti/rest/department/<department><br>
 e.g. hostname:port/lukkarimaatti/rest/department/tite<br>
 (ente/ymte/kete/kote/sate/tite/tuta/kati/mafy/kike/kv)<br>
 
-<b>[Test it!](http://54.194.116.194:8085/lukkarimaatti/rest/department/tite)</b>
+<b>[Test BETA version!](http://54.194.116.194:8085/lukkarimaatti)</b>
 
 
 <h3>Dependencies:</h3>

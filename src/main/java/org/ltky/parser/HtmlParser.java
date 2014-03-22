@@ -107,7 +107,7 @@ class HtmlParser {
                             break;
                         case 3:
                             if (!department.equals("kike") & stringHelper.extractPattern(item, coursePattern.getWeekDays()))
-                                course.setWeekDay(item);
+                                course = findWeekDay(item, course);
                             else if (department.equals("kike") & stringHelper.extractPattern(item, coursePattern.getWeekNumber()))
                                 course = findWeek(item, course);
                             break;
@@ -118,12 +118,12 @@ class HtmlParser {
                                     !"Klo".equals(item))
                                 course.setTimeOfDay(item + "-" + endTime);
                             else if (department.equals("kike") & stringHelper.extractPattern(item, coursePattern.getWeekDays()))
-                                course.setWeekDay(item);
+                                course = findWeekDay(item, course);
                             break;
                         case 6:
                             final String languageLabEndTime = new String(rowItems.get(elem + 1).text().getBytes("cp1252"), "UTF-8");
                             if (!department.equals("kike") & stringHelper.extractPattern(item, coursePattern.getClassRoom()) & !"Sali".equals(item))
-                                course.setClassroom(item);
+                                course = findClassroom(item, course);
                             else if (department.equals("kike") & stringHelper.extractPattern(item, coursePattern.getTimeOfDay()) &
                                     stringHelper.extractPattern(languageLabEndTime, coursePattern.getTimeOfDay()) &
                                     !"Klo".equals(item))
@@ -131,7 +131,7 @@ class HtmlParser {
                             break;
                         case 7:
                             if (department.equals("kike") & stringHelper.extractPattern(item, coursePattern.getClassRoom()) & !"Sali".equals(item))
-                                course.setClassroom(item);
+                                course = findClassroom(item, course);
                             break;
                     }
                 }
@@ -161,9 +161,31 @@ class HtmlParser {
             course.setPeriod(parsePeriod(course.getWeekNumber()));          //Set period
             return course;
         } else {
+            course.setPeriod(UNKNOWN);
             return course;
         }
     }
+
+    private Course findWeekDay(String weekDay, Course course) {
+        if (stringHelper.extractPattern(weekDay, coursePattern.getWeekDays())) {
+            course.setWeekNumber(weekDay);
+            return course;
+        } else {
+            course.setWeekNumber(UNKNOWN);
+            return course;
+        }
+    }
+
+    private Course findClassroom(String classroom, Course course) {
+        if (stringHelper.extractPattern(classroom, coursePattern.getClassRoom())) {
+            course.setClassroom(classroom);
+            return course;
+        } else {
+            course.setClassroom(UNKNOWN);
+            return course;
+        }
+    }
+
 
     private Course findNameCodeAndType(String courseNameAndCode, Course course) {
         final String[] courseCodeAndNamePair = StringUtils.splitByWholeSeparator(courseNameAndCode, " - ");

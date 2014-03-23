@@ -53,7 +53,7 @@ var lukkarimaatti = (function () {
             console.log("courseNames=" + document.cookie);
         }
         return data;
-    }());
+    });
 
     $(document).ready(function () {
         drawTable();
@@ -64,7 +64,6 @@ var lukkarimaatti = (function () {
             });
         }
     });
-
 
     function updateCourseList() {
         console.log("updateCourseList");
@@ -82,8 +81,6 @@ var lukkarimaatti = (function () {
 
                 for (var index = selectedCoursesArray.length - 1; index >= 0; index--) {
                     if (selectedCoursesArray[index].courseName === selectedCourses[selectedCourseIndex]) {
-                        console.log("1" + selectedCourses[selectedCourseIndex]);
-                        console.log("2" + selectedCoursesArray[index].courseName);
                         selectedCoursesArray.splice(index, 1);
                     }
                 }
@@ -123,7 +120,7 @@ var lukkarimaatti = (function () {
     function downloadCourseInfo(course) {
         console.log("downloadCourseInfo");
         var items = [];
-        $.getJSON(environment + "/lukkarimaatti/rest/names/", course, function (data) {
+        $.getJSON(environment + "/lukkarimaatti/rest/name/"+course, "", function (data) {
             $.each(data, function (key, val) {
                 items.push(val);
             });
@@ -134,7 +131,6 @@ var lukkarimaatti = (function () {
     }
 
     function lookupForTableItem(position) {
-        console.log("lookupForTableItem" + position);
         for (var i = 0, len = selectedCoursesArray.length; i < len; i++) {
             if (selectedCoursesArray[i].position.courseName.toLowerCase() === position.toLowerCase()) {
                 console.log("debug=" + typeof selectedCoursesArray[i].position)
@@ -147,7 +143,6 @@ var lukkarimaatti = (function () {
     }
 
     function createCourseObjectFromJsonObject(fetchedItems) {
-        console.log("createCourseObjectFromJsonObject");
         $.each(fetchedItems, function (index, course_to_process) {
             selectedCoursesArray[selectedCoursesArray.length] = JSON.stringify(course_to_process);
             console.log("stringify=" + selectedCoursesArray);
@@ -174,7 +169,6 @@ var lukkarimaatti = (function () {
             }
         });
         $('form').submit(function (e) {
-            console.log("submit");
             e.preventDefault(); // don't submit the form
             var course = $searchBox.val(); // get the current item
             console.log("searchBox=" + course);
@@ -195,4 +189,5 @@ var lukkarimaatti = (function () {
             $searchBox.typeahead('setQuery', '');
         });
     });
+
 }());

@@ -1,6 +1,5 @@
 package org.ltky.validator;
 
-import org.apache.log4j.Logger;
 import org.ltky.entity.Course;
 
 /**
@@ -10,6 +9,8 @@ import org.ltky.entity.Course;
  * Date: 6.1.2014
  */
 public class CourseValidator {
+
+    private CourseValidator() {};
 
     public static boolean validateCourse(Course course) {
         if ("".equals(course.getCourseCode()) | !investigateLength(course.getCourseCode(),32)) {

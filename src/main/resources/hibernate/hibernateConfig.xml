@@ -40,7 +40,7 @@
         <property name="sessionFactory" ref="mySessionFactory"/>
     </bean>
 
-    <bean id="courseDao" class="org.ltky.dao.daoImpl.CourseDaoImpl">
+    <bean id="courseDao" class="org.ltky.dao.daoimpl.CourseDaoImpl">
         <property name="SessionFactory" ref="mySessionFactory"/>
     </bean>
 

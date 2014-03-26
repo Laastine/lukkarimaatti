@@ -83,13 +83,9 @@ public class ParserConfiguration {
         Properties properties = new Properties();
         String path = "properties/parser.properties";
         ClassPathResource classPathResource = new ClassPathResource(path);
-        try {
-            FileInputStream fis = new FileInputStream(classPathResource.getFile());
-            properties.load(fis);
-            return properties;
-        } catch (Exception e) {
-            throw new IOException("Error loading properties. Path=" + path);
-        }
+        FileInputStream fis = new FileInputStream(classPathResource.getFile());
+        properties.load(fis);
+        return properties;
     }
 
     private String getPropertyOrThrowUp(Properties properties, String key) {

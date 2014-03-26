@@ -1,4 +1,4 @@
-package org.ltky.dao.daoImpl;
+package org.ltky.dao.daoimpl;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -46,43 +46,37 @@ public class CourseDaoImpl implements CourseDao {
     public List<Course> findByCourseCode(String courseCode) {
         final String hql = "FROM Course WHERE courseCode = :courseCode";
         Query query = getCurrentSession().createQuery(hql);
-        List<Course> list = query.setParameter("courseCode", courseCode).list();
-        return list;
+        return query.setParameter("courseCode", courseCode).list();
     }
 
     public List<String> findCourseCodes(String courseCode) {
         final String hql = "SELECT C.courseCode FROM Course C WHERE C.courseCode like :courseCode";
         Query query = getCurrentSession().createQuery(hql);
-        List<String> list = query.setParameter("courseCode", courseCode + "%").list();
-        return list;
+        return query.setParameter("courseCode", courseCode + "%").list();
     }
 
     public List<Course> findByCourseName(String courseName) {
         final String hql = "FROM Course WHERE courseName = :courseName";
         Query query = getCurrentSession().createQuery(hql);
-        List<Course> list = query.setParameter("courseName", courseName).list();
-        return list;
+        return query.setParameter("courseName", courseName).list();
     }
 
     public List<Course> findCourseNames(String courseName) {
         final String hql = "SELECT C.courseName FROM Course C WHERE lower(C.courseName) like lower(:courseName)";
         Query query = getCurrentSession().createQuery(hql);
-        List<Course> list = query.setParameter("courseName", courseName + "%").list();
-        return list;
+        return query.setParameter("courseName", courseName + "%").list();
     }
 
     public List<Course> findByDepartment(String department) {
         final String hql = "FROM Course WHERE department = :department";
         Query query = getCurrentSession().createQuery(hql);
-        List<Course> list = query.setParameter("department", department).list();
-        return list;
+        return query.setParameter("department", department).list();
     }
 
     public List<String> findAllCourseNames() {
         final String hql = "SELECT C.courseName FROM Course C";
         Query query = getCurrentSession().createQuery(hql);
-        List<String> list = query.list();
-        return list;
+        return query.list();
     }
 
 }

@@ -5,8 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.Map;
-
 /**
  * lukkarimaatti
  * Created with IntelliJ IDEA.
@@ -15,7 +13,7 @@ import java.util.Map;
  */
 @Controller
 public class LukkarimaattiController {
-    private static Logger LOGGER = Logger.getLogger(LukkarimaattiController.class);
+    private static final Logger LOGGER = Logger.getLogger(LukkarimaattiController.class);
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String getHome() {

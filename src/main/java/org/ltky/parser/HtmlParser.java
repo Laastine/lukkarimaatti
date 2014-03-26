@@ -82,7 +82,7 @@ class HtmlParser {
      * @throws UnsupportedEncodingException
      */
     private List parseElementData(Elements tableRowElements) throws UnsupportedEncodingException {
-        final ArrayList<Course> resultList = new ArrayList();
+        final List<Course> resultList = new ArrayList();
         Course course = new Course();
         for (int i = 0; i < tableRowElements.size(); i++) {
             Elements rowItems = tableRowElements.get(i).select("td");
@@ -132,6 +132,11 @@ class HtmlParser {
                         case 7:
                             if (department.equals("kike") & stringHelper.extractPattern(item, coursePattern.getClassRoom()) & !"Sali".equals(item))
                                 course = findClassroom(item, course);
+                            break;
+                        default:
+                            if (LOGGER.isDebugEnabled()) {
+                                LOGGER.debug("Hit empty line");
+                            }
                             break;
                     }
                 }
@@ -206,8 +211,8 @@ class HtmlParser {
         try {
             weeks = Integer.parseInt(stringHelper.extractWeek(week));
         } catch (Exception e) {
-            LOGGER.trace("Couldn't parse=" + week);
-            return UNKNOWN;
+            LOGGER.error("Couldn't parse=" + week);
+            weeks = 0;
         }
         int period1 = Integer.valueOf(config.getPeriod1());
         int period2 = Integer.valueOf(config.getPeriod2());

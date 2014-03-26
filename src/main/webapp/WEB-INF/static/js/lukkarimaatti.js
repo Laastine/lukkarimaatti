@@ -9,7 +9,7 @@ var lukkarimaatti = (function () {
     logged = true;
     courseNames = null;
     loaded = false;
-    environment = "http://localhost:8085";
+    environment = "http://54.194.116.194:8085";
 
     function makeAjaxRequest(url) {
         var httpRequest;

@@ -34,8 +34,7 @@ public class CourseRestService {
     public List<Course> getCourseCode(@PathParam("code") String code) {
         if (LOGGER.isDebugEnabled())
             LOGGER.debug("getCourseCode");
-        List<Course> courseList = courseDao.findByCourseCode(code);
-        return courseList;
+        return courseDao.findByCourseCode(code);
     }
 
     @GET
@@ -44,8 +43,7 @@ public class CourseRestService {
     public List<String> getLikeCourseCodes(@PathParam("codes") String codes) {
         if (LOGGER.isDebugEnabled())
             LOGGER.debug("getLikeCourseCodes");
-        List<String> courseCodesList = new StringHelper().removeDuplicates(courseDao.findCourseCodes(codes));
-        return courseCodesList;
+        return new StringHelper().removeDuplicates(courseDao.findCourseCodes(codes));
     }
 
     @GET
@@ -54,8 +52,7 @@ public class CourseRestService {
     public List<Course> getCourseName(@PathParam("courseName") String courseName) {
         if (LOGGER.isDebugEnabled())
             LOGGER.debug("getCourseName");
-        List<Course> courseList = courseDao.findByCourseName(courseName);
-        return courseList;
+        return courseDao.findByCourseName(courseName);
     }
 
     @GET
@@ -65,11 +62,9 @@ public class CourseRestService {
         if (LOGGER.isDebugEnabled())
             LOGGER.debug("getCourseNames");
         if (courseNames.length() > MIN) {
-            List<Course> courseList = courseDao.findCourseNames(courseNames);
-            return courseList;
+            return courseDao.findCourseNames(courseNames);
         } else {
-            List<Course> courseList = new ArrayList<>();
-            return courseList;
+            return new ArrayList<>();
         }
     }
 
@@ -79,8 +74,7 @@ public class CourseRestService {
     public List<Course> getDepartmentInJSON(@PathParam("department") String department) {
         if (LOGGER.isDebugEnabled())
             LOGGER.debug("getDepartmentInJSON");
-        List<Course> departmentCourseList = courseDao.findByDepartment(department);
-        return departmentCourseList;
+        return courseDao.findByDepartment(department);
     }
 
     @GET
@@ -89,7 +83,6 @@ public class CourseRestService {
     public List<String> getAllCourseCodes() {
         if (LOGGER.isDebugEnabled())
             LOGGER.debug("getAllCourseCodes");
-        List<String> allCourseCodesList = courseDao.findAllCourseNames();
-        return allCourseCodesList;  //<--TEST IT
+        return courseDao.findAllCourseNames();
     }
 }

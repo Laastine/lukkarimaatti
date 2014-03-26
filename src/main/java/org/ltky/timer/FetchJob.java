@@ -44,8 +44,9 @@ public class FetchJob {
         ExecutorService executor = Executors.newFixedThreadPool(map.size());
         while (iterator.hasNext()) {
             Map.Entry me = (Map.Entry) iterator.next();
-            if(LOGGER.isDebugEnabled())
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Key=" + me.getKey() + " Value=" + me.getValue());
+            }
             Runnable worker = new ParserTask((String) me.getKey(), (String) me.getValue());  //Task for each department
             executor.execute(worker);
         }
@@ -59,9 +60,7 @@ public class FetchJob {
     public void runCron() {
         if(LOGGER.isDebugEnabled())
             LOGGER.debug("cron task");
-        //getLinks();
-        //fetch();
-        //fetchJob.fetch();
+        //TODO: Activate when stable getLinks(); fetch(); fetchJob.fetch();
     }
 
 }

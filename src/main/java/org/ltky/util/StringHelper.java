@@ -67,10 +67,11 @@ public class StringHelper {
         FileUtils.write(new File(fileName), toFile, "ISO-8859-1");
     }
 
-    public void writeToFile(ArrayList<String> toFile, String fileName) throws IOException {
+    public void writeToFile(List<String> toFile, String fileName) throws IOException {
         String tmp = "";
-        for (String s : toFile)
+        for (String s : toFile) {
             tmp += s + "\n";
+        }
         FileUtils.write(new File(fileName), tmp, "ISO-8859-1");
     }
 }

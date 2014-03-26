@@ -12,8 +12,8 @@ Maven for building a package.
 * [Spring 3.x](http://spring.io/)
 * [Hibernate 3.x](http://hibernate.org/)
 * [Jsoup 1.7.x](http://jsoup.org/)
-* [Jersey 1.8](https://jersey.java.net/)<br>
-and few handy Apache libs
+* [Jersey 1.8](https://jersey.java.net/)
+* [Sonar](http://www.sonarqube.org/)<br>
 
 <h3>Build:</h3>
 mvn clean package

@@ -9,7 +9,7 @@ var lukkarimaatti = (function () {
     logged = true;
     courseNames = null;
     loaded = false;
-    environment = "http://54.194.116.194:8085";
+    environment = "http://localhost:8085";
 
     function makeAjaxRequest(url) {
         var httpRequest;
@@ -18,11 +18,11 @@ var lukkarimaatti = (function () {
         } else if (window.ActiveXObject) { //IE...
             try {
                 httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
-            } catch (e) {
+            } catch (e1) {
                 try {
                     httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
-                } catch (e) {
-                    console.log(e);
+                } catch (e2) {
+                    console.log(e2);
                 }
             }
         }
@@ -44,7 +44,7 @@ var lukkarimaatti = (function () {
         httpRequest.send();
     }
 
-    (function getCourseData() {
+    function getCourseData() {
         var data;
         if (!loaded) {
             data = JSON.stringify(makeAjaxRequest(environment + '/lukkarimaatti/rest/all'));
@@ -53,7 +53,7 @@ var lukkarimaatti = (function () {
             console.log("courseNames=" + document.cookie);
         }
         return data;
-    });
+    }
 
     $(document).ready(function () {
         drawTable();
@@ -66,12 +66,13 @@ var lukkarimaatti = (function () {
     });
 
     function updateCourseList() {
+        var i, item, index;
         console.log("updateCourseList");
         sidebarList.empty();
-        for (var i = 0; i < selectedCourses.length; i++) {
+        for (i = 0; i < selectedCourses.length; i++) {
             $('#sidebar_list_of_courses').append('<li id=' + selectedCourses[i] + ' class="list-group-item lukkarimaatti_search_list_item"><span class="design" > </span>' + selectedCourses[i] + '</li>'); //Slow!
         }
-        var item = sidebarList.find("li").last();
+        item = sidebarList.find("li").last();
         $(item[0]).hide().fadeIn(200);
 //    makeSidebarItemsRemovable();
 
@@ -79,7 +80,7 @@ var lukkarimaatti = (function () {
             $(this).fadeOut('slow', function () {
                 var selectedCourseIndex = selectedCourses.indexOf(this.id);
 
-                for (var index = selectedCoursesArray.length - 1; index >= 0; index--) {
+                for (index = selectedCoursesArray.length - 1; index >= 0; index -= 1) {
                     if (selectedCoursesArray[index].courseName === selectedCourses[selectedCourseIndex]) {
                         selectedCoursesArray.splice(index, 1);
                     }
@@ -94,21 +95,22 @@ var lukkarimaatti = (function () {
     }
 
     function drawTable() {
-        var dates = ["monday", "tuesday", "wednesday", "thursday", "friday"];
-        var lectureTimes = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+        var tr, row, dates, lectureTimes;
+        dates = ["monday", "tuesday", "wednesday", "thursday", "friday"];
+        lectureTimes = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 
         timetable.find("> tbody > tr").remove();
         jQuery.each(lectureTimes, function (lectureIndex) {
-            var row = timetable.find('> tbody:last');
+            row = timetable.find('> tbody:last');
             row.append('<tr>');
-            var tr = timetable.find('> tbody:last > tr:last');
+            tr = timetable.find('> tbody:last > tr:last');
             tr.append($('<td id="' + lectureTimes[lectureIndex] + '">').text(lectureTimes[lectureIndex] + "-" + (lectureTimes[lectureIndex] + 1)));
 
             jQuery.each(dates, function (dateIndex, dateValue) {
                 // lookupForTableItem searches courseItem based on time (e.g. we10 == wednesday at 10 a clock) from selectedCoursesArray
                 var checkItem = lookupForTableItem(dateValue + lectureTimes[lectureIndex]);
 
-                if (checkItem != null) {
+                if (checkItem !== null) {
                     tr.append($('<td class="hoverclass" id="' + (checkItem.courseCode) + '">').text(checkItem.courseCode + "/").append($('<p style="margin: 0px">').text(checkItem.courseName)));
                 } else {
                     tr.append($('<td class="hoverclass" id="XX00Y0000">').text("--"));
@@ -120,7 +122,7 @@ var lukkarimaatti = (function () {
     function downloadCourseInfo(course) {
         console.log("downloadCourseInfo");
         var items = [];
-        $.getJSON(environment + "/lukkarimaatti/rest/name/"+course, "", function (data) {
+        $.getJSON(environment + "/lukkarimaatti/rest/name/" + course, "", function (data) {
             $.each(data, function (key, val) {
                 items.push(val);
             });
@@ -131,7 +133,8 @@ var lukkarimaatti = (function () {
     }
 
     function lookupForTableItem(position) {
-        for (var i = 0, len = selectedCoursesArray.length; i < len; i++) {
+        var i, len;
+        for (i = 0, len = selectedCoursesArray.length; i < len; i += 1) {
             if (selectedCoursesArray[i].position.courseName.toLowerCase() === position.toLowerCase()) {
                 console.log("debug=" + typeof selectedCoursesArray[i].position)
                 return selectedCoursesArray[i];

@@ -23,7 +23,6 @@ public class HTMLParserTest {
     private Map<String, String> map;
 
     private static final String TITE = "tite";
-    private static final String KIKE = "kike";
 
     private void HTMLParserTest() {
         try {
@@ -35,7 +34,7 @@ public class HTMLParserTest {
 
     //@Test
     public void testDepartmentData() {
-        testCourseData(KIKE);
+        testCourseData(TITE);
     }
 
     private void testCourseData(String department) {

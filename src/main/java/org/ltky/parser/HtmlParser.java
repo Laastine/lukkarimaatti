@@ -95,21 +95,13 @@ class HtmlParser {
                             if (stringHelper.extractPattern(item, coursePattern.getCoursePattern()))
                                 course = findNameCodeAndType(item, course);
                             break;
-                        case 1:
-                            if (stringHelper.extractPattern(item, coursePattern.getKikeTeacher()) & department.equals("kike") &
-                                    course.getTeacher().isEmpty())
-                                course = findTeacher(item, course);
-                            break;
                         case 2:
-                            if (!department.equals("kike") & stringHelper.extractPattern(item, coursePattern.getWeekNumber()) &
-                                    !"Vko".equals(item))
+                            if (stringHelper.extractPattern(item, coursePattern.getWeekNumber()) & !"Vko".equals(item))
                                 course = findWeek(item, course);
                             break;
                         case 3:
-                            if (!department.equals("kike") & stringHelper.extractPattern(item, coursePattern.getWeekDays()))
+                            if (stringHelper.extractPattern(item, coursePattern.getWeekDays()))
                                 course = findWeekDay(item, course);
-                            else if (department.equals("kike") & stringHelper.extractPattern(item, coursePattern.getWeekNumber()))
-                                course = findWeek(item, course);
                             break;
                         case 4:
                             final String endTime = new String(rowItems.get(elem + 1).text().getBytes("cp1252"), "UTF-8");
@@ -117,26 +109,10 @@ class HtmlParser {
                                     stringHelper.extractPattern(endTime, coursePattern.getTimeOfDay()) &
                                     !"Klo".equals(item))
                                 course.setTimeOfDay(item + "-" + endTime);
-                            else if (department.equals("kike") & stringHelper.extractPattern(item, coursePattern.getWeekDays()))
-                                course = findWeekDay(item, course);
                             break;
                         case 6:
-                            final String languageLabEndTime = new String(rowItems.get(elem + 1).text().getBytes("cp1252"), "UTF-8");
-                            if (!department.equals("kike") & stringHelper.extractPattern(item, coursePattern.getClassRoom()) & !"Sali".equals(item))
+                            if (stringHelper.extractPattern(item, coursePattern.getClassRoom()) & !"Sali".equals(item))
                                 course = findClassroom(item, course);
-                            else if (department.equals("kike") & stringHelper.extractPattern(item, coursePattern.getTimeOfDay()) &
-                                    stringHelper.extractPattern(languageLabEndTime, coursePattern.getTimeOfDay()) &
-                                    !"Klo".equals(item))
-                                course.setTimeOfDay(item + "-" + languageLabEndTime);
-                            break;
-                        case 7:
-                            if (department.equals("kike") & stringHelper.extractPattern(item, coursePattern.getClassRoom()) & !"Sali".equals(item))
-                                course = findClassroom(item, course);
-                            break;
-                        default:
-                            if (LOGGER.isDebugEnabled()) {
-                                LOGGER.debug("Hit empty line");
-                            }
                             break;
                     }
                 }
@@ -173,10 +149,10 @@ class HtmlParser {
 
     private Course findWeekDay(String weekDay, Course course) {
         if (stringHelper.extractPattern(weekDay, coursePattern.getWeekDays())) {
-            course.setWeekNumber(weekDay);
+            course.setWeekDay(weekDay);
             return course;
         } else {
-            course.setWeekNumber(UNKNOWN);
+            course.setWeekDay(UNKNOWN);
             return course;
         }
     }

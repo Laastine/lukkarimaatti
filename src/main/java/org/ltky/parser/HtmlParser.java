@@ -57,18 +57,6 @@ class HtmlParser {
     /**
      * Parses (HTML) table <td></td> -element data
      *
-     * Language lab courses gets handled differently since they have 8 rows instead of normal 7
-     * Language lab:
-     * <td>FV11A2600 - Business English Reading Course: C</td>
-     * <td>Taipale, Jukka</td>  #teacher
-     * <td>Periodi 3</td>       #period
-     * <td>2-8</td>             #weeks
-     * <td>ke</td>              #week day
-     * <td>10</td>              #start time
-     * <td>12</td>              #end time
-     * <td>1406</td>            #classroom
-     *
-     * Normal:
      * <td>CT50A5700 - Introduction to Computer Graphics/L</td>
      * <td>Periodi 2</td>       #period
      * <td>43-49</td>           #weeks

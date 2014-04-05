@@ -7,13 +7,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.Map;
-import java.util.LinkedHashMap;
 import java.util.HashMap;
-import java.util.Set;
-import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class URLParser {
     private final ParserConfiguration parserConfiguration = ParserConfiguration.getInstance();
@@ -26,17 +26,12 @@ public class URLParser {
      * @throws IOException
      */
     public Map<String, String> fetchStuff() throws IOException {
-        String uniURL = parserConfiguration.getUniURL();
-        LOGGER.info("Fetching: " + uniURL);
-        final Map<String, String> dependencies = getProperties();
-        String startMark = parserConfiguration.getStartTag();
-        String endMark = parserConfiguration.getEndTag();
-        Map<String, String> resultSet = new HashMap<>();
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("startMark=" + startMark + ", endMark=" + endMark);
-        }
-        String linkList = StringUtils.substringBetween(fetchFromWeb(uniURL), startMark, endMark);
-        String prefix = "https://uni.lut.fi";
+        final Map<String, String> resultSet = new HashMap<>();
+        final String prefix = "https://uni.lut.fi";
+        final String uniURL = parserConfiguration.getUniURL();
+        final Map<String, String> dependencies = getProperties(uniURL);
+        String linkList = StringUtils.substringBetween(fetchFromWeb(uniURL), parserConfiguration.getStartTag(), parserConfiguration.getEndTag());
+        LOGGER.debug("linkList=" + linkList);
         String link = "";
         for (Map.Entry me : dependencies.entrySet()) {
             String department = me.toString();
@@ -60,10 +55,9 @@ public class URLParser {
         return resultSet;
     }
 
-    private Map getProperties() {
-        String uniURL = parserConfiguration.getUniURL();
-        LOGGER.info("Fetching: " + uniURL);
+    private Map getProperties(final String uniURL) {
         final Map<String, String> dependencies = new LinkedHashMap<>();
+        LOGGER.info("Fetching: " + uniURL);
         dependencies.put(parserConfiguration.getEnte(), "ente");
         dependencies.put(parserConfiguration.getYmte(), "ymte");
         dependencies.put(parserConfiguration.getKete(), "kete");
@@ -79,21 +73,15 @@ public class URLParser {
     }
 
     /**
-     * Returns UTF-8 string from given URL
+     * Returns UTF-8 string presentation of HTML page from given URL
      *
      * @param fromUrl
      * @return
      * @throws IOException
      */
-    String fetchFromWeb(String fromUrl) throws IOException {
-        String content = "";
-        String inputLine;
-        URL url = new URL(fromUrl);
-        BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-        while ((inputLine = in.readLine()) != null) {
-            content += inputLine;
-        }
-        in.close();
-        return new String(content.getBytes(), "UTF8");
+    private String fetchFromWeb(final String fromUrl) throws IOException {
+        final List<String> list = new BufferedReader(new InputStreamReader(new URL(fromUrl).openStream()))
+                .lines().collect(Collectors.toList());
+        return StringUtils.join(list.toArray());
     }
 }

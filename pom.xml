@@ -10,14 +10,12 @@
     <url>http://maven.apache.org</url>
 
     <properties>
-        <jdk.version>1.7</jdk.version>
+        <jdk.version>1.8</jdk.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.version>3.2.5.RELEASE</spring.version>
+        <spring.version>4.0.3.RELEASE</spring.version>
         <jstl.version>1.2</jstl.version>
-        <jackson.version>1.9.10</jackson.version>
         <jersey.version>1.8</jersey.version>
     </properties>
-
 
     <dependencies>
 
@@ -108,13 +106,13 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>4.1.5.Final</version>
+            <version>4.3.4.Final</version>
         </dependency>
 
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>4.2.0.Final</version>
+            <version>5.1.0.Final</version>
         </dependency>
 
         <dependency>
@@ -147,7 +145,7 @@
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
-            <version>1.7.2</version>
+            <version>1.7.3</version>
         </dependency>
 
         <!-- JUnit -->
@@ -175,7 +173,7 @@
         <dependency>
             <groupId>org.glassfish</groupId>
             <artifactId>javax.servlet</artifactId>
-            <version>3.0</version>
+            <version>3.1.1</version>
             <scope>provided</scope>
         </dependency>
 
@@ -184,6 +182,7 @@
     <build>
         <finalName>lukkarimaatti</finalName>
         <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -194,6 +193,7 @@
                     <target>${jdk.version}</target>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -202,6 +202,7 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
@@ -210,15 +211,17 @@
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
                 <version>2.1</version>
             </plugin>
+
             <plugin>
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>maven-jetty-plugin</artifactId>
-                <version>6.1.10</version>
+                <version>6.1.20</version>
                 <configuration>
                     <scanIntervalSeconds>10</scanIntervalSeconds>
                     <connectors>
@@ -229,6 +232,7 @@
                     </connectors>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 

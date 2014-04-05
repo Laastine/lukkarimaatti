@@ -10,3 +10,4 @@ log/
 src/main/webapp/WEB-INF/static/js/*.min.js
 src/main/webapp/WEB-INF/static/css/*.min.css
 yuicompressor-2.4.8.jar
+src/main/webapp/WEB-INF/static/bower_components/

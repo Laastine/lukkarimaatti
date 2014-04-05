@@ -1,21 +1,18 @@
 <h1>Lukkarimaatti RESTful backend</h1>
 
-Hobby project to offer course data easily usable scheduling tool over simple REST interface.
+Hobby project to offer course data easily usable scheduling tool over simple REST interface.<br>
+Information is retrieved from [the official LUT teaching schedule info site] (https://uni.lut.fi/fi/web/guest/lukujarjestykset).<br>
 
 <b>[Test beta version!](http://54.194.116.194:8085/lukkarimaatti)</b>
 
-<h3>Dependencies</h3>
-Information is retrieved from [the official LUT teaching schedule info site] (https://uni.lut.fi/fi/web/guest/lukujarjestykset).<br>
-
-<h3>Main libraries used</h3>
-<b>Back-end</b>
+<h3>Back-end</h3>
 * [Spring 4.x](http://spring.io/)
 * [Hibernate 4.x](http://hibernate.org/)
 * [Jsoup 1.7.x](http://jsoup.org/)
 * [Jersey 1.8](https://jersey.java.net/)
 * [SonarQube 4.1.2](http://www.sonarqube.org/)<br>
  
-<b>Front-end</b>
+<h3>Front-end</h3>
 * [jQuery](http://jquery.com/)
 * [underscore.js](http://underscorejs.org/)
 * [typeahead.js](http://twitter.github.io/typeahead.js/)

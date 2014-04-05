@@ -95,6 +95,7 @@ public class ParserConfiguration {
         return p;
     }
 
+    @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
     }

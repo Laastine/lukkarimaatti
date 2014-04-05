@@ -47,7 +47,7 @@ var lukkarimaatti = (function () {
         httpRequest.send();
     }
 
-    (function getCourseData() {
+    function getCourseData() {
         var data;
         if (!loaded) {
             data = JSON.stringify(makeAjaxRequest(environment + '/lukkarimaatti/rest/all'));
@@ -56,7 +56,7 @@ var lukkarimaatti = (function () {
             console.log("courseNames=" + document.cookie);
         }
         return data;
-    });
+    }
 
     $(document).ready(function () {
         drawTable();
@@ -135,8 +135,8 @@ var lukkarimaatti = (function () {
     }
 
     function lookupForTableItem(position) {
-        selectedCourses.forEach(function(entry) {
-        //for (var i = 0, len = selectedCoursesArray.length; i < len; i++) {
+        selectedCourses.forEach(function (entry) {
+            //for (var i = 0, len = selectedCoursesArray.length; i < len; i++) {
             if (entry.position.courseName.toLowerCase() === position.toLowerCase()) {
                 console.log("debug=" + typeof entry.position)
                 return entry;
@@ -155,13 +155,29 @@ var lukkarimaatti = (function () {
     }
 
     $(function () {
-        var $searchBox = $('#courseSearchBox').typeahead({
-            minLength: 3,
-            highlight: true,
-            name: 'Courses',
-            dataType: 'json',
-            maxParallelRequests: 3,
-            rateLimitWait: 1000,
+        /*
+         var $searchBox = $('#courseSearchBox').typeahead({
+         minLength: 3,
+         highlight: true,
+         name: 'Courses',
+         dataType: 'json',
+         maxParallelRequests: 3,
+         rateLimitWait: 1000,
+         remote: {
+         url: environment + '/lukkarimaatti/rest/names/%QUERY',
+         filter: function (parsedResponse) {
+         // parsedResponse is the array returned from your backend
+         console.log(parsedResponse);
+
+         // do whatever processing you need here
+         return parsedResponse;
+         }
+         }
+         });
+         */
+        var engine = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
             remote: {
                 url: environment + '/lukkarimaatti/rest/names/%QUERY',
                 filter: function (parsedResponse) {
@@ -169,14 +185,25 @@ var lukkarimaatti = (function () {
                     console.log(parsedResponse);
 
                     // do whatever processing you need here
-                    return parsedResponse;
+                    return  _.map(parsedResponse, function(name) { return { value: name }; })
                 }
-            }
+            },
+            limit: 5
         });
+        engine.initialize();
+        // instantiate the typeahead UI
+        $('#courseSearchBox').typeahead({
+                hint: true,
+                highlight: true,
+                minLength: 3
+            },
+            {
+                displayKey: 'value',
+                source: engine.ttAdapter()
+            });
         $('form').submit(function (e) {
             e.preventDefault(); // don't submit the form
-            var course = $searchBox.val(); // get the current item
-            console.log("searchBox=" + course);
+            var course = $('#courseSearchBox').val(); // get the current item
             var itemInCourseList = selectedCourses.some(function (entry) {
                 return entry === course;
             });
@@ -188,10 +215,10 @@ var lukkarimaatti = (function () {
             } else {
                 alert("Course " + course + " is already selected!");
             }
-            $searchBox.val(""); // clean the input
+            course.val(""); // clean the input
             // This clear last query away.
-            // Otherwise last item will appear pretyped to searchbox if mouse click happens in page
-            $searchBox.typeahead('setQuery', '');
+            // Otherwise last item will appear pre typed to search box if mouse click happens in page
+            course.typeahead('setQuery', '');
         });
     });
 

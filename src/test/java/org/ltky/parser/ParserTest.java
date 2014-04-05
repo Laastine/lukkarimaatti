@@ -16,7 +16,7 @@ import java.util.Map;
 public class ParserTest {
     private static final Logger LOGGER = Logger.getLogger(ParserTest.class);
 
-    //@Test
+    @Test
     public void parserTest() {
         ParserConfiguration config = ParserConfiguration.getInstance();
         URLParser parser = new URLParser();

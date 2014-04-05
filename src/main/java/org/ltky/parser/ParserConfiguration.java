@@ -68,7 +68,7 @@ public class ParserConfiguration {
         tuta = getPropertyOrThrowUp(parserProperties, "tuta");
         kati = getPropertyOrThrowUp(parserProperties, "kati");
         mafy = getPropertyOrThrowUp(parserProperties, "mafy");
-        kike = getPropertyOrThrowUp(parserProperties, "kike");
+        //kike = getPropertyOrThrowUp(parserProperties, "kike");    Waits implementation
         kv = getPropertyOrThrowUp(parserProperties, "kv");
         period1 = getPropertyOrThrowUp(parserProperties, "period1");
         period2 = getPropertyOrThrowUp(parserProperties, "period2");

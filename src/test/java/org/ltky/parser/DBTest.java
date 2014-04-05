@@ -28,7 +28,7 @@ import java.util.List;
 public class DBTest {
     private static final Logger LOGGER = Logger.getLogger(DBTest.class);
 
-    //@Test
+    @Test
     public void saveCoursesTest() {
         LOGGER.debug("saveCoursesTest");
         try {
@@ -39,11 +39,11 @@ public class DBTest {
         }
     }
 
-    //@Test
+    @Test
     public void encodingTest() throws UnsupportedEncodingException {
         final ApplicationContext applicationContext = new ClassPathXmlApplicationContext("hibernate/hibernateConfig.xml");
         final CourseDao courseDao = (CourseDao) applicationContext.getBean("courseDao");
-        List<Course> list1 = courseDao.findByCourseCode("CT60A0210");
+        final List<Course> list1 = courseDao.findByCourseCode("CT60A0210");
         String a = new String(("Käytännön ohjelmointi=" + list1.get(1).getCourseName()).getBytes("UTF-8"), "ISO8859-1");
         LOGGER.debug(a);
     }

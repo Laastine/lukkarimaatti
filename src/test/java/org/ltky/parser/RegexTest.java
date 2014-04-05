@@ -18,7 +18,7 @@ public class RegexTest {
     private final StringHelper stringHelper = new StringHelper();
     private final CoursePattern coursePattern = new CoursePattern();
     private static final Logger LOGGER = Logger.getLogger(RegexTest.class);
-    private ArrayList<String> list = new ArrayList<>();
+    private final ArrayList<String> list = new ArrayList<>();
 
     private void init() {
     list.add("35-41");
@@ -28,7 +28,7 @@ public class RegexTest {
     list.add("2-7, 11-12, 15");
     }
 
-    //@Test
+    @Test
     public void simpleTest() {
         init();
         for (String s : list) {

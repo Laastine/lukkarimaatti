@@ -32,7 +32,7 @@ public class HTMLParserTest {
         }
     }
 
-    //@Test
+    @Test
     public void testDepartmentData() {
         testCourseData(TITE);
     }
@@ -41,7 +41,7 @@ public class HTMLParserTest {
         HTMLParserTest();
         try {
             Assert.assertNotNull(map);
-            HtmlParser htmlParser = new HtmlParser(department);
+            final HtmlParser htmlParser = new HtmlParser(department);
             htmlParser.parse(map.get(department));
         } catch (Exception e) {
             LOGGER.error("test error", e);

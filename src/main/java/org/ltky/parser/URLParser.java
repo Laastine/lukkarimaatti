@@ -28,18 +28,7 @@ public class URLParser {
     public Map<String, String> fetchStuff() throws IOException {
         String uniURL = parserConfiguration.getUniURL();
         LOGGER.info("Fetching: " + uniURL);
-        final Map<String, String> dependencies = new LinkedHashMap<>();
-        dependencies.put(parserConfiguration.getEnte(), "ente");
-        dependencies.put(parserConfiguration.getYmte(), "ymte");
-        dependencies.put(parserConfiguration.getKete(), "kete");
-        dependencies.put(parserConfiguration.getKote(), "kote");
-        dependencies.put(parserConfiguration.getSate(), "sate");
-        dependencies.put(parserConfiguration.getTite(), "tite");
-        dependencies.put(parserConfiguration.getTuta(), "tuta");
-        dependencies.put(parserConfiguration.getKati(), "kati");
-        dependencies.put(parserConfiguration.getMafy(), "mafy");
-        dependencies.put(parserConfiguration.getKike(), "kike");
-        dependencies.put(parserConfiguration.getKv(), "kv");
+        final Map<String, String> dependencies = getProperties();
         String startMark = parserConfiguration.getStartTag();
         String endMark = parserConfiguration.getEndTag();
         Map<String, String> resultSet = new HashMap<>();
@@ -49,10 +38,7 @@ public class URLParser {
         String linkList = StringUtils.substringBetween(fetchFromWeb(uniURL), startMark, endMark);
         String prefix = "https://uni.lut.fi";
         String link = "";
-        Set set = dependencies.entrySet();
-        Iterator iterator = set.iterator();
-        for (int i = 0; i < dependencies.size(); i++) {
-            Map.Entry me = (Map.Entry) iterator.next();
+        for (Map.Entry me : dependencies.entrySet()) {
             String department = me.toString();
             department = department.substring(StringUtils.indexOfAny(department, "=") + 1, department.length());
             Pattern pattern = Pattern.compile("<a href=.+" + me.getKey());
@@ -72,6 +58,24 @@ public class URLParser {
             resultSet.put(department, link);
         }
         return resultSet;
+    }
+
+    private Map getProperties() {
+        String uniURL = parserConfiguration.getUniURL();
+        LOGGER.info("Fetching: " + uniURL);
+        final Map<String, String> dependencies = new LinkedHashMap<>();
+        dependencies.put(parserConfiguration.getEnte(), "ente");
+        dependencies.put(parserConfiguration.getYmte(), "ymte");
+        dependencies.put(parserConfiguration.getKete(), "kete");
+        dependencies.put(parserConfiguration.getKote(), "kote");
+        dependencies.put(parserConfiguration.getSate(), "sate");
+        dependencies.put(parserConfiguration.getTite(), "tite");
+        dependencies.put(parserConfiguration.getTuta(), "tuta");
+        dependencies.put(parserConfiguration.getKati(), "kati");
+        dependencies.put(parserConfiguration.getMafy(), "mafy");
+        //dependencies.put(parserConfiguration.getKike(), "kike");  Waits for implementation
+        dependencies.put(parserConfiguration.getKv(), "kv");
+        return dependencies;
     }
 
     /**

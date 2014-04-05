@@ -13,7 +13,7 @@ import org.junit.Test;
 public class LoadConfigTest {
     private static final Logger LOGGER = Logger.getLogger(LoadConfigTest.class);
 
-    //@Test
+    @Test
     public void loadTest() {
         ParserConfiguration parserConfig = ParserConfiguration.getInstance();
         try {

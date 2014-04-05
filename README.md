@@ -9,7 +9,7 @@ Information is retrieved from uni.lut.fi, [the official LUT teaching schedule in
 Maven for building a package.
 
 <h3>Main libraries used:</h3>
-* [Spring 3.x](http://spring.io/)
+* [Spring 4.x](http://spring.io/)
 * [Hibernate 3.x](http://hibernate.org/)
 * [Jsoup 1.7.x](http://jsoup.org/)
 * [Jersey 1.8](https://jersey.java.net/)

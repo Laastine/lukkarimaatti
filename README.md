@@ -16,7 +16,7 @@ Information is retrieved from [the official LUT teaching schedule info site] (ht
 * [jQuery](http://jquery.com/)
 * [underscore.js](http://underscorejs.org/)
 * [typeahead.js](http://twitter.github.io/typeahead.js/)
-* [Bootstrap](http://getbootstrap.com/)
+* [require.js](http://requirejs.org/)
 * [JSLint](http://www.jslint.com/)
 * [Bower](http://bower.io/)<br>
 

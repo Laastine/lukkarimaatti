@@ -1,56 +1,149 @@
 @charset "UTF-8";
-.lukkarimaatti_search_list {
-    min-height: 590px;
-    background-color: #eee;
-    border-radius: 4px;
+
+html,
+body {
+    height: 100%;
 }
 
-.lukkarimaatti_search_list_item {
-    background-color: #E0E0E0;
+html {
+    overflow-y: scroll;
+    *overflow-x: hidden;
 }
 
-.search-button {
-    vertical-align: top;
+html {
+    font-family: Prociono;
+    font-size: 18px;
+    line-height: 1.2;
+    color: #333;
 }
 
-th, td {
-    overflow: hidden;
+a {
+    color: #03739c;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+p {
+    margin: 0 0 10px 0;
+}
+
+.masthead,
+.footer {
+    max-width: 800px;
+    margin: 0 auto;
     text-align: center;
 }
 
-th {
-    width: 100px;
+.twitter-logo {
+    width: 72px;
+    height: 72px;
+    margin: 0;
+    vertical-align: middle;
 }
 
-th:first-child {
-    width: 20px;
+.title {
+    margin: 20px 0 0 0;
+    font-size: 64px;
 }
 
-.container-fluid {
-    padding-left: 80px;
-    padding-right: 80px;
-    padding-top: 10px;
+.disclaimer {
+    margin: 20px 0 0 0;
+    font-size: 20px;
+    color: #444;
 }
 
-.jumbotron {
-    font-size: 14px;
-    padding-top: 2px;
-    padding-bottom: 2px;
+.typeahead-demo {
+    position: relative;
+    *z-index: 1;
+    width: 600px;
+    margin: 50px auto 0 auto;
+    padding: 15px;
+    text-align: left;
+    background-color: #0097cf;
+    background-image: -moz-linear-gradient(top, #04a2dd, #03739c);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#04a2dd), to(#03739c));
+    background-image: -webkit-linear-gradient(top, #04a2dd, #03739c);
+    background-image: -o-linear-gradient(top, #04a2dd, #03739c);
+    background-image: linear-gradient(to bottom, #04a2dd, #03739c);
+    background-repeat: repeat-x;
+    border: 1px solid #024e6a;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 0 2px #111;
+    -moz-box-shadow: 0 0 2px #111;
+    box-shadow: 0 0 2px #111;
 }
 
-.table tbody tr td.hoverclass {
-    font-size: 10px;
-    padding-top: 2px;
+.btn-demo-text:active {
+    background-color: #aaa;
+    background-image: none;
 }
 
-.table tbody tr td.hoverclass:hover {
-    background-color: #ddd;
-}
-
-.design {
-    float: right;
-    width: 30px;
+.typeahead,
+.tt-hint {
+    width: 574px;
     height: 30px;
-    white-space: nowrap;
-    background: url("../res/ct_icon.png") no-repeat center top;
+    padding: 8px 12px;
+    font-size: 24px;
+    line-height: 30px;
+    border: 1px solid #024e6a;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    outline: none;
+}
+
+.typeahead {
+    background-color: #fff;
+}
+
+.tt-hint {
+    color: #999
+}
+
+.tt-dropdown-menu {
+    width: 600px;
+    margin-top: 12px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
+.tt-suggestion {
+    padding: 8px 20px;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.tt-suggestion + .tt-suggestion {
+    font-size: 14px;
+    border-top: 1px solid #ccc;
+}
+
+.tt-suggestions .repo-language {
+    float: right;
+    font-style: italic;
+}
+
+.tt-suggestions .repo-name {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.tt-suggestions .repo-description {
+    margin: 0;
+}
+
+.twitter-typeahead .tt-suggestion.tt-cursor {
+    color: #03739c;
 }

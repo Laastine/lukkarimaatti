@@ -1,91 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="LUT unofficial scheduling tool" content="">
-    <meta name="Mikko Kaistine & Oskar Sonninen" content="">
+    <meta name="Mikko Kaistinen" content="">
     <link rel="shortcut icon" href="res/favicon.png">
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link href="css/offcanvas.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/typeahead.js-bootstrap.css">
     <link rel="stylesheet" href="css/lukkarimaatti.css">
     <title>Lukkarimaatti</title>
-
 </head>
 
 <body>
-<div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#"><img src="res/lukkarimaatti_logo.png" alt="lukkarimaatti logo"/></a>
-        </div>
-        <div class="collapse navbar-collapse">
-            <form id="nav_login" class="navbar-form navbar-right" role="form">
-                <div class="form-group">
-                    <input type="text" placeholder="Email" class="form-control">
-                </div>
-                <div class="form-group">
-                    <input type="password" placeholder="Password" class="form-control">
-                </div>
-                <button type="submit" class="btn btn-success" onsubmit="lukkarimaatti.login()">Sign in</button>
-            </form>
-            <div id="nav_user_name" class="pull-right" style="display: none ; font-size: 30px ; color:  #777777">
-                ASDASDASDASD
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="container-fluid">
-    <div class="row row-offcanvas row-offcanvas-right">
-        <div class="col-xs-12 col-sm-9">
-            <form role="course-search-form" method="post">
-                <div class="form-group">
-                    <input id="courseSearchBox" type="search" class="form-control"
-                           placeholder="Type a course name [e.g. matematiikka]">
-                    <input type="submit" class="search-submit" value="Add"/>
-                </div>
-            </form>
-
-            <div class="jumbotron">
-                <table id="timetable" class="schedule_table table table-striped">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Monday</th>
-                        <th>Tuesday</th>
-                        <th>Wednesday</th>
-                        <th>Thursday</th>
-                        <th>Friday</th>
-                    </tr>
-                    <tbody>
-                    </tbody>
-                    </thead>
-                </table>
-            </div>
-        </div>
-
-        <div class="col-xs-6 col-sm-3 sidebar-offcanvas">
-            <div class="panel panel-default">
-                <div class="panel-heading">Courses</div>
-                <ul id="sidebar_list_of_courses" class="list-group table-bordered lukkarimaatti_search_list">
-                </ul>
-            </div>
-        </div>
-    </div>
+<div class="container">
+    <h1>Lukkarimaatti</h1>
+        <input id="courseSearchBox" type="search" class="typeahead" placeholder="Type a course name [e.g. matematiikka]"/>
     <footer>
-        <p>Runs on free AWS micro node so it can't handle too much load.</p>
+        <p class="disclaimer">
+            Runs on free AWS micro node so it can't handle too much load.
+        </p>
     </footer>
 </div>
 
 <script src="bower_components/jquery/dist/jquery.js"></script>
 <script src="js/lukkarimaatti.js"></script>
-<script src="js/offcanvas.js"></script>
 <script src="bower_components/underscore/underscore.js"></script>
+<script src="bower_components/handlebars/handlebars.js"></script>
 <script src="bower_components/typeahead.js/dist/typeahead.bundle.js"></script>
-<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 
 </body>
 </html>

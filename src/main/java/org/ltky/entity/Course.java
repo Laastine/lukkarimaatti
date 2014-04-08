@@ -1,6 +1,13 @@
 package org.ltky.entity;
 
-import javax.persistence.*;
+import org.hibernate.annotations.Immutable;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Column;
+import javax.persistence.GenerationType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
@@ -13,6 +20,7 @@ import java.io.Serializable;
  */
 @XmlRootElement
 @Entity
+@Immutable
 @Table(name = "COURSE")
 public class Course implements Serializable {
 

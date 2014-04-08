@@ -31,7 +31,7 @@ public class CourseRestService {
     @GET
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Path("/code/{code}")
-    public List<Course> getCourseCode(@PathParam("code") String code) {
+    public final List<Course> getCourseCode(@PathParam("code") final String code) {
         if (LOGGER.isDebugEnabled())
             LOGGER.debug("getCourseCode");
         return courseDao.findByCourseCode(code);
@@ -40,7 +40,7 @@ public class CourseRestService {
     @GET
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Path("/codes/{codes}")
-    public List<String> getLikeCourseCodes(@PathParam("codes") String codes) {
+    public final List<String> getLikeCourseCodes(@PathParam("codes") final String codes) {
         if (LOGGER.isDebugEnabled())
             LOGGER.debug("getLikeCourseCodes");
         return new StringHelper().removeDuplicates(courseDao.findCourseCodes(codes));
@@ -49,7 +49,7 @@ public class CourseRestService {
     @GET
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Path("/name/{courseName}")
-    public List<Course> getCourseName(@PathParam("courseName") String courseName) {
+    public final List<Course> getCourseName(@PathParam("courseName") final String courseName) {
         if (LOGGER.isDebugEnabled())
             LOGGER.debug("getCourseName");
         return courseDao.findByCourseName(courseName);
@@ -58,7 +58,7 @@ public class CourseRestService {
     @GET
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Path("/names/{courseNames}")
-    public List<Course> getCourseNames(@PathParam("courseNames") String courseNames) {
+    public final List<Course> getCourseNames(@PathParam("courseNames") final String courseNames) {
         if (LOGGER.isDebugEnabled())
             LOGGER.debug("getCourseNames");
         if (courseNames.length() > MIN) {
@@ -71,7 +71,7 @@ public class CourseRestService {
     @GET
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Path("/department/{department}")
-    public List<Course> getDepartmentInJSON(@PathParam("department") String department) {
+    public final List<Course> getDepartmentInJSON(@PathParam("department") final String department) {
         if (LOGGER.isDebugEnabled())
             LOGGER.debug("getDepartmentInJSON");
         return courseDao.findByDepartment(department);
@@ -80,7 +80,7 @@ public class CourseRestService {
     @GET
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Path("/all/")
-    public List<String> getAllCourseCodes() {
+    public final List<String> getAllCourseCodes() {
         if (LOGGER.isDebugEnabled())
             LOGGER.debug("getAllCourseCodes");
         return courseDao.findAllCourseNames();

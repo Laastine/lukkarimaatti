@@ -7,7 +7,15 @@ var lukkarimaatti = (function () {
     noppa = 'https://noppa.lut.fi/noppa/opintojakso/';
 
     $(document).ready(function () {
-        $('#courseSearchBox').focus();
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,basicWeek,basicDay'
+            },
+            defaultView: 'basicWeek',
+            editable: true
+        });
     });
 
     function downloadCourseInfo(course) {

@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="LUT unofficial scheduling tool" content="">
-    <meta name="Mikko Kaistinen" content="">
     <link rel="shortcut icon" href="res/favicon.png">
     <link rel="stylesheet" href="css/lukkarimaatti.css">
+    <link rel='stylesheet' href='bower_components/fullcalendar/fullcalendar.css'/>
     <title>Lukkarimaatti</title>
 </head>
 
 <body>
 <div class="container">
     <h1>Lukkarimaatti</h1>
-        <input id="courseSearchBox" type="search" class="typeahead" placeholder="Type a course name [e.g. matematiikka]"/>
+    <input id="courseSearchBox" type="search" class="typeahead" placeholder="Type a course name [e.g. matematiikka]"/>
+    <br>
+    <br>
+
+    <div id='calendar'></div>
     <footer>
         <p class="disclaimer">
             Runs on free AWS micro node so it can't handle too much load.
@@ -22,11 +24,12 @@
     </footer>
 </div>
 
-<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/jquery/jquery.js"></script>
 <script src="js/lukkarimaatti.js"></script>
 <script src="bower_components/underscore/underscore.js"></script>
 <script src="bower_components/handlebars/handlebars.js"></script>
 <script src="bower_components/typeahead.js/dist/typeahead.bundle.js"></script>
+<script src='bower_components/fullcalendar/fullcalendar.js'></script>
 
 </body>
 </html>

@@ -4,7 +4,7 @@
 
     <groupId>org.ltky</groupId>
     <artifactId>lukkarimaatti</artifactId>
-    <version>1.0</version>
+    <version>0.7</version>
     <packaging>war</packaging>
     <name>lukkarimaatti</name>
     <url>http://maven.apache.org</url>

@@ -24,7 +24,8 @@ Information is retrieved from [the official LUT teaching schedule info site] (ht
 <h2>Requirements & Build</h2>
 Requires Java 8 and Maven 3.x.<br>
 Maven for building a package.<br>
-mvn clean package
+mvn clean package - for building (release) package
+mvn clean jetty:run - for quick browser testing
 
 <h2>REST</h2>
 <b>Course code like-search</b><br>

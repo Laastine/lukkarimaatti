@@ -15,8 +15,9 @@ Information is retrieved from [the official LUT teaching schedule info site] (ht
 <h3>Front-end</h3>
 * [jQuery](http://jquery.com/)
 * [underscore.js](http://underscorejs.org/)
+* [BackBone](http://backbonejs.org/)
 * [typeahead.js](http://twitter.github.io/typeahead.js/)
-* [require.js](http://requirejs.org/)
+* [FullCalendar](http://arshaw.com/fullcalendar/)
 * [JSHint](http://www.jshint.com/)
 * [Bower](http://bower.io/)<br>
 
@@ -50,6 +51,14 @@ e.g. hostname:port/lukkarimaatti/rest/code/CT50A6000
 hostname:port/lukkarimaatti/rest/department/<department><br>
 e.g. hostname:port/lukkarimaatti/rest/department/tite<br>
 (ente/ymte/kete/kote/sate/tite/tuta/kati/mafy/kike/kv)<br>
+
+<b>Exam search</b><br>
+hostname:port/lukkarimaatti/lukkarimaatti/rest/examname/<courseName><br>
+e.g. hostname:port/lukkarimaatti/rest/examname/mate
+
+<b>Exam like-search</b><br>
+hostname:port/lukkarimaatti/lukkarimaatti/rest/examnames/<courseName><br>
+e.g. hostname:port/lukkarimaatti/rest/examnames/mikroteoria
 
 <h2>Copyright and license</h2>
 Copyright &copy; 2013 Mikko Kaistinen, laastine@kapsi.fi

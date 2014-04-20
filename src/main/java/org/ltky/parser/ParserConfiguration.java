@@ -14,8 +14,11 @@ import java.util.Properties;
  */
 public class ParserConfiguration {
     private String uniURL;
+    private String examURL;
     private String startTag;
     private String endTag;
+    private String examStartTag;
+    private String examEndTag;
     private String folder;
     private String ente;
     private String ymte;
@@ -56,8 +59,11 @@ public class ParserConfiguration {
     public String loadServletInitParameters() throws IOException {
         Properties parserProperties = loadProperties();
         uniURL = getPropertyOrThrowUp(parserProperties, "uniURL");
+        examURL = getPropertyOrThrowUp(parserProperties, "examURL");
         startTag = getPropertyOrThrowUp(parserProperties, "startTag");
         endTag = getPropertyOrThrowUp(parserProperties, "endTag");
+        examStartTag = getPropertyOrThrowUp(parserProperties, "examStartTag");
+        examEndTag = getPropertyOrThrowUp(parserProperties, "examEndTag");
         folder = getPropertyOrThrowUp(parserProperties, "folder");
         ente = getPropertyOrThrowUp(parserProperties, "ente");
         ymte = getPropertyOrThrowUp(parserProperties, "ymte");
@@ -104,12 +110,24 @@ public class ParserConfiguration {
         return uniURL;
     }
 
+    public String getExamURL() {
+        return examURL;
+    }
+
     public String getStartTag() {
         return startTag;
     }
 
     public String getEndTag() {
         return endTag;
+    }
+
+    public String getExamStartTag() {
+        return examStartTag;
+    }
+
+    public String getExamEndTag() {
+        return examEndTag;
     }
 
     public String getEnte() {

@@ -2,6 +2,7 @@ package org.ltky.parser;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.ltky.util.StringHelper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 public class URLParser {
     private final ParserConfiguration parserConfiguration = ParserConfiguration.getInstance();
     private static final Logger LOGGER = Logger.getLogger(URLParser.class);
-
+    private static final String prefix = "https://uni.lut.fi";
     /**
      * Parse each departments url
      *
@@ -27,7 +28,6 @@ public class URLParser {
      */
     public Map<String, String> fetchStuff() throws IOException {
         final Map<String, String> resultSet = new HashMap<>();
-        final String prefix = "https://uni.lut.fi";
         final String uniURL = parserConfiguration.getUniURL();
         final Map<String, String> dependencies = getProperties(uniURL);
         String linkList = StringUtils.substringBetween(fetchFromWeb(uniURL), parserConfiguration.getStartTag(), parserConfiguration.getEndTag());
@@ -53,6 +53,12 @@ public class URLParser {
             resultSet.put(department, link);
         }
         return resultSet;
+    }
+
+    public String fetchExamURL() throws IOException {
+        final String examURL = parserConfiguration.getExamURL();
+        new StringHelper().writeToFile(fetchFromWeb(examURL), "test.txt");
+        return prefix + StringUtils.substringBetween(fetchFromWeb(examURL), parserConfiguration.getExamStartTag(), parserConfiguration.getExamEndTag());
     }
 
     private Map getProperties(final String uniURL) {

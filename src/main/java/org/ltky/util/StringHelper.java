@@ -23,17 +23,17 @@ public class StringHelper {
     /**
      * Extract certain pattern from given string
      *
-     * @param courseAction
+     * @param input
      * @param pattern
      * @return
      * @throws IllegalStateException
      */
-    public boolean extractPattern(String courseAction, String pattern) throws IllegalStateException {
+    public boolean extractPattern(String input, String pattern) throws IllegalStateException {
         Pattern p = Pattern.compile(pattern);
-        Matcher matcher = p.matcher(courseAction);
+        Matcher matcher = p.matcher(input);
         while (matcher.find())
             if ("".equals(matcher.group())) {
-                LOGGER.trace("Couldn't find pattern=" + pattern + " from " + courseAction);
+                LOGGER.trace("Couldn't find pattern=" + pattern + " from " + input);
                 return false;
             }
         return true;

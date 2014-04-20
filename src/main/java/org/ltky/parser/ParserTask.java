@@ -2,12 +2,12 @@ package org.ltky.parser;
 
 import org.apache.log4j.Logger;
 import org.ltky.dao.CourseDao;
+import org.ltky.dao.ExamDao;
 import org.ltky.entity.Course;
+import org.ltky.entity.Exam;
 import org.ltky.validator.CourseValidator;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import java.util.List;
 
 /**
  * lukkarimaatti
@@ -21,7 +21,6 @@ public class ParserTask implements Runnable {
     private final String departmentData;
     private static final Logger LOGGER = Logger.getLogger(ParserTask.class);
     private final ApplicationContext applicationContext = new ClassPathXmlApplicationContext("hibernate/hibernateConfig.xml");
-    private final CourseDao courseDao = (CourseDao) applicationContext.getBean("courseDao");
 
     public ParserTask(String department, String departmentData){
         this.department = department;
@@ -31,23 +30,29 @@ public class ParserTask implements Runnable {
     @Override
     public void run() {
         LOGGER.info(Thread.currentThread().getName() + " Start, cmd=" + department);
-        processCommand();
+        saveCourseToDB();
     }
 
     /**
      * Save course data to DB
      */
-    private void processCommand() {
+    private void saveCourseToDB() {
+        final CourseDao courseDao = (CourseDao) applicationContext.getBean("courseDao");
         try {
-            final HtmlParser htmlParser = new HtmlParser(department);
             courseDao.delete();          //clean old courses
-            for (Course newCourse : (htmlParser.parse(departmentData))) {
-                if(CourseValidator.validateCourse(newCourse)) {
-                    courseDao.saveOrUpdate(newCourse);
-                }
-            }
+            (new HtmlParser(department).parse(departmentData)).stream().filter(newCourse -> CourseValidator.validateCourse(newCourse)).forEach(courseDao::saveOrUpdate);
         } catch (Exception e) {
             LOGGER.error("HtmlParser error", e);
+        }
+    }
+
+    public void saveExamsToDB() {
+        final ExamDao examDao = (ExamDao) applicationContext.getBean("examDao");
+        try {
+            examDao.delete();
+            new ExamParser().parseExams().forEach(examDao::saveOrUpdate);
+        } catch (Exception e) {
+            LOGGER.error("Exam parser error", e);
         }
     }
 

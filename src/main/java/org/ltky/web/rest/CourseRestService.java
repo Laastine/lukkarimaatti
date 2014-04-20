@@ -2,7 +2,9 @@ package org.ltky.web.rest;
 
 import org.apache.log4j.Logger;
 import org.ltky.dao.CourseDao;
+import org.ltky.dao.ExamDao;
 import org.ltky.entity.Course;
+import org.ltky.entity.Exam;
 import org.ltky.util.StringHelper;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -26,6 +28,7 @@ public class CourseRestService {
     private static final Logger LOGGER = Logger.getLogger(CourseRestService.class);
     private final ApplicationContext applicationContext = new ClassPathXmlApplicationContext("hibernate/hibernateConfig.xml");
     private final CourseDao courseDao = (CourseDao) applicationContext.getBean("courseDao");
+    private final ExamDao examDao = (ExamDao) applicationContext.getBean("examDao");
     private static final int MIN = 3;
 
     @GET
@@ -85,4 +88,27 @@ public class CourseRestService {
             LOGGER.debug("getAllCourseCodes");
         return courseDao.findAllCourseNames();
     }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    @Path("/examname/{examName}")
+    public final List<Exam> getExamName(@PathParam("examName") final String examName) {
+        if (LOGGER.isDebugEnabled())
+            LOGGER.debug("getExamNames");
+        return examDao.findByExamName(examName);
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    @Path("/examnames/{examNames}")
+    public final List<Exam> getExamNames(@PathParam("examNames") final String examNames) {
+        if (LOGGER.isDebugEnabled())
+            LOGGER.debug("getExamNames");
+        if (examNames.length() > MIN) {
+            return examDao.findExamNames(examNames);
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
 }

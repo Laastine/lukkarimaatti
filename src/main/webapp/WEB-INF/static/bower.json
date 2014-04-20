@@ -18,7 +18,6 @@
   "dependencies": {
     "handlebars": "~1.3.0",
     "fullcalendar": "~1.6.4",
-    "requirejs": "~2.1.11",
     "jquery": "~1.10.2",
     "typeahead.js": "~0.10.2",
     "underscore": "~1.6.0"

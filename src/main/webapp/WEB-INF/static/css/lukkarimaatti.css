@@ -17,6 +17,20 @@ html {
     color: #333;
 }
 
+.dialog label {
+    width:90px;
+    float:left;
+}
+
+.dialog .field {
+    width:170px;
+}
+
+#calendar {
+    width: 900px;
+    margin: 0 auto;
+}
+
 a {
     color: #03739c;
     text-decoration: none;

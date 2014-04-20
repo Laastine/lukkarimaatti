@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * lukkarimaatti
  * Created with IntelliJ IDEA.
@@ -16,8 +18,11 @@ public class LukkarimaattiController {
     private static final Logger LOGGER = Logger.getLogger(LukkarimaattiController.class);
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String getHome() {
-        LOGGER.debug("index.html HIT");
+    public String getHome(HttpServletRequest request) {
+        LOGGER.debug("index hit from "
+                +request.getRemoteAddr()+
+                "with user-agent"
+                +request.getHeader("user-agent"));
         return "redirect:/static/index.html";
     }
 }

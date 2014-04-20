@@ -1,35 +1,41 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="res/favicon.png">
     <link rel="stylesheet" href="css/lukkarimaatti.css">
-    <link rel='stylesheet' href='bower_components/fullcalendar/fullcalendar.css'/>
+    <link rel="stylesheet" href="bower_components/fullcalendar/fullcalendar.css"/>
+    <link rel="stylesheet" href="bower_components/jquery-ui/themes/base/jquery-ui.css"/>
     <title>Lukkarimaatti</title>
 </head>
 
 <body>
-<div class="container">
-    <h1>Lukkarimaatti</h1>
-    <input id="courseSearchBox" type="search" class="typeahead" placeholder="Type a course name [e.g. matematiikka]"/>
-    <br>
-    <br>
+    <div class="container">
+        <h1>Lukkarimaatti</h1>
+        <input id="courseSearchBox" type="search" class="typeahead" placeholder="Type a course name [e.g. matematiikka]"/>
+        <br>
+        <br>
 
-    <div id='calendar'></div>
-    <footer>
-        <p class="disclaimer">
-            Runs on free AWS micro node so it can't handle too much load.
-        </p>
-    </footer>
-</div>
+        <div id="calendar-container">
+        </div>
 
-<script src="bower_components/jquery/jquery.js"></script>
-<script src="js/lukkarimaatti.js"></script>
-<script src="bower_components/underscore/underscore.js"></script>
-<script src="bower_components/handlebars/handlebars.js"></script>
-<script src="bower_components/typeahead.js/dist/typeahead.bundle.js"></script>
-<script src='bower_components/fullcalendar/fullcalendar.js'></script>
+        <br>
+        <br>
+        <footer>
+            <p class="disclaimer">
+                Runs on free  AWS micro node so it can't handle too much load.
+            </p>
+        </footer>
+    </div>
+
+    <script src="bower_components/jquery/jquery.js"></script>
+    <script src="bower_components/jquery-ui/ui/jquery-ui.js"></script>
+    <script src='bower_components/fullcalendar/fullcalendar.js'></script>
+    <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/backbone/backbone.js"></script>
+    <script src="bower_components/handlebars/handlebars.js"></script>
+    <script src="bower_components/typeahead.js/dist/typeahead.bundle.js"></script>
+    <script src="js/lukkarimaatti.js"></script>
 
 </body>
 </html>

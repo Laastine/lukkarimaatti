@@ -44,4 +44,8 @@
         <property name="SessionFactory" ref="mySessionFactory"/>
     </bean>
 
+    <bean id="examDao" class="org.ltky.dao.daoimpl.ExamDaoImpl">
+        <property name="SessionFactory" ref="mySessionFactory"/>
+    </bean>
+
 </beans>

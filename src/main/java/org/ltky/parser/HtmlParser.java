@@ -56,6 +56,7 @@ class HtmlParser {
 
     /**
      * Parses (HTML) table <td></td> -element data
+     * e.g.
      *
      * <td>CT50A5700 - Introduction to Computer Graphics/L</td>
      * <td>Periodi 2</td>       #period

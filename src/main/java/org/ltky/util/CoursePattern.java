@@ -7,6 +7,10 @@ package org.ltky.util;
  * Date: 29.11.2013
  */
 public class CoursePattern {
+    public String getExamDate() {
+        return "[0-9]{1,2}.[0-9]{1,2}/[0-9]{1,2}";
+    }
+
     public String getKikeTeacher() {
         return "^[A-ZÄÖÅ][A-Za-zÄäÖöÅå,\\- ]+";
     }

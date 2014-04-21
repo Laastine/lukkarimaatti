@@ -2,40 +2,117 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Lukkarimaatti scheduling tool">
+    <meta name="Mikko Kaistinen" content="">
     <link rel="shortcut icon" href="res/favicon.png">
     <link rel="stylesheet" href="css/lukkarimaatti.css">
     <link rel="stylesheet" href="bower_components/fullcalendar/fullcalendar.css"/>
     <link rel="stylesheet" href="bower_components/jquery-ui/themes/base/jquery-ui.css"/>
-    <title>Lukkarimaatti</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css"/>
 </head>
 
 <body>
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
-        <h1>Lukkarimaatti</h1>
-        <input id="courseSearchBox" type="search" class="typeahead" placeholder="Type a course name [e.g. matematiikka]"/>
-        <br>
-        <br>
-
-        <div id="calendar-container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Lukkarimaatti</a>
         </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a data-toggle="modal" href="#aboutModal">About</a></li>
+                <li><a data-toggle="modal" href="#contactModal">Contact</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+
+<div class="container-fluid" style="padding-top: 20px">
+    <div class="sidebar">
+        <div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row" style="padding-top: 25px"></div>
+        <input id="courseSearchBox" type="search" class="typeahead"
+               placeholder="Type a course name [e.g. matematiikka]"/>
+        <div class="row" style="padding-top: 15px"></div>
+
+        <section id="lukkarimaatti">
+            <div id="calendar">
+            </div>
+        </section>
 
         <br>
         <br>
         <footer>
             <p class="disclaimer">
-                Runs on free  AWS micro node so it can't handle too much load.
+                Runs on free AWS micro node
             </p>
         </footer>
     </div>
+</div>
 
-    <script src="bower_components/jquery/jquery.js"></script>
-    <script src="bower_components/jquery-ui/ui/jquery-ui.js"></script>
-    <script src='bower_components/fullcalendar/fullcalendar.js'></script>
-    <script src="bower_components/underscore/underscore.js"></script>
-    <script src="bower_components/backbone/backbone.js"></script>
-    <script src="bower_components/handlebars/handlebars.js"></script>
-    <script src="bower_components/typeahead.js/dist/typeahead.bundle.js"></script>
-    <script src="js/lukkarimaatti.js"></script>
+
+<script src="bower_components/jquery/jquery.js"></script>
+<script src="bower_components/jquery-ui/ui/jquery-ui.js"></script>
+<script src='bower_components/fullcalendar/fullcalendar.js'></script>
+<script src="bower_components/underscore/underscore.js"></script>
+<script src="bower_components/backbone/backbone.js"></script>
+<script src="bower_components/handlebars/handlebars.js"></script>
+<script src="bower_components/typeahead.js/dist/typeahead.bundle.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="js/lukkarimaatti.js"></script>
+
+<!-- Modal -->
+<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="aboutModalLabel">About</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Lukkarimaatti scheduling tool for time table planning and creation.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="contactModalLabel">Contact</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    laastine@kapsi.fi
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 
 </body>
 </html>

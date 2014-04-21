@@ -2,8 +2,8 @@ var lukkarimaatti = (function () {
     'use strict';
     var courseNames, environment, noppa;
     courseNames = null;
-    //environment = "http://54.194.116.194:8085/lukkarimaatti";
-    environment = 'http://localhost:8085/lukkarimaatti';
+    environment = "http://54.194.116.194:8085/lukkarimaatti";
+    //environment = 'http://localhost:8085/lukkarimaatti';
     noppa = 'https://noppa.lut.fi/noppa/opintojakso/';
 
     $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
@@ -99,7 +99,7 @@ var lukkarimaatti = (function () {
 
         var EventCalendarView = Backbone.View.extend({
 
-            el: $('#calendar-container'),
+            el: $('#calendar'),
 
             initialize: function () {
                 _.bindAll(this, 'calendar', 'render', 'createCalendarEvent', 'addEvent', 'appendEvent');

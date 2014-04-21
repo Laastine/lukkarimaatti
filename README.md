@@ -3,7 +3,7 @@
 Hobby project to offer course data easily usable scheduling tool over simple REST interface.<br>
 Information is retrieved from [the official LUT teaching schedule info site] (https://uni.lut.fi/fi/web/guest/lukujarjestykset).<br>
 
-<b>[Test beta version!](http://54.194.116.194:8085/lukkarimaatti)</b>
+<b>[Test dev version!](http://54.194.116.194:8085/lukkarimaatti)</b>
 
 <h3>Back-end</h3>
 * [Spring 4.x](http://spring.io/)
@@ -13,11 +13,13 @@ Information is retrieved from [the official LUT teaching schedule info site] (ht
 * [SonarQube 4.1.2](http://www.sonarqube.org/)<br>
  
 <h3>Front-end</h3>
-* [jQuery](http://jquery.com/)
-* [underscore.js](http://underscorejs.org/)
-* [BackBone](http://backbonejs.org/)
-* [typeahead.js](http://twitter.github.io/typeahead.js/)
-* [FullCalendar](http://arshaw.com/fullcalendar/)
+* [jQuery 1.10](http://jquery.com/)
+* [Bootstrap3](http://getbootstrap.com/)
+* [underscore.js 1.6.x](http://underscorejs.org/)
+* [Backbone.js 1.1.x](http://backbonejs.org/)
+* [typeahead.js 0.10.x](http://twitter.github.io/typeahead.js/)
+* [FullCalendar 1.6.x](http://arshaw.com/fullcalendar/)
+* [Qunit 1.14.x](https://qunitjs.com/)
 * [JSHint](http://www.jshint.com/)
 * [Bower](http://bower.io/)<br>
 

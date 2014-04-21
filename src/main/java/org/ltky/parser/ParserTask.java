@@ -39,6 +39,7 @@ public class ParserTask implements Runnable {
     private void saveCourseToDB() {
         final CourseDao courseDao = (CourseDao) applicationContext.getBean("courseDao");
         try {
+            final HtmlParser htmlParser = new HtmlParser(department);
             courseDao.delete();          //clean old courses
             (new HtmlParser(department).parse(departmentData)).stream().filter(newCourse -> CourseValidator.validateCourse(newCourse)).forEach(courseDao::saveOrUpdate);
         } catch (Exception e) {

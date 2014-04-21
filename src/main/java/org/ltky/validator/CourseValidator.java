@@ -1,5 +1,6 @@
 package org.ltky.validator;
 
+import org.apache.commons.lang3.StringUtils;
 import org.ltky.entity.Course;
 
 /**
@@ -13,10 +14,10 @@ public class CourseValidator {
     private CourseValidator() {};
 
     public static boolean validateCourse(Course course) {
-        if ("".equals(course.getCourseCode()) | !investigateLength(course.getCourseCode(),32)) {
+        if (StringUtils.isBlank(course.getCourseCode()) | !investigateLength(course.getCourseCode(), 32)) {
             return false;
         }
-        if ("".equals(course.getCourseName()) | !investigateLength(course.getCourseName(), 256)) {
+        if (StringUtils.isBlank(course.getCourseName()) | !investigateLength(course.getCourseName(), 256)) {
             return false;
         }
 
@@ -49,6 +50,6 @@ public class CourseValidator {
     }
 
     private static boolean investigateLength(String courseData, int max) {
-        return courseData.length() >= 0 && courseData.length() <= max;
+        return StringUtils.length(courseData) >= 0 && StringUtils.length(courseData) <= max;
     }
 }

@@ -24,7 +24,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Lukkarimaatti</a>
+            <a class="navbar-brand" href="#">Lukkarimaatti++</a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -32,33 +32,35 @@
                 <li><a data-toggle="modal" href="#aboutModal">About</a></li>
                 <li><a data-toggle="modal" href="#contactModal">Contact</a></li>
             </ul>
-        </div><!--/.nav-collapse -->
+        </div>
+        <!--/.nav-collapse -->
     </div>
 </div>
 
-<div class="container-fluid" style="padding-top: 20px">
-    <div class="sidebar">
-        <div>
+<div class="row" style="padding-top: 35px"></div>
+
+<div class="container">
+
+    <form role="course-search-form" method="post" style="padding-top: 20px">
+        <div class="form-group">
+            <input id="courseSearchBox" type="search" class="typeahead"
+                   placeholder="Type a course name [e.g. matematiikka]"/>
+            <input type="submit" class="search-submit" value="Add course"/>
         </div>
+    </form>
+
+
+    <div id="courseList" style="padding-top: 10px">
+        <ul>
+        </ul>
     </div>
-    <div class="container">
-        <div class="row" style="padding-top: 25px"></div>
-        <input id="courseSearchBox" type="search" class="typeahead"
-               placeholder="Type a course name [e.g. matematiikka]"/>
-        <div class="row" style="padding-top: 15px"></div>
+    <div style="padding-top: 10px">
+        <div id="calendar">
+        </div>
 
-        <section id="lukkarimaatti">
-            <div id="calendar">
-            </div>
-        </section>
-
-        <br>
-        <br>
-        <footer>
-            <p class="disclaimer">
-                Runs on free AWS micro node
-            </p>
-        </footer>
+        <p class="disclaimer" style="padding-top: 15px">
+            Runs on free AWS micro node
+        </p>
     </div>
 </div>
 
@@ -83,15 +85,24 @@
             </div>
             <div class="modal-body">
                 <p>
-                    Lukkarimaatti scheduling tool for time table planning and creation.
+                    Lukkarimaatti++ scheduling tool for time table planning and creation.
+                    It started as an open source hobby project. Project repository is available at
+                    <a href="https://github.com/Laastine/lukkarimaatti">Github</a>.
+                    Lukkarimaatti has sister
+                    <a href="https://play.google.com/store/apps/details?id=fi.kapsi.coffeebreak.lutcampus.original.release">android
+                        project</a>
+                    which uses Lukkarimaatti backend for course data.
                 </p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
 <!-- Modal -->
 <div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -103,15 +114,20 @@
             </div>
             <div class="modal-body">
                 <p>
-                    laastine@kapsi.fi
+                    Developer: Mikko Kaistinen<br>
+                    laastine@kapsi.fi<br>
+                    Laastine @IRCnet
                 </p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
 
 </body>

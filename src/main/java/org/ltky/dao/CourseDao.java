@@ -26,6 +26,8 @@ public interface CourseDao {
 
     List<Course> findCourseNames(String courseName);
 
+    List<Course> findCourseNamesAndCodes(String courseName);
+
     List<Course> findByDepartment(String department);
 
     List<String> findAllCourseNames();

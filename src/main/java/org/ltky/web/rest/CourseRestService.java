@@ -73,6 +73,19 @@ public class CourseRestService {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    @Path("/cnames/{courseNamesandCodes}")
+    public final List<Course> getCourseNamesWithCode(@PathParam("courseNamesandCodes") final String courseNamesandCodes) {
+        if (LOGGER.isDebugEnabled())
+            LOGGER.debug("getCourseNamesWithCode");
+        if (courseNamesandCodes.length() > MIN) {
+            return courseDao.findCourseNamesAndCodes(courseNamesandCodes);
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Path("/department/{department}")
     public final List<Course> getDepartmentInJSON(@PathParam("department") final String department) {
         if (LOGGER.isDebugEnabled())

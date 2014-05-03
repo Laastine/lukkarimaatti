@@ -22,7 +22,8 @@ Plays well enough in older browser, but those aren't officially supported.
 * [Backbone.js 1.1.x](http://backbonejs.org/)
 * [typeahead.js 0.10.x](http://twitter.github.io/typeahead.js/)
 * [FullCalendar 1.6.x](http://arshaw.com/fullcalendar/)
-* [Qunit 1.14.x](https://qunitjs.com/)
+* [Jasmine 2.0.x](http://jasmine.github.io/)
+* [PhantomJS 1.9](http://phantomjs.org/)
 * [JSHint](http://www.jshint.com/)
 * [Bower](http://bower.io/)<br>
 

@@ -8,10 +8,10 @@
     <meta name="Mikko Kaistinen" content="">
     <link rel="shortcut icon" href="res/favicon.png">
     <link rel="stylesheet" href="css/lukkarimaatti.css">
-    <link rel="stylesheet" href="bower_components/fullcalendar/fullcalendar.css"/>
-    <link rel="stylesheet" href="bower_components/jquery-ui/themes/base/jquery-ui.css"/>
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css"/>
+    <link rel="stylesheet" href="css/fullcalendar.css"/>
+    <link rel="stylesheet" href="css/jquery-ui.css"/>
+    <link rel="stylesheet" href="css/bootstrap.css"/>
+    <link rel="stylesheet" href="css/bootstrap-theme.css"/>
 </head>
 
 <body>
@@ -33,7 +33,6 @@
                 <li><a data-toggle="modal" href="#contactModal">Contact</a></li>
             </ul>
         </div>
-        <!--/.nav-collapse -->
     </div>
 </div>
 
@@ -45,7 +44,7 @@
         <div class="form-group">
             <input id="courseSearchBox" type="search" class="typeahead"
                    placeholder="Type a course name [e.g. matematiikka]"/>
-            <input type="submit" class="search-submit" value="Add course"/>
+            <input type="submit" class="fc-button" value="Add course"/>
         </div>
     </form>
 
@@ -64,15 +63,14 @@
     </div>
 </div>
 
-
-<script src="bower_components/jquery/jquery.js"></script>
-<script src="bower_components/jquery-ui/ui/jquery-ui.js"></script>
-<script src='bower_components/fullcalendar/fullcalendar.js'></script>
-<script src="bower_components/underscore/underscore.js"></script>
-<script src="bower_components/backbone/backbone.js"></script>
-<script src="bower_components/handlebars/handlebars.js"></script>
-<script src="bower_components/typeahead.js/dist/typeahead.bundle.js"></script>
-<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="js/jquery.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script src='js/fullcalendar.js'></script>
+<script src="js/underscore.js"></script>
+<script src="js/backbone.js"></script>
+<script src="js/handlebars.js"></script>
+<script src="js/typeahead.bundle.js"></script>
+<script src="js/bootstrap.js"></script>
 <script src="js/lukkarimaatti.js"></script>
 
 <!-- Modal -->
@@ -98,11 +96,8 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
-        <!-- /.modal-content -->
     </div>
-    <!-- /.modal-dialog -->
 </div>
-<!-- /.modal -->
 
 <!-- Modal -->
 <div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -123,11 +118,8 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
-        <!-- /.modal-content -->
     </div>
-    <!-- /.modal-dialog -->
 </div>
-<!-- /.modal -->
 
 
 </body>

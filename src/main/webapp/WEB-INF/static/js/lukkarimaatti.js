@@ -2,19 +2,19 @@ var lukkarimaatti = (function () {
     'use strict';
     var courseNames, environment, noppa;
     courseNames = null;
-    environment = "http://54.194.116.194:8085/lukkarimaatti";
-    //environment = 'http://localhost:8085/lukkarimaatti';
+    environment = 'http://localhost:8085/lukkarimaatti';
     noppa = 'https://noppa.lut.fi/noppa/opintojakso/';
 
     $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
         options.url = environment + options.url;
     });
 
+
     $(function backbone() {
 
         var Event = Backbone.Model.extend({
             defaults: {
-                title: "new",
+                title: "empty",
                 startDate: null,
                 endDate: null,
                 isAllDay: false,
@@ -33,6 +33,59 @@ var lukkarimaatti = (function () {
 
         var EventCollection = Backbone.Collection.extend({
             model: Event
+        });
+
+        var EventView = Backbone.View.extend({
+
+            calendar: null,
+            calendarEvent: null,
+
+            initialize: function () {
+                _.bindAll(this, 'render', 'unrender', 'remove', 'synchronizeIntoCalendar', 'synchronizeFromCalendar');
+
+                this.model.bind('change', this.render);
+                this.model.bind('remove', this.unrender);
+
+                this.calendar = this.options['calendar'];
+            },
+
+            synchronizeIntoCalendar: function () {
+                var e = this.calendarEvent || (this.calendarEvent = { element: null });
+                e.id = this.model.cid;
+                e.start = this.model.get('startDate');
+                e.end = this.model.get('endDate');
+                e.allDay = this.model.get('isAllDay');
+                e.title = this.model.get('title');
+                e.color = this.model.get('color');
+                e.view = this;
+                return e;
+            },
+
+            synchronizeFromCalendar: function (calendarEvent) {
+                var e = this.calendarEvent = calendarEvent || this.calendarEvent;
+                return this.model.set({
+                    title: e.title,
+                    startDate: e.start,
+                    endDate: e.end,
+                    isAllDay: e.allDay,
+                    color: e.color
+                });
+            },
+
+            render: function () {
+                this.calendar('renderEvent', this.synchronizeIntoCalendar(), true);
+                return this; // For chaining
+            },
+
+            unrender: function () {
+                var that = this;
+                this.calendar('removeEvents', function (event) { return that.calendarEvent === event; });
+                this.remove();
+            },
+
+            remove: function () {
+                this.model.destroy();
+            }
         });
 
         var EventCalendarView = Backbone.View.extend({
@@ -193,8 +246,12 @@ var lukkarimaatti = (function () {
             e.preventDefault(); // don't submit the form
             var course = $searchBox.val(); // get the current item
             console.log("searchBox=" + course);
-            $('#courseList ul').append('<li>'+course+'</li>');
+            addToCalendar(course);
         });
+
+        function addToCalendar(course) {
+            $('#courseList ul').append('<li>'+course+'</li>');
+        }
 
     });
 

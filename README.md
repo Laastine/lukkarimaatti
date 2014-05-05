@@ -1,4 +1,4 @@
-<h1>Lukkarimaatti RESTful backend</h1>
+<h1>Lukkarimaatti</h1>
 
 Hobby project to offer course data easily usable scheduling tool over simple REST interface.<br>
 Information is retrieved from [the official LUT teaching schedule info site] (https://uni.lut.fi/fi/web/guest/lukujarjestykset).<br>
@@ -30,8 +30,8 @@ Plays well enough in older browser, but those aren't officially supported.
 <h2>Requirements & Build</h2>
 Requires Java 8 and Maven 3.x.<br>
 Maven for building a package.<br>
-mvn clean package - for building (release) package<br>
-mvn clean jetty:run - for quick browser testing
+mvn clean war - for building (release) package<br>
+gradle clean runJetty - for quick browser testing
 
 <h2>REST</h2>
 <b>Course code like-search</b><br>

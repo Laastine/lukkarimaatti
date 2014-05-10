@@ -2,7 +2,7 @@ var lukkarimaatti = (function () {
     'use strict';
     var courseNames, environment, noppa;
     courseNames = null;
-    environment = 'http://localhost:8085/lukkarimaatti';
+    environment = 'http://54.194.116.194:8085/lukkarimaatti';
     noppa = 'https://noppa.lut.fi/noppa/opintojakso/';
 
     $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
@@ -10,11 +10,13 @@ var lukkarimaatti = (function () {
     });
 
 
-    $(function backbone() {
+    var view = {};
+
+    (function backbone() {
 
         var Event = Backbone.Model.extend({
             defaults: {
-                title: "empty",
+                title: "testi",
                 startDate: null,
                 endDate: null,
                 isAllDay: false,
@@ -73,6 +75,7 @@ var lukkarimaatti = (function () {
             },
 
             render: function () {
+                console.log('render()');
                 this.calendar('renderEvent', this.synchronizeIntoCalendar(), true);
                 return this; // For chaining
             },
@@ -92,7 +95,7 @@ var lukkarimaatti = (function () {
 
             el: $('#calendar'),
             initialize: function () {
-                _.bindAll(this, 'calendar', 'render', 'createCalendarEvent', 'addEvent', 'appendEvent');
+                _.bindAll(this, 'calendar', 'render', 'createCalendarEvent', 'createCourse', 'addEvent', 'appendEvent');
 
                 this.collection = new EventCollection();
                 this.collection.bind('add', this.appendEvent);
@@ -117,13 +120,13 @@ var lukkarimaatti = (function () {
                     weekNumbers: true,
                     editable: true,
                     selectable: false,
-                    selectHelper: true,
                     firstDay: 1,
                     dayClick: function (date, allDay, jsEvent, view) {
+                        console.log('dayclick()');
                         that.createCalendarEvent(date, allDay);
                     },
                     eventClick: function (event, jsEvent, view) {
-
+                        console.log('Event click'+event);
                     },
                     eventRender: function (event, element, view) {
                         event.element = element; // Not known before
@@ -174,7 +177,20 @@ var lukkarimaatti = (function () {
                 };
                 this.calendar('renderEvent', calendarEvent, true);
             },
+            createCourse: function(course, date) {
+                var calendarEvent = {
+                    title: course.title,
+                    start:  new Date(date),
+                    //end: moment(date).add('h', 2),
+                    allDay: false,
+                    element: null,
+                    view: null,
+                    id: _.uniqueId('e')
+                };
+                this.calendar('renderEvent', calendarEvent, false);
+            },
             addEvent: function (calendarEvent) {
+                console.log('hello');
                 var event = new Event();
                 event.cid = calendarEvent.id;
                 var eventView = this.appendEvent(event);
@@ -195,11 +211,13 @@ var lukkarimaatti = (function () {
         });
 
         $(document).ready(function () {
-            new EventCalendarView();
+            view = new EventCalendarView();
+            console.log("save");
         });
-    });
+    })();
 
     $(function () {
+        var courses;
         var engine = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -208,21 +226,27 @@ var lukkarimaatti = (function () {
                     filter: function (response) {
                         // parsedResponse is the array returned from your backend
                         console.log(JSON.stringify(response));
-                        return $.map(response, function (course) {
+                        courses = $.map(response, function (course) {
                                 return {
-                                    name: course.courseName,
+                                    title: course.courseName,
                                     code: course.courseCode,
-                                    data: response
+                                    tof: course.timeOfDay,
+                                    wd: course.weekDay,
+                                    wn: course.weekNumber,
+                                    cr: course.classRoom,
+                                    t: course.type
                                 };
                             }
                         );
+                        return courses;
                     }
                 },
                 limit: 5
             }
         );
+
         engine.initialize();
-        var $searchBox = $('#courseSearchBox').typeahead({
+        $('#courseSearchBox').typeahead({
                 hint: true,
                 highlight: true,
                 minLength: 3
@@ -233,26 +257,58 @@ var lukkarimaatti = (function () {
                 source: engine.ttAdapter(),
                 templates: {
                     empty: [
-                        '<div class="empty-message">',
+                        '<p><strong>',
                         'Unable to find any courses that match the current query',
-                        '</div>'
+                        '</strong></p>'
                     ].join('\n'),
-                    suggestion: Handlebars.compile('<p><strong>{{name}}</strong> - {{code}}</p>')
+                    suggestion: Handlebars.compile('<p><strong>{{title}}</strong> - {{code}}</p>')
                 }
             }
         );
-        $('form').submit(function (e) {
-            console.log("submit");
-            e.preventDefault(); // don't submit the form
-            var course = $searchBox.val(); // get the current item
-            console.log("searchBox=" + course);
-            addToCalendar(course);
-        });
 
-        function addToCalendar(course) {
-            $('#courseList ul').append('<li>'+course+'</li>');
-        }
+        $('#addButton').click(function () {
+            function processCourse(course) {
+                var h = course.tof.split('-')[0] || 6;
+                var date = moment().day(course.wd || 'su').week(course.wn || '21').hours(h).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
+                console.log('date='+date);
+                //view.createCalendarEvent(new Date(), true);
+                view.createCourse(course, date);  //Render via backbone
+            }
+            courses.forEach(processCourse);
+        });
 
     });
 
 }());
+
+/*
+
+ [
+ {
+ "type":"L",
+ "timeOfDay":"14-17",
+ "weekNumber":"2-8, 10-15, 17",
+ "courseId":50718,
+ "courseCode":"CT50A6000",
+ "classroom":"7443*",
+ "department":"tite",
+ "courseName":"Pattern Recognition",
+ "period":"3",
+ "weekDay":"ke",
+ "teacher":null
+ },
+ {
+ "type":"H",
+ "timeOfDay":"12-14",
+ "weekNumber":"2-8, 10-15, 17",
+ "courseId":50726,
+ "courseCode":"CT50A6000",
+ "classroom":"ML 6216*",
+ "department":"tite",
+ "courseName":"Pattern Recognition",
+ "period":"3",
+ "weekDay":"to",
+ "teacher":null
+ }
+ ]
+ */

@@ -12,8 +12,10 @@ import org.ltky.validator.CourseValidator;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -126,7 +128,7 @@ class HtmlParser {
 
     private Course findWeek(String weekNumber, Course course) {
         if (stringHelper.extractPattern(weekNumber, coursePattern.getWeekNumber()))
-            course.setWeekNumber(weekNumber);
+            course.setWeekNumber(stringHelper.processWeekNumbers(weekNumber));
         if (course.getWeekNumber() != null & !course.getWeekNumber().isEmpty()) {
             course.setPeriod(parsePeriod(course.getWeekNumber()));          //Set period
             return course;

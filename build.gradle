@@ -12,10 +12,18 @@ repositories {
 
 jettyRun {
     httpPort = 8085
+    scanIntervalSeconds = 2
 }
 
 war {
     exclude('WEB-INF/tests')
+}
+
+test {
+    testLogging.showStandardStreams = true
+    testLogging {
+        events 'passed'
+    }
 }
 
 dependencies {

@@ -3,6 +3,7 @@ package org.ltky.parser;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
+import org.ltky.util.StringHelper;
 
 import java.io.IOException;
 import java.util.Map;
@@ -49,11 +50,29 @@ public class ParserTest {
 
     private static boolean isMatch(String s, String pattern) {
         try {
-            Pattern p = Pattern.compile(pattern);
-            Matcher m = p.matcher(s);
-            return m.matches();
+            Matcher m = Pattern.compile(pattern).matcher(s);
+            return m.lookingAt();
         } catch (Exception e) {
             return false;
         }
+    }
+
+    @Test
+    public void weekNumberProcessTest() {
+        final String t1 = "2-4, 6-8, 10, 12-15, 17", res1 = "2,3,4,6,7,8,10,12,13,14,15,17";
+        final String t2 = "35-36, 40, 43-48", res2 = "35,36,40,43,44,45,46,47,48";
+        final String t3 = "37", res3 = "37";
+        final String t4 = "7", res4 = "7";
+        final String t5 = "40-41, 43-49", res5 = "40,41,43,44,45,46,47,48,49";
+        final String t6 = "35-37", res6 = "35,36,37";
+        final String t7 = "42, 50, 9, 19", res7 = "9,19,42,50";
+        final StringHelper stringHelper = new StringHelper();
+        Assert.assertTrue(res1.equals(stringHelper.processWeekNumbers(t1)));
+        Assert.assertTrue(res2.equals(stringHelper.processWeekNumbers(t2)));
+        Assert.assertTrue(res3.equals(stringHelper.processWeekNumbers(t3)));
+        Assert.assertTrue(res4.equals(stringHelper.processWeekNumbers(t4)));
+        Assert.assertTrue(res5.equals(stringHelper.processWeekNumbers(t5)));
+        Assert.assertTrue(res6.equals(stringHelper.processWeekNumbers(t6)));
+        Assert.assertTrue(res7.equals(stringHelper.processWeekNumbers(t7)));
     }
 }

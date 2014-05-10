@@ -95,7 +95,7 @@ var lukkarimaatti = (function () {
 
             el: $('#calendar'),
             initialize: function () {
-                _.bindAll(this, 'calendar', 'render', 'createCalendarEvent', 'createCourse', 'addEvent', 'appendEvent');
+                _.bindAll(this, 'calendar', 'render', 'createCalendarEvent', 'addEvent', 'appendEvent');
 
                 this.collection = new EventCollection();
                 this.collection.bind('add', this.appendEvent);
@@ -164,20 +164,7 @@ var lukkarimaatti = (function () {
                     that.appendEvent(model);
                 }, this);
             },
-
-            createCalendarEvent: function (date, allDay) {
-                var calendarEvent = {
-                    title: "",
-                    start: new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), (date.getMinutes() >= 30 ? 30 : 0), 0),
-                    end: new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours() + 1, (date.getMinutes() >= 30 ? 30 : 0), 0),
-                    allDay: allDay,
-                    element: null,
-                    view: null,
-                    id: _.uniqueId('e')
-                };
-                this.calendar('renderEvent', calendarEvent, true);
-            },
-            createCourse: function(course, date) {
+            createCalendarEvent: function(course, date) {
                 var calendarEvent = {
                     title: course.title,
                     start:  new Date(date),
@@ -271,8 +258,7 @@ var lukkarimaatti = (function () {
                 var h = course.tof.split('-')[0] || 6;
                 var date = moment().day(course.wd || 'su').week(course.wn || '21').hours(h).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
                 console.log('date='+date);
-                //view.createCalendarEvent(new Date(), true);
-                view.createCourse(course, date);  //Render via backbone
+                view.createCalendarEvent(course, date);  //Render via backbone
             }
             courses.forEach(processCourse);
         });

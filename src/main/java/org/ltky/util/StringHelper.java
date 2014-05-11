@@ -66,7 +66,7 @@ public class StringHelper {
         if(StringUtils.isBlank(weeks)) {
             return "";
         } else {
-            if(StringUtils.contains(weeks, "-")) {
+            if(StringUtils.contains(weeks, dash)) {
                 final Set<String> allMatches = new HashSet();
                 final Matcher m = Pattern.compile("[0-9]{1,2}-[0-9]{1,2}").matcher(weeks);
                 while (m.find()) {
@@ -75,9 +75,7 @@ public class StringHelper {
                 for (String match : allMatches) {
                     final int start = Integer.valueOf(StringUtils.substringBefore(match, dash));
                     final int end =  Integer.valueOf(StringUtils.substringAfterLast(match, dash));
-                    final Set<Integer> intList = new HashSet<>();
-                    for(int i = start; i < end; i++, intList.add(i));
-                    weekSequence.addAll(intList);
+                    for(int i = start; i < end; i++, weekSequence.add(i));
                 }
             }
             final Matcher m = Pattern.compile("[0-9]+").matcher(weeks);
@@ -89,7 +87,7 @@ public class StringHelper {
         Arrays.sort(list, (a, b) -> ((Integer) a) - ((Integer) b));
         final StringBuilder builder = new StringBuilder();
         for(Object o : list) {
-            builder.append(String.valueOf(o)+",");
+            builder.append(String.valueOf(o)+comma);
         }
         return StringUtils.removeEnd(builder.toString(), comma);
     }

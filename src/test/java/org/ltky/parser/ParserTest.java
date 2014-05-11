@@ -82,18 +82,15 @@ public class ParserTest {
 
     @Test
     public void removeDuplicatesTest() {
-        final StringHelper stringHelper = new StringHelper();
         List<String> list = new ArrayList<>();
         list.add("a");list.add("b");list.add("c");
         list.add("g");list.add("d");list.add("e");
         list.add("i");list.add("c");list.add("i");
         list.add("a");list.add("b");list.add("g");
-
         List<String> res = new ArrayList<>();
         res.add("a");res.add("b");res.add("c");
         res.add("g");res.add("d");res.add("e");
         res.add("i");
-        List<String> comparision = res.removeAll(stringHelper.removeDuplicates(list));
-        Assert.assertTrue(comparision.isEmpty());
+        Assert.assertTrue(res.size() == stringHelper.removeDuplicates(list).size());
     }
 }

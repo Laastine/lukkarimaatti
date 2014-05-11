@@ -18,3 +18,4 @@ gradlew.bat
 gradlew
 bower_components/
 .gradle/
+src/main/webapp/WEB-INF/static/tests/

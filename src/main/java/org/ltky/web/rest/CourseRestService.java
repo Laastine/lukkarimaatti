@@ -30,6 +30,7 @@ public class CourseRestService {
     private final CourseDao courseDao = (CourseDao) applicationContext.getBean("courseDao");
     private final ExamDao examDao = (ExamDao) applicationContext.getBean("examDao");
     private static final int MIN = 3;
+    private static final StringHelper STRING_HELPER = new StringHelper();
 
     @GET
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
@@ -46,7 +47,7 @@ public class CourseRestService {
     public final List<String> getLikeCourseCodes(@PathParam("codes") final String codes) {
         if (LOGGER.isDebugEnabled())
             LOGGER.debug("getLikeCourseCodes");
-        return new StringHelper().removeDuplicates(courseDao.findCourseCodes(codes));
+        return STRING_HELPER.removeDuplicates(courseDao.findCourseCodes(codes));
     }
 
     @GET

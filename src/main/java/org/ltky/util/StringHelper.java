@@ -10,6 +10,7 @@ import java.lang.reflect.Array;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * lukkarimaatti
@@ -66,34 +67,35 @@ public class StringHelper {
             return "";
         } else {
             if(StringUtils.contains(weeks, "-")) {
-                Set<String> allMatches = new HashSet();
-                Matcher m = Pattern.compile("[0-9]{1,2}-[0-9]{1,2}").matcher(weeks);
+                final Set<String> allMatches = new HashSet();
+                final Matcher m = Pattern.compile("[0-9]{1,2}-[0-9]{1,2}").matcher(weeks);
                 while (m.find()) {
                     allMatches.add(m.group());
                 }
                 for (String match : allMatches) {
-                    int start = Integer.valueOf(StringUtils.substringBefore(match, dash));
-                    int end =  Integer.valueOf(StringUtils.substringAfterLast(match, dash));
+                    final int start = Integer.valueOf(StringUtils.substringBefore(match, dash));
+                    final int end =  Integer.valueOf(StringUtils.substringAfterLast(match, dash));
                     final Set<Integer> intList = new HashSet<>();
                     for(int i = start; i < end; i++, intList.add(i));
                     weekSequence.addAll(intList);
                 }
             }
-            Matcher m = Pattern.compile("[0-9]+").matcher(weeks);
+            final Matcher m = Pattern.compile("[0-9]+").matcher(weeks);
             while (m.find()) {
                 weekSequence.add(Integer.valueOf(m.group()));
             }
         }
-        List<Integer> list = new ArrayList(new TreeSet(weekSequence));
-        StringBuilder builder = new StringBuilder();
-        for(int s : list) {
-            builder.append(String.valueOf(s)+",");
+        final Object[] list = weekSequence.toArray();
+        Arrays.sort(list, (a, b) -> ((Integer) a) - ((Integer) b));
+        final StringBuilder builder = new StringBuilder();
+        for(Object o : list) {
+            builder.append(String.valueOf(o)+",");
         }
         return StringUtils.removeEnd(builder.toString(), comma);
     }
 
     public <T> List<T> removeDuplicates(List<T> list) {
-        return new ArrayList<T>(new LinkedHashSet<T>(list));
+        return list.parallelStream().distinct().collect(Collectors.toList());
     }
 
     /**

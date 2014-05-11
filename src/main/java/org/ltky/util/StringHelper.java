@@ -30,8 +30,8 @@ public class StringHelper {
      * @throws IllegalStateException
      */
     public boolean extractPattern(String input, String pattern) throws IllegalStateException {
-        Pattern p = Pattern.compile(pattern);
-        Matcher matcher = p.matcher(input);
+        final Pattern p = Pattern.compile(pattern);
+        final Matcher matcher = p.matcher(input);
         while (matcher.find())
             if ("".equals(matcher.group())) {
                 LOGGER.trace("Couldn't find pattern=" + pattern + " from " + input);
@@ -93,7 +93,7 @@ public class StringHelper {
     }
 
     public <T> List<T> removeDuplicates(List<T> list) {
-        return list.parallelStream().distinct().collect(Collectors.toList());
+        return list.stream().distinct().collect(Collectors.toList());
     }
 
     /**

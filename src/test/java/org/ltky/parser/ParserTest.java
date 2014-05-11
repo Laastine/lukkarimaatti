@@ -61,7 +61,6 @@ public class ParserTest {
         }
     }
 
-
     @Test
     public void weekNumberProcessTest() {
         final String t1 = "2-4, 6-8, 10, 12-15, 17", res1 = "2,3,4,6,7,8,10,12,13,14,15,17";

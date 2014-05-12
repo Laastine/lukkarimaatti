@@ -6,7 +6,6 @@ import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,8 +17,8 @@ import java.util.stream.Collectors;
  * User: laastine
  * Date: 6.12.2013
  */
-public class StringHelper {
-    private static final Logger LOGGER = Logger.getLogger(StringHelper.class);
+public class Util {
+    private static final Logger LOGGER = Logger.getLogger(Util.class);
 
     /**
      * Extract certain pattern from given string
@@ -40,9 +39,15 @@ public class StringHelper {
         return true;
     }
 
+
+    /**
+     * Extract week pattern from given string i.e. 1 or 2 digit number passes
+     * @param week
+     * @return
+     */
     public String extractWeek(String week) {
         String firstWeek = null;
-        Matcher matcher = Pattern.compile("(^[0-9]{2}|^[1-9])").matcher(week);
+        final Matcher matcher = Pattern.compile("(^[0-9]{2}|^[1-9])").matcher(week);
         while (matcher.find()) {
             firstWeek = matcher.group();
         }

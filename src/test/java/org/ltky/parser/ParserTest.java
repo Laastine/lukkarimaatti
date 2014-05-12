@@ -2,11 +2,9 @@ package org.ltky.parser;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.ltky.util.StringHelper;
+import org.ltky.util.Util;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +19,7 @@ import java.util.regex.Pattern;
  */
 public class ParserTest {
     private static final Logger LOGGER = Logger.getLogger(ParserTest.class);
-    private final StringHelper stringHelper = new StringHelper();
+    private final Util util = new Util();
 
     @Test
     public void parserTest() {
@@ -29,7 +27,7 @@ public class ParserTest {
         URLParser parser = new URLParser();
         try {
             Map<String, String> map = parser.fetchStuff();
-            //Assert.assertNotNull(map);
+            Assert.assertTrue(map.size() == 10);
             for (String s : map.keySet()) {
                 LOGGER.debug("Department=" + s);
             }
@@ -70,13 +68,15 @@ public class ParserTest {
         final String t5 = "40-41, 43-49", res5 = "40,41,43,44,45,46,47,48,49";
         final String t6 = "35-37", res6 = "35,36,37";
         final String t7 = "42, 50, 9, 19", res7 = "9,19,42,50";
-        Assert.assertTrue(res1.equals(stringHelper.processWeekNumbers(t1)));
-        Assert.assertTrue(res2.equals(stringHelper.processWeekNumbers(t2)));
-        Assert.assertTrue(res3.equals(stringHelper.processWeekNumbers(t3)));
-        Assert.assertTrue(res4.equals(stringHelper.processWeekNumbers(t4)));
-        Assert.assertTrue(res5.equals(stringHelper.processWeekNumbers(t5)));
-        Assert.assertTrue(res6.equals(stringHelper.processWeekNumbers(t6)));
-        Assert.assertTrue(res7.equals(stringHelper.processWeekNumbers(t7)));
+        Assert.assertTrue(res1.equals(util.processWeekNumbers(t1)));
+        Assert.assertTrue(res2.equals(util.processWeekNumbers(t2)));
+        Assert.assertTrue(res3.equals(util.processWeekNumbers(t3)));
+        Assert.assertTrue(res4.equals(util.processWeekNumbers(t4)));
+        Assert.assertTrue(res5.equals(util.processWeekNumbers(t5)));
+        Assert.assertTrue(res6.equals(util.processWeekNumbers(t6)));
+        Assert.assertTrue(res7.equals(util.processWeekNumbers(t7)));
+        Assert.assertFalse(res7.equals(util.processWeekNumbers(t1)));
+        Assert.assertFalse(res5.equals(util.processWeekNumbers(t1)));
     }
 
     @Test
@@ -90,6 +90,15 @@ public class ParserTest {
         res.add("a");res.add("b");res.add("c");
         res.add("g");res.add("d");res.add("e");
         res.add("i");
-        Assert.assertTrue(res.size() == stringHelper.removeDuplicates(list).size());
+        Assert.assertTrue(res.size() == util.removeDuplicates(list).size());
+        Assert.assertTrue(res.contains("a"));
+        Assert.assertTrue(res.contains("b"));
+        Assert.assertTrue(res.contains("c"));
+        Assert.assertTrue(res.contains("g"));
+        Assert.assertTrue(res.contains("d"));
+        Assert.assertTrue(res.contains("e"));
+        Assert.assertTrue(res.contains("i"));
+        Assert.assertFalse(res.contains("k"));
+        Assert.assertFalse(res.contains("p"));
     }
 }

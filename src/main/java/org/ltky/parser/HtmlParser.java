@@ -7,15 +7,13 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.ltky.entity.Course;
 import org.ltky.util.CoursePattern;
-import org.ltky.util.StringHelper;
+import org.ltky.util.Util;
 import org.ltky.validator.CourseValidator;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -28,7 +26,7 @@ class HtmlParser {
     private static final Logger LOGGER = Logger.getLogger(HtmlParser.class);
     private final String department;
     private final ParserConfiguration config = ParserConfiguration.getInstance();
-    private final StringHelper stringHelper = new StringHelper();
+    private final Util util = new Util();
     private final CoursePattern coursePattern = new CoursePattern();
     private static final String UNKNOWN = "?";
 
@@ -83,26 +81,26 @@ class HtmlParser {
                     course.setDepartment(department);
                     switch (elem) {
                         case 0:
-                            if (stringHelper.extractPattern(item, coursePattern.getCoursePattern()))
+                            if (util.extractPattern(item, coursePattern.getCoursePattern()))
                                 course = findNameCodeAndType(item, course);
                             break;
                         case 2:
-                            if (stringHelper.extractPattern(item, coursePattern.getWeekNumber()) & !"Vko".equals(item))
+                            if (util.extractPattern(item, coursePattern.getWeekNumber()) & !"Vko".equals(item))
                                 course = findWeek(item, course);
                             break;
                         case 3:
-                            if (stringHelper.extractPattern(item, coursePattern.getWeekDays()))
+                            if (util.extractPattern(item, coursePattern.getWeekDays()))
                                 course = findWeekDay(item, course);
                             break;
                         case 4:
                             final String endTime = new String(rowItems.get(elem + 1).text().getBytes("cp1252"), "UTF-8");
-                            if (!department.equals("kike") & stringHelper.extractPattern(item, coursePattern.getTimeOfDay()) &
-                                    stringHelper.extractPattern(endTime, coursePattern.getTimeOfDay()) &
+                            if (!department.equals("kike") & util.extractPattern(item, coursePattern.getTimeOfDay()) &
+                                    util.extractPattern(endTime, coursePattern.getTimeOfDay()) &
                                     !"Klo".equals(item))
                                 course.setTimeOfDay(item + "-" + endTime);
                             break;
                         case 6:
-                            if (stringHelper.extractPattern(item, coursePattern.getClassRoom()) & !"Sali".equals(item))
+                            if (util.extractPattern(item, coursePattern.getClassRoom()) & !"Sali".equals(item))
                                 course = findClassroom(item, course);
                             break;
                     }
@@ -118,7 +116,7 @@ class HtmlParser {
     }
 
     private Course findTeacher(String teacher, Course course) {
-        if (stringHelper.extractPattern(teacher, coursePattern.getKikeTeacher())) {
+        if (util.extractPattern(teacher, coursePattern.getKikeTeacher())) {
             course.setTeacher(teacher);
         } else {
             course.setTeacher(UNKNOWN);
@@ -127,8 +125,8 @@ class HtmlParser {
     }
 
     private Course findWeek(String weekNumber, Course course) {
-        if (stringHelper.extractPattern(weekNumber, coursePattern.getWeekNumber()))
-            course.setWeekNumber(stringHelper.processWeekNumbers(weekNumber));
+        if (util.extractPattern(weekNumber, coursePattern.getWeekNumber()))
+            course.setWeekNumber(util.processWeekNumbers(weekNumber));
         if (course.getWeekNumber() != null & !course.getWeekNumber().isEmpty()) {
             course.setPeriod(parsePeriod(course.getWeekNumber()));          //Set period
             return course;
@@ -139,7 +137,7 @@ class HtmlParser {
     }
 
     private Course findWeekDay(String weekDay, Course course) {
-        if (stringHelper.extractPattern(weekDay, coursePattern.getWeekDays())) {
+        if (util.extractPattern(weekDay, coursePattern.getWeekDays())) {
             course.setWeekDay(weekDay);
             return course;
         } else {
@@ -149,7 +147,7 @@ class HtmlParser {
     }
 
     private Course findClassroom(String classroom, Course course) {
-        if (stringHelper.extractPattern(classroom, coursePattern.getClassRoom())) {
+        if (util.extractPattern(classroom, coursePattern.getClassRoom())) {
             course.setClassroom(classroom);
             return course;
         } else {
@@ -176,7 +174,7 @@ class HtmlParser {
     private String parsePeriod(String week) {
         int weeks;
         try {
-            weeks = Integer.parseInt(stringHelper.extractWeek(week));
+            weeks = Integer.parseInt(util.extractWeek(week));
         } catch (Exception e) {
             LOGGER.error("Couldn't parse=" + week);
             weeks = 0;

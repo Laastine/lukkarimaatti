@@ -3,18 +3,13 @@ package org.ltky.parser;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.ltky.dao.CourseDao;
 import org.ltky.entity.Course;
 import org.ltky.timer.FetchJob;
-import org.ltky.util.StringHelper;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 import java.util.List;
 
 /**

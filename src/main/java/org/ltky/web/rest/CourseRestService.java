@@ -5,7 +5,7 @@ import org.ltky.dao.CourseDao;
 import org.ltky.dao.ExamDao;
 import org.ltky.entity.Course;
 import org.ltky.entity.Exam;
-import org.ltky.util.StringHelper;
+import org.ltky.util.Util;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -30,7 +30,7 @@ public class CourseRestService {
     private final CourseDao courseDao = (CourseDao) applicationContext.getBean("courseDao");
     private final ExamDao examDao = (ExamDao) applicationContext.getBean("examDao");
     private static final int MIN = 3;
-    private static final StringHelper STRING_HELPER = new StringHelper();
+    private static final Util STRING_HELPER = new Util();
 
     @GET
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")

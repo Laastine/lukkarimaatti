@@ -2,7 +2,7 @@ package org.ltky.parser;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import org.ltky.util.StringHelper;
+import org.ltky.util.Util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -57,7 +57,7 @@ public class URLParser {
 
     public String fetchExamURL() throws IOException {
         final String examURL = parserConfiguration.getExamURL();
-        new StringHelper().writeToFile(fetchFromWeb(examURL), "test.txt");
+        new Util().writeToFile(fetchFromWeb(examURL), "test.txt");
         return prefix + StringUtils.substringBetween(fetchFromWeb(examURL), parserConfiguration.getExamStartTag(), parserConfiguration.getExamEndTag());
     }
 

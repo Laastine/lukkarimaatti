@@ -28,8 +28,8 @@ Plays well enough in older browser, but those aren't officially supported.
 * [Bower](http://bower.io/)<br>
 
 <h2>Requirements & Build</h2>
-Requires Java 8 and Maven 3.x.<br>
-Maven for building a package.<br>
+Compiles with Java 8 and Gradle 1.12<br>
+Gradle for building a package.<br>
 gradle war - for building (release) package<br>
 gradle clean runJetty - for quick browser testing
 

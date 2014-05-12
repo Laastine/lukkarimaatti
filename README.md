@@ -30,7 +30,7 @@ Plays well enough in older browser, but those aren't officially supported.
 <h2>Requirements & Build</h2>
 Requires Java 8 and Maven 3.x.<br>
 Maven for building a package.<br>
-mvn clean war - for building (release) package<br>
+gradle war - for building (release) package<br>
 gradle clean runJetty - for quick browser testing
 
 <h2>REST</h2>

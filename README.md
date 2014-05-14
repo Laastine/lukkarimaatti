@@ -29,15 +29,18 @@ Plays well enough in older browser, but those aren't officially supported.
 * [Bower](http://bower.io/)<br>
 
 <h2>Requirements & Build</h2>
-Compiles with Java 8 and Gradle 1.12<br>
+Compiles with Java 8 and Gradle 1.10<br>
 Gradle for building a package.<br>
 gradle war - for building (release) package<br>
 gradle clean runJetty - for quick browser testing
 
 <h3>Testing</h3>
-Front end testing with Karma+Jasmine+Node.js.<br>
+<b>Front end</b> testing with Karma+Jasmine+Node.js.<br>
 Requires: Node.js with modules:<br>
-karma, karma-cli, karma-junit-reporter karma-phantomjs-launcher, phantomjs
+karma, karma-cli, karma-junit-reporter karma-phantomjs-launcher, phantomjs<br>
+<b>Back end:</b><br>
+gradle test - for running unit tests<br>
+gradle integrationTest - for running integration tests
 
 <h2>REST interface</h2>
 <b>Course code like-search</b><br>

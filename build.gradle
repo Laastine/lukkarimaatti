@@ -43,7 +43,7 @@ task integrationTest(type: Test) {
 
 ext {
     springVersion = '4.0.3.RELEASE'
-    jerseyVersion = '1.8'
+    jerseyVersion = '1.9'
 }
 
 dependencies {
@@ -79,6 +79,5 @@ dependencies {
             "org.springframework:spring-test:$springVersion",
             "com.sun.jersey:jersey-client:$jerseyVersion",
             "com.sun.jersey:jersey-test-framework:$jerseyVersion"
-
 
 }

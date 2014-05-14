@@ -1,4 +1,4 @@
-var lukkarimaatti = (function () {
+var Lukkarimaatti = (function () {
     'use strict';
     var courseNames, environment, noppa;
     courseNames = null;
@@ -203,7 +203,7 @@ var lukkarimaatti = (function () {
         });
     })();
 
-    $(function () {
+    var searchQuery = $(function () {
         var courses;
         var engine = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),

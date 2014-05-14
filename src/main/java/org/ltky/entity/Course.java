@@ -1,5 +1,6 @@
 package org.ltky.entity;
 
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.Immutable;
 
 import javax.persistence.*;
@@ -148,5 +149,13 @@ public class Course implements Serializable {
         return "[courseCode=" + courseCode + ", courseName=" + courseName + ", teacher=" + teacher +
                 ", weekNumber=" + weekNumber + ", weekDay=" + weekDay + ", period=" + period + ", timeOfDay=" + timeOfDay +
                 ", classroom=" + classroom + ", type=" + type + ", department=" + department + "]";
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 31)
+                .append(courseCode)
+                .append(courseName)
+                .toHashCode();
     }
 }

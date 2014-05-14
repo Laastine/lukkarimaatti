@@ -24,13 +24,13 @@ import java.util.List;
  * Date: 14.12.2013
  */
 @Path("/")
-public class CourseRestService {
-    private static final Logger LOGGER = Logger.getLogger(CourseRestService.class);
+public class CourseService {
+    private static final Logger LOGGER = Logger.getLogger(CourseService.class);
     private final ApplicationContext applicationContext = new ClassPathXmlApplicationContext("hibernate/hibernateConfig.xml");
     private final CourseDao courseDao = (CourseDao) applicationContext.getBean("courseDao");
     private final ExamDao examDao = (ExamDao) applicationContext.getBean("examDao");
     private static final int MIN = 3;
-    private static final Util STRING_HELPER = new Util();
+    private static final Util UTIL = new Util();
 
     @GET
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
@@ -47,7 +47,7 @@ public class CourseRestService {
     public final List<String> getLikeCourseCodes(@PathParam("codes") final String codes) {
         if (LOGGER.isDebugEnabled())
             LOGGER.debug("getLikeCourseCodes");
-        return STRING_HELPER.removeDuplicates(courseDao.findCourseCodes(codes));
+        return UTIL.removeDuplicates(courseDao.findCourseCodes(codes));
     }
 
     @GET

@@ -24,6 +24,7 @@ Plays well enough in older browser, but those aren't officially supported.
 * [FullCalendar 1.6.x](http://arshaw.com/fullcalendar/)
 * [Jasmine 2.0.x](http://jasmine.github.io/)
 * [PhantomJS 1.9](http://phantomjs.org/)
+* [Karma](http://karma-runner.github.io/)
 * [JSHint](http://www.jshint.com/)
 * [Bower](http://bower.io/)<br>
 
@@ -33,7 +34,12 @@ Gradle for building a package.<br>
 gradle war - for building (release) package<br>
 gradle clean runJetty - for quick browser testing
 
-<h2>REST</h2>
+<h3>Testing</h3>
+Front end testing with Karma+Jasmine+Node.js.<br>
+Requires: Node.js with modules:<br>
+karma, karma-cli, karma-junit-reporter karma-phantomjs-launcher, phantomjs
+
+<h2>REST interface</h2>
 <b>Course code like-search</b><br>
 hostname:port/lukkarimaatti/rest/codes/code<br>
 e.g. hostname:port/lukkarimaatti/rest/codes/CT

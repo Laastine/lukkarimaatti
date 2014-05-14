@@ -31,16 +31,17 @@ Plays well enough in older browser, but those aren't officially supported.
 <h2>Requirements & Build</h2>
 Compiles with Java 8 and Gradle 1.10<br>
 Gradle for building a package.<br>
-gradle war - for building (release) package<br>
-gradle clean runJetty - for quick browser testing
+<i>gradle war</i> - for building (release) package<br>
+<i>gradle clean runJetty</i> - for quick browser testing
 
 <h3>Testing</h3>
 <b>Front end</b> testing with Karma+Jasmine+Node.js.<br>
 Requires: Node.js with modules:<br>
 karma, karma-cli, karma-junit-reporter karma-phantomjs-launcher, phantomjs<br>
+<i>karma start karma.conf.js</i><br>
 <b>Back end:</b><br>
-gradle test - for running unit tests<br>
-gradle integrationTest - for running integration tests
+<i>gradle test</i> - for running unit tests<br>
+<i>gradle integrationTest</i> - for running integration tests
 
 <h2>REST interface</h2>
 <b>Course code like-search</b><br>
@@ -77,6 +78,6 @@ hostname:port/lukkarimaatti/lukkarimaatti/rest/examnames/<courseName><br>
 e.g. hostname:port/lukkarimaatti/rest/examnames/mikroteoria
 
 <h2>Copyright and license</h2>
-Copyright &copy; 2013 Mikko Kaistinen, laastine@kapsi.fi
+Copyright &copy; 2013 Mikko Kaistinen, mikko.kaistinen@kapsi.fi
 
 The MIT License

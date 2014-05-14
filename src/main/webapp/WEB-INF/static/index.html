@@ -16,7 +16,7 @@
 
 <body>
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
+    <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -44,10 +44,10 @@
         <div class="form-group">
             <input id="courseSearchBox" type="search" class="typeahead"
                    placeholder="Type a course name [e.g. matematiikka]"/>
-            <input id='addButton' type="button" class="fc-button fc-state-default" value="Add course"/>
+            <input id='addButton' type="button" class="fc-button fc-state-default fc-corner-left fc-corner-right"
+                   value="Add course"/>
         </div>
     </form>
-
 
     <div id="courseList" style="padding-top: 10px">
         <ul>
@@ -89,7 +89,7 @@
                     It started as an open source hobby project. Project repository is available at
                     <a href="https://github.com/Laastine/lukkarimaatti">Github</a>.
                     Lukkarimaatti has sister
-                    <a href="https://play.google.com/store/apps/details?id=fi.kapsi.coffeebreak.lutcampus.original.release">android
+                    <a href="https://play.google.com/store/apps/details?id=fi.kapsi.coffeebreak.lutcampus.original.release">Android
                         project</a>
                     which uses Lukkarimaatti backend for course data.
                 </p>

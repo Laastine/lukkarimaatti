@@ -1,5 +1,10 @@
-Search = (function () {
+LukkarimaattiModule = (function () {
+    'use strict';
+
     var courses;
+
+    var view = {};
+
     var engine = new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -27,35 +32,42 @@ Search = (function () {
         }
     );
 
-    engine.initialize();
-    $('#courseSearchBox').typeahead({
-            hint: true,
-            highlight: true,
-            minLength: 3
-        },
-        {
-            name: 'courses',
-            displayKey: 'name',
-            source: engine.ttAdapter(),
-            templates: {
-                empty: [
-                    '<p><strong>',
-                    'Unable to find any courses that match the current query',
-                    '</strong></p>'
-                ].join('\n'),
-                suggestion: Handlebars.compile('<p><strong>{{title}}</strong> - {{code}}</p>')
+    var searchBox = function () {
+        $('#courseSearchBox').typeahead({
+                hint: true,
+                highlight: true,
+                minLength: 3
+            },
+            {
+                name: 'courses',
+                displayKey: 'name',
+                source: engine.ttAdapter(),
+                templates: {
+                    empty: [
+                        '<p><strong>',
+                        'Unable to find any courses that match the current query',
+                        '</strong></p>'
+                    ].join('\n'),
+                    suggestion: Handlebars.compile('<p><strong>{{title}}</strong> - {{code}}</p>')
+                }
             }
-        }
-    );
+        );
+    };
 
     $('#addButton').click(function () {
         function processCourse(course) {
             var h = course.tof.split('-')[0] || 6;
             var date = moment().day(course.wd || 'su').week(course.wn || '21').hours(h).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
-            console.log('date='+date);
-            view.createCalendarEvent(course, date);  //Render via backbone
+            console.log('date=' + date);
+            ViewModule.createCalendarEvent(course, date);
         }
+
         courses.forEach(processCourse);
     });
+
+    return {
+        engine: engine,
+        searchBox: searchBox
+    };
 
 })();

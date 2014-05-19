@@ -164,7 +164,6 @@ ViewModule = (function () {
             this.calendar('renderEvent', calendarEvent, false);
         },
         addEvent: function (calendarEvent) {
-            console.log('hello');
             var event = new Event();
             event.cid = calendarEvent.id;
             var eventView = this.appendEvent(event);

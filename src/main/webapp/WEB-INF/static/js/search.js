@@ -14,21 +14,23 @@ LukkarimaattiModule = (function () {
                     // parsedResponse is the array returned from your backend
                     console.log(JSON.stringify(response));
                     courses = $.map(response, function (course) {
-                            return {
-                                title: course.courseName,
-                                code: course.courseCode,
-                                tof: course.timeOfDay,
-                                wd: course.weekDay,
-                                wn: course.weekNumber,
-                                cr: course.classRoom,
-                                t: course.type
-                            };
-                        }
-                    );
-                    return courses;
+                        return {
+                            title: course.courseName,
+                            code: course.courseCode,
+                            tof: course.timeOfDay,
+                            wd: course.weekDay,
+                            wn: course.weekNumber,
+                            cr: course.classRoom,
+                            t: course.type
+                        };
+                    });
+
+                    return _.uniq(courses, function(item) {
+                        return item.title + item.code;
+                    });
                 }
             },
-            limit: 5
+            limit: 10
         }
     );
 

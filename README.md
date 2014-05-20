@@ -6,7 +6,7 @@ Information is retrieved from [the official LUT teaching schedule info site] (ht
 Supported web browser are newest Firefox and Google Chrome.<br>
 Plays well enough in older browser, but those aren't officially supported.
 
-<b>[Test dev version!](http://54.194.116.194:8085/lukkarimaatti/static/index.html)</b>
+<b>[Test dev version!](http://54.194.116.194:8085/lukkarimaatti/)</b> **CURRENTLY DOWN**
 
 <h3>Back-end</h3>
 * [Spring 4.x](http://spring.io/)

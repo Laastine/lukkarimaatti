@@ -2,6 +2,7 @@ package org.ltky.parser;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -23,7 +24,8 @@ public class HTMLParserTest {
 
     private static final String TITE = "tite";
 
-    private void HTMLParserTest() {
+    @Before
+    public void init() {
         try {
             map = new URLParser().fetchStuff();
         } catch (IOException e) {
@@ -37,7 +39,6 @@ public class HTMLParserTest {
     }
 
     private void testCourseData(String department) {
-        HTMLParserTest();
         try {
             Assert.assertNotNull(map);
             final HtmlParser htmlParser = new HtmlParser(department);

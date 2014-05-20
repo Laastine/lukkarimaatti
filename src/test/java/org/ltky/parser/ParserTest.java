@@ -2,6 +2,7 @@ package org.ltky.parser;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.ltky.util.Util;
 
@@ -19,12 +20,19 @@ import java.util.regex.Pattern;
  */
 public class ParserTest {
     private static final Logger LOGGER = Logger.getLogger(ParserTest.class);
-    private final Util util = new Util();
+    private Util util;
+    private ParserConfiguration config;
+    private URLParser parser;
+
+    @Before
+    public void init() {
+        util = new Util();
+        config = ParserConfiguration.getInstance();
+        parser = new URLParser();
+    }
 
     @Test
     public void parserTest() {
-        ParserConfiguration config = ParserConfiguration.getInstance();
-        URLParser parser = new URLParser();
         try {
             Map<String, String> map = parser.fetchStuff();
             Assert.assertTrue(map.size() == 10);
@@ -38,8 +46,6 @@ public class ParserTest {
 
     @Test
     public void examParserTest() {
-        ParserConfiguration config = ParserConfiguration.getInstance();
-        URLParser parser = new URLParser();
         final String regex = "^https://uni.lut.fi/*";
         try {
             String s = parser.fetchExamURL();

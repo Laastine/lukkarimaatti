@@ -2,6 +2,7 @@ package org.ltky.parser;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.ltky.util.CoursePattern;
 import org.ltky.util.Util;
@@ -20,7 +21,8 @@ public class RegexTest {
     private static final Logger LOGGER = Logger.getLogger(RegexTest.class);
     private final ArrayList<String> list = new ArrayList<>();
 
-    private void init() {
+    @Before
+    public void init() {
     list.add("35-41");
     list.add("36, 2");
     list.add("1");

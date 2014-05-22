@@ -3,8 +3,6 @@ package org.ltky.parser;
 import org.apache.log4j.Logger;
 import org.ltky.dao.CourseDao;
 import org.ltky.dao.ExamDao;
-import org.ltky.entity.Course;
-import org.ltky.entity.Exam;
 import org.ltky.validator.CourseValidator;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -16,13 +14,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * Date: 8.12.2013
  */
 public class ParserTask implements Runnable {
-
     private final String department;
     private final String departmentData;
     private static final Logger LOGGER = Logger.getLogger(ParserTask.class);
     private final ApplicationContext applicationContext = new ClassPathXmlApplicationContext("hibernate/hibernateConfig.xml");
 
-    public ParserTask(String department, String departmentData){
+    public ParserTask(String department, String departmentData) {
         this.department = department;
         this.departmentData = departmentData;
     }
@@ -39,8 +36,7 @@ public class ParserTask implements Runnable {
     private void saveCourseToDB() {
         final CourseDao courseDao = (CourseDao) applicationContext.getBean("courseDao");
         try {
-            final HtmlParser htmlParser = new HtmlParser(department);
-            courseDao.delete();          //clean old courses
+            courseDao.delete();     //clean old courses
             (new HtmlParser(department).parse(departmentData)).stream().filter(newCourse -> CourseValidator.validateCourse(newCourse)).forEach(courseDao::saveOrUpdate);
         } catch (Exception e) {
             LOGGER.error("HtmlParser error", e);
@@ -58,7 +54,7 @@ public class ParserTask implements Runnable {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return this.department;
     }
 }

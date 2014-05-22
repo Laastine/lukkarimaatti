@@ -10,10 +10,13 @@ import org.ltky.util.CoursePattern;
 import org.ltky.util.Util;
 import org.ltky.validator.CourseValidator;
 
+import javax.print.Doc;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -35,22 +38,36 @@ class HtmlParser {
     }
 
     public List<Course> parse(String url) throws IOException {
-        return parseElementData(getTableElements(url));
+        return parseElementData(getTableElements(getUrlData(url)));
     }
 
+    public List<Course> parseHTMLData(String html) throws IOException {
+        return parseElementData(getTableElements(Jsoup.parse(html)));
+    }
+
+
     /**
-     * Select table class=spreadsheet elements from given HMTL
-     *
+     * Fetch HTML string
      * @param url
      * @return
-     * @throws IllegalStateException
      * @throws IOException
      */
-    private Elements getTableElements(String url) throws IllegalStateException, IOException {
-        Document doc = Jsoup.parse(
+    private Document getUrlData(String url) throws IOException {
+        return Jsoup.parse(
                 new URL(url).openStream(),
                 "cp1252",   //Set to null to determine from http-equiv meta tag, if present, or fall back to UTF-8
                 url);
+    }
+
+    /**
+     * Select table class=spreadsheet elements from given HMTL string
+     *
+     * @param doc
+     * @return
+     * @throws IllegalStateException
+     * @throws IOException
+    */
+    private Elements getTableElements(Document doc) throws IllegalStateException, IOException {
         return doc.select("table").select(".spreadsheet").select(":not(thead) tr");
     }
 
@@ -107,7 +124,8 @@ class HtmlParser {
                 }
             }
             if (CourseValidator.validateCourse(course)) {
-                LOGGER.debug("COURSE=" + course);
+                if(LOGGER.isDebugEnabled())
+                    LOGGER.debug("COURSE=" + course);
                 resultList.add(course);
                 course = new Course();
             }
@@ -127,7 +145,7 @@ class HtmlParser {
     private Course findWeek(String weekNumber, Course course) {
         if (util.extractPattern(weekNumber, coursePattern.getWeekNumber()))
             course.setWeekNumber(util.processWeekNumbers(weekNumber));
-        if (course.getWeekNumber() != null & !course.getWeekNumber().isEmpty()) {
+        if (StringUtils.isBlank(course.getPeriod())) {
             course.setPeriod(parsePeriod(course.getWeekNumber()));          //Set period
             return course;
         } else {

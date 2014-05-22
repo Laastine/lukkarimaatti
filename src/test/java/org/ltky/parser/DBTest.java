@@ -36,7 +36,7 @@ public class DBTest {
             Assert.fail("DB failure");
         }
     }
-
+/*
     @Test
     public void encodingTest() throws UnsupportedEncodingException {
         final ApplicationContext applicationContext = new ClassPathXmlApplicationContext("hibernate/hibernateConfig.xml");
@@ -45,4 +45,5 @@ public class DBTest {
         String a = new String(("Käytännön ohjelmointi=" + list1.get(1).getCourseName()).getBytes("UTF-8"), "ISO8859-1");
         LOGGER.debug(a);
     }
+    */
 }

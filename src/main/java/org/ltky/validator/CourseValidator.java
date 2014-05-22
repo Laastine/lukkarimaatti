@@ -20,11 +20,7 @@ public class CourseValidator {
         if (StringUtils.isBlank(course.getCourseName()) | !investigateLength(course.getCourseName(), 256)) {
             return false;
         }
-
-        if (!investigateLength(course.getPeriod(), 64)) {
-            return false;
-        }
-        if (course.getWeekNumber() == null | !investigateLength(course.getWeekNumber(), 32)) {
+        if (course.getWeekNumber() == null | !investigateLength(course.getWeekNumber(), 128)) {
             return false;
         }
         if (!investigateLength(course.getWeekDay(), 4)) {

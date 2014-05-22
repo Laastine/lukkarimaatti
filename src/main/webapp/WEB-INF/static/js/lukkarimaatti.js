@@ -5,7 +5,7 @@ LukkarimaattiModule.main = (function () {
 
     var courseNames, environment, noppa;
     courseNames = null;
-    environment = 'http://83.136.252.198/lukkarimaatti';
+    environment = 'http://localhost:8085/lukkarimaatti';
     noppa = 'https://noppa.lut.fi/noppa/opintojakso/';
 
     $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
@@ -15,6 +15,7 @@ LukkarimaattiModule.main = (function () {
     $(document).ready(function () {
         LukkarimaattiModule.engine.initialize();
         LukkarimaattiModule.searchBox();
+        $('#courseSearchBox').focus();
     });
 
 })();

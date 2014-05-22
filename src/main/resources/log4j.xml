@@ -10,6 +10,17 @@
         </layout>
     </appender>
 
+    <!--
+    <logger name="org.springframework">
+        <level value="INFO"/>
+        <appender-ref ref="rolling-file" />
+    </logger>
+
+    <logger name="org.hibernate">
+        <level value="INFO"/>
+        <appender-ref ref="rolling-file" />
+    </logger>
+    -->
     <root>
         <priority value="DEBUG"/>
         <appender-ref ref="rolling-file" />

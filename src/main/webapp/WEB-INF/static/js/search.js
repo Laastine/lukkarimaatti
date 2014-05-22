@@ -3,8 +3,6 @@ LukkarimaattiModule = (function () {
 
     var courses;
 
-    var view = {};
-
     var engine = new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -53,18 +51,25 @@ LukkarimaattiModule = (function () {
                     suggestion: Handlebars.compile('<p><strong>{{title}}</strong> - {{code}}</p>')
                 }
             }
-        );
+        ).on('typeahead:selected', function(evt, item) {
+                console.log(item);
+                addDataToCalendar();
+            });
     };
 
-    $('#addButton').click(function () {
+    function addDataToCalendar() {
         function processCourse(course) {
             var h = course.tof.split('-')[0] || 6;
+            var weekNumber = course.wn.split(',');
             var date = moment().day(course.wd || 'su').week(course.wn || '21').hours(h).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
             console.log('date=' + date);
             ViewModule.createCalendarEvent(course, date);
         }
-
         courses.forEach(processCourse);
+    }
+
+    $('#addButton').click(function () {
+        addDataToCalendar();
     });
 
     return {

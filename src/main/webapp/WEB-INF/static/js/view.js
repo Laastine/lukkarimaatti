@@ -83,10 +83,8 @@ ViewModule = (function () {
         el: $('#calendar'),
         initialize: function () {
             _.bindAll(this, 'calendar', 'render', 'createCalendarEvent', 'addEvent', 'appendEvent');
-
             this.collection = new EventCollection();
             this.collection.bind('add', this.appendEvent);
-
             this.render();
         },
         calendar: function () {
@@ -95,22 +93,24 @@ ViewModule = (function () {
         },
         render: function () {
             var that = this;
-
             this.calendar({
                 header: {
                     left: 'prev, next today',
                     center: 'title',
-                    right: 'month, agendaWeek, basicDay',
+                    right: 'month, agendaWeek, agendaDay',
                     ignoreTimezone: false
                 },
+                modal: true,
+                weekends: false,
                 defaultView: 'agendaWeek',
                 weekNumbers: true,
                 editable: true,
                 selectable: false,
+                selectHelper: true,
                 firstDay: 1,
+                minTime: 8,
+                maxTime: 20,
                 dayClick: function (date, allDay, jsEvent, view) {
-                    console.log('dayclick()');
-                    that.createCalendarEvent(date, allDay);
                 },
                 eventClick: function (event, jsEvent, view) {
                     console.log('Event click'+event);
@@ -153,7 +153,7 @@ ViewModule = (function () {
         },
         createCalendarEvent: function(course, date) {
             var calendarEvent = {
-                title: course.title,
+                title: course.title+'/'+course.t,
                 start:  new Date(date),
                 //end: moment(date).add('h', 2),
                 allDay: false,

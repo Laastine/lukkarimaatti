@@ -58,13 +58,19 @@ LukkarimaattiModule = (function () {
     };
 
     function addDataToCalendar() {
+
         function processCourse(course) {
-            var h = course.tof.split('-')[0] || 6;
-            var weekNumber = course.wn.split(',');
-            var date = moment().day(course.wd || 'su').week(course.wn || '21').hours(h).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
-            console.log('date=' + date);
-            ViewModule.createCalendarEvent(course, date);
+            var weekNumber = JSON.parse('['+course.wn+']');
+            weekNumber.forEach(processWeekNumbers);
+
+            function processWeekNumbers(weekNumber) {
+                var h = course.tof.split('-')[0] || 6;
+                var date = moment().day(course.wd || 'su').week(weekNumber || '0').hours(h).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
+                //console.log('date=' + date);
+                ViewModule.createCalendarEvent(course, date);
+            }
         }
+
         courses.forEach(processCourse);
     }
 

@@ -63,7 +63,7 @@ LukkarimaattiModule = (function () {
 
     var addItem = function (courseName, courseCode) {
         var noppa = 'https://noppa.lut.fi/noppa/opintojakso/';
-        $("#courseList").append('<li data-filtertext="' + courseName + '"><a href=' + noppa + courseCode + '>' + courseName + '</a></li>');
+        $("#courseList").append('<li data-filtertext="' + courseName + '"><a href=' + noppa + courseCode + ' target="_blank">' + courseName + '</a></li>');
     }
 
     function addDataToCalendar() {

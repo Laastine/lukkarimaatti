@@ -114,6 +114,7 @@ class HtmlParser {
         if (StringUtils.isBlank(item)) {
             return course;
         }
+
         switch (elem) {
             case 0:
                 if (util.extractPattern(item, coursePattern.getCoursePattern()))
@@ -146,7 +147,6 @@ class HtmlParser {
         if (StringUtils.isBlank(item)) {
             return course;
         }
-        course.setDepartment(department);
         switch (elem) {
             case 0:
                 if (util.extractPattern(item, coursePattern.getCoursePattern()))

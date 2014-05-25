@@ -6,7 +6,6 @@ LukkarimaattiModule.main = (function () {
     var courseNames, environment, noppa;
     courseNames = null;
     environment = 'http://localhost:8085/lukkarimaatti';
-    noppa = 'https://noppa.lut.fi/noppa/opintojakso/';
 
     $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
         options.url = environment + options.url;

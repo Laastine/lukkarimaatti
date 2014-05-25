@@ -8,10 +8,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.LinkedHashMap;
+import java.util.Queue;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -20,6 +21,7 @@ public class URLParser {
     private final ParserConfiguration parserConfiguration = ParserConfiguration.getInstance();
     private static final Logger LOGGER = Logger.getLogger(URLParser.class);
     private static final String prefix = "https://uni.lut.fi";
+
     /**
      * Parse each departments url
      *
@@ -27,32 +29,23 @@ public class URLParser {
      * @throws IOException
      */
     public Map<String, String> fetchStuff() throws IOException {
-        final Map<String, String> resultSet = new HashMap<>();
         final String uniURL = parserConfiguration.getUniURL();
-        final Map<String, String> dependencies = getProperties(uniURL);
+        final Map<String, String> dependencies = new LinkedHashMap<>();
+        final Queue<String> queue = initDepart2UrlMap();
+        final String COURSE_URL_PATTERN = "\\/fi\\/c\\/document_library\\/get_file\\?uuid=[a-z0-9\\-]*&amp;groupId=10304";
         String linkList = StringUtils.substringBetween(fetchFromWeb(uniURL), parserConfiguration.getStartTag(), parserConfiguration.getEndTag());
         LOGGER.debug("linkList=" + linkList);
         String link = "";
-        for (Map.Entry me : dependencies.entrySet()) {
-            String department = me.toString();
-            department = department.substring(StringUtils.indexOfAny(department, "=") + 1, department.length());
-            Pattern pattern = Pattern.compile("<a href=.+" + me.getKey());
-            Matcher matcher = pattern.matcher(linkList);
-            if (matcher.find()) {
-                String tmp = matcher.group();
-                if (StringUtils.contains(tmp, "\" target=")) {
-                    link = prefix + StringUtils.substringBetween(tmp, "<a href=\"", "\" target=");
-                } else {
-                    link = prefix + StringUtils.substringBetween(tmp, "<a href=\"", "\"><br ");
-                }
-            }
-            linkList = StringUtils.substringAfter(linkList, "10304");
+        Pattern pattern = Pattern.compile(COURSE_URL_PATTERN);
+        Matcher matcher = pattern.matcher(linkList);
+        while (matcher.find()) {
+            link = prefix + matcher.group();
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Department=" + department + ", link=" + link);
+                LOGGER.debug("Department=" + queue.peek() + ", link=" + link);
             }
-            resultSet.put(department, link);
+            dependencies.put(queue.poll(), link);
         }
-        return resultSet;
+        return dependencies;
     }
 
     public String fetchExamURL() throws IOException {
@@ -61,21 +54,20 @@ public class URLParser {
         return prefix + StringUtils.substringBetween(fetchFromWeb(examURL), parserConfiguration.getExamStartTag(), parserConfiguration.getExamEndTag());
     }
 
-    private Map getProperties(final String uniURL) {
-        final Map<String, String> dependencies = new LinkedHashMap<>();
-        LOGGER.info("Fetching: " + uniURL);
-        dependencies.put(parserConfiguration.getEnte(), "ente");
-        dependencies.put(parserConfiguration.getYmte(), "ymte");
-        dependencies.put(parserConfiguration.getKete(), "kete");
-        dependencies.put(parserConfiguration.getKote(), "kote");
-        dependencies.put(parserConfiguration.getSate(), "sate");
-        dependencies.put(parserConfiguration.getTite(), "tite");
-        dependencies.put(parserConfiguration.getTuta(), "tuta");
-        dependencies.put(parserConfiguration.getKati(), "kati");
-        dependencies.put(parserConfiguration.getMafy(), "mafy");
-        //dependencies.put(parserConfiguration.getKike(), "kike");  Waits for implementation
-        dependencies.put(parserConfiguration.getKv(), "kv");
-        return dependencies;
+    private final LinkedList<String> initDepart2UrlMap() {
+        final LinkedList<String> list = new LinkedList();
+        list.add("ente");
+        list.add("ymte");
+        list.add("kete");
+        list.add("kote");
+        list.add("sate");
+        list.add("tite");
+        list.add("tuta");
+        list.add("kati");
+        list.add("mafy");
+        list.add("kike");
+        list.add("kv");
+        return list;
     }
 
     /**

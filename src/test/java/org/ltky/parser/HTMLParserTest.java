@@ -23,9 +23,10 @@ public class HTMLParserTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
     private Map<String, String> map;
-    private static final String TITE = "tite";
+    private static final String TITE_DEPARTMENT = "tite";
+    private static final String KIKE_DEPARTMENT = "kike";
     private static final String COURSE_TEST_DATA =
-            "<table class='spreadsheet' cellspacing='0' cellpadding='2%' border='t'>\n" +
+                    "<table class='spreadsheet' cellspacing='0' cellpadding='2%' border='t'>\n" +
                     "<col class='column0' /><col class='column1' /><col class='column2' /><col class='column3' /><col class='column4' /><col class='column5' /><col class='column6' /><col class='column7' />\n" +
                     "<tr class='columnTitles'>\n" +
                     "<td></td>\n" +
@@ -59,7 +60,7 @@ public class HTMLParserTest {
                     "</tr>\n" +
                     "</table>";
     private static final String COURSE_TEST_DATA2 =
-            "<table class='spreadsheet' cellspacing='0' cellpadding='2%' border='t'>\n" +
+                    "<table class='spreadsheet' cellspacing='0' cellpadding='2%' border='t'>\n" +
                     "<col class='column0' /><col class='column1' /><col class='column2' /><col class='column3' /><col class='column4' /><col class='column5' /><col class='column6' /><col class='column7' />\n" +
                     "<tr class='columnTitles'>\n" +
                     "<td></td>\n" +
@@ -112,6 +113,120 @@ public class HTMLParserTest {
                     "<td>&nbsp;</td>\n" +
                     "</tr>\n" +
                     "</table>";
+    private static final String LANGUAGE_LAB_TEST_DATA =
+                    "<table class='spreadsheet' cellspacing='0' cellpadding='2%' border='t'>\n" +
+                    "<col class='column0' /><col class='column1' /><col class='column2' /><col class='column3' /><col class='column4' /><col class='column5' /><col class='column6' /><col class='column7' /><col class='column8' />\n" +
+                    "<tr class='columnTitles'>\n" +
+                    "<td></td>\n" +
+                    "<td></td>\n" +
+                    "<td>Periodi</td>\n" +
+                    "<td>Vko</td>\n" +
+                    "<td>      </td>\n" +
+                    "<td>Klo</td>\n" +
+                    "<td>      </td>\n" +
+                    "<td>Sali</td>\n" +
+                    "<td></td>\n" +
+                    "</tr>\n" +
+                    "<tr>\n" +
+                    "<td>FV14A1200 - Venäjä 1: D</td>\n" +
+                    "<td>Kullberg, Olesya</td>\n" +
+                    "<td>Periodi 1-2</td>\n" +
+                    "<td>35-41, 43-49</td>\n" +
+                    "<td>to</td>\n" +
+                    "<td>12</td>\n" +
+                    "<td>14</td>\n" +
+                    "<td>1427C*</td>\n" +
+                    "<td>Mainitse ilmoittautuessasi Lisätietoja-kenttään, oletko lukenut kieltä aiemmin jossain muualla ja kuinka monta vuotta.</td>\n" +
+                    "</tr>\n" +
+                    "<tr>\n" +
+                    "<td>FV14A1200 - Venäjä 1: D</td>\n" +
+                    "<td>Kullberg, Olesya</td>\n" +
+                    "<td>Periodi 1-2</td>\n" +
+                    "<td>35-41, 43-49</td>\n" +
+                    "<td>ti</td>\n" +
+                    "<td>8</td>\n" +
+                    "<td>10</td>\n" +
+                    "<td>1407</td>\n" +
+                    "<td>Mainitse ilmoittautuessasi Lisätietoja-kenttään, oletko lukenut kieltä aiemmin jossain muualla ja kuinka monta vuotta.</td>\n" +
+                    "</tr>\n" +
+                    "<tr>\n" +
+                    "<td>FV14A1200 - Venäjä 1: C</td>\n" +
+                    "<td>Bagrova, Natalia</td>\n" +
+                    "<td>&nbsp;</td>\n" +
+                    "<td>2-8, 10-15, 17</td>\n" +
+                    "<td>to</td>\n" +
+                    "<td>10</td>\n" +
+                    "<td>12</td>\n" +
+                    "<td>1407</td>\n" +
+                    "<td>Mainitse ilmoittautuessasi Lisätietoja-kenttään, oletko lukenut kieltä aiemmin jossain muualla ja kuinka monta vuotta.</td>\n" +
+                    "</tr>\n" +
+                    "<tr>\n" +
+                    "<td>FV14A1200 - Venäjä 1: C</td>\n" +
+                    "<td>Bagrova, Natalia</td>\n" +
+                    "<td>&nbsp;</td>\n" +
+                    "<td>2-8, 10-15, 17</td>\n" +
+                    "<td>ti</td>\n" +
+                    "<td>12</td>\n" +
+                    "<td>14</td>\n" +
+                    "<td>1431*</td>\n" +
+                    "<td>Mainitse ilmoittautuessasi Lisätietoja-kenttään, oletko lukenut kieltä aiemmin jossain muualla ja kuinka monta vuotta.</td>\n" +
+                    "</tr>\n" +
+                    "<tr>\n" +
+                    "<td>FV14A1200 - Venäjä 1: A</td>\n" +
+                    "<td>Bagrova, Natalia</td>\n" +
+                    "<td>&nbsp;</td>\n" +
+                    "<td>43</td>\n" +
+                    "<td>ti</td>\n" +
+                    "<td>8</td>\n" +
+                    "<td>10</td>\n" +
+                    "<td>1431*</td>\n" +
+                    "<td>Mainitse ilmoittautuessasi Lisätietoja-kenttään, oletko lukenut kieltä aiemmin jossain muualla ja kuinka monta vuotta.</td>\n" +
+                    "</tr>\n" +
+                    "<tr>\n" +
+                    "<td>FV14A1200 - Venäjä 1: B</td>\n" +
+                    "<td>Kullberg, Olesya</td>\n" +
+                    "<td>Periodi 1-2</td>\n" +
+                    "<td>35-41, 43-49</td>\n" +
+                    "<td>ke</td>\n" +
+                    "<td>12</td>\n" +
+                    "<td>14</td>\n" +
+                    "<td>1427A</td>\n" +
+                    "<td>Mainitse ilmoittautuessasi Lisätietoja-kenttään, oletko lukenut kieltä aiemmin jossain muualla ja kuinka monta vuotta.</td>\n" +
+                    "</tr>\n" +
+                    "<tr>\n" +
+                    "<td>FV14A1200 - Venäjä 1: B</td>\n" +
+                    "<td>Kullberg, Olesya</td>\n" +
+                    "<td>Periodi 1-2</td>\n" +
+                    "<td>35-41, 43-49</td>\n" +
+                    "<td>ma</td>\n" +
+                    "<td>12</td>\n" +
+                    "<td>14</td>\n" +
+                    "<td>1427A</td>\n" +
+                    "<td>Mainitse ilmoittautuessasi Lisätietoja-kenttään, oletko lukenut kieltä aiemmin jossain muualla ja kuinka monta vuotta.</td>\n" +
+                    "</tr>\n" +
+                    "<tr>\n" +
+                    "<td>FV14A1200 - Venäjä 1: A</td>\n" +
+                    "<td>Bagrova, Natalia</td>\n" +
+                    "<td>Periodi 1-2</td>\n" +
+                    "<td>35-41, 43-49</td>\n" +
+                    "<td>to</td>\n" +
+                    "<td>12</td>\n" +
+                    "<td>14</td>\n" +
+                    "<td>1410A</td>\n" +
+                    "<td>Mainitse ilmoittautuessasi Lisätietoja-kenttään, oletko lukenut kieltä aiemmin jossain muualla ja kuinka monta vuotta.</td>\n" +
+                    "</tr>\n" +
+                    "<tr>\n" +
+                    "<td>FV14A1200 - Venäjä 1: A</td>\n" +
+                    "<td>Bagrova, Natalia</td>\n" +
+                    "<td>&nbsp;</td>\n" +
+                    "<td>35-41, 44-49</td>\n" +
+                    "<td>ti</td>\n" +
+                    "<td>8</td>\n" +
+                    "<td>10</td>\n" +
+                    "<td>1410A</td>\n" +
+                    "<td>Mainitse ilmoittautuessasi Lisätietoja-kenttään, oletko lukenut kieltä aiemmin jossain muualla ja kuinka monta vuotta.</td>\n" +
+                    "</tr>\n" +
+                    "</table>";
 
     @Before
     public void init() {
@@ -124,7 +239,7 @@ public class HTMLParserTest {
 
     @Test
     public void HTMLDataParsingTest() throws IOException {
-        HtmlParser htmlParser = new HtmlParser(TITE);
+        HtmlParser htmlParser = new HtmlParser(TITE_DEPARTMENT);
         List<Course> list = htmlParser.parseHTMLData(COURSE_TEST_DATA);
         List<Course> list2 = htmlParser.parseHTMLData(COURSE_TEST_DATA2);
         Assert.assertFalse(list.isEmpty());
@@ -132,8 +247,17 @@ public class HTMLParserTest {
     }
 
     @Test
+    public void HTMLanguageLabLDataParsingTest() throws IOException {
+        HtmlParser htmlParser = new HtmlParser(KIKE_DEPARTMENT);
+        List<Course> list = htmlParser.parseHTMLData(LANGUAGE_LAB_TEST_DATA);
+        Assert.assertFalse(list.isEmpty());
+        LOGGER.info("LL=" + list.get(0).toString());
+    }
+
+    @Test
     public void testDepartmentData() {
-        testCourseData(TITE);
+        testCourseData(TITE_DEPARTMENT);
+        testCourseData(KIKE_DEPARTMENT);
     }
 
     private void testCourseData(String department) {

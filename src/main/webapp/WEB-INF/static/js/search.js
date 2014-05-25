@@ -36,7 +36,7 @@ LukkarimaattiModule = (function () {
         $('#courseSearchBox').typeahead({
                 hint: true,
                 highlight: true,
-                minLength: 3
+                minLength: 2
             },
             {
                 name: 'courses',
@@ -52,7 +52,6 @@ LukkarimaattiModule = (function () {
                 }
             }
         ).on('typeahead:selected', function(evt, item) {
-                console.log(item);
                 addDataToCalendar();
             });
     };
@@ -65,12 +64,10 @@ LukkarimaattiModule = (function () {
 
             function processWeekNumbers(weekNumber) {
                 var h = course.tof.split('-')[0] || 6;
-                var date = moment().day(course.wd || 'su').week(weekNumber || '0').hours(h).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
-                //console.log('date=' + date);
+                var date = moment().day(course.wd).week(weekNumber).hours(h).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
                 ViewModule.createCalendarEvent(course, date);
             }
         }
-
         courses.forEach(processCourse);
     }
 

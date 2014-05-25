@@ -20,17 +20,6 @@ public class ParserConfiguration {
     private String examStartTag;
     private String examEndTag;
     private String folder;
-    private String ente;
-    private String ymte;
-    private String kete;
-    private String kote;
-    private String sate;
-    private String tite;
-    private String tuta;
-    private String kati;
-    private String mafy;
-    private String kike;
-    private String kv;
 
     private String period1;
     private String period2;
@@ -65,17 +54,6 @@ public class ParserConfiguration {
         examStartTag = getPropertyOrThrowUp(parserProperties, "examStartTag");
         examEndTag = getPropertyOrThrowUp(parserProperties, "examEndTag");
         folder = getPropertyOrThrowUp(parserProperties, "folder");
-        ente = getPropertyOrThrowUp(parserProperties, "ente");
-        ymte = getPropertyOrThrowUp(parserProperties, "ymte");
-        kete = getPropertyOrThrowUp(parserProperties, "kete");
-        kote = getPropertyOrThrowUp(parserProperties, "kote");
-        sate = getPropertyOrThrowUp(parserProperties, "sate");
-        tite = getPropertyOrThrowUp(parserProperties, "tite");
-        tuta = getPropertyOrThrowUp(parserProperties, "tuta");
-        kati = getPropertyOrThrowUp(parserProperties, "kati");
-        mafy = getPropertyOrThrowUp(parserProperties, "mafy");
-        //kike = getPropertyOrThrowUp(parserProperties, "kike");    Waits implementation
-        kv = getPropertyOrThrowUp(parserProperties, "kv");
         period1 = getPropertyOrThrowUp(parserProperties, "period1");
         period2 = getPropertyOrThrowUp(parserProperties, "period2");
         period3 = getPropertyOrThrowUp(parserProperties, "period3");
@@ -128,50 +106,6 @@ public class ParserConfiguration {
 
     public String getExamEndTag() {
         return examEndTag;
-    }
-
-    public String getEnte() {
-        return ente;
-    }
-
-    public String getYmte() {
-        return ymte;
-    }
-
-    public String getKete() {
-        return kete;
-    }
-
-    public String getKote() {
-        return kote;
-    }
-
-    public String getSate() {
-        return sate;
-    }
-
-    public String getTite() {
-        return tite;
-    }
-
-    public String getTuta() {
-        return tuta;
-    }
-
-    public String getKati() {
-        return kati;
-    }
-
-    public String getMafy() {
-        return mafy;
-    }
-
-    public String getKike() {
-        return kike;
-    }
-
-    public String getKv() {
-        return kv;
     }
 
     public String getFolder() {

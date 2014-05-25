@@ -3,11 +3,10 @@ ViewModule = (function () {
 
     var Event = Backbone.Model.extend({
         defaults: {
-            title: "test",
+            title: 'tmp',
             startDate: null,
             endDate: null,
-            isAllDay: false,
-            color: "rgb(0, 0, 0)"
+            isAllDay: false
         },
         validate: function (attrs) {
             if (attrs.endDate && attrs.endDate < attrs.startDate) {
@@ -31,10 +30,6 @@ ViewModule = (function () {
 
         initialize: function () {
             _.bindAll(this, 'render', 'unrender', 'remove', 'synchronizeIntoCalendar', 'synchronizeFromCalendar');
-
-            this.model.bind('change', this.render);
-            this.model.bind('remove', this.unrender);
-
             this.calendar = this.options['calendar'];
         },
 
@@ -116,7 +111,7 @@ ViewModule = (function () {
                     console.log('Event click'+event);
                 },
                 eventRender: function (event, element, view) {
-                    event.element = element; // Not known before
+                    event.element = element;
                 },
                 eventAfterRender: function (event, element, view) {
                     if (!event.view) {

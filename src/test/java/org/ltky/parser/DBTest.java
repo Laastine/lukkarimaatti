@@ -26,9 +26,8 @@ import java.util.List;
 public class DBTest {
     private static final Logger LOGGER = Logger.getLogger(DBTest.class);
 
-    @Test
-    public void saveCoursesTest() {
-        LOGGER.debug("saveCoursesTest");
+    //@Test
+    public void saveCoursesTest() { //Use to updated DB
         try {
             new FetchJob().fetch();
         } catch (Exception e) {
@@ -36,7 +35,8 @@ public class DBTest {
             Assert.fail("DB failure");
         }
     }
-/*
+
+
     @Test
     public void encodingTest() throws UnsupportedEncodingException {
         final ApplicationContext applicationContext = new ClassPathXmlApplicationContext("hibernate/hibernateConfig.xml");
@@ -45,5 +45,5 @@ public class DBTest {
         String a = new String(("Käytännön ohjelmointi=" + list1.get(1).getCourseName()).getBytes("UTF-8"), "ISO8859-1");
         LOGGER.debug(a);
     }
-    */
+
 }

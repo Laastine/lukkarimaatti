@@ -13,11 +13,13 @@ Plays well enough in older browser, but those aren't officially supported.
 * [Hibernate 4.x](http://hibernate.org/)
 * [Jsoup 1.7.x](http://jsoup.org/)
 * [Jersey 1.8](https://jersey.java.net/)
+* [Jetty 9](http://www.eclipse.org/jetty/)
+* [PostgreSQL 9.1](http://www.postgresql.org/)
 * [SonarQube 4.1.2](http://www.sonarqube.org/)<br>
  
 <h3>Front-end</h3>
 * [jQuery 1.10](http://jquery.com/)
-* [Bootstrap3](http://getbootstrap.com/)
+* [Bootstrap 3](http://getbootstrap.com/)
 * [underscore.js 1.6.x](http://underscorejs.org/)
 * [Backbone.js 1.1.x](http://backbonejs.org/)
 * [typeahead.js 0.10.x](http://twitter.github.io/typeahead.js/)

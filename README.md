@@ -1,4 +1,4 @@
-<h1>Lukkarimaatti</h1>
+<h1>Lukkarimaatti++</h1>
 
 Hobby project to offer course data easily usable scheduling tool over simple REST interface.<br>
 Information is retrieved from [the official LUT teaching schedule info site] (https://uni.lut.fi/fi/web/guest/lukujarjestykset).<br>

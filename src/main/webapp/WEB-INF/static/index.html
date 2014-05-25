@@ -44,9 +44,12 @@
     <form role="course-search-form" method="post" style="padding-top: 20px">
         <div class="form-group">
             <input id="courseSearchBox" type="search" class="typeahead"
-                   placeholder="Type a course name [e.g. matematiikka]"/>
+                   placeholder="Type a course name [e.g. mat for matematiikka]"/>
         </div>
     </form>
+
+    <ul data-role="listview" data-filter="true" data-theme="b" id="courseList">
+    </ul>
 
     <div style="padding-top: 10px">
         <div id="calendar">

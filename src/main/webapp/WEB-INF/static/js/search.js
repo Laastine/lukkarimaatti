@@ -1,7 +1,7 @@
 LukkarimaattiModule = (function () {
     'use strict';
 
-    var courses;
+    var courses = {};
 
     var engine = new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
@@ -9,8 +9,6 @@ LukkarimaattiModule = (function () {
             remote: {
                 url: '/rest/cnames/%QUERY',
                 filter: function (response) {
-                    // parsedResponse is the array returned from your backend
-                    console.log(JSON.stringify(response));
                     courses = $.map(response, function (course) {
                         return {
                             title: course.courseName,
@@ -23,7 +21,7 @@ LukkarimaattiModule = (function () {
                         };
                     });
 
-                    return _.uniq(courses, function(item) {
+                    return _.uniq(courses, function (item) {
                         return item.title + item.code;
                     });
                 }
@@ -36,7 +34,7 @@ LukkarimaattiModule = (function () {
         $('#courseSearchBox').typeahead({
                 hint: true,
                 highlight: true,
-                minLength: 2
+                minLength: 3
             },
             {
                 name: 'courses',
@@ -51,29 +49,40 @@ LukkarimaattiModule = (function () {
                     suggestion: Handlebars.compile('<p><strong>{{title}}</strong> - {{code}}</p>')
                 }
             }
-        ).on('typeahead:selected', function(evt, item) {
+        ).on('typeahead:selected', function (evt, item) {
+                courses = courses.filter(function (el) {
+                    return el.code === item.code;
+                });
+                if (courses[0].title.length != 0) {
+                    addItem(courses[0].title, courses[0].code);
+                }
                 addDataToCalendar();
             });
     };
 
+
+    var addItem = function (courseName, courseCode) {
+        var noppa = 'https://noppa.lut.fi/noppa/opintojakso/';
+        $("#courseList").append('<li data-filtertext="' + courseName + '"><a href=' + noppa + courseCode + '>' + courseName + '</a></li>');
+    }
+
     function addDataToCalendar() {
 
         function processCourse(course) {
-            var weekNumber = JSON.parse('['+course.wn+']');
+            var weekNumber = JSON.parse('[' + course.wn + ']');
             weekNumber.forEach(processWeekNumbers);
 
             function processWeekNumbers(weekNumber) {
-                var h = course.tof.split('-')[0] || 6;
-                var date = moment().day(course.wd).week(weekNumber).hours(h).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
-                ViewModule.createCalendarEvent(course, date);
+                var hStart = course.tof.split('-')[0] || 6;
+                var hEnd = course.tof.split('-')[0] || 6;
+                var dateStart = moment().day(course.wd).week(weekNumber).hours(hStart).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
+                var dateEnd = moment().day(course.wd).week(weekNumber).hours(hEnd).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
+                ViewModule.createCalendarEvent(course, dateStart, dateEnd);
             }
         }
+
         courses.forEach(processCourse);
     }
-
-    $('#addButton').click(function () {
-        addDataToCalendar();
-    });
 
     return {
         engine: engine,

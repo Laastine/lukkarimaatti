@@ -105,39 +105,11 @@ ViewModule = (function () {
                 firstDay: 1,
                 minTime: 8,
                 maxTime: 20,
-                dayClick: function (date, allDay, jsEvent, view) {
-                },
                 eventClick: function (event, jsEvent, view) {
                     console.log('Event click'+event);
                 },
                 eventRender: function (event, element, view) {
                     event.element = element;
-                },
-                eventAfterRender: function (event, element, view) {
-                    if (!event.view) {
-
-                        event.submit = function (popover) {
-                            event.title = popover.getEventTitle();
-                            return that.addEvent(event);
-                        };
-
-                        event.discard = function (popover) {
-                            that.calendar('removeEvents', function (e) {
-                                return event === e;
-                            });
-                            return true;
-                        };
-                    }
-                },
-                eventResize: function (event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view) {
-                    if (event.view && !event.view.synchronizeFromCalendar()) {
-                        revertFunc();
-                    }
-                },
-                eventDrop: function (event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
-                    if (event.view && !event.view.synchronizeFromCalendar()) {
-                        revertFunc();
-                    }
                 }
             });
 
@@ -146,17 +118,17 @@ ViewModule = (function () {
                 that.appendEvent(model);
             }, this);
         },
-        createCalendarEvent: function(course, date) {
+        createCalendarEvent: function(course, dateStart, dateEnd) {
             var calendarEvent = {
                 title: course.title+'/'+course.t,
-                start:  new Date(date),
-                //end: moment(date).add('h', 2),
+                start:  new Date(dateStart),
+                end: new Date(dateEnd),
                 allDay: false,
                 element: null,
                 view: null,
                 id: _.uniqueId('e')
             };
-            this.calendar('renderEvent', calendarEvent, false);
+            this.calendar('renderEvent', calendarEvent, true);
         },
         addEvent: function (calendarEvent) {
             var event = new Event();

@@ -10,6 +10,7 @@ import org.ltky.entity.Exam;
 import org.ltky.util.CoursePattern;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -92,17 +93,17 @@ public class ExamParser {
      *
      * @param set
      */
-    private Set<Exam> parseExamData(List<String> set) {
+    private Set<Exam> parseExamData(List<String> set) throws UnsupportedEncodingException {
         Exam exam = new Exam();
         final Set<Exam> examList = new HashSet();
         LOGGER.debug("set size=" + set.size());
         for (String examElement : set) {
-            final String courseCode = StringUtils.split(examElement, " ")[0];
+            final String courseCode = new String(StringUtils.split(examElement, " ")[0].getBytes("cp1252"), "UTF-8");
             if (!StringUtils.isBlank(courseCode)) {
                 exam.setCourseCode(StringUtils.trim(courseCode));
                 final List<String> timeList = extractExamTimes(examElement);
                 if (!timeList.isEmpty()) {
-                    final String courseName = StringUtils.substringBetween(examElement, courseCode, timeList.get(0));
+                    final String courseName = new String(StringUtils.substringBetween(examElement, courseCode, timeList.get(0)).getBytes("cp1252"), "UTF-8");
                     if (!StringUtils.isBlank(courseName))
                         exam.setCourseName(StringUtils.trim(courseName));
                     String examTimes = "";
@@ -110,7 +111,7 @@ public class ExamParser {
                         examTimes += c + ", ";
                     }
                     if (!StringUtils.isBlank(StringUtils.substringBeforeLast(examTimes, ",")))
-                        exam.setExamTimes(examTimes);
+                        exam.setExamTimes(new String(examTimes.getBytes("cp1252"), "UTF-8"));
                     examList.add(exam);
                 }
                 exam = new Exam();

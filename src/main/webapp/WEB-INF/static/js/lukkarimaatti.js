@@ -3,7 +3,7 @@ var LukkarimaattiModule = LukkarimaattiModule || {};
 LukkarimaattiModule.main = (function () {
     'use strict';
 
-    var environment = 'http://localhost:8085/lukkarimaatti';
+    var environment = 'http://83.136.252.198/lukkarimaatti';
 
     $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
         options.url = environment + options.url;

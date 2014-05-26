@@ -88,13 +88,25 @@ public class ParserTest {
     @Test
     public void removeDuplicatesTest() {
         List<String> list = new ArrayList<>();
-        list.add("a");list.add("b");list.add("c");
-        list.add("g");list.add("d");list.add("e");
-        list.add("i");list.add("c");list.add("i");
-        list.add("a");list.add("b");list.add("g");
+        list.add("a");
+        list.add("b");
+        list.add("c");
+        list.add("g");
+        list.add("d");
+        list.add("e");
+        list.add("i");
+        list.add("c");
+        list.add("i");
+        list.add("a");
+        list.add("b");
+        list.add("g");
         List<String> res = new ArrayList<>();
-        res.add("a");res.add("b");res.add("c");
-        res.add("g");res.add("d");res.add("e");
+        res.add("a");
+        res.add("b");
+        res.add("c");
+        res.add("g");
+        res.add("d");
+        res.add("e");
         res.add("i");
         Assert.assertTrue(res.size() == util.removeDuplicates(list).size());
         Assert.assertTrue(res.contains("a"));

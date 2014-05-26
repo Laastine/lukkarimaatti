@@ -3,7 +3,6 @@ package org.ltky.parser;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
-import org.jsoup.helper.StringUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.ltky.entity.Course;
@@ -93,12 +92,11 @@ class HtmlParser {
             for (int elem = 0; elem < rowItems.size(); elem++) {
                 String item = new String(rowItems.get(elem).text().getBytes("cp1252"), "UTF-8");
                 course.setDepartment(department);
-                if(!course.getDepartment().equals("kike")) {
-                    course = parseNormalCourse(course, rowItems, elem, item);
+                if (!course.getDepartment().equals("kike")) {
+                    course = parseNormalCourse(course, rowItems, elem, item.trim());
                 } else {
-                    course = parseLanguageLabCourse(course, rowItems, elem, item);
+                    course = parseLanguageLabCourse(course, rowItems, elem, item.trim());
                 }
-
             }
             if (CourseValidator.validateCourse(course)) {
                 if (LOGGER.isDebugEnabled())
@@ -114,7 +112,6 @@ class HtmlParser {
         if (StringUtils.isBlank(item)) {
             return course;
         }
-
         switch (elem) {
             case 0:
                 if (util.extractPattern(item, coursePattern.getCoursePattern()))
@@ -133,7 +130,11 @@ class HtmlParser {
                 if (util.extractPattern(item, coursePattern.getTimeOfDay()) &
                         util.extractPattern(endTime, coursePattern.getTimeOfDay()) &
                         !"Klo".equals(item))
-                    course.setTimeOfDay(item + "-" + endTime);
+                    if (StringUtils.contains(item, ":00") || StringUtils.contains(endTime, ":00")) {
+                        course.setTimeOfDay(StringUtils.removeEndIgnoreCase(item, ":00") + "-" + StringUtils.removeEndIgnoreCase(endTime, ":00"));
+                    } else {
+                        course.setTimeOfDay(item + "-" + endTime);
+                    }
                 break;
             case 6:
                 if (util.extractPattern(item, coursePattern.getClassRoom()) & !"Sali".equals(item))
@@ -153,7 +154,7 @@ class HtmlParser {
                     course = findNameCodeAndType(item, course);
                 break;
             case 1:
-                if(util.extractPattern(item, coursePattern.getKikeTeacher()))
+                if (util.extractPattern(item, coursePattern.getKikeTeacher()))
                     course = findTeacher(item, course);
                 break;
             case 3:
@@ -168,8 +169,9 @@ class HtmlParser {
                 final String endTime = new String(rowItems.get(elem + 1).text().getBytes("cp1252"), "UTF-8");
                 if (util.extractPattern(item, coursePattern.getTimeOfDay()) &
                         util.extractPattern(endTime, coursePattern.getTimeOfDay()) &
-                        !"Klo".equals(item))
+                        !"Klo".equals(item)) {
                     course.setTimeOfDay(item + "-" + endTime);
+                }
                 break;
             case 7:
                 if (util.extractPattern(item, coursePattern.getClassRoom()) & !"Sali".equals(item))
@@ -183,7 +185,7 @@ class HtmlParser {
     }
 
     private Course findMiscData(String misc, Course course) {
-        if(StringUtils.isBlank(misc)) {
+        if (StringUtils.isBlank(misc)) {
             course.setMisc(UNKNOWN);
         } else {
             course.setMisc(misc);
@@ -233,7 +235,10 @@ class HtmlParser {
     }
 
     private Course findNameCodeAndType(String courseNameAndCode, Course course) {
-        final String[] courseCodeAndNamePair = StringUtils.splitByWholeSeparator(courseNameAndCode, " - ");
+        String[] courseCodeAndNamePair = StringUtils.splitByWholeSeparator(courseNameAndCode, " - ");
+        if (courseCodeAndNamePair.length < 2) {
+            courseCodeAndNamePair = StringUtils.splitByWholeSeparator(courseNameAndCode, "- ");
+        }
         course.setCourseCode(courseCodeAndNamePair[0]);
         course.setCourseName(StringUtils.substringBefore(courseCodeAndNamePair[1], "/"));
         course.setType(StringUtils.substringAfterLast(courseCodeAndNamePair[1], "/"));
@@ -254,7 +259,7 @@ class HtmlParser {
             LOGGER.error("Couldn't parse=" + week);
             weeks = 0;
         }
-        if(weeks == null) {
+        if (weeks == null) {
             weeks = 0;
         }
         int period1 = Integer.valueOf(config.getPeriod1());

@@ -26,7 +26,7 @@ import java.util.List;
 public class DBTest {
     private static final Logger LOGGER = Logger.getLogger(DBTest.class);
 
-    //@Test
+    @Test
     public void saveCoursesTest() { //Use to updated DB
         try {
             new FetchJob().fetch();
@@ -35,7 +35,6 @@ public class DBTest {
             Assert.fail("DB failure");
         }
     }
-
 
     @Test
     public void encodingTest() throws UnsupportedEncodingException {

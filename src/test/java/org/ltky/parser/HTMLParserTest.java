@@ -25,8 +25,10 @@ public class HTMLParserTest {
     private Map<String, String> map;
     private static final String TITE_DEPARTMENT = "tite";
     private static final String KIKE_DEPARTMENT = "kike";
+    private static final String TUTA_DEPARTMENT = "tuta";
+    private static final String KATI_DEPARTMENT = "kati";
     private static final String COURSE_TEST_DATA =
-                    "<table class='spreadsheet' cellspacing='0' cellpadding='2%' border='t'>\n" +
+            "<table class='spreadsheet' cellspacing='0' cellpadding='2%' border='t'>\n" +
                     "<col class='column0' /><col class='column1' /><col class='column2' /><col class='column3' /><col class='column4' /><col class='column5' /><col class='column6' /><col class='column7' />\n" +
                     "<tr class='columnTitles'>\n" +
                     "<td></td>\n" +
@@ -60,7 +62,7 @@ public class HTMLParserTest {
                     "</tr>\n" +
                     "</table>";
     private static final String COURSE_TEST_DATA2 =
-                    "<table class='spreadsheet' cellspacing='0' cellpadding='2%' border='t'>\n" +
+            "<table class='spreadsheet' cellspacing='0' cellpadding='2%' border='t'>\n" +
                     "<col class='column0' /><col class='column1' /><col class='column2' /><col class='column3' /><col class='column4' /><col class='column5' /><col class='column6' /><col class='column7' />\n" +
                     "<tr class='columnTitles'>\n" +
                     "<td></td>\n" +
@@ -114,7 +116,7 @@ public class HTMLParserTest {
                     "</tr>\n" +
                     "</table>";
     private static final String LANGUAGE_LAB_TEST_DATA =
-                    "<table class='spreadsheet' cellspacing='0' cellpadding='2%' border='t'>\n" +
+            "<table class='spreadsheet' cellspacing='0' cellpadding='2%' border='t'>\n" +
                     "<col class='column0' /><col class='column1' /><col class='column2' /><col class='column3' /><col class='column4' /><col class='column5' /><col class='column6' /><col class='column7' /><col class='column8' />\n" +
                     "<tr class='columnTitles'>\n" +
                     "<td></td>\n" +
@@ -227,6 +229,114 @@ public class HTMLParserTest {
                     "<td>Mainitse ilmoittautuessasi Lisätietoja-kenttään, oletko lukenut kieltä aiemmin jossain muualla ja kuinka monta vuotta.</td>\n" +
                     "</tr>\n" +
                     "</table>";
+    private static final String PUPPA_TEST_DATA =
+            "<table class='spreadsheet' cellspacing='0' cellpadding='2%' border='t'>\n" +
+                    "<col class='column0' /><col class='column1' /><col class='column2' /><col class='column3' /><col class='column4' /><col class='column5' /><col class='column6' /><col class='column7' />\n" +
+                    "<tr class='columnTitles'>\n" +
+                    "<td></td>\n" +
+                    "<td>Periodi</td>\n" +
+                    "<td>Vko</td>\n" +
+                    "<td>      </td>\n" +
+                    "<td>Klo</td>\n" +
+                    "<td>      </td>\n" +
+                    "<td>Sali</td>\n" +
+                    "<td></td>\n" +
+                    "</tr>\n" +
+                    "<tr>\n" +
+                    "<td>CS31A0101- Kustannusjohtamisen peruskurssi/L</td>\n" +
+                    "<td>&nbsp;</td>\n" +
+                    "<td>41</td>\n" +
+                    "<td>ti</td>\n" +
+                    "<td>15</td>\n" +
+                    "<td>17</td>\n" +
+                    "<td>Viipuri-sali*</td>\n" +
+                    "<td>&nbsp;</td>\n" +
+                    "</tr>\n" +
+                    "<tr>\n" +
+                    "<td>CS31A0101- Kustannusjohtamisen peruskurssi/H</td>\n" +
+                    "<td>&nbsp;</td>\n" +
+                    "<td>37-41</td>\n" +
+                    "<td>to</td>\n" +
+                    "<td>8</td>\n" +
+                    "<td>10</td>\n" +
+                    "<td>1381</td>\n" +
+                    "<td>&nbsp;</td>\n" +
+                    "</tr>\n" +
+                    "<tr>\n" +
+                    "<td>CS31A0101- Kustannusjohtamisen peruskurssi/L</td>\n" +
+                    "<td>Periodi 1</td>\n" +
+                    "<td>35-41</td>\n" +
+                    "<td>ma</td>\n" +
+                    "<td>10</td>\n" +
+                    "<td>12</td>\n" +
+                    "<td>1381</td>\n" +
+                    "<td>&nbsp;</td>\n" +
+                    "</tr>\n" +
+                    "<tr>\n" +
+                    "<td>CS31A0101- Kustannusjohtamisen peruskurssi/L</td>\n" +
+                    "<td>&nbsp;</td>\n" +
+                    "<td>35-40</td>\n" +
+                    "<td>ti</td>\n" +
+                    "<td>15</td>\n" +
+                    "<td>17</td>\n" +
+                    "<td>2310*</td>\n" +
+                    "<td>&nbsp;</td>\n" +
+                    "</tr>\n" +
+                    "</table>";
+    private static final String KATI_TEST_DATA =
+            "<table class='spreadsheet' cellspacing='0' cellpadding='2%' border='t'>\n" +
+                    "<col class='column0' /><col class='column1' /><col class='column2' /><col class='column3' /><col class='column4' /><col class='column5' /><col class='column6' /><col class='column7' />\n" +
+                    "<tr class='columnTitles'>\n" +
+                    "<td></td>\n" +
+                    "<td>Periodi</td>\n" +
+                    "<td>Vko</td>\n" +
+                    "<td>      </td>\n" +
+                    "<td>Klo</td>\n" +
+                    "<td>      </td>\n" +
+                    "<td>Sali</td>\n" +
+                    "<td></td>\n" +
+                    "</tr>\n" +
+                    "<tr>\n" +
+                    "<td>A250A0350 - Makroteoria/L</td>\n" +
+                    "<td>&nbsp;</td>\n" +
+                    "<td>9</td>\n" +
+                    "<td>pe</td>\n" +
+                    "<td>9:00</td>\n" +
+                    "<td>15:00</td>\n" +
+                    "<td>1382</td>\n" +
+                    "<td>&nbsp;</td>\n" +
+                    "</tr>\n" +
+                    "<tr>\n" +
+                    "<td>A250A0350 - Makroteoria/L</td>\n" +
+                    "<td>&nbsp;</td>\n" +
+                    "<td>9</td>\n" +
+                    "<td>ke</td>\n" +
+                    "<td>9:00</td>\n" +
+                    "<td>15:00</td>\n" +
+                    "<td>1382</td>\n" +
+                    "<td>&nbsp;</td>\n" +
+                    "</tr>\n" +
+                    "<tr>\n" +
+                    "<td>A250A0350 - Makroteoria/L</td>\n" +
+                    "<td>&nbsp;</td>\n" +
+                    "<td>9</td>\n" +
+                    "<td>to</td>\n" +
+                    "<td>9:00</td>\n" +
+                    "<td>15:00</td>\n" +
+                    "<td>1382</td>\n" +
+                    "<td>&nbsp;</td>\n" +
+                    "</tr>\n" +
+                    "<tr>\n" +
+                    "<td>A250A0350 - Makroteoria/L</td>\n" +
+                    "<td>&nbsp;</td>\n" +
+                    "<td>9</td>\n" +
+                    "<td>ti</td>\n" +
+                    "<td>9:00</td>\n" +
+                    "<td>15:00</td>\n" +
+                    "<td>1382</td>\n" +
+                    "<td>&nbsp;</td>\n" +
+                    "</tr>\n" +
+                    "</table>";
 
     @Before
     public void init() {
@@ -252,6 +362,22 @@ public class HTMLParserTest {
         List<Course> list = htmlParser.parseHTMLData(LANGUAGE_LAB_TEST_DATA);
         Assert.assertFalse(list.isEmpty());
         LOGGER.info("LL=" + list.get(0).toString());
+    }
+
+    @Test
+    public void PuppaDataParsingTest() throws IOException {
+        HtmlParser htmlParser = new HtmlParser(TUTA_DEPARTMENT);
+        List<Course> list = htmlParser.parseHTMLData(PUPPA_TEST_DATA);
+        Assert.assertFalse(list.isEmpty());
+        LOGGER.info("TUTA=" + list.get(0).toString());
+    }
+
+    @Test
+    public void KatiDataParsingTest() throws IOException {
+        HtmlParser htmlParser = new HtmlParser(KATI_DEPARTMENT);
+        List<Course> list = htmlParser.parseHTMLData(KATI_TEST_DATA);
+        Assert.assertFalse(list.isEmpty());
+        LOGGER.info("KATI=" + list.get(0).toString());
     }
 
     @Test

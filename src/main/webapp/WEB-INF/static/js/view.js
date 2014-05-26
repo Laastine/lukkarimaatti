@@ -150,6 +150,6 @@ ViewModule = (function () {
         }
 
     });
-    return new EventCalendarView();
 
+    return new EventCalendarView();
 })();

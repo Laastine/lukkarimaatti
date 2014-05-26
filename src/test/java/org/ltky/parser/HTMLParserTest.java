@@ -27,6 +27,7 @@ public class HTMLParserTest {
     private static final String KIKE_DEPARTMENT = "kike";
     private static final String TUTA_DEPARTMENT = "tuta";
     private static final String KATI_DEPARTMENT = "kati";
+    private static final String YMTE_DEPARTMENT = "ymte";
     private static final String COURSE_TEST_DATA =
             "<table class='spreadsheet' cellspacing='0' cellpadding='2%' border='t'>\n" +
                     "<col class='column0' /><col class='column1' /><col class='column2' /><col class='column3' /><col class='column4' /><col class='column5' /><col class='column6' /><col class='column7' />\n" +
@@ -337,6 +338,50 @@ public class HTMLParserTest {
                     "<td>&nbsp;</td>\n" +
                     "</tr>\n" +
                     "</table>";
+    private static final String YMTE_TEST_DATA =
+            "<table class='spreadsheet' cellspacing='0' cellpadding='2%' border='t'>\n"+
+            "<col class='column0' /><col class='column1' /><col class='column2' /><col class='column3' /><col class='column4' /><col class='column5' /><col class='column6' /><col class='column7' />\n"+
+            "<tr class='columnTitles'>\n"+
+            "<td></td>\n"+
+            "<td>Periodi</td>\n"+
+            "<td>Vko</td>\n"+
+            "<td>      </td>\n"+
+            "<td>Klo</td>\n"+
+            "<td>      </td>\n"+
+            "<td>Sali</td>\n"+
+            "<td></td>\n"+
+            "</tr>\n"+
+            "<tr>\n"+
+            "<td>BH60A0250 - Kiinteiden päästöjen hallinta /S</td>\n"+
+            "<td>&nbsp;</td>\n"+
+            "<td>46-47</td>\n"+
+            "<td>to</td>\n"+
+            "<td>14</td>\n"+
+            "<td>16</td>\n"+
+            "<td>7339*</td>\n"+
+            "<td>&nbsp;</td>\n"+
+            "</tr>\n"+
+            "<tr>\n"+
+            "<td>BH60A0250 - Kiinteiden päästöjen hallinta /H</td>\n"+
+            "<td>Periodi 1-2</td>\n"+
+            "<td>35-41, 43-49</td>\n"+
+            "<td>ke</td>\n"+
+            "<td>10</td>\n"+
+            "<td>12</td>\n"+
+            "<td>4301+4302*</td>\n"+
+            "<td>&nbsp;</td>\n"+
+            "</tr>\n"+
+            "<tr>\n"+
+            "<td>BH60A0250 - Kiinteiden päästöjen hallinta /L</td>\n"+
+            "<td>Periodi 1-2</td>\n"+
+            "<td>35-41, 43-49</td>\n"+
+            "<td>ti</td>\n"+
+            "<td>12</td>\n"+
+            "<td>14</td>\n"+
+            "<td>1381</td>\n"+
+            "<td>&nbsp;</td>\n"+
+            "</tr>\n"+
+            "</table>";
 
     @Before
     public void init() {
@@ -373,12 +418,21 @@ public class HTMLParserTest {
     }
 
     @Test
-    public void KatiDataParsingTest() throws IOException {
+     public void KatiDataParsingTest() throws IOException {
         HtmlParser htmlParser = new HtmlParser(KATI_DEPARTMENT);
         List<Course> list = htmlParser.parseHTMLData(KATI_TEST_DATA);
         Assert.assertFalse(list.isEmpty());
         LOGGER.info("KATI=" + list.get(0).toString());
     }
+
+    @Test
+    public void YmteDataParsingTest() throws IOException {
+        HtmlParser htmlParser = new HtmlParser(YMTE_DEPARTMENT);
+        List<Course> list = htmlParser.parseHTMLData(YMTE_TEST_DATA);
+        Assert.assertFalse(list.isEmpty());
+        LOGGER.info("YMTE=" + list.get(0).toString());
+    }
+
 
     @Test
     public void testDepartmentData() {

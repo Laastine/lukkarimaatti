@@ -74,7 +74,7 @@ LukkarimaattiModule = (function () {
 
             function processWeekNumbers(weekNumber) {
                 var hStart = course.tof.split('-')[0] || 6;
-                var hEnd = course.tof.split('-')[0] || 6;
+                var hEnd = course.tof.split('-')[1] || 6;
                 var dateStart = moment().day(course.wd).week(weekNumber).hours(hStart).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
                 var dateEnd = moment().day(course.wd).week(weekNumber).hours(hEnd).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
                 ViewModule.createCalendarEvent(course, dateStart, dateEnd);

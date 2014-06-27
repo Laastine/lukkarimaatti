@@ -34,7 +34,7 @@ Plays well enough in older browser, but those aren't officially supported.
 Compiles with Java 8 and Gradle 1.10<br>
 Gradle for building a package.<br>
 <i>gradle war</i> - for building (release) package<br>
-<i>gradle clean runJetty</i> - for quick browser testing
+<i>gradle clean jettyRun</i> - for quick browser testing
 
 <h3>Testing</h3>
 <b>Front end</b> testing with Karma+Jasmine+Node.js.<br>

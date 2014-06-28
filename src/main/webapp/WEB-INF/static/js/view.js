@@ -1,5 +1,9 @@
+var View
+
 ViewModule = (function () {
     'use strict';
+
+    /*global Backbone:false, _:false */
 
     var Event = Backbone.Model.extend({
         defaults: {
@@ -106,7 +110,6 @@ ViewModule = (function () {
                 minTime: 8,
                 maxTime: 20,
                 eventClick: function (event, jsEvent, view) {
-                    console.log('Event click'+event);
                 },
                 eventRender: function (event, element, view) {
                     event.element = element;
@@ -136,7 +139,7 @@ ViewModule = (function () {
             var eventView = this.appendEvent(event);
             eventView.synchronizeFromCalendar(calendarEvent);
 
-            if (!event.isValid()) return false;
+            if (!event.isValid()) { return false; }
 
             this.collection.add(event, { silent: true }); // skipping "add" event since already rendered
             return event.save();

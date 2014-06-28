@@ -1,6 +1,8 @@
 LukkarimaattiModule = (function () {
     'use strict';
 
+    /*global $:false, _:false, Bloodhound:false, Handlebars:false, moment:false */
+
     var courses = {};
 
     var engine = new Bloodhound({
@@ -53,7 +55,7 @@ LukkarimaattiModule = (function () {
                 courses = courses.filter(function (el) {
                     return el.code === item.code;
                 });
-                if (courses[0].title.length != 0) {
+                if (courses[0].title.length !== 0) {
                     addItem(courses[0].title, courses[0].code);
                 }
                 addDataToCalendar();
@@ -63,8 +65,12 @@ LukkarimaattiModule = (function () {
 
     var addItem = function (courseName, courseCode) {
         var noppa = 'https://noppa.lut.fi/noppa/opintojakso/';
-        $("#courseList").append('<li data-filtertext="' + courseName + '"><a href=' + noppa + courseCode + ' target="_blank">' + courseName + '</a></li>');
-    }
+        $('#courseList').append('<li data-filtertext="' + courseName + '"><a href=' + noppa + courseCode + ' target="_blank">' + courseName + '</a></li>').checkbox();
+    };
+
+    var removeItem = function(courseName, courseCode) {
+        $('#courseList').remove('<li data-filtertext="' + courseName + '"><a href=' + noppa + courseCode + ' target="_blank">' + courseName + '</a></li>');
+    };
 
     function addDataToCalendar() {
 

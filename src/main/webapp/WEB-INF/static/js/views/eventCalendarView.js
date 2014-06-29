@@ -21,7 +21,6 @@ define([
         },
 
         calendar: function () {
-            console.log('calendar');
             var $context = $(this.el);
             $context.fullCalendar.apply($context, arguments);
         },
@@ -59,8 +58,6 @@ define([
         },
 
         createCalendarEvent: function (course, dateStart, dateEnd) {
-            console.log('createCalendarEvent='+course.title+', '+dateStart);
-
             var calendarEvent = {
                 title: course.title + '/' + course.t,
                 start: new Date(dateStart),

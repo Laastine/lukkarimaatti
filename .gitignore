@@ -18,6 +18,6 @@ gradlew.bat
 gradlew
 bower_components/
 .gradle/
-src/main/webapp/WEB-INF/static/js/
 src/main/webapp/WEB-INF/static/server.js
+src/main/webapp/WEB-INF/static/js/lib/
 src/main/webapp/WEB-INF/static/node_modules/

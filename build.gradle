@@ -15,7 +15,13 @@ jettyRun {
 }
 
 war {
-    exclude('WEB-INF/tests')
+    exclude('WEB-INF/static/tests',
+            'WEB-INF/static/build',
+            'WEB-INF/static/css',
+            'WEB-INF/static/js',
+            'WEB-INF/static/res',
+            'WEB-INF/static/build',
+    )
 }
 
 test {

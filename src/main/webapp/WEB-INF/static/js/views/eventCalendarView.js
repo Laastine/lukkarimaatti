@@ -1,80 +1,13 @@
-var View
-
-ViewModule = (function () {
+define([
+    'backbone',
+    'fullcalendar',
+    'js/views/eventView',
+    'js/models/eventModel'
+], function (Backbone, calendar, EventView, Event) {
     'use strict';
-
-    /*global Backbone:false, _:false */
-
-    var Event = Backbone.Model.extend({
-        defaults: {
-            title: 'tmp',
-            startDate: null,
-            endDate: null,
-            isAllDay: false
-        },
-        validate: function (attrs) {
-            if (attrs.endDate && attrs.endDate < attrs.startDate) {
-                return "Invalid end date.";
-            }
-            if (!attrs.title) {
-                return "Missing title.";
-            }
-            return null;
-        }
-    });
 
     var EventCollection = Backbone.Collection.extend({
         model: Event
-    });
-
-    var EventView = Backbone.View.extend({
-
-        calendar: null,
-        calendarEvent: null,
-
-        initialize: function () {
-            _.bindAll(this, 'render', 'unrender', 'remove', 'synchronizeIntoCalendar', 'synchronizeFromCalendar');
-            this.calendar = this.options['calendar'];
-        },
-
-        synchronizeIntoCalendar: function () {
-            var e = this.calendarEvent || (this.calendarEvent = { element: null });
-            e.id = this.model.cid;
-            e.start = this.model.get('startDate');
-            e.end = this.model.get('endDate');
-            e.allDay = this.model.get('isAllDay');
-            e.title = this.model.get('title');
-            e.color = this.model.get('color');
-            e.view = this;
-            return e;
-        },
-
-        synchronizeFromCalendar: function (calendarEvent) {
-            var e = this.calendarEvent = calendarEvent || this.calendarEvent;
-            return this.model.set({
-                title: e.title,
-                startDate: e.start,
-                endDate: e.end,
-                isAllDay: e.allDay,
-                color: e.color
-            });
-        },
-
-        render: function () {
-            console.log('render()');
-            this.calendar('renderEvent', this.synchronizeIntoCalendar(), true);
-            return this; // For chaining
-        },
-
-        unrender: function () {
-            var that = this;
-            this.calendar('removeEvents', function (event) { return that.calendarEvent === event; });
-            this.remove();
-        },
-
-        remove: function () {
-            this.model.destroy();
-        }
     });
 
     var EventCalendarView = Backbone.View.extend({
@@ -86,10 +19,13 @@ ViewModule = (function () {
             this.collection.bind('add', this.appendEvent);
             this.render();
         },
+
         calendar: function () {
+            console.log('calendar');
             var $context = $(this.el);
             $context.fullCalendar.apply($context, arguments);
         },
+
         render: function () {
             var that = this;
             this.calendar({
@@ -100,7 +36,7 @@ ViewModule = (function () {
                     ignoreTimezone: false
                 },
                 modal: true,
-                weekends: false,
+                weekends: true,
                 defaultView: 'agendaWeek',
                 weekNumbers: true,
                 editable: true,
@@ -121,10 +57,13 @@ ViewModule = (function () {
                 that.appendEvent(model);
             }, this);
         },
-        createCalendarEvent: function(course, dateStart, dateEnd) {
+
+        createCalendarEvent: function (course, dateStart, dateEnd) {
+            console.log('createCalendarEvent='+course.title+', '+dateStart);
+
             var calendarEvent = {
-                title: course.title+'/'+course.t,
-                start:  new Date(dateStart),
+                title: course.title + '/' + course.t,
+                start: new Date(dateStart),
                 end: new Date(dateEnd),
                 allDay: false,
                 element: null,
@@ -133,17 +72,21 @@ ViewModule = (function () {
             };
             this.calendar('renderEvent', calendarEvent, true);
         },
+
         addEvent: function (calendarEvent) {
             var event = new Event();
             event.cid = calendarEvent.id;
             var eventView = this.appendEvent(event);
             eventView.synchronizeFromCalendar(calendarEvent);
 
-            if (!event.isValid()) { return false; }
+            if (!event.isValid()) {
+                return false;
+            }
 
             this.collection.add(event, { silent: true }); // skipping "add" event since already rendered
             return event.save();
         },
+
         appendEvent: function (event) {
             var eventView = new EventView({
                 model: event,
@@ -154,5 +97,6 @@ ViewModule = (function () {
 
     });
 
-    return new EventCalendarView();
-})();
+    return EventCalendarView;
+
+});

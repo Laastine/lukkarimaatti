@@ -1,7 +1,7 @@
 require(['js/views/eventCalendarView', 'js/search'], function(EventCalendarView, search) {
     'use strict';
 
-    var environment = 'http://localhost:8085/lukkarimaatti';
+    var environment = 'http://83.136.252.198/lukkarimaatti';
 
     $.ajaxSetup({ cache: false });          // force ajax call on all browsers
 

@@ -1,7 +1,7 @@
 /* global require:false */
 
 require.config({
-    baseUrl: '/lukkarimaatti/static',
+    baseUrl: '/lukkarimaatti/static/',
 
     paths: {
         'jquery': 'js/lib/jquery/jquery',
@@ -13,8 +13,7 @@ require.config({
         'handlebars': 'js/lib/handlebars/handlebars',
         'bloodhound': 'js/lib/typeahead.js/dist/bloodhound',
         'typeahead': 'js/lib/typeahead.js/dist/typeahead.bundle',
-        'moment': 'js/lib/moment/moment',
-        'app': 'js/app',
+        'moment': 'js/lib/moment/min/moment-with-langs',
         'search': 'js/search',
         'view': 'js/view'
     },

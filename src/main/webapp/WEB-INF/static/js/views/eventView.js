@@ -1,7 +1,7 @@
 define([
-    'backbone'
-], function (Backbone) {
-    'use strict';
+    'backbone',
+    'fullcalendar'
+], function (Backbone, calendar) {
 
     var EventView = Backbone.View.extend({
 
@@ -14,6 +14,7 @@ define([
         },
 
         synchronizeIntoCalendar: function () {
+            console.log('synchronizeIntoCalendar');
             var e = this.calendarEvent || (this.calendarEvent = { element: null });
             e.id = this.model.cid;
             e.start = this.model.get('startDate');
@@ -37,6 +38,7 @@ define([
         },
 
         render: function () {
+            console.log('render');
             this.calendar('renderEvent', this.synchronizeIntoCalendar(), true);
             return this; // For chaining
         },

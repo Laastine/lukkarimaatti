@@ -1,7 +1,9 @@
 define([
     'backbone',
-    'fullcalendar'
-], function (Backbone, fullCalendar) {
+    'fullcalendar',
+    'js/views/eventView',
+    'js/models/eventModel'
+], function (Backbone, calendar, EventView, Event) {
     'use strict';
 
     var EventCollection = Backbone.Collection.extend({
@@ -19,6 +21,7 @@ define([
         },
 
         calendar: function () {
+            console.log('calendar');
             var $context = $(this.el);
             $context.fullCalendar.apply($context, arguments);
         },
@@ -33,7 +36,7 @@ define([
                     ignoreTimezone: false
                 },
                 modal: true,
-                weekends: false,
+                weekends: true,
                 defaultView: 'agendaWeek',
                 weekNumbers: true,
                 editable: true,
@@ -56,6 +59,8 @@ define([
         },
 
         createCalendarEvent: function (course, dateStart, dateEnd) {
+            console.log('createCalendarEvent='+course.title+', '+dateStart);
+
             var calendarEvent = {
                 title: course.title + '/' + course.t,
                 start: new Date(dateStart),

@@ -1,5 +1,5 @@
-define(['app', 'handlebars', 'moment', 'bloodhound', 'typeahead'],
-    function (app, Handlebars, moment, Bloodhound, typeahead) {
+define(['handlebars', 'moment', 'bloodhound', 'typeahead'],
+    function (Handlebars, moment, Bloodhound, typeahead) {
     'use strict';
 
     var courses = {};
@@ -31,7 +31,7 @@ define(['app', 'handlebars', 'moment', 'bloodhound', 'typeahead'],
         }
     );
 
-    var searchBox = function () {
+    var searchBox = function (eventCal) {
         $('#courseSearchBox').typeahead({
                 hint: true,
                 highlight: true,
@@ -57,7 +57,7 @@ define(['app', 'handlebars', 'moment', 'bloodhound', 'typeahead'],
                 if (courses[0].title.length !== 0) {
                     addItem(courses[0].title, courses[0].code);
                 }
-                addDataToCalendar();
+                addDataToCalendar(eventCal);
             });
     };
 
@@ -71,7 +71,7 @@ define(['app', 'handlebars', 'moment', 'bloodhound', 'typeahead'],
         $('#courseList').remove('<li data-filtertext="' + courseName + '"><a href=' + noppa + courseCode + ' target="_blank">' + courseName + '</a></li>');
     };
 
-    function addDataToCalendar() {
+    function addDataToCalendar(calendar) {
 
         function processCourse(course) {
             var weekNumber = JSON.parse('[' + course.wn + ']');
@@ -80,10 +80,9 @@ define(['app', 'handlebars', 'moment', 'bloodhound', 'typeahead'],
             function processWeekNumbers(weekNumber) {
                 var hStart = course.tof.split('-')[0] || 6;
                 var hEnd = course.tof.split('-')[1] || 6;
-                var dateStart = moment().day(course.wd).week(weekNumber).hours(hStart).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
-                var dateEnd = moment().day(course.wd).week(weekNumber).hours(hEnd).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
-                view.createEvent(course, dateStart, dateEnd);
-                //view.EventCalendarView(course, dateStart, dateEnd);
+                var dateStart = moment().lang('fi').day(course.wd).week(weekNumber).hours(hStart).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
+                var dateEnd = moment().lang('fi').day(course.wd).week(weekNumber).hours(hEnd).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
+                calendar.createCalendarEvent(course, dateStart, dateEnd);
             }
         }
 

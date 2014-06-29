@@ -1,7 +1,6 @@
-LukkarimaattiModule = (function () {
+define(['handlebars', 'moment', 'bloodhound', 'typeahead'],
+    function (Handlebars, moment, Bloodhound, typeahead) {
     'use strict';
-
-    /*global $:false, _:false, Bloodhound:false, Handlebars:false, moment:false */
 
     var courses = {};
 
@@ -32,7 +31,7 @@ LukkarimaattiModule = (function () {
         }
     );
 
-    var searchBox = function () {
+    var searchBox = function (eventCal) {
         $('#courseSearchBox').typeahead({
                 hint: true,
                 highlight: true,
@@ -58,21 +57,21 @@ LukkarimaattiModule = (function () {
                 if (courses[0].title.length !== 0) {
                     addItem(courses[0].title, courses[0].code);
                 }
-                addDataToCalendar();
+                addDataToCalendar(eventCal);
             });
     };
 
 
     var addItem = function (courseName, courseCode) {
         var noppa = 'https://noppa.lut.fi/noppa/opintojakso/';
-        $('#courseList').append('<li data-filtertext="' + courseName + '"><a href=' + noppa + courseCode + ' target="_blank">' + courseName + '</a></li>').checkbox();
+        $('#courseList').append('<li data-filtertext="' + courseName + '"><a href=' + noppa + courseCode + ' target="_blank">' + courseName + '</a></li>');
     };
 
     var removeItem = function(courseName, courseCode) {
         $('#courseList').remove('<li data-filtertext="' + courseName + '"><a href=' + noppa + courseCode + ' target="_blank">' + courseName + '</a></li>');
     };
 
-    function addDataToCalendar() {
+    function addDataToCalendar(calendar) {
 
         function processCourse(course) {
             var weekNumber = JSON.parse('[' + course.wn + ']');
@@ -81,9 +80,9 @@ LukkarimaattiModule = (function () {
             function processWeekNumbers(weekNumber) {
                 var hStart = course.tof.split('-')[0] || 6;
                 var hEnd = course.tof.split('-')[1] || 6;
-                var dateStart = moment().day(course.wd).week(weekNumber).hours(hStart).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
-                var dateEnd = moment().day(course.wd).week(weekNumber).hours(hEnd).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
-                ViewModule.createCalendarEvent(course, dateStart, dateEnd);
+                var dateStart = moment().lang('fi').day(course.wd).week(weekNumber).hours(hStart).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
+                var dateEnd = moment().lang('fi').day(course.wd).week(weekNumber).hours(hEnd).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
+                calendar.createCalendarEvent(course, dateStart, dateEnd);
             }
         }
 
@@ -95,4 +94,4 @@ LukkarimaattiModule = (function () {
         searchBox: searchBox
     };
 
-})();
+});

@@ -26,6 +26,7 @@ Plays well enough in older browser, but those aren't officially supported.
 * [FullCalendar 1.6.x](http://arshaw.com/fullcalendar/)
 * [Jasmine 2.0.x](http://jasmine.github.io/)
 * [PhantomJS 1.9](http://phantomjs.org/)
+* [RequireJS](http://requirejs.org/)
 * [Karma](http://karma-runner.github.io/)
 * [JSHint](http://www.jshint.com/)
 * [Bower](http://bower.io/)<br>

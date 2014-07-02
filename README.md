@@ -12,7 +12,6 @@ Plays well enough in older browser, but those aren't officially supported.
 * [Spring 4.x](http://spring.io/)
 * [Hibernate 4.x](http://hibernate.org/)
 * [Jsoup 1.7.x](http://jsoup.org/)
-* [Jersey 1.8](https://jersey.java.net/)
 * [Jetty 9](http://www.eclipse.org/jetty/)
 * [PostgreSQL 9.1](http://www.postgresql.org/)
 * [SonarQube 4.1.2](http://www.sonarqube.org/)<br>

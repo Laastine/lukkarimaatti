@@ -1,6 +1,6 @@
 package org.ltky.dao;
 
-import org.ltky.entity.Course;
+import org.ltky.model.Course;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

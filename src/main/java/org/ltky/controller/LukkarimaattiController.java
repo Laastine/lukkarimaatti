@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
  * Date: 8.3.2014
  */
 @Controller
+@RequestMapping("/")
 public class LukkarimaattiController {
     private static final Logger LOGGER = Logger.getLogger(LukkarimaattiController.class);
 
@@ -25,4 +26,6 @@ public class LukkarimaattiController {
                 +request.getHeader("user-agent"));
         return "redirect:/static/index.html";
     }
+
+
 }

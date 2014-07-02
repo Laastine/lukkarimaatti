@@ -1,6 +1,5 @@
-package org.ltky.web.rest;
+package org.ltky.controller;
 
-import org.apache.log4j.Logger;
 import org.ltky.dao.CourseDao;
 import org.ltky.dao.ExamDao;
 import org.ltky.entity.Course;
@@ -8,12 +7,11 @@ import org.ltky.entity.Exam;
 import org.ltky.util.Util;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import org.apache.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,48 +19,41 @@ import java.util.List;
  * lukkarimaatti
  * Created with IntelliJ IDEA.
  * User: laastine
- * Date: 14.12.2013
+ * Date: 2.7.2014
  */
-@Path("/")
-public class CourseService {
-    private static final Logger LOGGER = Logger.getLogger(CourseService.class);
+@Controller
+@RequestMapping("/rest")
+public class RestController {
+    private static final Logger LOGGER = Logger.getLogger(RestController.class);
     private final ApplicationContext applicationContext = new ClassPathXmlApplicationContext("hibernate/hibernateConfig.xml");
     private final CourseDao courseDao = (CourseDao) applicationContext.getBean("courseDao");
     private final ExamDao examDao = (ExamDao) applicationContext.getBean("examDao");
     private static final int MIN = 3;
     private static final Util UTIL = new Util();
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    @Path("/code/{code}")
-    public final List<Course> getCourseCode(@PathParam("code") final String code) {
+    @RequestMapping(value = "/code/{code}", method = RequestMethod.GET)
+    public @ResponseBody final List<Course> getCourseCode(@PathVariable String code) {
         if (LOGGER.isDebugEnabled())
             LOGGER.debug("getCourseCode");
         return courseDao.findByCourseCode(code);
     }
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    @Path("/codes/{codes}")
-    public final List<String> getLikeCourseCodes(@PathParam("codes") final String codes) {
+    @RequestMapping(value = "/codes/{codes}", method = RequestMethod.GET)
+    public @ResponseBody final List<String> getLikeCourseCodes(@PathVariable String codes) {
         if (LOGGER.isDebugEnabled())
             LOGGER.debug("getLikeCourseCodes");
         return UTIL.removeDuplicates(courseDao.findCourseCodes(codes));
     }
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    @Path("/name/{courseName}")
-    public final List<Course> getCourseName(@PathParam("courseName") final String courseName) {
+    @RequestMapping(value = "/name/{courseName}", method = RequestMethod.GET)
+    public @ResponseBody final List<Course> getCourseName(@PathVariable String courseName) {
         if (LOGGER.isDebugEnabled())
             LOGGER.debug("getCourseName");
         return courseDao.findByCourseName(courseName);
     }
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    @Path("/names/{courseNames}")
-    public final List<Course> getCourseNames(@PathParam("courseNames") final String courseNames) {
+    @RequestMapping(value = "/names/{courseNames}", method = RequestMethod.GET)
+    public @ResponseBody List<Course> getCourseNames(@PathVariable String courseNames) {
         if (LOGGER.isDebugEnabled())
             LOGGER.debug("getCourseNames");
         if (courseNames.length() > MIN) {
@@ -72,10 +63,8 @@ public class CourseService {
         }
     }
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    @Path("/cnames/{courseNamesandCodes}")
-    public final List<Course> getCourseNamesWithCode(@PathParam("courseNamesandCodes") final String courseNamesandCodes) {
+    @RequestMapping(value = "/cnames/{courseNamesandCodes}", method = RequestMethod.GET)
+    public @ResponseBody final List<Course> getCourseNamesWithCode(@PathVariable String courseNamesandCodes) {
         if (LOGGER.isDebugEnabled())
             LOGGER.debug("getCourseNamesWithCode");
         if (courseNamesandCodes.length() > MIN) {
@@ -85,37 +74,29 @@ public class CourseService {
         }
     }
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    @Path("/department/{department}")
-    public final List<Course> getDepartmentInJSON(@PathParam("department") final String department) {
+    @RequestMapping(value = "/department/{department}", method = RequestMethod.GET)
+    public @ResponseBody final List<Course> getDepartmentInJSON(@PathVariable String department) {
         if (LOGGER.isDebugEnabled())
             LOGGER.debug("getDepartmentInJSON");
         return courseDao.findByDepartment(department);
     }
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    @Path("/all/")
-    public final List<String> getAllCourseCodes() {
+    @RequestMapping(value = "/all/")
+    public @ResponseBody final List<String> getAllCourseCodes() {
         if (LOGGER.isDebugEnabled())
             LOGGER.debug("getAllCourseCodes");
         return courseDao.findAllCourseNames();
     }
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    @Path("/examname/{examName}")
-    public final List<Exam> getExamName(@PathParam("examName") final String examName) {
+    @RequestMapping(value = "/examname/{examName}", method = RequestMethod.GET)
+    public @ResponseBody final List<Exam> getExamName(@PathVariable String examName) {
         if (LOGGER.isDebugEnabled())
             LOGGER.debug("getExamNames");
         return examDao.findByExamName(examName);
     }
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    @Path("/examnames/{examNames}")
-    public final List<Exam> getExamNames(@PathParam("examNames") final String examNames) {
+    @RequestMapping(value = "/examnames/{examNames}", method = RequestMethod.GET)
+    public @ResponseBody final List<Exam> getExamNames(@PathVariable final String examNames) {
         if (LOGGER.isDebugEnabled())
             LOGGER.debug("getExamNames");
         if (examNames.length() > MIN) {
@@ -124,5 +105,4 @@ public class CourseService {
             return new ArrayList<>();
         }
     }
-
 }

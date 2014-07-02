@@ -2,8 +2,8 @@ package org.ltky.controller;
 
 import org.ltky.dao.CourseDao;
 import org.ltky.dao.ExamDao;
-import org.ltky.entity.Course;
-import org.ltky.entity.Exam;
+import org.ltky.model.Course;
+import org.ltky.model.Exam;
 import org.ltky.util.Util;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

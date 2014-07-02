@@ -25,7 +25,7 @@
 
     <bean id="mySessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="packagesToScan" value="org.ltky.entity"/>
+        <property name="packagesToScan" value="org.ltky.model"/>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">${jdbc.hibernate.dialect}</prop>

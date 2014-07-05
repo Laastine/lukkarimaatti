@@ -24,7 +24,7 @@ public class LukkarimaattiController {
                 +request.getRemoteAddr()+
                 "with user-agent"
                 +request.getHeader("user-agent"));
-        return "redirect:/static/index.html";
+        return "redirect:/index.html";
     }
 
 

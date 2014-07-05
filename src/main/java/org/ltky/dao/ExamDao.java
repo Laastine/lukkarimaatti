@@ -1,6 +1,6 @@
 package org.ltky.dao;
 
-import org.ltky.entity.Exam;
+import org.ltky.model.Exam;
 
 import javax.transaction.Transactional;
 import java.util.List;

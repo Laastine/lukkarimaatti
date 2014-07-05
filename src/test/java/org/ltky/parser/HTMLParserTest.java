@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.ltky.entity.Course;
+import org.ltky.model.Course;
 
 import java.io.IOException;
 import java.util.List;

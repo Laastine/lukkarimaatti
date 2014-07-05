@@ -14,10 +14,8 @@
 
     <context:component-scan base-package="org.ltky"/>
     <mvc:annotation-driven/>
-    <!--
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" id="viewResolver"/>
-    -->
-    <mvc:resources mapping="/static/**" location="/WEB-INF/static/"/>
+
+    <mvc:resources mapping="/**" location="/WEB-INF/static/"/>
 
     <util:properties id="lukkariProperties" location="classpath:properties/parser.properties"/>
 

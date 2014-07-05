@@ -6,7 +6,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.ltky.entity.Exam;
+import org.ltky.model.Exam;
 import org.ltky.util.CoursePattern;
 
 import java.io.IOException;

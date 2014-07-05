@@ -1,7 +1,7 @@
 /* global require:false */
 
 require.config({
-    baseUrl: '/lukkarimaatti/static/dist/',
+    baseUrl: '/lukkarimaatti/app/dist/',
 
     paths: {
         'jquery': 'js/lib/jquery/jquery',

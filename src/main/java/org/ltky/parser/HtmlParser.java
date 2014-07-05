@@ -5,7 +5,7 @@ import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import org.ltky.entity.Course;
+import org.ltky.model.Course;
 import org.ltky.util.CoursePattern;
 import org.ltky.util.Util;
 import org.ltky.validator.CourseValidator;

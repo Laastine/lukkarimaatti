@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.ltky.dao.CourseDao;
-import org.ltky.entity.Course;
+import org.ltky.model.Course;
 import org.ltky.timer.FetchJob;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

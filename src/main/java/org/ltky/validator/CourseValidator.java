@@ -1,7 +1,7 @@
 package org.ltky.validator;
 
 import org.apache.commons.lang3.StringUtils;
-import org.ltky.entity.Course;
+import org.ltky.model.Course;
 
 /**
  * lukkarimaatti

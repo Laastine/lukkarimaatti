@@ -1,4 +1,4 @@
-package org.ltky.entity;
+package org.ltky.model;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.Immutable;

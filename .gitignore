@@ -6,11 +6,8 @@ logs/
 *.iml
 src/main/resources/properties/database.properties
 deploy.sh
-log/
 src/main/webapp/WEB-INF/static/js/*.min.js
 src/main/webapp/WEB-INF/static/css/*.min.css
-yuicompressor-2.4.8.jar
-src/main/webapp/WEB-INF/static/bower_components/
 build/
 gradle/
 gradlew/
@@ -18,7 +15,7 @@ gradlew.bat
 gradlew
 bower_components/
 .gradle/
-src/main/webapp/WEB-INF/static/server.js
-src/main/webapp/WEB-INF/static/js/lib/
-src/main/webapp/WEB-INF/static/node_modules/
-src/main/webapp/WEB-INF/static/dist/
+src/main/webapp/WEB-INF/app/server.js
+src/main/webapp/WEB-INF/app/js/lib/
+src/main/webapp/WEB-INF/app/node_modules/
+src/main/webapp/WEB-INF/app/dist/

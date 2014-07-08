@@ -45,40 +45,6 @@ karma, karma-cli, karma-junit-reporter karma-phantomjs-launcher, phantomjs<br>
 <i>gradle test</i> - for running unit tests<br>
 <i>gradle integrationTest</i> - for running integration tests
 
-<h2>REST interface</h2>
-<b>Course code like-search</b><br>
-hostname:port/lukkarimaatti/rest/codes/code<br>
-e.g. hostname:port/lukkarimaatti/rest/codes/CT
-
-<b>Course name like-search</b><br>
-hostname:port/lukkarimaatti/rest/names/name<br>
-e.g. hostname:port/lukkarimaatti/rest/names/pattern (provide at least 4 characters)
-
-<b>Course course name search</b><br>
-hostname:port/lukkarimaatti/rest/name/courseName<br>
-e.g. hostname:port/lukkarimaatti/rest/name/Pattern Recognition
-
-<b>All Course course names search</b><br>
-hostname:port/lukkarimaatti/rest/all<br>
-e.g. hostname:port/lukkarimaatti/rest/all
-
-<b>Course code search</b><br>
-hostname:port/lukkarimaatti/rest/code/code<br>
-e.g. hostname:port/lukkarimaatti/rest/code/CT50A6000
-
-<b>Course department search</b><br>
-hostname:port/lukkarimaatti/rest/department/<department><br>
-e.g. hostname:port/lukkarimaatti/rest/department/tite<br>
-(ente/ymte/kete/kote/sate/tite/tuta/kati/mafy/kike/kv)<br>
-
-<b>Exam search</b><br>
-hostname:port/lukkarimaatti/lukkarimaatti/rest/examname/<courseName><br>
-e.g. hostname:port/lukkarimaatti/rest/examname/mate
-
-<b>Exam like-search</b><br>
-hostname:port/lukkarimaatti/lukkarimaatti/rest/examnames/<courseName><br>
-e.g. hostname:port/lukkarimaatti/rest/examnames/mikroteoria
-
 <h2>Copyright and license</h2>
 Copyright &copy; 2013 Mikko Kaistinen, mikko.kaistinen@kapsi.fi
 

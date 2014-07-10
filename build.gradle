@@ -52,7 +52,7 @@ task integrationTest(type: Test) {
 }
 
 ext {
-    springVersion = '4.0.3.RELEASE'
+    springVersion = '4.0.5.RELEASE'
 }
 
 dependencies {

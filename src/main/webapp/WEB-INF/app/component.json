@@ -2,10 +2,11 @@
     "name": "Lukkarimaatti frontend",
     "version": "0.7",
     "dependencies": {
+        "requirejs": null,
         "jquery": null,
         "jquery-ui": null,
-        "backbone-amd": null,
-        "underscore-amd": null,
+        "backbone": null,
+        "underscore": null,
         "requirejs": null,
         "fullcalendar": "1.6.4",
         "bootstrap": null,

@@ -1,0 +1,27 @@
+<form role="course-search-form" method="post" style="padding-top: 50px">
+    <div class="form-group">
+        <input id="courseSearchBox" type="search" class="typeahead"
+               placeholder="Type a course name [e.g. mat for matematiikka]"/>
+    </div>
+</form>
+
+<ul data-role="listview" data-filter="true" data-theme="b" id="courseList">
+</ul>
+
+<div id="calendar" style="padding-top: 10px">
+</div>
+
+
+<div id="list" class="contrainer-fluid">
+    <h4>TODO:</h4>
+    <ul id="todo">
+        <il><p>Course remove</p></il>
+        <il><p>Save course selection to cookie or DB</p></il>
+    </ul>
+    <br/>
+    <h4>KNOWN ISSUES:</h4>
+    <ul id="issues">
+        <il><p>Course event which starts or stop at half past doesn't render correctly</p></il>
+        <il><p>Currently adds to current year</p></il>
+    </ul>
+</div>

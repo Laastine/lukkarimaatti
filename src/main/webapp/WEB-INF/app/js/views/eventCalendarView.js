@@ -1,23 +1,37 @@
 define([
     'backbone',
     'fullcalendar',
-    'views/eventView',
-    'models/eventModel'
-], function (Backbone, calendar, EventView, Event) {
+    'views/EventView',
+    'models/EventModel'
+], function (Backbone, calendar, EventView, EventModel) {
     'use strict';
 
     var EventCollection = Backbone.Collection.extend({
-        model: Event
+        model: EventModel
     });
 
     var EventCalendarView = Backbone.View.extend({
 
         el: $('#calendar'),
+
         initialize: function () {
-            _.bindAll(this, 'calendar', 'render', 'createCalendarEvent', 'addEvent', 'appendEvent');
+            _.bindAll(this, 'calendar', 'render', 'createCalendarEvent', 'addEvent',
+                'appendEvent');
             this.collection = new EventCollection();
             this.collection.bind('add', this.appendEvent);
             this.render();
+        },
+
+        onClickAboutModal: function () {
+            console.log('onClickAboutModal');
+        },
+
+        onClickContactModal: function () {
+            console.log('onClickContactModal');
+        },
+
+        onClickSaveModal: function () {
+            console.log('onClickSaveModal');
         },
 
         calendar: function () {
@@ -35,7 +49,7 @@ define([
                     ignoreTimezone: false
                 },
                 modal: true,
-                weekends: true,
+                weekends: false,
                 defaultView: 'agendaWeek',
                 weekNumbers: true,
                 editable: true,
@@ -71,7 +85,7 @@ define([
         },
 
         addEvent: function (calendarEvent) {
-            var event = new Event();
+            var event = new EventModel();
             event.cid = calendarEvent.id;
             var eventView = this.appendEvent(event);
             eventView.synchronizeFromCalendar(calendarEvent);

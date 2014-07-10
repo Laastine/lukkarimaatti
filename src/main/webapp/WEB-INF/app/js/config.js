@@ -14,8 +14,7 @@ require.config({
         'bloodhound': 'lib/typeahead.js/dist/bloodhound',
         'typeahead': 'lib/typeahead.js/dist/typeahead.bundle',
         'moment': 'lib/moment/min/moment-with-langs',
-        'search': 'search',
-        'view': 'view'
+        'text': 'lib/text/text'
     },
 
     shim: {

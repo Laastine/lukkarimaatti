@@ -12,6 +12,7 @@
         "bootstrap": null,
         "moment": null,
         "handlebars": null,
-        "typeahead.js": null
+        "typeahead.js": null,
+        "text": "https://github.com/requirejs/text.git"
     }
 }

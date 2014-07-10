@@ -1,9 +1,12 @@
 package org.ltky.controller;
 
 import org.apache.log4j.Logger;
+import org.ltky.model.JsonResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,14 +21,22 @@ import javax.servlet.http.HttpServletRequest;
 public class LukkarimaattiController {
     private static final Logger LOGGER = Logger.getLogger(LukkarimaattiController.class);
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/",
+            method = RequestMethod.GET)
     public String getHome(HttpServletRequest request) {
         LOGGER.debug("index hit from "
-                +request.getRemoteAddr()+
+                + request.getRemoteAddr() +
                 "with user-agent"
-                +request.getHeader("user-agent"));
+                + request.getHeader("user-agent"));
         return "redirect:/app/index.html";
     }
 
-
+    @RequestMapping(value = "app/save",
+            method = RequestMethod.POST,
+            produces = "application/json")
+    @ResponseBody
+    public JsonResponse saveCourseData(@RequestParam(value = "email") String email) {
+        LOGGER.info("Save data with email=" + email);
+        return new JsonResponse("OK", "200");
+    }
 }

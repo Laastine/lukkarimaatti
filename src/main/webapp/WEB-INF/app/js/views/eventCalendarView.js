@@ -12,26 +12,13 @@ define([
 
     var EventCalendarView = Backbone.View.extend({
 
-        el: $('#calendar'),
+        el: $('#content'),
 
         initialize: function () {
-            _.bindAll(this, 'calendar', 'render', 'createCalendarEvent', 'addEvent',
-                'appendEvent');
+            _.bindAll(this, 'calendar', 'render', 'createCalendarEvent', 'addEvent', 'appendEvent');
             this.collection = new EventCollection();
             this.collection.bind('add', this.appendEvent);
             this.render();
-        },
-
-        onClickAboutModal: function () {
-            console.log('onClickAboutModal');
-        },
-
-        onClickContactModal: function () {
-            console.log('onClickContactModal');
-        },
-
-        onClickSaveModal: function () {
-            console.log('onClickSaveModal');
         },
 
         calendar: function () {

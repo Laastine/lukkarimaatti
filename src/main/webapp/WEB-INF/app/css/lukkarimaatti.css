@@ -18,6 +18,7 @@ body {
 .header {
     border-bottom: 1px solid #e5e5e5;
 }
+
 /* Make the masthead heading the same height as the navigation */
 .header h3 {
     padding-bottom: 19px;
@@ -38,6 +39,7 @@ body {
         max-width: 730px;
     }
 }
+
 .container-narrow > hr {
     margin: 30px 0;
 }
@@ -47,6 +49,7 @@ body {
     text-align: center;
     border-bottom: 1px solid #e5e5e5;
 }
+
 .jumbotron .btn {
     padding: 14px 24px;
     font-size: 21px;
@@ -61,10 +64,12 @@ body {
         padding-right: 0;
         padding-left: 0;
     }
+
     /* Space out the masthead */
     .header {
         margin-bottom: 10px;
     }
+
     /* Remove the bottom border on the jumbotron for visual effect */
     .jumbotron {
         border-bottom: 0;
@@ -84,12 +89,12 @@ html {
 }
 
 .dialog label {
-    width:90px;
-    float:left;
+    width: 90px;
+    float: left;
 }
 
 .dialog .field {
-    width:170px;
+    width: 170px;
 }
 
 #calendar {
@@ -194,9 +199,9 @@ p {
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     border-radius: 8px;
-    -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
-    -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
-    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
 }
 
 .tt-suggestion {

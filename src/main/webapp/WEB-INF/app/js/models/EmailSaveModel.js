@@ -1,5 +1,4 @@
-
-define(['backbone'], function(Backbone) {
+define(['backbone'], function (Backbone) {
     'use strict';
 
     var EmailModel = Backbone.Model.extend({
@@ -9,7 +8,7 @@ define(['backbone'], function(Backbone) {
 
         validate: function (attrs) {
             var regex = /^(([^<>()[]\.,;:s@"]+(.[^<>()[]\.,;:s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$/igm;
-            if (attrs === '' || !regex.test(attrs) ) {
+            if (attrs === '' || !regex.test(attrs)) {
                 return "Invalid email address";
             }
             return null;

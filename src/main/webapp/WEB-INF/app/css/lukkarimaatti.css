@@ -19,14 +19,6 @@ body {
     border-bottom: 1px solid #e5e5e5;
 }
 
-/* Make the masthead heading the same height as the navigation */
-.header h3 {
-    padding-bottom: 19px;
-    margin-top: 0;
-    margin-bottom: 0;
-    line-height: 40px;
-}
-
 /* Custom page footer */
 .footer {
     padding-top: 19px;
@@ -36,23 +28,13 @@ body {
 /* Customize container */
 @media (min-width: 768px) {
     .container {
-        max-width: 730px;
+        max-width: 1024px;
+        padding-bottom: 20px;
     }
 }
 
 .container-narrow > hr {
-    margin: 30px 0;
-}
-
-/* Main marketing message and sign up button */
-.jumbotron {
-    text-align: center;
-    border-bottom: 1px solid #e5e5e5;
-}
-
-.jumbotron .btn {
-    padding: 14px 24px;
-    font-size: 21px;
+    margin: 40px 0;
 }
 
 /* Responsive: Portrait tablets and up */
@@ -97,11 +79,6 @@ html {
     width: 170px;
 }
 
-#calendar {
-    width: 900px;
-    margin: 0 auto;
-}
-
 a {
     color: #03739c;
     text-decoration: none;
@@ -120,13 +97,6 @@ p {
     max-width: 800px;
     margin: 0 auto;
     text-align: center;
-}
-
-.twitter-logo {
-    width: 72px;
-    height: 72px;
-    margin: 0;
-    vertical-align: middle;
 }
 
 .title {

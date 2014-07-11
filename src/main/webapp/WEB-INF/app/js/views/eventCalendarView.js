@@ -12,7 +12,7 @@ define([
 
     var EventCalendarView = Backbone.View.extend({
 
-        el: $('#content'),
+        el: $('#calendar'),
 
         initialize: function () {
             _.bindAll(this, 'calendar', 'render', 'createCalendarEvent', 'addEvent', 'appendEvent');

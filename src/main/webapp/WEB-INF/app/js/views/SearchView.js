@@ -2,38 +2,37 @@ define(['handlebars', 'moment', 'bloodhound', 'typeahead', 'views/EventCalendarV
     function (Handlebars, moment, Bloodhound, typeahead, EventCalendarView, searchTemplate) {
         'use strict';
 
+        var courses = {};
+
         var SearchView = Backbone.View.extend({
-            courses: {},
+            engine: new Bloodhound({
+                    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+                    queryTokenizer: Bloodhound.tokenizers.whitespace,
+                    remote: {
+                        url: '/rest/cnames/%QUERY',
+                        filter: function (response) {
+                            this.courses = $.map(response, function (course) {
+                                return {
+                                    title: course.courseName,
+                                    code: course.courseCode,
+                                    tof: course.timeOfDay,
+                                    wd: course.weekDay,
+                                    wn: course.weekNumber,
+                                    cr: course.classRoom,
+                                    t: course.type
+                                };
+                            });
+
+                            return _.uniq(this.courses, function (item) {
+                                return item.title + item.code;
+                            });
+                        }
+                    },
+                    limit: 10
+                }
+            ),
 
             searchBox: function (eventCal) {
-
-                var engine = new Bloodhound({
-                        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-                        queryTokenizer: Bloodhound.tokenizers.whitespace,
-                        remote: {
-                            url: '/rest/cnames/%QUERY',
-                            filter: function (response) {
-                                this.courses = $.map(response, function (course) {
-                                    return {
-                                        title: course.courseName,
-                                        code: course.courseCode,
-                                        tof: course.timeOfDay,
-                                        wd: course.weekDay,
-                                        wn: course.weekNumber,
-                                        cr: course.classRoom,
-                                        t: course.type
-                                    };
-                                });
-
-                                return _.uniq(this.courses, function (item) {
-                                    return item.title + item.code;
-                                });
-                            }
-                        },
-                        limit: 10
-                    }
-                );
-
                 $('#courseSearchBox').typeahead({
                         hint: true,
                         highlight: true,
@@ -42,7 +41,7 @@ define(['handlebars', 'moment', 'bloodhound', 'typeahead', 'views/EventCalendarV
                     {
                         name: 'courses',
                         displayKey: 'name',
-                        source: engine.ttAdapter(),
+                        source: this.engine.ttAdapter(),
                         templates: {
                             empty: [
                                 '<p><strong>',
@@ -53,16 +52,19 @@ define(['handlebars', 'moment', 'bloodhound', 'typeahead', 'views/EventCalendarV
                         }
                     }
                 ).on('typeahead:selected', function (evt, item) {
-                        this.courses = this.courses.filter(function (el) {
-                            return el.code === item.code;
-                        });
-                        if (this.courses[0].title.length !== 0) {
-                            this.addCourseItem(this.courses[0].title, this.courses[0].code);
+                        if (typeof courses !== 'undefined' && courses.hasOwnProperty('filter')) {
+                            courses = courses.filter(function (el) {
+                                return el.code === item.code;
+                            });
+                            if (courses[0].title.length !== 0) {
+                                this.addCourseItem(courses[0].title, courses[0].code);
+                            }
+                            this.addDataToCalendar(eventCal);
+                        } else {
+                            console.warn("courses object lost in scope");
                         }
-                        this.addDataToCalendar(eventCal);
                     });
             },
-
 
             addCourseItem: function (courseName, courseCode) {
                 var noppa = 'https://noppa.lut.fi/noppa/opintojakso/';
@@ -82,6 +84,7 @@ define(['handlebars', 'moment', 'bloodhound', 'typeahead', 'views/EventCalendarV
                         var dateEnd = moment().lang('fi').day(course.wd).week(weekNumber).hours(hEnd).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
                         calendar.createCalendarEvent(course, dateStart, dateEnd);
                     }
+
                     var weekNumber = JSON.parse('[' + course.wn + ']');
                     weekNumber.forEach(processWeekNumbers);
                 }
@@ -92,6 +95,7 @@ define(['handlebars', 'moment', 'bloodhound', 'typeahead', 'views/EventCalendarV
             render: function () {
                 this.template = _.template(searchTemplate);
                 this.$el.html(this.template({}));
+                this.engine.initialize();
                 this.searchBox(new EventCalendarView());
                 return this;
             }

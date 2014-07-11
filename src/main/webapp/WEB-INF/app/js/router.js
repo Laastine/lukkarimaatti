@@ -16,7 +16,6 @@ define([
 
         initialize: function () {
             _.bindAll(this, 'show', 'index');
-            console.log('WebRouter');
         },
 
         routes: {
@@ -24,7 +23,6 @@ define([
         },
 
         show: function (view, options) {
-            console.log('show');
 
             // Every page view in the router should need a header.
             // Instead of creating a base parent view, just assign the view to this
@@ -33,20 +31,27 @@ define([
                 this.headerView = new HeaderView({});
                 this.headerView.setElement($(".header")).render();
             }
-            console.log('1');
+
             //Same goes with search view
-            if(!this.searchView) {
-                this.searchView = new SearchView({});
-                this.searchView.setElement($(".container")).render();
+            //          $(document).ready(function () {
+            if (!this.searchView) {
+                this.searchView = new SearchView();
+                this.searchView.setElement($("#searchbar")).render();
+            }
+//            });
+
+            //And EventCalendarView
+/*
+            if (!this.eventCalendarView) {
+                this.eventCalendarView = new EventCalendarView();
+                this.eventCalendarView.initialize();
             }
 
-            //And
+            */
 
 
-
-            console.log('1');
             // Close and unbind any existing page view
-            if (this.currentView) { this.currentView.close(); }
+            //if (this.currentView) { this.currentView.close(); }
 
             // Establish the requested view into scope
             this.currentView = view;
@@ -56,16 +61,8 @@ define([
         },
 
         index: function () {
-            console.log('index');
-
             // Fix for non-pushState routing (IE9 and below)
-            var hasPushState = !!(window.history && history.pushState);
-            if (!hasPushState) {
-                this.navigate(window.location.pathname.substring(1),
-                    {trigger: true, replace: true});
-            } else {
-                this.show(new EventCalendarView());
-            }
+            this.show();
 
         }
 

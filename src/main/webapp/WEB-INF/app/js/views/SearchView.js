@@ -2,16 +2,24 @@ define(['handlebars', 'moment', 'bloodhound', 'typeahead', 'views/EventCalendarV
     function (Handlebars, moment, Bloodhound, typeahead, EventCalendarView, searchTemplate) {
         'use strict';
 
-        var courses = {};
+        var courseCollection;
 
         var SearchView = Backbone.View.extend({
-            engine: new Bloodhound({
+
+            initialize: function() {
+                _.bindAll(this, 'searchBox', 'addCourseItem', 'removeCourseItem', 'addDataToCalendar', 'render');
+                courseCollection = {};
+                this.engine.initialize();
+            },
+
+            engine: new Bloodhound(
+                {
                     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
                     queryTokenizer: Bloodhound.tokenizers.whitespace,
                     remote: {
                         url: '/rest/cnames/%QUERY',
                         filter: function (response) {
-                            this.courses = $.map(response, function (course) {
+                            courseCollection = $.map(response, function (course) {
                                 return {
                                     title: course.courseName,
                                     code: course.courseCode,
@@ -22,8 +30,7 @@ define(['handlebars', 'moment', 'bloodhound', 'typeahead', 'views/EventCalendarV
                                     t: course.type
                                 };
                             });
-
-                            return _.uniq(this.courses, function (item) {
+                            return _.uniq(courseCollection, function (item) {
                                 return item.title + item.code;
                             });
                         }
@@ -33,6 +40,7 @@ define(['handlebars', 'moment', 'bloodhound', 'typeahead', 'views/EventCalendarV
             ),
 
             searchBox: function (eventCal) {
+                var that = this;
                 $('#courseSearchBox').typeahead({
                         hint: true,
                         highlight: true,
@@ -52,17 +60,13 @@ define(['handlebars', 'moment', 'bloodhound', 'typeahead', 'views/EventCalendarV
                         }
                     }
                 ).on('typeahead:selected', function (evt, item) {
-                        if (typeof courses !== 'undefined' && courses.hasOwnProperty('filter')) {
-                            courses = courses.filter(function (el) {
+                            courseCollection = courseCollection.filter(function (el) {
                                 return el.code === item.code;
                             });
-                            if (courses[0].title.length !== 0) {
-                                this.addCourseItem(courses[0].title, courses[0].code);
+                            if (courseCollection[0].title.length !== 0) {
+                                that.addCourseItem(courseCollection[0].title, courseCollection[0].code);
                             }
-                            this.addDataToCalendar(eventCal);
-                        } else {
-                            console.warn("courses object lost in scope");
-                        }
+                            that.addDataToCalendar(eventCal);
                     });
             },
 
@@ -88,15 +92,14 @@ define(['handlebars', 'moment', 'bloodhound', 'typeahead', 'views/EventCalendarV
                     var weekNumber = JSON.parse('[' + course.wn + ']');
                     weekNumber.forEach(processWeekNumbers);
                 }
-
-                this.courses.forEach(processCourse);
+                courseCollection.forEach(processCourse);
             },
 
             render: function () {
                 this.template = _.template(searchTemplate);
                 this.$el.html(this.template({}));
-                this.engine.initialize();
                 this.searchBox(new EventCalendarView());
+                $('#courseSearchBox').focus();
                 return this;
             }
         });

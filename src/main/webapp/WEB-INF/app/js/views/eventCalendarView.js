@@ -43,7 +43,6 @@ define([
                 },
                 allDaySlot: false,
                 axisFormat: 'HH:mm',
-                theme: true,
                 weekends: false,
                 weekNumbers: true,
                 firstDay: 1,

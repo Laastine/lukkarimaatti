@@ -32,38 +32,14 @@ define([
                 this.headerView.setElement($(".header")).render();
             }
 
-            //Same goes with search view
-            //          $(document).ready(function () {
             if (!this.searchView) {
                 this.searchView = new SearchView();
                 this.searchView.setElement($("#searchbar")).render();
             }
-//            });
-
-            //And EventCalendarView
-/*
-            if (!this.eventCalendarView) {
-                this.eventCalendarView = new EventCalendarView();
-                this.eventCalendarView.initialize();
-            }
-
-            */
-
-
-            // Close and unbind any existing page view
-            //if (this.currentView) { this.currentView.close(); }
-
-            // Establish the requested view into scope
-            this.currentView = view;
-
-            // Render inside the page wrapper
-            //$('#content').html(this.currentView.render().$el);
         },
 
         index: function () {
-            // Fix for non-pushState routing (IE9 and below)
-            this.show();
-
+            this.show(new EventCalendarView());
         }
 
     });

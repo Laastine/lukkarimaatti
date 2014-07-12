@@ -24,22 +24,18 @@ define([
 
         show: function (view, options) {
 
-            // Every page view in the router should need a header.
-            // Instead of creating a base parent view, just assign the view to this
-            // so we can create it if it doesn't yet exist
             if (!this.headerView) {
                 this.headerView = new HeaderView({});
                 this.headerView.setElement($(".header")).render();
             }
 
-            if (!this.searchView) {
-                this.searchView = new SearchView();
-                this.searchView.setElement($("#searchbar")).render();
-            }
+            this.currentView = view;
+
+            this.currentView.setElement($("#searchbar")).render();
         },
 
         index: function () {
-            this.show(new EventCalendarView());
+            this.show(new SearchView());
         }
 
     });

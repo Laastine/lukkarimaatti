@@ -35,16 +35,22 @@ define([
                     right: 'month, agendaWeek, agendaDay',
                     ignoreTimezone: false
                 },
-                modal: true,
+                titleFormat: {
+                    month: 'MMMM',
+                    week: 'DD.MM.YYYY',
+                    day: 'DD.MM',
+                    agenda: 'hh:mm'
+                },
+                allDaySlot: false,
+                axisFormat: 'HH:mm',
+                theme: true,
                 weekends: false,
-                defaultView: 'agendaWeek',
                 weekNumbers: true,
-                editable: true,
-                selectable: false,
-                selectHelper: true,
                 firstDay: 1,
-                minTime: 8,
-                maxTime: 20,
+                minTime: '08:00:00',
+                maxTime: '20:00:00',
+                timeFormat: 'hh:mm',
+                defaultView: 'agendaWeek',
                 eventClick: function (event, jsEvent, view) {
                 },
                 eventRender: function (event, element, view) {

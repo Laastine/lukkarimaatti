@@ -1,6 +1,8 @@
 define([
     "app",
     "text!templates/header.html",
+    "jquery",
+    "bootstrap",
     "utils"
 ], function (app, HeaderTpl) {
     'use strict';
@@ -8,12 +10,6 @@ define([
     var HeaderView = Backbone.View.extend({
 
         template: _.template(HeaderTpl),
-
-        events: {
-            "click a #aboutModalButton": "onClickAboutModal",
-            "click a #contactModalButton": "onClickContactModal",
-            "click a #saveModalButton": "onClickSaveModal"
-        },
 
         render: function () {
             this.$el.html(this.template({}));

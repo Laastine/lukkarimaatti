@@ -1,7 +1,7 @@
 /* global require:false */
 
 require.config({
-    baseUrl: '/lukkarimaatti/app/js/',
+    baseUrl: '/lukkarimaatti/app/dist/js/',
 
     paths: {
         'jquery': 'lib/jquery/dist/jquery',
@@ -22,7 +22,7 @@ require.config({
         'typeahead': { deps: ['jquery'] },
         'bloodhound': { deps: ['jquery'], exports: 'Bloodhound' },
         'handlebars': { exports: 'Handlebars' },
-        'fullcalendar': { deps: ['jquery'], exports: 'fullCalendar'}
+        'fullcalendar': { deps: ['jquery'], exports: 'fullCalendar' }
     }
 });
 

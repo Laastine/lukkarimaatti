@@ -1,7 +1,3 @@
-/**
- * @desc        backbone router for pushState page routing
- */
-
 define([
     "app",
     "models/EventModel",
@@ -29,8 +25,8 @@ define([
                 this.headerView.setElement($(".header")).render();
             }
 
+            if (this.currentView) { this.currentView.close(); }
             this.currentView = view;
-
             this.currentView.setElement($("#searchbar")).render();
         },
 
@@ -41,5 +37,4 @@ define([
     });
 
     return WebRouter;
-
 });

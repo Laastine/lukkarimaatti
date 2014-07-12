@@ -1,16 +1,7 @@
-/**
- * @desc        Common helper functions/utilities
- *              ex/ cookie helpers, alerting utils, localStorage support, etc
- */
-
 require(['app'], function (app) {
     'use strict';
 
     var utils = utils || {
-
-        /*
-         * ERRORS and ALERT HANDLING
-         */
 
         // Default alert when there is a validation error
         displayValidationErrors: function (messages) {
@@ -65,9 +56,6 @@ require(['app'], function (app) {
             }
         },
 
-        /*
-         * COOKIE HELPERS
-         */
         readCookie: function (name) {
             var nameEQ = name + "=";
             var ca = document.cookie.split(';');

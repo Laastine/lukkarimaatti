@@ -1,17 +1,19 @@
 {
-    "name": "Lukkarimaatti frontend",
-    "version": "0.7",
-    "dependencies": {
-        "requirejs": null,
-        "jquery": null,
-        "jquery-ui": null,
-        "backbone": null,
-        "underscore": null,
-        "requirejs": null,
-        "fullcalendar": null,
-        "bootstrap": null,
-        "handlebars": null,
-        "typeahead.js": null,
-        "text": "https://github.com/requirejs/text.git"
-    }
+  "name": "Lukkarimaatti frontend",
+  "version": "0.7",
+  "dependencies": {
+    "requirejs": null,
+    "jquery": null,
+    "jquery-ui": null,
+    "backbone": null,
+    "underscore": null,
+    "fullcalendar": null,
+    "bootstrap": null,
+    "handlebars": null,
+    "typeahead.js": null,
+    "text": "https://github.com/requirejs/text.git"
+  },
+  "resolutions": {
+    "jquery": "2.1.1"
+  }
 }

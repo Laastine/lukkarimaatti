@@ -44,7 +44,7 @@ define(['handlebars', 'moment', 'bloodhound', 'typeahead', 'views/EventCalendarV
                 $('#courseSearchBox').typeahead({
                         hint: true,
                         highlight: true,
-                        minLength: 3
+                        minLength: 2
                     },
                     {
                         name: 'courses',

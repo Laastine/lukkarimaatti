@@ -38,7 +38,6 @@ define([
         },
 
         render: function () {
-            console.log('render');
             this.calendar('renderEvent', this.synchronizeIntoCalendar(), true);
             return this; // For chaining
         },

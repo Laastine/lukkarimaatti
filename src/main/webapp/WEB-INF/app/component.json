@@ -8,9 +8,8 @@
         "backbone": null,
         "underscore": null,
         "requirejs": null,
-        "fullcalendar": "1.6.4",
+        "fullcalendar": null,
         "bootstrap": null,
-        "moment": null,
         "handlebars": null,
         "typeahead.js": null,
         "text": "https://github.com/requirejs/text.git"

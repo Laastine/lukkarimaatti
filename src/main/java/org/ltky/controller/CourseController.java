@@ -36,8 +36,6 @@ public class CourseController {
     public
     @ResponseBody
     final List<Course> getCourseCode(@PathVariable String code) {
-        if (LOGGER.isDebugEnabled())
-            LOGGER.debug("getCourseCode");
         return courseDao.findByCourseCode(code);
     }
 
@@ -45,8 +43,6 @@ public class CourseController {
     public
     @ResponseBody
     final List<String> getLikeCourseCodes(@PathVariable String codes) {
-        if (LOGGER.isDebugEnabled())
-            LOGGER.debug("getLikeCourseCodes");
         return UTIL.removeDuplicates(courseDao.findCourseCodes(codes));
     }
 
@@ -54,8 +50,6 @@ public class CourseController {
     public
     @ResponseBody
     final List<Course> getCourseName(@PathVariable String courseName) {
-        if (LOGGER.isDebugEnabled())
-            LOGGER.debug("getCourseName");
         return courseDao.findByCourseName(courseName);
     }
 
@@ -63,8 +57,6 @@ public class CourseController {
     public
     @ResponseBody
     List<Course> getCourseNames(@PathVariable String courseNames) {
-        if (LOGGER.isDebugEnabled())
-            LOGGER.debug("getCourseNames");
         if (courseNames.length() > MIN) {
             return courseDao.findCourseNames(courseNames);
         } else {
@@ -76,8 +68,6 @@ public class CourseController {
     public
     @ResponseBody
     final List<Course> getCourseNamesWithCode(@PathVariable String courseNamesandCodes) {
-        if (LOGGER.isDebugEnabled())
-            LOGGER.debug("getCourseNamesWithCode");
         if (courseNamesandCodes.length() > MIN) {
             return courseDao.findCourseNamesAndCodes(courseNamesandCodes);
         } else {
@@ -89,8 +79,6 @@ public class CourseController {
     public
     @ResponseBody
     final List<Course> getDepartmentInJSON(@PathVariable String department) {
-        if (LOGGER.isDebugEnabled())
-            LOGGER.debug("getDepartmentInJSON");
         return courseDao.findByDepartment(department);
     }
 
@@ -98,8 +86,6 @@ public class CourseController {
     public
     @ResponseBody
     final List<String> getAllCourseCodes() {
-        if (LOGGER.isDebugEnabled())
-            LOGGER.debug("getAllCourseCodes");
         return courseDao.findAllCourseNames();
     }
 }

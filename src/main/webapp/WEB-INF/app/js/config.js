@@ -1,31 +1,39 @@
-/* global require:false */
-
 require.config({
-    baseUrl: '/lukkarimaatti/app/dist/',
+    baseUrl: '/lukkarimaatti/app/dist',
 
     paths: {
-        'jquery': 'js/lib/jquery/jquery',
-        'jquery-ui': 'js/lib/jquery-ui/ui/jquery-ui',
-        'jquery.bootstrap': 'js/lib/bootstrap/dist/js/bootstrap',
-        'fullcalendar': 'js/lib/fullcalendar/fullcalendar',
-        'underscore': 'js/lib/underscore-amd/underscore',
-        'backbone': 'js/lib/backbone-amd/backbone',
-        'handlebars': 'js/lib/handlebars/handlebars',
-        'bloodhound': 'js/lib/typeahead.js/dist/bloodhound',
-        'typeahead': 'js/lib/typeahead.js/dist/typeahead.bundle',
-        'moment': 'js/lib/moment/min/moment-with-langs',
-        'search': 'js/search',
-        'view': 'js/view'
+        'jquery': 'lib/jquery/dist/jquery',
+        'jquery-ui': 'lib/jquery-ui/ui/jquery-ui',
+        'bootstrap': 'lib/bootstrap/dist/js/bootstrap',
+        'fullcalendar': 'lib/fullcalendar/dist/fullcalendar',
+        'underscore': 'lib/underscore/underscore',
+        'backbone': 'lib/backbone/backbone',
+        'handlebars': 'lib/handlebars/handlebars',
+        'bloodhound': 'lib/typeahead.js/dist/bloodhound',
+        'typeahead': 'lib/typeahead.js/dist/typeahead.bundle',
+        'moment': 'lib/moment/min/moment-with-langs',
+        'text': 'lib/text/text',
+
+        'app': 'app',
+        'router': 'router',
+        'searchengine': 'SearchEngine',
+        'utils': 'utils',
+        'eventcalendarview': 'views/EventCalendarView',
+        'eventview': 'views/EventView',
+        'headerview': 'views/HeaderView',
+        'searchview': 'views/SearchView',
+        'emailsavemodel': 'models/EmailSaveModel',
+        'eventmodel': 'models/EventModel'
     },
 
     shim: {
-        'jquery.bootstrap': { deps: ['jquery'] },
+        'bootstrap': { deps: ['jquery'] },
         'typeahead': { deps: ['jquery'] },
         'bloodhound': { deps: ['jquery'], exports: 'Bloodhound' },
         'handlebars': { exports: 'Handlebars' },
-        'fullcalendar': { deps: ['jquery'], exports: 'fullCalendar'}
+        'fullcalendar': { deps: ['jquery'], exports: 'fullCalendar' }
     }
 });
 
-require(['js/main'])
+require(['js/main']);
 

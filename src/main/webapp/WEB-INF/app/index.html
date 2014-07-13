@@ -2,126 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Lukkarimaatti++</title>
+    <title>Lukkarimaatti++ [BETA]</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Lukkarimaatti scheduling tool">
     <meta name="Mikko Kaistinen" content="">
     <link rel="shortcut icon" href="res/favicon.png">
-    <link rel="stylesheet" href="dist/css/lukkarimaatti.css">
-    <link rel="stylesheet" href="dist/css/fullcalendar.css"/>
-    <link rel="stylesheet" href="dist/css/jquery-ui.css"/>
-    <link rel="stylesheet" href="dist/css/bootstrap.css"/>
-    <link href="css/bootstrap.css.map"/>
-    <!--[if lt IE 9]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" href="css/lukkarimaatti.css">
+    <link rel="stylesheet" href="css/github-fork.css">
+    <link rel="stylesheet" href="js/lib/fullcalendar/dist/fullcalendar.css"/>
+    <link rel="stylesheet" href="js/lib/jquery-ui/themes/black-tie/jquery-ui.css"/>
+    <link rel="stylesheet" href="js/lib/bootstrap/dist/css/bootstrap.css"/>
 </head>
 
 <body>
-<div id="header" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Lukkarimaatti++ [beta version]</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a data-toggle="modal" href="#aboutModal" id="aboutModalButton">About</a></li>
-                <li><a data-toggle="modal" href="#contactModal" id="contactModalButton">Contact</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
-
-<div class="row" style="padding-top: 35px"></div>
-
-<div class="container">
-
-    <form role="course-search-form" method="post" style="padding-top: 20px">
-        <div class="form-group">
-            <input id="courseSearchBox" type="search" class="typeahead"
-                   placeholder="Type a course name [e.g. mat for matematiikka]"/>
-        </div>
-    </form>
-
-    <ul data-role="listview" data-filter="true" data-theme="b" id="courseList">
-    </ul>
-
-    <div id="calendar" style="padding-top: 10px">
-    </div>
-
-
-    <div id="list" class="contrainer-fluid">
-        <h4>TODO:</h4>
-        <ul id="todo">
-            <il><p>Course remove</p></il>
-            <il><p>Save course selection to cookie or DB</p></il>
-        </ul>
-        <br/>
-        <h4>KNOWN ISSUES:</h4>
-        <ul id="issues">
-            <il><p>Course event which starts or stop at half past doesn't render correctly</p></il>
-            <il><p>Currently adds to current year</p></il>
-        </ul>
-    </div>
-    <script src="dist/js/require.js" data-main="dist/js/config.js"></script>
-
-</div>
-
-
-<!-- Modal -->
-<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="aboutModalLabel">About</h4>
-            </div>
-            <div class="modal-body">
-                <p>
-                    Lukkarimaatti++ scheduling tool for time table planning and creation.
-                    It started as an open source hobby project. Project repository is available at
-                    <a href="https://github.com/Laastine/lukkarimaatti">Github</a>.
-                    Lukkarimaatti has sister
-                    <a href="https://play.google.com/store/apps/details?id=fi.kapsi.coffeebreak.lutcampus.original.release">Android
-                        project</a>
-                    which uses Lukkarimaatti backend for course data.
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="contactModalLabel">Contact</h4>
-            </div>
-            <div class="modal-body">
-                <p>
-                    Developer: Mikko Kaistinen<br>
-                    etunimi.sukunimi@lut.fi<br>
-                    Laastine @IRCnet
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
+<div id="wrap">
+    <div class="header"></div>
+    <div id="searchbar" class="container"></div>
+    <div id="calendar" class="container"></div>
+    <script src="js/lib/requirejs/require.js" data-main="js/config.js"></script>
 </div>
 
 </body>

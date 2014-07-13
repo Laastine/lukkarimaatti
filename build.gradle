@@ -17,7 +17,6 @@ jettyRun {
 
 war {
     exclude('WEB-INF/app/tests',
-            'WEB-INF/app/build',
             'WEB-INF/app/css',
             'WEB-INF/app/js',
             'WEB-INF/app/res',
@@ -52,7 +51,7 @@ task integrationTest(type: Test) {
 }
 
 ext {
-    springVersion = '4.0.3.RELEASE'
+    springVersion = '4.0.5.RELEASE'
 }
 
 dependencies {

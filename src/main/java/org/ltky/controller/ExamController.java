@@ -22,7 +22,7 @@ import java.util.List;
  * Date: 2.7.2014
  */
 @Controller
-@RequestMapping("/")
+@RequestMapping("/exam")
 public class ExamController {
     private static final Logger LOGGER = Logger.getLogger(ExamController.class);
     private static final int MIN = 3;

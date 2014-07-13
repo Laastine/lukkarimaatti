@@ -1,18 +1,19 @@
 define([
     'backbone',
     'fullcalendar',
-    'js/views/eventView',
-    'js/models/eventModel'
-], function (Backbone, calendar, EventView, Event) {
+    'eventview',
+    'eventmodel'
+], function (Backbone, calendar, EventView, EventModel) {
     'use strict';
 
     var EventCollection = Backbone.Collection.extend({
-        model: Event
+        model: EventModel
     });
 
     var EventCalendarView = Backbone.View.extend({
 
         el: $('#calendar'),
+
         initialize: function () {
             _.bindAll(this, 'calendar', 'render', 'createCalendarEvent', 'addEvent', 'appendEvent');
             this.collection = new EventCollection();
@@ -34,16 +35,21 @@ define([
                     right: 'month, agendaWeek, agendaDay',
                     ignoreTimezone: false
                 },
-                modal: true,
-                weekends: true,
-                defaultView: 'agendaWeek',
+                titleFormat: {
+                    month: 'MMMM',
+                    week: 'DD.MM.YYYY',
+                    day: 'DD.MM',
+                    agenda: 'hh:mm'
+                },
+                allDaySlot: false,
+                axisFormat: 'HH:mm',
+                weekends: false,
                 weekNumbers: true,
-                editable: true,
-                selectable: false,
-                selectHelper: true,
                 firstDay: 1,
-                minTime: 8,
-                maxTime: 20,
+                minTime: '08:00:00',
+                maxTime: '20:00:00',
+                timeFormat: 'hh:mm',
+                defaultView: 'agendaWeek',
                 eventClick: function (event, jsEvent, view) {
                 },
                 eventRender: function (event, element, view) {
@@ -71,7 +77,7 @@ define([
         },
 
         addEvent: function (calendarEvent) {
-            var event = new Event();
+            var event = new EventModel();
             event.cid = calendarEvent.id;
             var eventView = this.appendEvent(event);
             eventView.synchronizeFromCalendar(calendarEvent);

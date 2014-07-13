@@ -1,7 +1,5 @@
-/* global require:false */
-
 require.config({
-    baseUrl: '/lukkarimaatti/app/dist/js/',
+    baseUrl: '/lukkarimaatti/app/dist',
 
     paths: {
         'jquery': 'lib/jquery/dist/jquery',
@@ -14,7 +12,18 @@ require.config({
         'bloodhound': 'lib/typeahead.js/dist/bloodhound',
         'typeahead': 'lib/typeahead.js/dist/typeahead.bundle',
         'moment': 'lib/moment/min/moment-with-langs',
-        'text': 'lib/text/text'
+        'text': 'lib/text/text',
+
+        'app': 'app',
+        'router': 'router',
+        'searchengine': 'SearchEngine',
+        'utils': 'utils',
+        'eventcalendarview': 'views/EventCalendarView',
+        'eventview': 'views/EventView',
+        'headerview': 'views/HeaderView',
+        'searchview': 'views/SearchView',
+        'emailsavemodel': 'models/EmailSaveModel',
+        'eventmodel': 'models/EventModel'
     },
 
     shim: {
@@ -26,5 +35,5 @@ require.config({
     }
 });
 
-require(['main']);
+require(['js/main']);
 

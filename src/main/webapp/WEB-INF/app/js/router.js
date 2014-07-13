@@ -1,9 +1,9 @@
 define([
     "app",
-    "models/EventModel",
-    "views/HeaderView",
-    "views/EventCalendarView",
-    "views/SearchView",
+    "eventmodel",
+    "headerview",
+    "eventcalendarview",
+    "searchview",
     "utils"
 ], function (app, EventModel, HeaderView, EventCalendarView, SearchView) {
     'use strict';

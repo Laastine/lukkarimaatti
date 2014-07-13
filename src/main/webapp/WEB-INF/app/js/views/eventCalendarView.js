@@ -1,8 +1,8 @@
 define([
     'backbone',
     'fullcalendar',
-    'views/EventView',
-    'models/EventModel'
+    'eventview',
+    'eventmodel'
 ], function (Backbone, calendar, EventView, EventModel) {
     'use strict';
 

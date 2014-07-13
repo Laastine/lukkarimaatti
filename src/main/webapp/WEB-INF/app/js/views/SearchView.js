@@ -1,4 +1,4 @@
-define(['SearchEngine', 'views/EventCalendarView', 'text!templates/search.html'],
+define(['searchengine', 'eventcalendarview', 'text!templates/search.html'],
     function ( SearchEngine, EventCalendarView, searchTemplate) {
         'use strict';
 

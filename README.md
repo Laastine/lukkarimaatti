@@ -6,6 +6,8 @@ Information is retrieved from [the official LUT teaching schedule info site] (ht
 Supported web browser are newest Firefox and Google Chrome.<br>
 Plays well enough in older browser, but those aren't officially supported.
 
+Compatible with IE9+ and newest Firefox and Chrome
+
 <b>[Test dev version!](http://83.136.252.198/lukkarimaatti/)</b>
 
 <h3>Back-end</h3>

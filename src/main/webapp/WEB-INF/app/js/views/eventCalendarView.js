@@ -65,7 +65,7 @@ define([
 
         createCalendarEvent: function (course, dateStart, dateEnd) {
             var calendarEvent = {
-                title: course.title + '/' + course.t,
+                title: course.title + '/' + course.t + '\n' + course.cr,
                 start: new Date(dateStart),
                 end: new Date(dateEnd),
                 allDay: false,

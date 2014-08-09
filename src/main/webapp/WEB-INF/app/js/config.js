@@ -17,7 +17,6 @@ require.config({
         'app': 'app',
         'router': 'router',
         'searchengine': 'SearchEngine',
-        'utils': 'utils',
         'eventcalendarview': 'views/EventCalendarView',
         'eventview': 'views/EventView',
         'headerview': 'views/HeaderView',

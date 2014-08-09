@@ -2,8 +2,7 @@ define([
     "app",
     "text!templates/header.html",
     "jquery",
-    "bootstrap",
-    "utils"
+    "bootstrap"
 ], function (app, HeaderTpl) {
     'use strict';
 

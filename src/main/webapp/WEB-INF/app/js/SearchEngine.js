@@ -17,7 +17,7 @@ define(['jquery', 'underscore', 'moment','handlebars', 'bloodhound', 'typeahead'
                             tof: course.timeOfDay,
                             wd: course.weekDay,
                             wn: course.weekNumber,
-                            cr: course.classRoom,
+                            cr: course.classroom,
                             t: course.type
                         };
                     });

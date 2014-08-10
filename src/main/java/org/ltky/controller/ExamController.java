@@ -36,8 +36,6 @@ public class ExamController {
     public
     @ResponseBody
     final List<Exam> getExamName(@PathVariable String examName) {
-        if (LOGGER.isDebugEnabled())
-            LOGGER.debug("getExamNames");
         return examDao.findByExamName(examName);
     }
 
@@ -45,8 +43,6 @@ public class ExamController {
     public
     @ResponseBody
     final List<Exam> getExamNames(@PathVariable final String examNames) {
-        if (LOGGER.isDebugEnabled())
-            LOGGER.debug("getExamNames");
         if (examNames.length() > MIN) {
             return examDao.findExamNames(examNames);
         } else {

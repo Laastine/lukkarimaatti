@@ -29,7 +29,7 @@ public class DBTest {
     @Test
     public void saveCoursesTest() { //Use to updated DB
         try {
-            new FetchJob().fetch();
+            new FetchJob().fetchDepartmentData();
         } catch (Exception e) {
             LOGGER.error("Error while saving course data to DB", e);
             Assert.fail("DB failure");

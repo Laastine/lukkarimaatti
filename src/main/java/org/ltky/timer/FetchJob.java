@@ -1,8 +1,8 @@
 package org.ltky.timer;
 
 import org.apache.log4j.Logger;
-import org.ltky.parser.URLParser;
 import org.ltky.parser.ParserTask;
+import org.ltky.parser.URLParser;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -38,13 +38,13 @@ public class FetchJob {
     /**
      * Fetch data for departments
      */
-    public void fetch() {
+    public void fetchDepartmentData() {
         getLinks();
         Iterator iterator = map.entrySet().iterator();
         ExecutorService executor = Executors.newFixedThreadPool(map.size());
         while (iterator.hasNext()) {
             Map.Entry me = (Map.Entry) iterator.next();
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Key=" + me.getKey() + " Value=" + me.getValue());
             }
             Runnable worker = new ParserTask((String) me.getKey(), (String) me.getValue());  //Task for each department
@@ -56,11 +56,10 @@ public class FetchJob {
         LOGGER.info("Finished all threads");
     }
 
-    @Scheduled(cron = "00 00 6 * * ?")
-    public void runCron() {
-        if(LOGGER.isDebugEnabled())
-            LOGGER.debug("cron task");
-        //TODO: Activate when stable getLinks(); fetch(); fetchJob.fetch();
+    @Scheduled(cron = "00 00 5 * * ?")
+    public void updateCourseDataCronJob() {
+        LOGGER.info("course cron task");
+        getLinks();
+        fetchDepartmentData();
     }
-
 }

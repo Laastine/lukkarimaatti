@@ -16,12 +16,12 @@ Compatible with IE9+ and newest Firefox and Chrome
 * [SonarQube 4.1.2](http://www.sonarqube.org/)<br>
  
 <h3>Front-end</h3>
-* [jQuery 1.10](http://jquery.com/)
+* [jQuery 2.1.1](http://jquery.com/)
 * [Bootstrap 3](http://getbootstrap.com/)
 * [underscore.js 1.6.x](http://underscorejs.org/)
 * [Backbone.js 1.1.x](http://backbonejs.org/)
 * [typeahead.js 0.10.x](http://twitter.github.io/typeahead.js/)
-* [FullCalendar 1.6.x](http://arshaw.com/fullcalendar/)
+* [FullCalendar 2.0.2](http://arshaw.com/fullcalendar/)
 * [Jasmine 2.0.x](http://jasmine.github.io/)
 * [PhantomJS 1.9](http://phantomjs.org/)
 * [RequireJS](http://requirejs.org/)

@@ -3,6 +3,7 @@ package org.ltky.timer;
 import org.apache.log4j.Logger;
 import org.ltky.parser.ParserTask;
 import org.ltky.parser.URLParser;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,7 @@ import java.util.concurrent.Executors;
  * Date: 26.11.2013
  */
 @Component
+@EnableScheduling
 public class FetchJob {
     private static final Logger LOGGER = Logger.getLogger(FetchJob.class);
     private Map<String, String> map;
@@ -44,9 +46,6 @@ public class FetchJob {
         ExecutorService executor = Executors.newFixedThreadPool(map.size());
         while (iterator.hasNext()) {
             Map.Entry me = (Map.Entry) iterator.next();
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Key=" + me.getKey() + " Value=" + me.getValue());
-            }
             Runnable worker = new ParserTask((String) me.getKey(), (String) me.getValue());  //Task for each department
             executor.execute(worker);
         }
@@ -56,9 +55,9 @@ public class FetchJob {
         LOGGER.info("Finished all threads");
     }
 
-    @Scheduled(cron = "00 00 5 * * ?")
+    @Scheduled(cron = "0 0 6 * * *")
     public void updateCourseDataCronJob() {
-        LOGGER.info("course cron task");
+        LOGGER.info("course CRON task");
         getLinks();
         fetchDepartmentData();
     }

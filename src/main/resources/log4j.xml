@@ -8,9 +8,9 @@
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="[%p] %d %c %M - %m%n"/>
         </layout>
+        <param name="MaxBackupIndex" value="14"></param>
     </appender>
 
-    <!--
     <logger name="org.springframework">
         <level value="INFO"/>
         <appender-ref ref="rolling-file" />
@@ -20,7 +20,12 @@
         <level value="INFO"/>
         <appender-ref ref="rolling-file" />
     </logger>
-    -->
+
+    <logger name="org.jboss">
+        <level value="INFO"/>
+        <appender-ref ref="rolling-file"/>
+    </logger>
+
     <root>
         <priority value="DEBUG"/>
         <appender-ref ref="rolling-file" />

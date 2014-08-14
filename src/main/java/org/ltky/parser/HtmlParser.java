@@ -22,7 +22,7 @@ import java.util.List;
  * User: laastine
  * Date: 28.11.2013
  */
-class HtmlParser {
+public class HtmlParser {
     private static final Logger LOGGER = Logger.getLogger(HtmlParser.class);
     private final String department;
     private final ParserConfiguration config = ParserConfiguration.getInstance();

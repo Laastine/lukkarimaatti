@@ -23,7 +23,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/rest")
 public class CourseController {
-    private static final Logger LOGGER = Logger.getLogger(CourseController.class);
     private static final int MIN = 3;
     private static final Util UTIL = new Util();
 

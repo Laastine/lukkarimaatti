@@ -28,25 +28,9 @@ war {
 }
 
 test {
-    exclude '**/*IntegrationTest*'
     testLogging.showStandardStreams = true
     testLogging {
         events 'passed'
-    }
-}
-
-task integrationTest(type: Test) {
-    include '**/*IntegrationTest*'
-    doFirst {
-        jettyRun.contextPath = '/lukkarimaatti';
-        jettyRun.httpPort = 8085    // Port for test
-        jettyRun.daemon = true
-        jettyRun.execute()
-    }
-    doLast {
-        jettyStop.stopPort = 8091   // Port for stop signal
-        jettyStop.stopKey = 'stopKey'
-        jettyStop.execute()
     }
 }
 

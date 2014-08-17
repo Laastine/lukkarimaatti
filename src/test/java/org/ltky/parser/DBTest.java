@@ -2,6 +2,7 @@ package org.ltky.parser;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.ltky.dao.CourseDao;
@@ -9,6 +10,7 @@ import org.ltky.model.Course;
 import org.ltky.timer.FetchJob;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -23,11 +25,12 @@ import java.util.List;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/hibernate/hibernateConfig.xml"})
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class DBTest {
     private static final Logger LOGGER = Logger.getLogger(DBTest.class);
 
     @Test
-    public void saveCoursesTest() { //Use to updated DB
+    public void saveCoursesTest() {
         try {
             new FetchJob().fetchDepartmentData();
         } catch (Exception e) {
@@ -36,7 +39,7 @@ public class DBTest {
         }
     }
 
-    @Test
+    //@Test
     public void encodingTest() throws UnsupportedEncodingException {
         final ApplicationContext applicationContext = new ClassPathXmlApplicationContext("hibernate/hibernateConfig.xml");
         final CourseDao courseDao = (CourseDao) applicationContext.getBean("courseDao");

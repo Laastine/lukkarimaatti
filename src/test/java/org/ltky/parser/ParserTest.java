@@ -44,6 +44,7 @@ public class ParserTest {
         }
     }
 
+
     @Test
     public void examParserTest() {
         final String regex = "^https://uni.lut.fi/*";

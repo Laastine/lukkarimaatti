@@ -13,8 +13,6 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * parser
@@ -38,9 +36,6 @@ public class TaskConfigurer {
     @Autowired
     private ExamDao examDao;
 
-    public TaskConfigurer() {
-    }
-
     private void getLinks() {
         try {
             map = new URLParser().fetchStuff();
@@ -52,16 +47,12 @@ public class TaskConfigurer {
     public void setUpRunners() {
         getLinks();
         courseDao.delete();      //clean old courses
-        ExecutorService executor = Executors.newFixedThreadPool(map.size());
         for (Map.Entry<String, String> entry : map.entrySet()) {
-            executor.execute(() -> courseTask.parse(entry.getKey(), entry.getValue()));
-        }
-        executor.shutdown();
-        while (!executor.isTerminated()) {
+            ((Runnable) () -> courseTask.parse(entry.getKey(), entry.getValue())).run();
         }
     }
 
-    @Scheduled(cron = "0 0 6 * * *")
+    @Scheduled(cron = "0 0 4 * * *")
     public void updateCourseDataCronJob() {
         LOGGER.info("course data update cron task");
         setUpRunners();

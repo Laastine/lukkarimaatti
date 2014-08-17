@@ -7,7 +7,6 @@ package org.ltky.model;
  * Date: 10.7.2014
  */
 public class JsonResponse {
-
     private String status = "";
     private String errorMessage = "";
 

@@ -26,7 +26,7 @@ define([
 
         var environment = 'http://83.136.252.198/lukkarimaatti';
 
-        $.ajaxSetup({ cache: true });
+        $.ajaxSetup({ cache: false });
 
         $.ajaxPrefilter(function (options) {
             options.url = environment + options.url;

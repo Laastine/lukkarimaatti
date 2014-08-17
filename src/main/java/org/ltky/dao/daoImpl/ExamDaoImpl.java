@@ -18,7 +18,6 @@ import java.util.List;
  */
 @Repository
 public class ExamDaoImpl implements ExamDao {
-
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -55,5 +54,4 @@ public class ExamDaoImpl implements ExamDao {
         Query query = getCurrentSession().createQuery(hql);
         return query.setParameter("courseName", "%" + courseName + "%").list();
     }
-
 }

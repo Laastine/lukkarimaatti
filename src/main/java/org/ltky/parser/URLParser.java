@@ -8,19 +8,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.Map;
-import java.util.LinkedHashMap;
-import java.util.Queue;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class URLParser {
-    private final ParserConfiguration parserConfiguration = ParserConfiguration.getInstance();
     private static final Logger LOGGER = Logger.getLogger(URLParser.class);
     private static final String prefix = "https://uni.lut.fi";
+    private final ParserConfiguration parserConfiguration = ParserConfiguration.getInstance();
 
     /**
      * Parse each departments url

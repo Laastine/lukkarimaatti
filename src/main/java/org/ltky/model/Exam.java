@@ -23,15 +23,12 @@ public class Exam {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @XmlElement(name = "examId")
     private Integer examId;
-
     @Column(name = "COURSE_CODE", nullable = false)
     @XmlElement(name = "courseCode")
     private String courseCode;
-
     @Column(name = "COURSE_NAME", nullable = false)
     @XmlElement(name = "courseName")
     private String courseName;
-
     @Column(name = "EXAM_TIMES")
     @XmlElement(name = "examTimes")
     private String examTimes;

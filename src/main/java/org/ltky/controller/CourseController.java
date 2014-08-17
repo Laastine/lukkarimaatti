@@ -1,6 +1,5 @@
 package org.ltky.controller;
 
-import org.apache.log4j.Logger;
 import org.ltky.dao.CourseDao;
 import org.ltky.model.Course;
 import org.ltky.util.Util;
@@ -25,11 +24,8 @@ import java.util.List;
 public class CourseController {
     private static final int MIN = 3;
     private static final Util UTIL = new Util();
-
     @Autowired
     private CourseDao courseDao;
-
-    public CourseController() {}
 
     @RequestMapping(value = "/code/{code}", method = RequestMethod.GET)
     public

@@ -24,11 +24,11 @@ import java.util.List;
  */
 public class HtmlParser {
     private static final Logger LOGGER = Logger.getLogger(HtmlParser.class);
+    private static final String UNKNOWN = "?";
     private final String department;
     private final ParserConfiguration config = ParserConfiguration.getInstance();
     private final Util util = new Util();
     private final CoursePattern coursePattern = new CoursePattern();
-    private static final String UNKNOWN = "?";
 
     public HtmlParser(String department) {
         this.department = department;

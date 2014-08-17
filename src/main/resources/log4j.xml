@@ -2,33 +2,34 @@
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-    <appender name="rolling-file" class="org.apache.log4j.DailyRollingFileAppender">
+
+    <appender name="rolling" class="org.apache.log4j.RollingFileAppender">
         <param name="file" value="logs/lukkarimaatti.log"/>
-        <param name="DatePattern" value="'.'dd-MM-yyyy" />
+        <param name="MaxFileSize" value="1MB"/>
+        <param name="MaxBackupIndex" value="10"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="[%p] %d %c %M - %m%n"/>
         </layout>
-        <param name="MaxBackupIndex" value="14"></param>
     </appender>
 
     <logger name="org.springframework">
         <level value="INFO"/>
-        <appender-ref ref="rolling-file" />
+        <appender-ref ref="rolling" />
     </logger>
 
     <logger name="org.hibernate">
         <level value="INFO"/>
-        <appender-ref ref="rolling-file" />
+        <appender-ref ref="rolling" />
     </logger>
 
     <logger name="org.jboss">
         <level value="INFO"/>
-        <appender-ref ref="rolling-file"/>
+        <appender-ref ref="rolling"/>
     </logger>
 
     <root>
         <priority value="DEBUG"/>
-        <appender-ref ref="rolling-file" />
+        <appender-ref ref="rolling" />
     </root>
 
 </log4j:configuration>

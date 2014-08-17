@@ -6,7 +6,10 @@ import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -39,9 +42,9 @@ public class Util {
         return true;
     }
 
-
     /**
      * Extract week pattern from given string i.e. 1 or 2 digit number passes
+     *
      * @param week
      * @return
      */
@@ -68,10 +71,10 @@ public class Util {
         final String dash = "-";
         final String comma = ",";
         final Set<Integer> weekSequence = new HashSet();
-        if(StringUtils.isBlank(weeks)) {
+        if (StringUtils.isBlank(weeks)) {
             return "";
         } else {
-            if(StringUtils.contains(weeks, dash)) {
+            if (StringUtils.contains(weeks, dash)) {
                 final Set<String> allMatches = new HashSet();
                 final Matcher m = Pattern.compile("[0-9]{1,2}-[0-9]{1,2}").matcher(weeks);
                 while (m.find()) {
@@ -79,8 +82,8 @@ public class Util {
                 }
                 for (String match : allMatches) {
                     final int start = Integer.valueOf(StringUtils.substringBefore(match, dash));
-                    final int end =  Integer.valueOf(StringUtils.substringAfterLast(match, dash));
-                    for(int i = start; i < end; i++, weekSequence.add(i));
+                    final int end = Integer.valueOf(StringUtils.substringAfterLast(match, dash));
+                    for (int i = start; i < end; i++, weekSequence.add(i)) ;
                 }
             }
             final Matcher m = Pattern.compile("[0-9]+").matcher(weeks);
@@ -91,8 +94,8 @@ public class Util {
         final Object[] list = weekSequence.toArray();
         Arrays.sort(list, (a, b) -> ((Integer) a) - ((Integer) b));
         final StringBuilder builder = new StringBuilder();
-        for(Object o : list) {
-            builder.append(String.valueOf(o)+comma);
+        for (Object o : list) {
+            builder.append(String.valueOf(o) + comma);
         }
         return StringUtils.removeEnd(builder.toString(), comma);
     }

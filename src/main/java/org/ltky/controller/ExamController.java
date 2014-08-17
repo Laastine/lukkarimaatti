@@ -4,8 +4,6 @@ import org.apache.log4j.Logger;
 import org.ltky.dao.ExamDao;
 import org.ltky.model.Exam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,11 +24,9 @@ import java.util.List;
 public class ExamController {
     private static final Logger LOGGER = Logger.getLogger(ExamController.class);
     private static final int MIN = 3;
-
     @Autowired
     private ExamDao examDao;
 
-    public ExamController() {}
 
     @RequestMapping(value = "/examname/{examName}", method = RequestMethod.GET)
     public

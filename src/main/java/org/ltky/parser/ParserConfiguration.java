@@ -13,6 +13,8 @@ import java.util.Properties;
  * @author laastine
  */
 public class ParserConfiguration {
+    private static final Logger LOGGER = Logger.getLogger(ParserConfiguration.class);
+    private static ParserConfiguration instance;
     private String uniURL;
     private String examURL;
     private String startTag;
@@ -20,15 +22,11 @@ public class ParserConfiguration {
     private String examStartTag;
     private String examEndTag;
     private String folder;
-
     private String period1;
     private String period2;
     private String period3;
     private String period4;
-
     private String timer;
-    private static ParserConfiguration instance;
-    private static final Logger LOGGER = Logger.getLogger(ParserConfiguration.class);
 
     private ParserConfiguration() {
         try {

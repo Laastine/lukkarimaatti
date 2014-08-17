@@ -26,12 +26,10 @@ import java.util.regex.Pattern;
  * Date: 20.4.2014
  */
 public class ExamParser {
-
     private static final Logger LOGGER = Logger.getLogger(ExamParser.class);
     private final CoursePattern coursePattern = new CoursePattern();
 
     public ExamParser() {
-
     }
 
     public Set<Exam> parseExams() throws IOException {
@@ -57,7 +55,7 @@ public class ExamParser {
     /**
      * Parses (HTML) table <tr></tr> -element data
      * e.g.
-     * <p/>
+     * <p>
      * <td bgcolor="#FFF0D7" width="75">A310A0100</td>
      * <td bgcolor="#FFF0D7" width="290"><b>Strateginen hankintatoimi</b></td>
      * <td bgcolor="#FFE9DD">12.12/8</td>
@@ -120,7 +118,6 @@ public class ExamParser {
         return examList;
     }
 
-
     /**
      * Extracts exam times from course exam entry
      * e.g.
@@ -141,5 +138,4 @@ public class ExamParser {
         }
         return allMatches;
     }
-
 }

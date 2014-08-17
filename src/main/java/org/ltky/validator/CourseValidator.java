@@ -10,8 +10,10 @@ import org.ltky.model.Course;
  * Date: 6.1.2014
  */
 public class CourseValidator {
+    private CourseValidator() {
+    }
 
-    private CourseValidator() {};
+    ;
 
     public static boolean validateCourse(Course course) {
         if (StringUtils.isBlank(course.getCourseCode()) | !investigateLength(course.getCourseCode(), 32)) {
@@ -41,7 +43,6 @@ public class CourseValidator {
         if (!investigateLength(course.getTeacher(), 64)) {
             return false;
         }
-
         return true;
     }
 

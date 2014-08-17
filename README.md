@@ -42,7 +42,6 @@ karma, karma-cli, karma-junit-reporter karma-phantomjs-launcher, phantomjs<br>
 <i>karma start karma.conf.js</i><br>
 <b>Back end:</b><br>
 <i>gradle test</i> - for running unit tests<br>
-<i>gradle integrationTest</i> - for running integration tests
 
 <h2>Copyright and license</h2>
 Copyright &copy; 2013 Mikko Kaistinen, mikko.kaistinen@kapsi.fi

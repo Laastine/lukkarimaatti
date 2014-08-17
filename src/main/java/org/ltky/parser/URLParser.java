@@ -37,7 +37,7 @@ public class URLParser {
         while (matcher.find()) {
             link = prefix + matcher.group();
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Department=" + queue.peek() + ", link=" + link);
+                LOGGER.debug("Department=" + queue.peek() + ", \nlink=" + link);
             }
             dependencies.put(queue.poll(), link);
         }
@@ -51,18 +51,12 @@ public class URLParser {
     }
 
     private final LinkedList<String> initDepart2UrlMap() {
-        final LinkedList<String> list = new LinkedList();
-        list.add("ente");
-        list.add("ymte");
-        list.add("kete");
-        list.add("kote");
-        list.add("sate");
-        list.add("tite");
-        list.add("tuta");
-        list.add("kati");
-        list.add("mafy");
-        list.add("kike");
-        list.add("kv");
+        final LinkedList<String> list = new LinkedList() {{
+            add("ente"); add("ymte"); add("kete");
+            add("kote"); add("sate"); add("tite");
+            add("tuta"); add("kati"); add("mafy");
+            add("kike"); add("kv");
+        }};
         return list;
     }
 

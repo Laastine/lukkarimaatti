@@ -26,7 +26,6 @@ public class ParserConfiguration {
     private String period2;
     private String period3;
     private String period4;
-    private String timer;
 
     private ParserConfiguration() {
         try {
@@ -56,7 +55,6 @@ public class ParserConfiguration {
         period2 = getPropertyOrThrowUp(parserProperties, "period2");
         period3 = getPropertyOrThrowUp(parserProperties, "period3");
         period4 = getPropertyOrThrowUp(parserProperties, "period4");
-        timer = getPropertyOrThrowUp(parserProperties, "timer");
         LOGGER.info("Config=" + this.toString());
         return this.toString();
     }
@@ -108,10 +106,6 @@ public class ParserConfiguration {
 
     public String getFolder() {
         return folder;
-    }
-
-    public String getTimer() {
-        return timer;
     }
 
     public String getPeriod1() {

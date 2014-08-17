@@ -75,5 +75,4 @@ public class CourseDaoImpl implements CourseDao {
     public List<String> findAllCourseNames() {
         return getCurrentSession().createQuery("SELECT C.courseName FROM Course C").list();
     }
-
 }

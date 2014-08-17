@@ -19,7 +19,6 @@ import java.io.Serializable;
 @Immutable
 @Table(name = "COURSE")
 public class Course implements Serializable {
-
     @Id
     @Column(name = "COURSE_ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)

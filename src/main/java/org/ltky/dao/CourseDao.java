@@ -1,7 +1,7 @@
 package org.ltky.dao;
 
 import org.ltky.model.Course;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
  * User: laastine
  * Date: 27.11.2013
  */
-
+@Component
 @Transactional
 public interface CourseDao {
     void saveOrUpdate(Course course);
@@ -32,5 +32,4 @@ public interface CourseDao {
     List<Course> findByDepartment(String department);
 
     List<String> findAllCourseNames();
-
 }

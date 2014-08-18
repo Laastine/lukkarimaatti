@@ -32,6 +32,7 @@ Compatible with IE9+ and newest Firefox and Chrome
 <h2>Requirements & Build</h2>
 Compiles with Java 8 and Gradle 1.10<br>
 Gradle for building a package.<br>
+<i>bower install</i> - for JS stuff<br>
 <i>gradle war</i> - for building (release) package<br>
 <i>gradle clean jettyRun</i> - for quick browser testing
 

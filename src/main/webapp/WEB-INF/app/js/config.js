@@ -11,7 +11,7 @@ require.config({
         'handlebars': 'lib/handlebars/handlebars',
         'bloodhound': 'lib/typeahead.js/dist/bloodhound',
         'typeahead': 'lib/typeahead.js/dist/typeahead.bundle',
-        'moment': 'lib/moment/min/moment-with-langs',
+        'moment': 'lib/moment/min/moment-with-locales',
         'text': 'lib/text/text',
 
         'app': 'app',

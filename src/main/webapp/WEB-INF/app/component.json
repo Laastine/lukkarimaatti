@@ -12,8 +12,5 @@
     "handlebars": null,
     "typeahead.js": null,
     "text": "https://github.com/requirejs/text.git"
-  },
-  "resolutions": {
-    "jquery": "2.1.1"
   }
 }

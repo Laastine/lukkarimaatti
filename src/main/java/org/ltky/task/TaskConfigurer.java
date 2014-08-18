@@ -52,7 +52,7 @@ public class TaskConfigurer {
         }
     }
 
-    @Scheduled(cron = "0 0 4 * * *")
+    @Scheduled(cron = "0 0 */4 * * *")
     public void updateCourseDataCronJob() {
         LOGGER.info("course data update cron task");
         setUpRunners();

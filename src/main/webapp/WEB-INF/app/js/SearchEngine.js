@@ -60,7 +60,7 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
                         addCourseItem(courseCollection[0].title, courseCollection[0].code);
                     }
                     load.modal('toggle');
-                    setTimeout(function(){ addDataToCalendar(eventCal);}, 200);
+                    setTimeout(function(){ addDataToCalendar(eventCal);}, 300);
                 });
         };
 

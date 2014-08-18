@@ -12,17 +12,17 @@
         </layout>
     </appender>
 
-    <logger name="org.springframework">
+    <logger name="org.springframework" additivity="false">
         <level value="INFO"/>
         <appender-ref ref="rolling" />
     </logger>
 
-    <logger name="org.hibernate">
+    <logger name="org.hibernate" additivity="false">
         <level value="INFO"/>
         <appender-ref ref="rolling" />
     </logger>
 
-    <logger name="org.jboss">
+    <logger name="org.jboss" additivity="false">
         <level value="INFO"/>
         <appender-ref ref="rolling"/>
     </logger>

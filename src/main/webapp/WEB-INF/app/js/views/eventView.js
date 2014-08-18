@@ -2,6 +2,7 @@ define([
     'backbone',
     'fullcalendar'
 ], function (Backbone, calendar) {
+    'use strict';
 
     var EventView = Backbone.View.extend({
 

@@ -3,9 +3,10 @@
 Hobby project to offer course data easily usable scheduling tool over simple REST interface.<br>
 Information is retrieved from [the official LUT teaching schedule info site] (https://uni.lut.fi/fi/web/guest/lukujarjestykset).<br>
 
+<b>[Test beta version!](http://83.136.252.198/lukkarimaatti/)</b>
+
 Compatible with IE9+ and newest Firefox and Chrome
 
-<b>[Test dev version!](http://83.136.252.198/lukkarimaatti/)</b>
 
 <h3>Back-end</h3>
 * [Spring 4.x](http://spring.io/)

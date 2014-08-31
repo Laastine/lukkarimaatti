@@ -5,22 +5,20 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
         var courseCollection = [];
         var load = $(loadModal);
 
-        var engine = new Bloodhound(
-            {
-                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-                queryTokenizer: Bloodhound.tokenizers.whitespace,
-                remote: {
-                    url: '/rest/cnames/%QUERY',
-                    filter: function (response) {
-                        mapResponse(response);
-                        return _.uniq(courseCollection, function (item) {
-                            return item.title + item.code;
-                        });
-                    }
-                },
-                limit: 10
-            }
-        );
+        var engine = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: '/rest/cnames/%QUERY',
+                filter: function (response) {
+                    mapResponse(response);
+                    return _.uniq(courseCollection, function (item) {
+                        return item.title + item.code;
+                    });
+                }
+            },
+            limit: 10
+        });
 
         var mapResponse = function (response) {
             courseCollection = $.map(response, function (course) {
@@ -91,7 +89,6 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
         var refresh = function (calendar) {
             var params = window.location.search;
             var courseCodes = params.substring(1, params.length).split(/[+]/);
-            console.log('courseCodes=' + typeof courseCodes);
             load.modal('toggle');
             if (courseCodes.length > 0) {
                 courseCodes.forEach(function (cc) {
@@ -119,13 +116,13 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
 
         var addCourseLink = function (courseName, courseCode) {
             var noppa = 'https://noppa.lut.fi/noppa/opintojakso/';
-            courseCode = courseCode.replace('+', '');
-            console.log('update courseCode=' + courseCode);
-            $('#courseList').append('<li id="+' + courseCode + '+" data-filtertext="' + courseName + '"><a href=' + noppa + courseCode + ' target="_blank">' + courseName + '</a></li>');
+            $('#courseList').append('<li id="' + courseCode + '" data-filtertext="' + courseName + '">' +
+                    '<a href=' + noppa + courseCode + ' target="_blank">' + courseName + '</a></li>');
         };
 
         var removeCourseItem = function (courseCode) {
             $('#' + courseCode).remove();
+
         };
 
         var addDataToCalendar = function (calendar) {

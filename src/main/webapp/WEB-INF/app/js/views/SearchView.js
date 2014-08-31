@@ -12,6 +12,16 @@ define(['searchengine', 'eventcalendarview', 'text!templates/search.html'],
                 SearchEngine.onPageLoad(calendar);
             },
 
+            events: {
+                "click #deleteButton": "deleteCourse"
+            },
+
+            deleteCourse: function (e) {
+                var ele = $(e.target).closest('tr');
+                console.log('delete id='+ele);
+                SearchEngine.onClickDelete(ele);
+            },
+
             render: function () {
                 this.template = _.template(searchTemplate);
                 this.$el.html(this.template({}));

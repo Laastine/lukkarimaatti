@@ -51,9 +51,12 @@ define([
                 timeFormat: 'hh:mm',
                 defaultView: 'agendaWeek',
                 eventClick: function (event, jsEvent, view) {
+                    console.log('event id='+event._id);
+                    that.calendar('removeEvents', event._id);
                 },
-                eventRender: function (event, element, view) {
+                eventRender: function (event, element) {
                     event.element = element;
+                    element.find('.fc-event-title').append("<br/>" + event.description);
                 }
             });
 
@@ -65,13 +68,14 @@ define([
 
         createCalendarEvent: function (course, dateStart, dateEnd) {
             var calendarEvent = {
-                title: course.title + '/' + course.t + '\n' + course.cr,
+                title:  course.code+'\n'+course.title+ '/' +course.t,
+                description: course.cr,
                 start: new Date(dateStart),
                 end: new Date(dateEnd),
                 allDay: false,
                 element: null,
                 view: null,
-                id: _.uniqueId('e')
+                id: course.code+'#'+course.t
             };
             this.calendar('renderEvent', calendarEvent, true);
         },
@@ -96,6 +100,10 @@ define([
                 calendar: this.calendar
             });
             return eventView;
+        },
+
+        removeEvent: function (event) {
+            console.log('remove called');
         }
 
     });

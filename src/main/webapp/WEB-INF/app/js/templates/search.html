@@ -2,12 +2,21 @@
 <br/>
 <br/>
 
-<form role="course-search-form" method="post">
-    <div class="form-group">
-        <input id="courseSearchBox" type="search" class="typeahead"
-               placeholder="Type a course name [e.g. mat for matematiikka]"/>
-    </div>
-</form>
+<div class="col-sm-6" role="complementary">
+    <form role="course-search-form" method="post">
+        <div class="form-group">
+            <input id="courseSearchBox" type="search" class="typeahead"
+                   placeholder="Type a course name [e.g. mat for matematiikka]"/>
+        </div>
+    </form>
 
-<ul data-role="listview" data-filter="true" data-theme="b" id="courseList">
-</ul>
+    <table class="table table-striped" id="courseList">
+        <thead>
+        <tr>
+            <th>Selected courses</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>

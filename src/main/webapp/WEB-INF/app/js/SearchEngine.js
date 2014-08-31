@@ -86,6 +86,10 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
             }
         };
 
+        var removeUrlParameter = function () {
+            var params = window.location.search;
+        };
+
         var refresh = function (calendar) {
             var params = window.location.search;
             var courseCodes = params.substring(1, params.length).split(/[+]/);
@@ -116,13 +120,17 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
 
         var addCourseLink = function (courseName, courseCode) {
             var noppa = 'https://noppa.lut.fi/noppa/opintojakso/';
-            $('#courseList').append('<li id="' + courseCode + '" data-filtertext="' + courseName + '">' +
-                    '<a href=' + noppa + courseCode + ' target="_blank">' + courseName + '</a></li>');
+            $('#courseList').append('<tr><td id="'+courseCode+'">' +
+                '<a href=' + noppa + courseCode + ' target="_blank">' + courseName + '</a>' +
+                '</td><td>' +
+                '<button id="deleteButton" class="button" type="button">' +
+                '<span class="glyphicon glyphicon-remove"></span>' +
+                '</button>' +
+                '</td></tr>');
         };
 
-        var removeCourseItem = function (courseCode) {
-            $('#' + courseCode).remove();
-
+        var removeCourseItem = function (id) {
+            $(id).remove();
         };
 
         var addDataToCalendar = function (calendar) {
@@ -132,7 +140,6 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
                     var dateEnd = moment().lang('fi').day(course.wd).week(weekNumber).hours(course.tof.split('-')[1] || 6).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
                     calendar.createCalendarEvent(course, dateStart, dateEnd);
                 }
-
                 JSON.parse('[' + course.wn + ']').forEach(processWeekNumbers);
             });
             load.modal('hide');
@@ -141,7 +148,8 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
         return {
             engine: engine,
             searchBox: searchBox,
-            onPageLoad: refresh
+            onPageLoad: refresh,
+            onClickDelete: removeCourseItem
         };
 
     });

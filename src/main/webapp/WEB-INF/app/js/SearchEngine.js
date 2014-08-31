@@ -64,13 +64,66 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
                 });
         };
 
+        var addUrlParameter = function (courseName, courseCode) {
+            var params = window.location.search;
+            if (params.length > 0) {
+                console.log('not zero');
+                history.pushState(
+                    {
+                        name: courseName,
+                        code: courseCode
+                    },
+                    "",
+                        "index.html?" + params.substring(1, params.length) + '+' + courseCode);
+            } else {
+                console.log('more than zero');
+                history.pushState(
+                    {
+                        name: courseName,
+                        code: courseCode
+                    },
+                    "",
+                        "index.html?" + params + courseCode);
+            }
+        };
+
+        var refresh = function()  {
+            var courseData = {};
+            var params = window.location.search;
+            var courseCodes = params.substring(1, params.length).split(/[+]/);
+            console.log('courseCodes='+courseCodes);
+            if(typeof courseCodes !== 'undefined') {
+                $.ajax({
+                    url: '/rest/code/BM40A0700',
+                    type: 'GET',
+
+                    dataType: 'json',
+                    success: function(data, textStatus) {
+                        console.log('reload, data='+data+', status='+textStatus);
+                        courseData = data;
+                    },
+                    error:function(xhr, status, error) {
+                        console.log('xhr'+xhr+', status='+status+', error='+error);
+                    }
+                });
+            } else {
+                console.log('not valid course code');
+            }
+            console.log('courseData='+courseData.courseName+', '+courseData.courseCode);
+            //addCourseItem(courseData.courseName, courseData.courseCode);
+        };
+
         var addCourseItem = function (courseName, courseCode) {
             var noppa = 'https://noppa.lut.fi/noppa/opintojakso/';
-            $('#courseList').append('<li data-filtertext="' + courseName + '"><a href=' + noppa + courseCode + ' target="_blank">' + courseName + '</a></li>');
+            $('#courseList')
+                .append('<li id="+'+courseCode+'+" data-filtertext="' + courseName + '"><a href=' + noppa + courseCode + ' target="_blank">' + courseName + '</a> ' +
+                    '<button class="btn btn-default btn-sm" type="button">' +
+                    '<span class="glyphicon glyphicon-remove"></span>' +
+                    '</button></li>');
         };
 
         var removeCourseItem = function (courseName, courseCode) {
-            $('#courseList').remove('<li data-filtertext="' + courseName + '"><a href=' + noppa + courseCode + ' target="_blank">' + courseName + '</a></li>');
+            $('#courseList').attr('id', courseCode).remove('<li data-filtertext="' + courseName + '"><a href=' + noppa + courseCode + ' target="_blank">' + courseName + '</a></li>');
         };
 
         var addDataToCalendar = function (calendar) {

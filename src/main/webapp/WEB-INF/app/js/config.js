@@ -1,5 +1,5 @@
 require.config({
-    baseUrl: '/lukkarimaatti/app/dist',
+    baseUrl: '/lukkarimaatti/app/js',
 
     paths: {
         'jquery': 'lib/jquery/dist/jquery',
@@ -11,7 +11,7 @@ require.config({
         'handlebars': 'lib/handlebars/handlebars',
         'bloodhound': 'lib/typeahead.js/dist/bloodhound',
         'typeahead': 'lib/typeahead.js/dist/typeahead.bundle',
-        'moment': 'lib/moment/min/moment-with-locales',
+        'moment': 'lib/moment/min/moment-with-langs',
         'text': 'lib/text/text',
 
         'app': 'app',
@@ -34,5 +34,5 @@ require.config({
     }
 });
 
-require(['js/main']);
+require(['main']);
 

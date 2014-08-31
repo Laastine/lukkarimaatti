@@ -19,3 +19,4 @@ src/main/webapp/WEB-INF/app/server.js
 src/main/webapp/WEB-INF/app/js/lib/
 src/main/webapp/WEB-INF/app/node_modules/
 src/main/webapp/WEB-INF/app/dist/
+src/main/webapp/WEB-INF/app/test/node_modules/

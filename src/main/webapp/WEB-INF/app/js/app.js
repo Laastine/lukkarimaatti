@@ -6,14 +6,13 @@ define([
     function ($, _, Backbone) {
         'use strict';
 
-        // We need to keep the functionality of being able to bindAll to entire object w/out specifying each function name individually
         _.bindAll = function (obj) {
             var funcs = Array.prototype.slice.call(arguments, 1);
             if (funcs.length === 0) {
                 funcs = _.functions(obj);
             }
             _.each(funcs, function (f) {
-                if (f !== 'constructor' && f !== 'initialize') { // binding to the constructor / initialize is a dangerous practice that can cause problems
+                if (f !== 'constructor' && f !== 'initialize') {
                     obj[f] = _.bind(obj[f], obj);
                 }
             });
@@ -24,7 +23,7 @@ define([
             root: "/"
         };
 
-        var environment = 'http://83.136.252.198/lukkarimaatti';
+        var environment = 'http://localhost:8085/lukkarimaatti';
 
         $.ajaxSetup({ cache: false });
 

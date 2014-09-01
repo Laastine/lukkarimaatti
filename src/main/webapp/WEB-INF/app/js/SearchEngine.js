@@ -82,8 +82,7 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
 
         var removeUrlParameter = function (id) {
             var url = window.location.search;
-            var params = url.substring(1, url.length).split('+');
-            var updatedParams = params.filter(function (p) {
+            var updatedParams = url.substring(1, url.length).split('+').filter(function (p) {
                 return p !== id;
             });
             if (updatedParams.length > 0) {
@@ -96,8 +95,8 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
         var refresh = function (calendar) {
             var params = window.location.search;
             var courseCodes = params.substring(1, params.length).split(/[+]/);
-            load.modal('toggle');
-            if (courseCodes.length > 0) {
+            if (courseCodes.length > 1) {
+                load.modal('toggle');
                 courseCodes.forEach(function (cc) {
                     if (typeof cc !== 'undefined') {
                         $.ajax({
@@ -117,8 +116,8 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
                         console.log('Not a valid course code');
                     }
                 });
+                load.modal('hide');
             }
-            load.modal('hide');
         };
 
         var addCourseLink = function (courseName, courseCode) {

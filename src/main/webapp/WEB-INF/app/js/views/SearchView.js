@@ -17,9 +17,8 @@ define(['searchengine', 'eventcalendarview', 'text!templates/search.html'],
             },
 
             deleteCourse: function (e) {
-                var ele = $(e.target).closest('tr');
-                console.log('delete id='+ele);
-                SearchEngine.onClickDelete(ele);
+                var element = $(e.currentTarget).closest('tr');
+                SearchEngine.onClickDelete(element, element.attr('id'));
             },
 
             render: function () {

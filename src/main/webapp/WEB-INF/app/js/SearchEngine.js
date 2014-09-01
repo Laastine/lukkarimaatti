@@ -73,21 +73,24 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
             var params = window.location.search;
             if (params.length > 0) {
                 history.pushState(
-                    {
-                        name: courseName,
-                        code: courseCode
-                    }, "", "index.html?" + params.substring(1, params.length) + '+' + courseCode);
+                    {}, "", "index.html?" + params.substring(1, params.length) + '+' + courseCode);
             } else {
                 history.pushState(
-                    {
-                        name: courseName,
-                        code: courseCode
-                    }, "", "index.html?" + params + courseCode);
+                    {}, "", "index.html?" + params + courseCode);
             }
         };
 
-        var removeUrlParameter = function () {
-            var params = window.location.search;
+        var removeUrlParameter = function (id) {
+            var url = window.location.search;
+            var params = url.substring(1, url.length).split('+');
+            var updatedParams = params.filter(function (p) {
+                return p !== id;
+            });
+            if (updatedParams.length > 0) {
+                history.pushState({}, "", "index.html?" + updatedParams.join().replace(',', '+'));
+            } else {
+                history.pushState({}, "", "index.html");
+            }
         };
 
         var refresh = function (calendar) {
@@ -120,7 +123,7 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
 
         var addCourseLink = function (courseName, courseCode) {
             var noppa = 'https://noppa.lut.fi/noppa/opintojakso/';
-            $('#courseList').append('<tr><td id="'+courseCode+'">' +
+            $('#courseList').append('<tr id="' + courseCode + '"><td>' +
                 '<a href=' + noppa + courseCode + ' target="_blank">' + courseName + '</a>' +
                 '</td><td>' +
                 '<button id="deleteButton" class="button" type="button">' +
@@ -129,8 +132,9 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
                 '</td></tr>');
         };
 
-        var removeCourseItem = function (id) {
-            $(id).remove();
+        var removeCourseItem = function (element, id) {
+            $(element).remove();
+            removeUrlParameter(id);
         };
 
         var addDataToCalendar = function (calendar) {
@@ -140,6 +144,7 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
                     var dateEnd = moment().lang('fi').day(course.wd).week(weekNumber).hours(course.tof.split('-')[1] || 6).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
                     calendar.createCalendarEvent(course, dateStart, dateEnd);
                 }
+
                 JSON.parse('[' + course.wn + ']').forEach(processWeekNumbers);
             });
             load.modal('hide');

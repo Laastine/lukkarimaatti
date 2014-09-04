@@ -2,35 +2,37 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
     function ($, _, moment, Handlebars, Bloodhound, loadModal) {
         'use strict';
 
-        var courseCollection = {};
+        var courseCollection = [];
         var load = $(loadModal);
 
-        var engine = new Bloodhound(
-            {
-                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-                queryTokenizer: Bloodhound.tokenizers.whitespace,
-                remote: {
-                    url: '/rest/cnames/%QUERY',
-                    filter: function (response) {
-                        courseCollection = $.map(response, function (course) {
-                            return {
-                                title: course.courseName,
-                                code: course.courseCode,
-                                tof: course.timeOfDay,
-                                wd: course.weekDay,
-                                wn: course.weekNumber,
-                                cr: course.classroom,
-                                t: course.type
-                            };
-                        });
-                        return _.uniq(courseCollection, function (item) {
-                            return item.title + item.code;
-                        });
-                    }
-                },
-                limit: 10
-            }
-        );
+        var engine = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: '/rest/cnames/%QUERY',
+                filter: function (response) {
+                    mapResponse(response);
+                    return _.uniq(courseCollection, function (item) {
+                        return item.title + item.code;
+                    });
+                }
+            },
+            limit: 10
+        });
+
+        var mapResponse = function (response) {
+            courseCollection = $.map(response, function (course) {
+                return {
+                    title: course.courseName,
+                    code: course.courseCode,
+                    tof: course.timeOfDay,
+                    wd: course.weekDay,
+                    wn: course.weekNumber,
+                    cr: course.classroom,
+                    t: course.type
+                };
+            });
+        };
 
         var searchBox = function (eventCal) {
             var that = this;
@@ -57,43 +59,101 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
                         return el.code === item.code;
                     });
                     if (courseCollection[0].title.length !== 0) {
-                        addCourseItem(courseCollection[0].title, courseCollection[0].code);
+                        addCourseLink(courseCollection[0].title, courseCollection[0].code);
                     }
                     load.modal('toggle');
-                    setTimeout(function(){ addDataToCalendar(eventCal);}, 300);
+                    setTimeout(function () {
+                        addDataToCalendar(eventCal);
+                    }, 300);
+                    addUrlParameter(courseCollection[0].title, courseCollection[0].code);
                 });
         };
 
-        var addCourseItem = function (courseName, courseCode) {
-            var noppa = 'https://noppa.lut.fi/noppa/opintojakso/';
-            $('#courseList').append('<li data-filtertext="' + courseName + '"><a href=' + noppa + courseCode + ' target="_blank">' + courseName + '</a></li>');
+        var addUrlParameter = function (courseName, courseCode) {
+            var params = window.location.search;
+            if (params.length > 0) {
+                history.pushState(
+                    {}, "", "index.html?" + params.substring(1, params.length) + '+' + courseCode);
+            } else {
+                history.pushState(
+                    {}, "", "index.html?" + params + courseCode);
+            }
         };
 
-        var removeCourseItem = function (courseName, courseCode) {
-            $('#courseList').remove('<li data-filtertext="' + courseName + '"><a href=' + noppa + courseCode + ' target="_blank">' + courseName + '</a></li>');
+        var removeUrlParameter = function (id) {
+            var url = window.location.search;
+            var updatedParams = url.substring(1, url.length).split('+').filter(function (p) {
+                return p !== id;
+            });
+            if (updatedParams.length > 0) {
+                history.pushState({}, "", "index.html?" + updatedParams.join().replace(',', '+'));
+            } else {
+                history.pushState({}, "", "index.html");
+            }
+        };
+
+        var refresh = function (calendar) {
+            var params = window.location.search;
+            var courseCodes = params.substring(1, params.length).split(/[+]/);
+            if (courseCodes[0].length > 0) {
+                load.modal('toggle');
+                courseCodes.forEach(function (cc) {
+                    if (typeof cc !== 'undefined') {
+                        $.ajax({
+                            url: '/rest/code/' + cc,
+                            type: 'GET',
+                            dataType: 'json',
+                            success: function (data) {
+                                mapResponse(data);
+                                addCourseLink(data[0].courseName, data[0].courseCode);
+                                addDataToCalendar(calendar);
+                            },
+                            error: function (xhr, status, error) {
+                                console.log('xhr' + xhr + ', status=' + status + ', error=' + error);
+                            }
+                        });
+                    } else {
+                        console.log('Not a valid course code');
+                    }
+                });
+                load.modal('hide');
+            }
+        };
+
+        var addCourseLink = function (courseName, courseCode) {
+            var noppa = 'https://noppa.lut.fi/noppa/opintojakso/';
+            $('#courseList').append('<tr id="' + courseCode + '"><td>' +
+                '<a href=' + noppa + courseCode + ' target="_blank">' + courseName + '</a>' +
+                '</td><td>' +
+                '<button id="deleteButton" class="button" type="button">' +
+                '<span class="glyphicon glyphicon-remove"></span>' +
+                '</button>' +
+                '</td></tr>');
+        };
+
+        var removeCourseItem = function (element, id) {
+            $(element).remove();
+            removeUrlParameter(id);
         };
 
         var addDataToCalendar = function (calendar) {
-            function processCourse(course) {
+            courseCollection.forEach(function (course) {
                 function processWeekNumbers(weekNumber) {
-                    var hStart = course.tof.split('-')[0] || 6;
-                    var hEnd = course.tof.split('-')[1] || 6;
-                    var dateStart = moment().lang('fi').day(course.wd).week(weekNumber).hours(hStart).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
-                    var dateEnd = moment().lang('fi').day(course.wd).week(weekNumber).hours(hEnd).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
+                    var dateStart = moment().lang('fi').day(course.wd).week(weekNumber).hours(course.tof.split('-')[0] || 6).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
+                    var dateEnd = moment().lang('fi').day(course.wd).week(weekNumber).hours(course.tof.split('-')[1] || 6).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
                     calendar.createCalendarEvent(course, dateStart, dateEnd);
                 }
 
-                var weekNumber = JSON.parse('[' + course.wn + ']');
-                weekNumber.forEach(processWeekNumbers);
-            }
-
-            courseCollection.forEach(processCourse);
+                JSON.parse('[' + course.wn + ']').forEach(processWeekNumbers);
+            });
             load.modal('hide');
         };
 
         return {
             engine: engine,
-            searchBox: searchBox
+            searchBox: searchBox,
+            onPageLoad: refresh,
+            onClickDelete: removeCourseItem
         };
 
     });

@@ -5,7 +5,7 @@ Information is retrieved from [the official LUT teaching schedule info site] (ht
 
 <b>[Test beta version!](http://83.136.252.198/lukkarimaatti/)</b>
 
-Compatible with IE9+ and newest Firefox and Chrome
+Compatible with IE10+ and newest Firefox and Chrome
 
 
 <h3>Back-end</h3>

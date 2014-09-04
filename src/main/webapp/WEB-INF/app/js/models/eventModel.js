@@ -3,10 +3,14 @@ define(['jquery', 'underscore', 'backbone'], function ($, _, Backbone) {
 
     var EventModel = Backbone.Model.extend({
         defaults: {
-            title: 'tmp',
-            startDate: null,
-            endDate: null,
-            isAllDay: false
+            title:  '',
+            description: '',
+            start: '',
+            end: '',
+            allDay: false,
+            element: null,
+            view: null,
+            id: ''
         },
 
         validate: function (attrs) {

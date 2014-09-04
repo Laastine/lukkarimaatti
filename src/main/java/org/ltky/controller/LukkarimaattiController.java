@@ -24,9 +24,9 @@ public class LukkarimaattiController {
     @RequestMapping(value = "/",
             method = RequestMethod.GET)
     public String getHome(HttpServletRequest request) {
-        LOGGER.debug("index hit from "
+        LOGGER.info("index hit from "
                 + request.getRemoteAddr() +
-                "with user-agent"
+                " with user-agent"
                 + request.getHeader("user-agent"));
         return "redirect:/app/dist/index.html";
     }

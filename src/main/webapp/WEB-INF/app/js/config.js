@@ -1,5 +1,5 @@
 require.config({
-    baseUrl: '/lukkarimaatti/app/js',
+    baseUrl: '/lukkarimaatti/app/dist',
 
     paths: {
         'jquery': 'lib/jquery/dist/jquery',
@@ -34,5 +34,5 @@ require.config({
     }
 });
 
-require(['main']);
+require(['js/main']);
 

@@ -95,7 +95,7 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
         var refresh = function (calendar) {
             var params = window.location.search;
             var courseCodes = params.substring(1, params.length).split(/[+]/);
-            if (courseCodes.length > 1) {
+            if (courseCodes[0].length > 0) {
                 load.modal('toggle');
                 courseCodes.forEach(function (cc) {
                     if (typeof cc !== 'undefined') {

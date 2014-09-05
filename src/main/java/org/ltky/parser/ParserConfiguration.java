@@ -27,6 +27,9 @@ public class ParserConfiguration {
     private String period3;
     private String period4;
 
+    private String emailUsername;
+    private String emailPassword;
+
     private ParserConfiguration() {
         try {
             loadServletInitParameters();
@@ -55,6 +58,8 @@ public class ParserConfiguration {
         period2 = getPropertyOrThrowUp(parserProperties, "period2");
         period3 = getPropertyOrThrowUp(parserProperties, "period3");
         period4 = getPropertyOrThrowUp(parserProperties, "period4");
+        emailUsername = getPropertyOrThrowUp(parserProperties, "emailUsername");
+        emailPassword = getPropertyOrThrowUp(parserProperties, "emailPassword");
         LOGGER.info("Config=" + this.toString());
         return this.toString();
     }
@@ -122,5 +127,13 @@ public class ParserConfiguration {
 
     public String getPeriod4() {
         return period4;
+    }
+
+    public String getEmailUsername() {
+        return emailUsername;
+    }
+
+    public String getEmailPassword() {
+        return emailPassword;
     }
 }

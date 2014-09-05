@@ -59,7 +59,8 @@ dependencies {
             'org.slf4j:slf4j-log4j12:1.7.6',
             'postgresql:postgresql:9.1-901.jdbc4',
             'org.jsoup:jsoup:1.7.3',
-            'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
+            'org.codehaus.jackson:jackson-mapper-asl:1.9.13',
+            'javax.mail:mail:1.4.7'
 
     providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
     runtime 'jstl:jstl:1.2'

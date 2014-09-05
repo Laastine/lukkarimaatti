@@ -24,7 +24,7 @@ public class DBTest {
     @Autowired
     private TaskConfigurer taskConfigurer;
 
-    @Test
+    //@Test
     public void saveCoursesTest() {
         try {
             taskConfigurer.setUpRunners();

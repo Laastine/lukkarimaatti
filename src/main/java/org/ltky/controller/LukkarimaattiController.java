@@ -1,7 +1,9 @@
 package org.ltky.controller;
 
 import org.apache.log4j.Logger;
-import org.ltky.model.JsonResponse;
+import org.ltky.util.EmailLink;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,8 +37,11 @@ public class LukkarimaattiController {
             method = RequestMethod.POST,
             produces = "application/json")
     @ResponseBody
-    public JsonResponse saveCourseData(@RequestParam(value = "email") String email) {
-        LOGGER.info("Save data with email=" + email);
-        return new JsonResponse("OK", "200");
+    public ResponseEntity<String> saveCourseData(
+            @RequestParam(value = "email", required = true) String toAddress,
+            @RequestParam(value = "link", required = true) String link) {
+        LOGGER.info("Save data with email=" + toAddress + " link=" + link);
+        new EmailLink().buildMail(toAddress, link);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

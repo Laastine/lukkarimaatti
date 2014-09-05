@@ -149,11 +149,22 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
             load.modal('hide');
         };
 
+        var sendLink = function (address) {
+            var link = window.location.href.toString();
+            $.ajax({
+                type: "POST",
+                url: '/app/save',
+                data: { email: address, link: link },
+                dataType: 'json'
+            });
+        };
+
         return {
             engine: engine,
             searchBox: searchBox,
             onPageLoad: refresh,
-            onClickDelete: removeCourseItem
+            onClickDelete: removeCourseItem,
+            postLink: sendLink
         };
 
     });

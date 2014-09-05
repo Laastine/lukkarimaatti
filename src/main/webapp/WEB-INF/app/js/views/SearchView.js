@@ -16,6 +16,10 @@ define(['searchengine', 'eventcalendarview', 'text!templates/search.html'],
                 "click #deleteButton": "deleteCourse"
             },
 
+            sendLink: function (e) {
+                SearchEngine.postLink($(e.currentTarget).parent().children('#saveEmail').val());
+            },
+
             deleteCourse: function (e) {
                 var element = $(e.currentTarget).closest('tr');
                 SearchEngine.onClickDelete(element, element.attr('id'));
@@ -27,6 +31,7 @@ define(['searchengine', 'eventcalendarview', 'text!templates/search.html'],
                 this.$el.html(this.template({}));
                 SearchEngine.searchBox(calendar);
                 $('#courseSearchBox').focus();
+                $('#saveId').bind('click', this.sendLink);
                 return this;
             }
         });

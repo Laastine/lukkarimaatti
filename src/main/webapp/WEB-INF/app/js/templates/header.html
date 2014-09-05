@@ -10,16 +10,14 @@
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="">Home</a></li>
                         <li><a data-toggle="modal"
+                               href="#saveModal"
+                               id="saveModalButton">Save</a></li>
+                        <li><a data-toggle="modal"
                                href="#aboutModal"
                                id="aboutModalButton">About</a></li>
                         <li><a data-toggle="modal"
                                href="#contactModal"
                                id="contactModalButton">Contact</a></li>
-                        <!--
-                        <li><a data-toggle="modal"
-                               href="#saveModal"
-                               id="saveModalButton">Save</a></li>
-                               -->
                     </ul>
                 </div>
             </div>
@@ -49,10 +47,11 @@
                         project</a>
                     which uses Lukkarimaatti++ backend for course data.
                 </p>
+
                 <p>
                     <b>Few tips:</b><br/>
-                        -Click event and Lukkarimaatti++ removes event with same code and type e.g.(BM20A5800/H22).<br/>
-                        -Courses are listed under search bar and courses are linked to its Noppa (noppa.lut.fi) page.<br/>
+                    -Click event and Lukkarimaatti++ removes event with same code and type e.g.(BM20A5800/H22).<br/>
+                    -Courses are listed under search bar and courses are linked to its Noppa (noppa.lut.fi) page.<br/>
                 </p>
             </div>
             <div class="modal-footer">
@@ -97,11 +96,14 @@
             <div class="modal-body">
                 <form method="post" class="input-group-lg" action='save' id="saveForm">
                     <div class="row" style="padding-top: 5px; padding-left: 10px;">
-                        <input type="email" class="input-lg" id="saveEmail" placeholder="Email">
+                        <span>
+                            <p>Send course selection URL to your email.</p>
+                            <input type="email" class="input-lg" id="saveEmail" placeholder="Email">
+                            <button type="button" id="saveId" class="btn btn-default">Send</button>
+                        </span>
                     </div>
                     </br>
                     <div class="modal-footer">
-                        <button id="saveId" class="btn btn-default">Save</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </form>

@@ -21,7 +21,6 @@ require.config({
         'eventview': 'views/EventView',
         'headerview': 'views/HeaderView',
         'searchview': 'views/SearchView',
-        'emailsavemodel': 'models/EmailSaveModel',
         'eventmodel': 'models/EventModel'
     },
 

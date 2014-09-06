@@ -23,12 +23,10 @@ define([
             root: "/"
         };
 
-        var environment = 'http://83.136.252.198/lukkarimaatti';
-
         $.ajaxSetup({ cache: false });
 
         $.ajaxPrefilter(function (options) {
-            options.url = environment + options.url;
+            options.url = 'http://83.136.252.198/lukkarimaatti' + options.url;
         });
 
         app.eventAggregator = _.extend({}, Backbone.Events);

@@ -30,7 +30,9 @@ require.config({
         'bloodhound': { deps: ['jquery'], exports: 'Bloodhound' },
         'handlebars': { exports: 'Handlebars' },
         'fullcalendar': { deps: ['jquery'], exports: 'fullCalendar' }
-    }
+    },
+
+    urlArgs: "bust=0.8"
 });
 
 require(['js/main']);

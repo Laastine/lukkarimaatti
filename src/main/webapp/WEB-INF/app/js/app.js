@@ -1,3 +1,4 @@
+/* global define, Backbone, $, _ */
 define([
         "jquery",
         "underscore",

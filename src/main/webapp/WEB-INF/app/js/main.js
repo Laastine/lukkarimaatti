@@ -1,3 +1,4 @@
+/* global require, $, Backbone */
 require(['app', 'router'],
     function (app, WebRouter) {
         'use strict';

@@ -1,10 +1,12 @@
+/* global define, $, _, Backbone */
 define([
     "app",
     "eventmodel",
     "headerview",
+    "footerview",
     "eventcalendarview",
     "searchview"
-], function (app, EventModel, HeaderView, EventCalendarView, SearchView) {
+], function (app, EventModel, HeaderView, FooterView, EventCalendarView, SearchView) {
     'use strict';
 
     var WebRouter = Backbone.Router.extend({
@@ -22,6 +24,11 @@ define([
             if (!this.headerView) {
                 this.headerView = new HeaderView({});
                 this.headerView.setElement($(".header")).render();
+            }
+
+            if(!this.footerView) {
+                this.footerView = new FooterView({});
+                this.footerView.setElement($("#footer")).render();
             }
 
             if (this.currentView) { this.currentView.close(); }

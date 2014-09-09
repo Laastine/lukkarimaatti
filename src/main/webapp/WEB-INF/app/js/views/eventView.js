@@ -1,3 +1,4 @@
+/* global Backbone, _, $, define */
 define([
     'backbone',
     'fullcalendar'
@@ -29,7 +30,6 @@ define([
         },
 
         synchronizeIntoCalendar: function () {
-            console.log('synchronizeIntoCalendar');
             var event = this.calendarEvent || (this.calendarEvent = { element: null });
             event.id = this.model.cid;
             event.start = this.model.get('startDate');

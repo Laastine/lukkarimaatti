@@ -1,3 +1,4 @@
+/* global Backbone, _, $, define */
 define([
     'backbone',
     'fullcalendar',

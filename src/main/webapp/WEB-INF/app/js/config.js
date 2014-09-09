@@ -1,3 +1,4 @@
+/* global require */
 require.config({
     baseUrl: '/lukkarimaatti/app/dist',
 
@@ -21,7 +22,8 @@ require.config({
         'eventview': 'views/EventView',
         'headerview': 'views/HeaderView',
         'searchview': 'views/SearchView',
-        'eventmodel': 'models/EventModel'
+        'eventmodel': 'models/EventModel',
+        "footerview": 'views/FooterView'
     },
 
     shim: {
@@ -32,7 +34,7 @@ require.config({
         'fullcalendar': { deps: ['jquery'], exports: 'fullCalendar' }
     },
 
-    urlArgs: "bust=0.8"
+    urlArgs: "bust=0.8.1"
 });
 
 require(['js/main']);

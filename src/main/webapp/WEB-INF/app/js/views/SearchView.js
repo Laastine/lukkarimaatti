@@ -1,3 +1,4 @@
+/* global define, Backbone, $, _ */
 define(['searchengine', 'eventcalendarview', 'text!templates/search.html'],
     function ( SearchEngine, EventCalendarView, searchTemplate) {
         'use strict';

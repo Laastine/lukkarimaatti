@@ -1,3 +1,4 @@
+/* global define, $, _, moment, Handlebars, Bloodhound, console */
 define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!templates/loadModal.html', 'typeahead'],
     function ($, _, moment, Handlebars, Bloodhound, loadModal) {
         'use strict';

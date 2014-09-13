@@ -82,12 +82,12 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
         };
 
         var removeUrlParameter = function (id) {
-            var url = window.location.search;
-            var updatedParams = url.substring(1, url.length).split('+').filter(function (p) {
+            var params = window.location.search;
+            var updatedParams = params.substring(1, params.length).split('+').filter(function (p) {
                 return p !== id;
             });
             if (updatedParams.length > 0) {
-                history.pushState({}, "", "index.html?" + updatedParams.join().replace(',', '+'));
+                history.pushState({}, "", "index.html?" + updatedParams.join('+'));
             } else {
                 history.pushState({}, "", "index.html");
             }

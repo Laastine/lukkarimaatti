@@ -6,7 +6,7 @@
     <appender name="rolling" class="org.apache.log4j.RollingFileAppender">
         <param name="file" value="logs/lukkarimaatti.log"/>
         <param name="MaxFileSize" value="1MB"/>
-        <param name="MaxBackupIndex" value="10"/>
+        <param name="MaxBackupIndex" value="30"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="[%p] %d %c %M - %m%n"/>
         </layout>

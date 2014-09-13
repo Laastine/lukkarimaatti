@@ -16,14 +16,16 @@ jettyRun {
 }
 
 war {
-    exclude('WEB-INF/app/tests',
+    exclude('WEB-INF/app/test',
             'WEB-INF/app/css',
             'WEB-INF/app/js',
             'WEB-INF/app/res',
             'WEB-INF/app/build',
             'WEB-INF/app/dist/build',
-            'WEB-INF/app/dist/tests',
-            'WEB-INF/app/dist/build.txt'
+            'WEB-INF/app/dist/test',
+            'WEB-INF/app/dist/build.txt',
+            'WEB-INF/app/dist/.bowerrc',
+            'WEB-INF/app/dist/component.json'
     )
 }
 

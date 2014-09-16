@@ -1,6 +1,14 @@
-/* global require */
-require.config({
-    baseUrl: '/lukkarimaatti/app/dist',
+var tests = [];
+for (var file in window.__karma__.files) {
+
+    if (/Spec\.js$/.test(file)) {
+        tests.push(file.replace(/^\/base\//, 'http://localhost:9876/base/'));
+    }
+}
+
+requirejs.config({
+    // Karma serves files from '/base'
+    baseUrl: 'http://localhost:9876/base/app/js/',
 
     paths: {
         'jquery': 'lib/jquery/dist/jquery',
@@ -34,8 +42,10 @@ require.config({
         'fullcalendar': { deps: ['jquery'], exports: 'fullCalendar' }
     },
 
-    urlArgs: "bust=0.8.4.1"
-});
+    // ask Require.js to load these files (all our tests)
+    deps: tests,
 
-require(['js/main']);
+    // start test run, once Require.js is done
+    callback: window.__karma__.start
+});
 

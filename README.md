@@ -40,7 +40,7 @@ Gradle for building a package.<br>
 <h3>Testing</h3>
 <b>Front end</b> testing with Karma+Jasmine+Node.js.<br>
 Requires: Node.js with modules:<br>
-karma, karma-cli, karma-junit-reporter karma-phantomjs-launcher, phantomjs<br>
+karma, karma-cli, karma-requirejs karma-jasmine<br>
 <i>karma start karma.conf.js</i><br>
 <b>Back end:</b><br>
 <i>gradle test</i> - for running unit tests<br>

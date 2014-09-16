@@ -10,7 +10,7 @@ define(['searchengine', 'eventcalendarview', 'text!templates/search.html'],
             initialize: function() {
                 _.bindAll(this, 'render');
                 SearchEngine.engine.initialize();
-                SearchEngine.onPageLoad(calendar);
+                SearchEngine.refresh(calendar);
             },
 
             events: {
@@ -18,12 +18,12 @@ define(['searchengine', 'eventcalendarview', 'text!templates/search.html'],
             },
 
             sendLink: function (e) {
-                SearchEngine.postLink($(e.currentTarget).parent().children('#saveEmail').val());
+                SearchEngine.sendLink($(e.currentTarget).parent().children('#saveEmail').val());
             },
 
             deleteCourse: function (e) {
                 var element = $(e.currentTarget).closest('tr');
-                SearchEngine.onClickDelete(element, element.attr('id'));
+                SearchEngine.removeCourseItem(element, element.attr('id'));
                 calendar.removeEvent(element.attr('id'));
             },
 

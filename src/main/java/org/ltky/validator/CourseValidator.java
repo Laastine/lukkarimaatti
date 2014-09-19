@@ -1,6 +1,7 @@
 package org.ltky.validator;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.ltky.model.Course;
 
 /**
@@ -10,25 +11,22 @@ import org.ltky.model.Course;
  * Date: 6.1.2014
  */
 public class CourseValidator {
-    private CourseValidator() {
-    }
-
-    ;
+    private static final Logger LOGGER = Logger.getLogger(CourseValidator.class);
 
     public static boolean validateCourse(Course course) {
-        if (StringUtils.isBlank(course.getCourseCode()) | !investigateLength(course.getCourseCode(), 32)) {
+        if (StringUtils.isBlank(course.getCourseCode()) || !investigateLength(course.getCourseCode(), 32)) {
             return false;
         }
-        if (StringUtils.isBlank(course.getCourseName()) | !investigateLength(course.getCourseName(), 256)) {
+        if (StringUtils.isBlank(course.getCourseName()) || !investigateLength(course.getCourseName(), 256)) {
             return false;
         }
-        if (course.getWeekNumber() == null | !investigateLength(course.getWeekNumber(), 128)) {
+        if (course.getWeekNumber() == null || !investigateLength(course.getWeekNumber(), 128)) {
             return false;
         }
         if (!investigateLength(course.getWeekDay(), 4)) {
             return false;
         }
-        if (course.getTimeOfDay() == null | !investigateLength(course.getTimeOfDay(), 32)) {
+        if (course.getTimeOfDay() == null || !investigateLength(course.getTimeOfDay(), 32)) {
             return false;
         }
         if (!investigateLength(course.getClassroom(), 64)) {

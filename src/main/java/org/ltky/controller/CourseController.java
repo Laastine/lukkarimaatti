@@ -23,7 +23,7 @@ import java.util.List;
 @RequestMapping("/rest")
 public class CourseController {
     private static final int MIN = 3;
-    private static final Util UTIL = new Util();
+    private final Util UTIL = Util.getInstance();
     @Autowired
     private CourseDao courseDao;
 

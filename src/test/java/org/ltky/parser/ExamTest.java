@@ -18,7 +18,7 @@ import java.io.IOException;
  * Date: 20.4.2014
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"/hibernate/hibernateConfig.xml"})
+@ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/dispatcher-servlet.xml"})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class ExamTest {
     private static final Logger LOGGER = Logger.getLogger(ExamTest.class);
@@ -33,7 +33,7 @@ public class ExamTest {
         }
     }
 
-    @Test
+    //@Test
     public void saveExamsTest() {
         try {
             new ExamTask().saveExamsToDB();

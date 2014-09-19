@@ -17,6 +17,7 @@ public class URLParser {
     private static final Logger LOGGER = Logger.getLogger(URLParser.class);
     private static final String prefix = "https://uni.lut.fi";
     private final ParserConfiguration parserConfiguration = ParserConfiguration.getInstance();
+    private final Util UTIL = Util.getInstance();
 
     /**
      * Parse each departments url
@@ -46,7 +47,7 @@ public class URLParser {
 
     public String fetchExamURL() throws IOException {
         final String examURL = parserConfiguration.getExamURL();
-        new Util().writeToFile(fetchFromWeb(examURL), "test.txt");
+        UTIL.writeToFile(fetchFromWeb(examURL), "test.txt");
         return prefix + StringUtils.substringBetween(fetchFromWeb(examURL), parserConfiguration.getExamStartTag(), parserConfiguration.getExamEndTag());
     }
 

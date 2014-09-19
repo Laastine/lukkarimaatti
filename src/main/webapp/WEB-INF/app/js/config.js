@@ -1,6 +1,6 @@
 /* global require */
 require.config({
-    baseUrl: '/lukkarimaatti/app/dist',
+    baseUrl: '/lukkarimaatti/app/js',
 
     paths: {
         'jquery': 'lib/jquery/dist/jquery',
@@ -37,5 +37,5 @@ require.config({
     urlArgs: "bust=0.8.4.1"
 });
 
-require(['js/main']);
+require(['main']);
 

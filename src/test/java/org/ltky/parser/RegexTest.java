@@ -8,6 +8,7 @@ import org.ltky.util.CoursePattern;
 import org.ltky.util.Util;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * lukkarimaatti
@@ -16,10 +17,10 @@ import java.util.ArrayList;
  * Date: 16.1.2014
  */
 public class RegexTest {
-    private final Util util = new Util();
+    private final Util UTIL = Util.getInstance();
     private final CoursePattern coursePattern = new CoursePattern();
     private static final Logger LOGGER = Logger.getLogger(RegexTest.class);
-    private final ArrayList<String> list = new ArrayList<>();
+    private final List<String> list = new ArrayList<>();
 
     @Before
     public void init() {
@@ -34,7 +35,7 @@ public class RegexTest {
     public void simpleTest() {
         init();
         for (String s : list) {
-            LOGGER.debug("\n"+s+" = \n"+ util.extractPattern(s, coursePattern.getWeekNumber())+"\n");
+            LOGGER.debug("\n"+s+" = \n"+ UTIL.extractPattern(s, coursePattern.getWeekNumber())+"\n");
         }
         Assert.assertTrue(true);
     }

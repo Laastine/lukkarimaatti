@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * lukkarimaatti
@@ -92,10 +93,14 @@ public class ExamParser {
      * @param set
      */
     private Set<Exam> parseExamData(List<String> set) throws UnsupportedEncodingException {
-        Exam exam = new Exam();
         final Set<Exam> examList = new HashSet();
-        LOGGER.debug("set size=" + set.size());
-        for (String examElement : set) {
+        examList.addAll(set.stream().map(e -> parseExam(e)).collect(Collectors.toList()));
+        return examList;
+    }
+
+    private Exam parseExam(String examElement) {
+        Exam exam = new Exam();
+        try {
             final String courseCode = new String(StringUtils.split(examElement, " ")[0].getBytes("cp1252"), "UTF-8");
             if (!StringUtils.isBlank(courseCode)) {
                 exam.setCourseCode(StringUtils.trim(courseCode));
@@ -110,12 +115,13 @@ public class ExamParser {
                     }
                     if (!StringUtils.isBlank(StringUtils.substringBeforeLast(examTimes, ",")))
                         exam.setExamTimes(new String(examTimes.getBytes("cp1252"), "UTF-8"));
-                    examList.add(exam);
                 }
-                exam = new Exam();
             }
+        } catch (UnsupportedEncodingException e) {
+            LOGGER.error("Encoding conversion error ", e);
         }
-        return examList;
+
+        return exam;
     }
 
     /**

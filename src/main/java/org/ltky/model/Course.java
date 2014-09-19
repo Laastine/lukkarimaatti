@@ -1,11 +1,13 @@
 package org.ltky.model;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.hibernate.annotations.Immutable;
 
-import javax.persistence.*;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import java.io.Serializable;
 
 /**
@@ -14,48 +16,34 @@ import java.io.Serializable;
  * User: laastine
  * Date: 27.11.2013
  */
-@XmlRootElement
 @Entity
-@Immutable
 @Table(name = "COURSE")
 public class Course implements Serializable {
     @Id
     @Column(name = "COURSE_ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @XmlElement(name = "courseId")
     private Integer courseId;
     @Column(name = "COURSE_CODE", nullable = false)
-    @XmlElement(name = "courseCode")
     private String courseCode;
     @Column(name = "COURSE_NAME", nullable = false)
-    @XmlElement(name = "courseName")
     private String courseName;
     @Column(name = "PERIOD")
-    @XmlElement(name = "period")
     private String period = "";
     @Column(name = "WEEK")
-    @XmlElement(name = "weekNumber")
     private String weekNumber;
     @Column(name = "WEEK_DAY")
-    @XmlElement(name = "weekDay")
     private String weekDay;
     @Column(name = "TIME_OF_DAY")
-    @XmlElement(name = "timeOfDay")
     private String timeOfDay;
     @Column(name = "CLASSROOM")
-    @XmlElement(name = "classroom")
     private String classroom = "";
     @Column(name = "TYPE")
-    @XmlElement(name = "type")
     private String type;
     @Column(name = "DEPARTMENT")
-    @XmlElement(name = "department")
     private String department;
     @Column(name = "TEACHER")
-    @XmlElement(name = "teacher")
     private String teacher;
     @Column(name = "MISC")
-    @XmlElement(name = "misc")
     private String misc;
 
     public Integer getCourseId() {

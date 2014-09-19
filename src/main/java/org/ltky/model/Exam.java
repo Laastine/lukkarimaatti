@@ -1,11 +1,8 @@
 package org.ltky.model;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.hibernate.annotations.Immutable;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * lukkarimaatti
@@ -13,24 +10,18 @@ import javax.xml.bind.annotation.XmlRootElement;
  * User: laastine
  * Date: 20.4.2014
  */
-@XmlRootElement
 @Entity
-@Immutable
 @Table(name = "EXAM")
 public class Exam {
     @Id
     @Column(name = "EXAM_ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @XmlElement(name = "examId")
     private Integer examId;
     @Column(name = "COURSE_CODE", nullable = false)
-    @XmlElement(name = "courseCode")
     private String courseCode;
     @Column(name = "COURSE_NAME", nullable = false)
-    @XmlElement(name = "courseName")
     private String courseName;
     @Column(name = "EXAM_TIMES")
-    @XmlElement(name = "examTimes")
     private String examTimes;
 
     public Integer getExamId() {

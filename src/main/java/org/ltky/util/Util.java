@@ -22,6 +22,14 @@ import java.util.stream.Collectors;
  */
 public class Util {
     private static final Logger LOGGER = Logger.getLogger(Util.class);
+    private static Util instance;
+
+    public static Util getInstance() {
+        if (instance == null) {
+            instance = new Util();
+        }
+        return instance;
+    }
 
     /**
      * Extract certain pattern from given string

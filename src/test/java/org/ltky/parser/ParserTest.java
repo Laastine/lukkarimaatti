@@ -20,13 +20,13 @@ import java.util.regex.Pattern;
  */
 public class ParserTest {
     private static final Logger LOGGER = Logger.getLogger(ParserTest.class);
-    private Util util;
+    private Util UTIL;
     private ParserConfiguration config;
     private URLParser parser;
 
     @Before
     public void init() {
-        util = new Util();
+        UTIL = Util.getInstance();
         config = ParserConfiguration.getInstance();
         parser = new URLParser();
     }
@@ -75,15 +75,15 @@ public class ParserTest {
         final String t5 = "40-41, 43-49", res5 = "40,41,43,44,45,46,47,48,49";
         final String t6 = "35-37", res6 = "35,36,37";
         final String t7 = "42, 50, 9, 19", res7 = "9,19,42,50";
-        Assert.assertTrue(res1.equals(util.processWeekNumbers(t1)));
-        Assert.assertTrue(res2.equals(util.processWeekNumbers(t2)));
-        Assert.assertTrue(res3.equals(util.processWeekNumbers(t3)));
-        Assert.assertTrue(res4.equals(util.processWeekNumbers(t4)));
-        Assert.assertTrue(res5.equals(util.processWeekNumbers(t5)));
-        Assert.assertTrue(res6.equals(util.processWeekNumbers(t6)));
-        Assert.assertTrue(res7.equals(util.processWeekNumbers(t7)));
-        Assert.assertFalse(res7.equals(util.processWeekNumbers(t1)));
-        Assert.assertFalse(res5.equals(util.processWeekNumbers(t1)));
+        Assert.assertTrue(res1.equals(UTIL.processWeekNumbers(t1)));
+        Assert.assertTrue(res2.equals(UTIL.processWeekNumbers(t2)));
+        Assert.assertTrue(res3.equals(UTIL.processWeekNumbers(t3)));
+        Assert.assertTrue(res4.equals(UTIL.processWeekNumbers(t4)));
+        Assert.assertTrue(res5.equals(UTIL.processWeekNumbers(t5)));
+        Assert.assertTrue(res6.equals(UTIL.processWeekNumbers(t6)));
+        Assert.assertTrue(res7.equals(UTIL.processWeekNumbers(t7)));
+        Assert.assertFalse(res7.equals(UTIL.processWeekNumbers(t1)));
+        Assert.assertFalse(res5.equals(UTIL.processWeekNumbers(t1)));
     }
 
     @Test
@@ -109,7 +109,7 @@ public class ParserTest {
         res.add("d");
         res.add("e");
         res.add("i");
-        Assert.assertTrue(res.size() == util.removeDuplicates(list).size());
+        Assert.assertTrue(res.size() == UTIL.removeDuplicates(list).size());
         Assert.assertTrue(res.contains("a"));
         Assert.assertTrue(res.contains("b"));
         Assert.assertTrue(res.contains("c"));

@@ -20,7 +20,7 @@ public class ExamTask {
 
     public void saveExamsToDB() {
         try {
-            new ExamHtmlParser().parseExams().forEach(examDao::saveOrUpdate);
+            new ExamHtmlParser().parseExams().forEach(examDao::save);
         } catch (Exception e) {
             LOGGER.error("Exam parser error", e);
         }

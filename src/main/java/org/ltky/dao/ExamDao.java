@@ -1,9 +1,11 @@
 package org.ltky.dao;
 
-import org.ltky.model.Exam;
+import org.ltky.dao.model.Exam;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -13,13 +15,11 @@ import java.util.List;
  * Date: 20.4.2014
  */
 @Component
-@Transactional
-public interface ExamDao {
-    void saveOrUpdate(Exam exam);
+public interface ExamDao extends CrudRepository<Exam, Long>, QueryDslPredicateExecutor<Exam> {
 
-    void delete();
-
+    @Query("SELECT E.courseName, E.courseCode, E.examTimes FROM Exam E WHERE lower(E.courseName) = lower(:courseName)")
     List<Exam> findByExamName(String courseName);
 
+    @Query("SELECT E.courseName, E.courseCode, E.examTimes FROM Exam E WHERE lower(E.courseName) like lower(:courseName)")
     List<Exam> findExamNames(String courseName);
 }

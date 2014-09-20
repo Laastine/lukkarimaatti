@@ -1,35 +1,40 @@
 package org.ltky.dao;
 
-import org.ltky.model.Course;
+import org.ltky.dao.model.Course;
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 /**
- * parser
+ * CourseDao
  * Created with IntelliJ IDEA.
  * User: laastine
  * Date: 27.11.2013
  */
 @Component
-@Transactional
-public interface CourseDao {
-    void saveOrUpdate(Course course);
+public interface CourseDao extends CrudRepository<Course, Long>, QueryDslPredicateExecutor<Course> {
+    @Query("SELECT c FROM Course c WHERE courseCode = :searchTerm")
+    public List findByCourseCode(@Param("searchTerm") String searchTerm);
 
-    void delete();
+    @Query("SELECT DISTINCT(c.courseCode) FROM Course c WHERE courseCode like :searchTerm")
+    public List<String> findCourseCodes(@Param("searchTerm") String searchTerm);
 
-    List findByCourseCode(String courseCode);
+    @Query("SELECT c FROM Course c WHERE lower(c.courseName) = :searchTerm")
+    public List<Course> findByCourseName(@Param("searchTerm") String searchTerm);
 
-    List<String> findCourseCodes(String code);
+    @Query("SELECT c.courseName FROM Course c WHERE lower(c.courseName) like %:searchTerm%")
+    public List<Course> findCourseNames(@Param("searchTerm") String searchTerm);
 
-    List<Course> findByCourseName(String courseName);
+    @Query("SELECT c FROM Course c WHERE LOWER(c.courseName) LIKE %:searchTerm%")
+    public List<Course> findCourseNamesAndCodes(@Param("searchTerm") String searchTerm);
 
-    List<Course> findCourseNames(String courseName);
+    @Query("SELECT c FROM Course c WHERE lower(c.department) = :searchTerm")
+    public List<Course> findByDepartment(@Param("searchTerm") String searchTerm);
 
-    List<Course> findCourseNamesAndCodes(String courseName);
-
-    List<Course> findByDepartment(String department);
-
-    List<String> findAllCourseNames();
+    @Query("SELECT c.courseName FROM Course c")
+    public List<String> findAllCourseNames();
 }

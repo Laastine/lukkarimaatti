@@ -18,7 +18,8 @@ public class CourseTask {
     private static final Logger LOGGER = Logger.getLogger(CourseTask.class);
     private String department;
     private String departmentData;
-    @Autowired(required = true)
+
+    @Autowired
     private CourseDao courseDao;
 
     public void parse(String department, String departmentData) {
@@ -31,7 +32,7 @@ public class CourseTask {
 
     private void saveCourseToDB() {
         try {
-            (new CourseHtmlParser(department).parse(departmentData)).stream().filter(newCourse -> CourseValidator.validateCourse(newCourse)).forEach(courseDao::saveOrUpdate);
+            (new CourseHtmlParser(department).parse(departmentData)).stream().filter(newCourse -> CourseValidator.validateCourse(newCourse)).forEach(courseDao::save);
         } catch (Exception e) {
             LOGGER.error("HtmlParser error", e);
         }

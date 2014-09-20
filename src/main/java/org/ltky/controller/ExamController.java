@@ -2,7 +2,7 @@ package org.ltky.controller;
 
 import org.apache.log4j.Logger;
 import org.ltky.dao.ExamDao;
-import org.ltky.model.Exam;
+import org.ltky.dao.model.Exam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +22,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/exam")
 public class ExamController {
+
     private static final Logger LOGGER = Logger.getLogger(ExamController.class);
     private static final int MIN = 3;
     @Autowired

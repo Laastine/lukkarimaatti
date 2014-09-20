@@ -2,7 +2,7 @@ package org.ltky.task;
 
 import org.apache.log4j.Logger;
 import org.ltky.dao.CourseDao;
-import org.ltky.parser.HtmlParser;
+import org.ltky.parser.CourseHtmlParser;
 import org.ltky.validator.CourseValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -31,7 +31,7 @@ public class CourseTask {
 
     private void saveCourseToDB() {
         try {
-            (new HtmlParser(department).parse(departmentData)).stream().filter(newCourse -> CourseValidator.validateCourse(newCourse)).forEach(courseDao::saveOrUpdate);
+            (new CourseHtmlParser(department).parse(departmentData)).stream().filter(newCourse -> CourseValidator.validateCourse(newCourse)).forEach(courseDao::saveOrUpdate);
         } catch (Exception e) {
             LOGGER.error("HtmlParser error", e);
         }

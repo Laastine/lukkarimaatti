@@ -2,7 +2,7 @@ package org.ltky.task;
 
 import org.apache.log4j.Logger;
 import org.ltky.dao.ExamDao;
-import org.ltky.parser.ExamParser;
+import org.ltky.parser.ExamHtmlParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +20,7 @@ public class ExamTask {
 
     public void saveExamsToDB() {
         try {
-            new ExamParser().parseExams().forEach(examDao::saveOrUpdate);
+            new ExamHtmlParser().parseExams().forEach(examDao::saveOrUpdate);
         } catch (Exception e) {
             LOGGER.error("Exam parser error", e);
         }

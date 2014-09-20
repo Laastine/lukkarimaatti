@@ -4,7 +4,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.ltky.model.Course;
 import org.ltky.util.CoursePattern;
@@ -23,24 +22,24 @@ import java.util.List;
  * User: laastine
  * Date: 28.11.2013
  */
-public class HtmlParser {
-    private static final Logger LOGGER = Logger.getLogger(HtmlParser.class);
+public class CourseHtmlParser {
+    private static final Logger LOGGER = Logger.getLogger(CourseHtmlParser.class);
     private static final String UNKNOWN = "?";
     private final String department;
     private final ParserConfiguration config = ParserConfiguration.getInstance();
     private final Util UTIL = Util.getInstance();
     private final CoursePattern coursePattern = new CoursePattern();
 
-    public HtmlParser(String department) {
+    public CourseHtmlParser(String department) {
         this.department = department;
     }
 
     public List<Course> parse(String url) throws IOException {
-        return parseElementData(getTableElements(getUrlData(url)));
+        return parseElementsData(getTableElements(getUrlData(url)));
     }
 
     public List<Course> parseHTMLData(String html) throws IOException {
-        return parseElementData(getTableElements(Jsoup.parse(html)));
+        return parseElementsData(getTableElements(Jsoup.parse(html)));
     }
 
     /**
@@ -85,31 +84,28 @@ public class HtmlParser {
      * @return
      * @throws UnsupportedEncodingException
      */
-    private List parseElementData(Elements tableRowElements) {
+    private List parseElementsData(Elements tableRowElements) {
         final List<Course> resultList = new ArrayList();
-        for (Element el : tableRowElements) {
-            Elements rowItems = el.select("td");
-            rowItems.stream()
-                    .forEach(e -> {
-                        Course course = parseTableElement(rowItems);
-                        if (CourseValidator.validateCourse(course)) {
-                            resultList.add(course);
-                        }
-                    });
-        }
+        tableRowElements.stream().forEach(t -> {
+            Elements rowItems = t.select("td");
+            Course course = parseTableElement(rowItems);
+            if (CourseValidator.validateCourse(course)) {
+                resultList.add(course);
+            }
+        });
         return resultList;
     }
 
     private Course parseTableElement(Elements rowItems) {
         Course course = new Course();
-        for (int elem = 0; elem < rowItems.size(); elem++) {
+        for (int elementIndex = 0; elementIndex < rowItems.size(); elementIndex++) {
             try {
-                String item = new String(rowItems.get(elem).text().getBytes("cp1252"), "UTF-8").trim();
+                String item = new String(rowItems.get(elementIndex).text().getBytes("cp1252"), "UTF-8").trim();
                 course.setDepartment(department);
                 if (!course.getDepartment().equals("kike")) {
-                    course = parseNormalCourse(course, rowItems, elem, item);
+                    course = parseNormalCourse(course, rowItems, elementIndex, item);
                 } else {
-                    course = parseLanguageLabCourse(course, rowItems, elem, item);
+                    course = parseLanguageLabCourse(course, rowItems, elementIndex, item);
                 }
             } catch (UnsupportedEncodingException e) {
                 LOGGER.error("Encoding conversion error ", e);
@@ -118,7 +114,7 @@ public class HtmlParser {
         return course;
     }
 
-    private Course parseNormalCourse(Course course, Elements rowItems, int elem, String item) throws UnsupportedEncodingException {
+    private Course parseNormalCourse(Course course, Elements rowItems, Integer elem, String item) throws UnsupportedEncodingException {
         if (StringUtils.isBlank(item)) {
             return course;
         }

@@ -25,15 +25,15 @@ public class ExamTest {
 
     @Test
     public void testDepartmentData() {
-        final ExamParser examParser = new ExamParser();
+        final ExamHtmlParser examHtmlParser = new ExamHtmlParser();
         try {
-            examParser.parseExams();
+            examHtmlParser.parseExams();
         } catch (IOException e) {
             LOGGER.error("Exam parse error", e);
         }
     }
 
-    //@Test
+    @Test
     public void saveExamsTest() {
         try {
             new ExamTask().saveExamsToDB();

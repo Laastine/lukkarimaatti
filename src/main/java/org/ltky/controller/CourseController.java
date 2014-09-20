@@ -25,7 +25,6 @@ import java.util.List;
 @RequestMapping("/rest")
 public class CourseController {
     private static final int MIN = 2;
-    private final Util UTIL = Util.getInstance();
     private static final Logger LOGGER = Logger.getLogger(CourseController.class);
     @Autowired
     private CourseDao courseDao;
@@ -41,22 +40,22 @@ public class CourseController {
     public
     @ResponseBody
     final List<String> getLikeCourseCodes(@PathVariable String codes) {
-        return UTIL.removeDuplicates(courseDao.findCourseCodes(codes));
+        return courseDao.findCourseCodes(codes);
     }
 
     @RequestMapping(value = "/name/{courseName}", method = RequestMethod.GET)
     public
     @ResponseBody
     final List<Course> getCourseName(@PathVariable String courseName) {
-        return courseDao.findByCourseName(courseName);
+        return courseDao.findByCourseName(courseName.toLowerCase());
     }
 
     @RequestMapping(value = "/names/{courseNames}", method = RequestMethod.GET)
     public
     @ResponseBody
     List<Course> getCourseNames(@PathVariable String courseNames) {
-        if (courseNames.length() > MIN) {
-            return courseDao.findCourseNames(courseNames);
+        if (courseNames.length() >= MIN) {
+            return courseDao.findCourseNames(courseNames.toLowerCase());
         } else {
             return new ArrayList<>();
         }

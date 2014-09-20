@@ -10,30 +10,30 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * parser
+ * CourseDao
  * Created with IntelliJ IDEA.
  * User: laastine
  * Date: 27.11.2013
  */
 @Component
 public interface CourseDao extends CrudRepository<Course, Long>, QueryDslPredicateExecutor<Course> {
-    @Query("SELECT c FROM Course c WHERE courseCode = :courseCode")
-    public List findByCourseCode(@Param("courseCode") String courseCode);
+    @Query("SELECT c FROM Course c WHERE courseCode = :searchTerm")
+    public List findByCourseCode(@Param("searchTerm") String searchTerm);
 
-    @Query("SELECT c.courseCode FROM Course c WHERE c.courseCode like :courseCode")
-    public List<String> findCourseCodes(String code);
+    @Query("SELECT DISTINCT(c.courseCode) FROM Course c WHERE courseCode like :searchTerm")
+    public List<String> findCourseCodes(@Param("searchTerm") String searchTerm);
 
-    @Query("SELECT c FROM Course c WHERE c.courseName = :courseName")
-    public List<Course> findByCourseName(@Param("courseName") String courseName);
+    @Query("SELECT c FROM Course c WHERE lower(c.courseName) = :searchTerm")
+    public List<Course> findByCourseName(@Param("searchTerm") String searchTerm);
 
-    @Query("SELECT c.courseName FROM Course c WHERE lower(c.courseName) like lower(:courseName)")
-    public List<Course> findCourseNames(@Param("courseName") String courseName);
+    @Query("SELECT c.courseName FROM Course c WHERE lower(c.courseName) like %:searchTerm%")
+    public List<Course> findCourseNames(@Param("searchTerm") String searchTerm);
 
-    @Query("SELECT c FROM Course c WHERE LOWER(c.courseName) LIKE %:courseName% ")
-    public List<Course> findCourseNamesAndCodes(@Param("courseName") String courseName);
+    @Query("SELECT c FROM Course c WHERE LOWER(c.courseName) LIKE %:searchTerm%")
+    public List<Course> findCourseNamesAndCodes(@Param("searchTerm") String searchTerm);
 
-    @Query("SELECT c FROM Course c WHERE department = :department")
-    public List<Course> findByDepartment(@Param("department") String department);
+    @Query("SELECT c FROM Course c WHERE lower(c.department) = :searchTerm")
+    public List<Course> findByDepartment(@Param("searchTerm") String searchTerm);
 
     @Query("SELECT c.courseName FROM Course c")
     public List<String> findAllCourseNames();

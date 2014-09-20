@@ -22,3 +22,4 @@ src/main/webapp/WEB-INF/app/dist/
 src/main/webapp/WEB-INF/app/test/node_modules/
 src/main/resources/properties/parser.properties
 src/main/webapp/WEB-INF/node_modules/
+src/main/generated/

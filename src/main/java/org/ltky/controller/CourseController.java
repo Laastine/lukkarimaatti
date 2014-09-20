@@ -1,7 +1,8 @@
 package org.ltky.controller;
 
+import org.apache.log4j.Logger;
 import org.ltky.dao.CourseDao;
-import org.ltky.model.Course;
+import org.ltky.dao.model.Course;
 import org.ltky.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * lukkarimaatti
  * Created with IntelliJ IDEA.
@@ -22,8 +24,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/rest")
 public class CourseController {
-    private static final int MIN = 3;
-    private final Util UTIL = Util.getInstance();
+    private static final int MIN = 2;
+    private static final Logger LOGGER = Logger.getLogger(CourseController.class);
     @Autowired
     private CourseDao courseDao;
 
@@ -38,22 +40,22 @@ public class CourseController {
     public
     @ResponseBody
     final List<String> getLikeCourseCodes(@PathVariable String codes) {
-        return UTIL.removeDuplicates(courseDao.findCourseCodes(codes));
+        return courseDao.findCourseCodes(codes);
     }
 
     @RequestMapping(value = "/name/{courseName}", method = RequestMethod.GET)
     public
     @ResponseBody
     final List<Course> getCourseName(@PathVariable String courseName) {
-        return courseDao.findByCourseName(courseName);
+        return courseDao.findByCourseName(courseName.toLowerCase());
     }
 
     @RequestMapping(value = "/names/{courseNames}", method = RequestMethod.GET)
     public
     @ResponseBody
     List<Course> getCourseNames(@PathVariable String courseNames) {
-        if (courseNames.length() > MIN) {
-            return courseDao.findCourseNames(courseNames);
+        if (courseNames.length() >= MIN) {
+            return courseDao.findCourseNames(courseNames.toLowerCase());
         } else {
             return new ArrayList<>();
         }
@@ -63,8 +65,9 @@ public class CourseController {
     public
     @ResponseBody
     final List<Course> getCourseNamesWithCode(@PathVariable String courseNamesandCodes) {
-        if (courseNamesandCodes.length() > MIN) {
-            return courseDao.findCourseNamesAndCodes(courseNamesandCodes);
+        if (courseNamesandCodes.length() >= MIN) {
+            LOGGER.info("RESULTS"+courseDao.findCourseNamesAndCodes(courseNamesandCodes.toLowerCase()));
+            return courseDao.findCourseNamesAndCodes(courseNamesandCodes.toLowerCase());
         } else {
             return new ArrayList<>();
         }

@@ -46,7 +46,7 @@ public class TaskConfigurer {
 
     public void setUpRunners() {
         getLinks();
-        courseDao.delete();      //clean old courses
+        courseDao.deleteAll();      //clean old courses
         for (Map.Entry<String, String> entry : map.entrySet()) {
             ((Runnable) () -> courseTask.parse(entry.getKey(), entry.getValue())).run();
         }
@@ -61,7 +61,7 @@ public class TaskConfigurer {
     @Scheduled(cron = "0 0 5 * * *")
     public void updateExamDataCronJob() {
         LOGGER.info("exam data update cron task");
-        examDao.delete();
+        examDao.deleteAll();
         examTask.saveExamsToDB();
     }
 }

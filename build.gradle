@@ -9,6 +9,18 @@ repositories {
     mavenCentral()
 }
 
+sourceSets {
+    generated {
+        java {
+            srcDirs = ['src/main/generated']
+        }
+    }
+}
+
+configurations {
+    querydslapt
+}
+
 jettyRun {
     httpPort = 8085
     reload = 'automatic'
@@ -32,6 +44,37 @@ war {
     )
 }
 
+task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates the QueryDSL query types') {
+    source = sourceSets.main.java
+    classpath = configurations.compile + configurations.querydslapt
+    options.compilerArgs = [
+            "-proc:only",
+            "-processor", "com.mysema.query.apt.jpa.JPAAnnotationProcessor"
+    ]
+    destinationDir = sourceSets.generated.java.srcDirs.iterator().next()
+}
+
+idea {
+    module {
+        sourceDirs += file('src/main/generated')
+    }
+}
+
+clean {
+    delete sourceSets.generated.java.srcDirs
+}
+
+compileJava {
+    dependsOn generateQueryDSL
+    source generateQueryDSL.destinationDir
+}
+
+compileGeneratedJava {
+    dependsOn generateQueryDSL
+    options.warnings = false
+    classpath += sourceSets.main.runtimeClasspath
+}
+
 test {
     testLogging.showStandardStreams = true
     testLogging {
@@ -49,23 +92,22 @@ dependencies {
             'commons-io:commons-io:2.4',
             'cglib:cglib:3.1',
             'asm:asm:3.3.1',
-            "org.springframework:spring-core:$springVersion",
-            "org.springframework:spring-web:$springVersion",
-            "org.springframework:spring-webmvc:$springVersion",
-            "org.springframework:spring-orm:$springVersion",
-            "org.springframework:spring-beans:$springVersion",
+            "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final",
+            "org.hibernate:hibernate-entitymanager:4.3.6.Final", 'org.javassist:javassist:3.18.1-GA',
             "org.springframework:spring-jdbc:$springVersion",
-            "org.springframework:spring-context:$springVersion",
-            "org.springframework:spring-context-support:$springVersion",
-            'org.hibernate:hibernate-core:4.3.4.Final',
-            'org.hibernate:hibernate-validator:5.1.0.Final',
-            'org.javassist:javassist:3.18.1-GA',
+            'org.springframework.boot:spring-boot-starter-web:1.1.6.RELEASE',
+            'org.springframework.data:spring-data-rest-core:2.2.0.RELEASE',
+            'org.springframework.data:spring-data-rest-webmvc:2.2.0.RELEASE',
+            "org.springframework.data:spring-data-jpa:1.6.4.RELEASE",
+            'com.mysema.querydsl:querydsl-jpa:3.3.2',
             'log4j:log4j:1.2.17',
             'org.slf4j:slf4j-log4j12:1.7.6',
             'postgresql:postgresql:9.1-901.jdbc4',
             'org.jsoup:jsoup:1.7.3',
             'org.codehaus.jackson:jackson-mapper-asl:1.9.13',
             'javax.mail:mail:1.4.7'
+
+    querydslapt "com.mysema.querydsl:querydsl-apt:3.3.2"
 
     providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
     runtime 'jstl:jstl:1.2'

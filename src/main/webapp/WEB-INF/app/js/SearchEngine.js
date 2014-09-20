@@ -7,7 +7,6 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
         var load = $(loadModal);
 
         var SearchEngine = {
-
             engine: new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -93,7 +92,8 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
 
             refresh: function (calendar) {
                 var params = window.location.search;
-                var courseCodes = params.substring(1, params.length).split('+');
+                var courseCodes = params.substring(1, params.length).split(/[+]/);
+                var that = this;
                 if (courseCodes[0].length > 0) {
                     load.modal('toggle');
                     courseCodes.forEach(function (cc) {
@@ -103,9 +103,19 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
                                 type: 'GET',
                                 dataType: 'json',
                                 success: function (data) {
-                                    this.mapResponse(data);
-                                    this.addCourseLink(data[0].courseName, data[0].courseCode);
-                                    this.addDataToCalendar(calendar);
+                                    courseCollection = $.map(data, function (course) {
+                                        return {
+                                            title: course.courseName,
+                                            code: course.courseCode,
+                                            tof: course.timeOfDay,
+                                            wd: course.weekDay,
+                                            wn: course.weekNumber,
+                                            cr: course.classroom,
+                                            t: course.type
+                                        };
+                                    });
+                                    that.addCourseLink(data[0].courseName, data[0].courseCode);
+                                    that.addDataToCalendar(calendar);
                                 },
                                 error: function (xhr, status, error) {
                                     console.log('xhr' + xhr + ', status=' + status + ', error=' + error);

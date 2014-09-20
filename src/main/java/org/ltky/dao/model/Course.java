@@ -1,4 +1,4 @@
-package org.ltky.model;
+package org.ltky.dao.model;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 

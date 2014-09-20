@@ -98,14 +98,14 @@ public class CourseHtmlParser {
 
     private Course parseTableElement(Elements rowItems) {
         Course course = new Course();
-        for (int elem = 0; elem < rowItems.size(); elem++) {
+        for (int elementIndex = 0; elementIndex < rowItems.size(); elementIndex++) {
             try {
-                String item = new String(rowItems.get(elem).text().getBytes("cp1252"), "UTF-8").trim();
+                String item = new String(rowItems.get(elementIndex).text().getBytes("cp1252"), "UTF-8").trim();
                 course.setDepartment(department);
                 if (!course.getDepartment().equals("kike")) {
-                    course = parseNormalCourse(course, rowItems, elem, item);
+                    course = parseNormalCourse(course, rowItems, elementIndex, item);
                 } else {
-                    course = parseLanguageLabCourse(course, rowItems, elem, item);
+                    course = parseLanguageLabCourse(course, rowItems, elementIndex, item);
                 }
             } catch (UnsupportedEncodingException e) {
                 LOGGER.error("Encoding conversion error ", e);

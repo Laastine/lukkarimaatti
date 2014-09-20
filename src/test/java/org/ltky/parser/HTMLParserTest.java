@@ -394,41 +394,41 @@ public class HTMLParserTest {
 
     @Test
     public void HTMLDataParsingTest() throws IOException {
-        HtmlParser htmlParser = new HtmlParser(TITE_DEPARTMENT);
-        List<Course> list = htmlParser.parseHTMLData(COURSE_TEST_DATA);
-        List<Course> list2 = htmlParser.parseHTMLData(COURSE_TEST_DATA2);
+        CourseHtmlParser courseHtmlParser = new CourseHtmlParser(TITE_DEPARTMENT);
+        List<Course> list = courseHtmlParser.parseHTMLData(COURSE_TEST_DATA);
+        List<Course> list2 = courseHtmlParser.parseHTMLData(COURSE_TEST_DATA2);
         Assert.assertFalse(list.isEmpty());
         Assert.assertFalse(list2.isEmpty());
     }
 
     @Test
     public void HTMLanguageLabLDataParsingTest() throws IOException {
-        HtmlParser htmlParser = new HtmlParser(KIKE_DEPARTMENT);
-        List<Course> list = htmlParser.parseHTMLData(LANGUAGE_LAB_TEST_DATA);
+        CourseHtmlParser courseHtmlParser = new CourseHtmlParser(KIKE_DEPARTMENT);
+        List<Course> list = courseHtmlParser.parseHTMLData(LANGUAGE_LAB_TEST_DATA);
         Assert.assertFalse(list.isEmpty());
         LOGGER.info("LL=" + list.get(0).toString());
     }
 
     @Test
     public void PuppaDataParsingTest() throws IOException {
-        HtmlParser htmlParser = new HtmlParser(TUTA_DEPARTMENT);
-        List<Course> list = htmlParser.parseHTMLData(PUPPA_TEST_DATA);
+        CourseHtmlParser courseHtmlParser = new CourseHtmlParser(TUTA_DEPARTMENT);
+        List<Course> list = courseHtmlParser.parseHTMLData(PUPPA_TEST_DATA);
         Assert.assertFalse(list.isEmpty());
         LOGGER.info("TUTA=" + list.get(0).toString());
     }
 
     @Test
     public void KatiDataParsingTest() throws IOException {
-        HtmlParser htmlParser = new HtmlParser(KATI_DEPARTMENT);
-        List<Course> list = htmlParser.parseHTMLData(KATI_TEST_DATA);
+        CourseHtmlParser courseHtmlParser = new CourseHtmlParser(KATI_DEPARTMENT);
+        List<Course> list = courseHtmlParser.parseHTMLData(KATI_TEST_DATA);
         Assert.assertFalse(list.isEmpty());
         LOGGER.info("KATI=" + list.get(0).toString());
     }
 
     @Test
     public void YmteDataParsingTest() throws IOException {
-        HtmlParser htmlParser = new HtmlParser(YMTE_DEPARTMENT);
-        List<Course> list = htmlParser.parseHTMLData(YMTE_TEST_DATA);
+        CourseHtmlParser courseHtmlParser = new CourseHtmlParser(YMTE_DEPARTMENT);
+        List<Course> list = courseHtmlParser.parseHTMLData(YMTE_TEST_DATA);
         Assert.assertFalse(list.isEmpty());
         LOGGER.info("YMTE=" + list.get(0).toString());
     }
@@ -442,8 +442,8 @@ public class HTMLParserTest {
     private void testCourseData(String department) {
         try {
             Assert.assertNotNull(map);
-            final HtmlParser htmlParser = new HtmlParser(department);
-            htmlParser.parse(map.get(department));
+            final CourseHtmlParser courseHtmlParser = new CourseHtmlParser(department);
+            courseHtmlParser.parse(map.get(department));
         } catch (Exception e) {
             LOGGER.error("test error", e);
         }

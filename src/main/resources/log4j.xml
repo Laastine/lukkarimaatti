@@ -14,12 +14,12 @@
 
     <logger name="org.springframework" additivity="false">
         <level value="INFO"/>
-        <appender-ref ref="rolling" />
+        <appender-ref ref="rolling"/>
     </logger>
 
     <logger name="org.hibernate" additivity="false">
         <level value="INFO"/>
-        <appender-ref ref="rolling" />
+        <appender-ref ref="rolling"/>
     </logger>
 
     <logger name="org.jboss" additivity="false">
@@ -29,7 +29,7 @@
 
     <root>
         <priority value="DEBUG"/>
-        <appender-ref ref="rolling" />
+        <appender-ref ref="rolling"/>
     </root>
 
 </log4j:configuration>

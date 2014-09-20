@@ -22,12 +22,9 @@ import java.util.List;
 @Controller
 @RequestMapping("/exam")
 public class ExamController {
-
-    private static final Logger LOGGER = Logger.getLogger(ExamController.class);
     private static final int MIN = 3;
     @Autowired
     private ExamDao examDao;
-
 
     @RequestMapping(value = "/examname/{examName}", method = RequestMethod.GET)
     public

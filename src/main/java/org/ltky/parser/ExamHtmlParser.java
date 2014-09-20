@@ -26,11 +26,11 @@ import java.util.stream.Collectors;
  * User: laastine
  * Date: 20.4.2014
  */
-public class ExamParser {
-    private static final Logger LOGGER = Logger.getLogger(ExamParser.class);
+public class ExamHtmlParser {
+    private static final Logger LOGGER = Logger.getLogger(ExamHtmlParser.class);
     private final CoursePattern coursePattern = new CoursePattern();
 
-    public ExamParser() {
+    public ExamHtmlParser() {
     }
 
     public Set<Exam> parseExams() throws IOException {
@@ -71,18 +71,17 @@ public class ExamParser {
     private List<String> parseExamHTML() throws IOException {
         final List<String> resultSet = new ArrayList<>();
         final URLParser urlParser = new URLParser();
-        Elements e = getTableElements(urlParser.fetchExamURL());
-        for (Element i : e) {
-            Elements rowItems = i.select("tr");
-            for (Element j : rowItems) {
+        getTableElements(urlParser.fetchExamURL()).stream().forEach(row -> {
+            Elements rowItems = row.select("tr");
+            rowItems.forEach(j -> {
                 Elements tds = j.select("td");
                 String item = tds.text();
                 if (!StringUtils.isBlank(item)) {
                     LOGGER.debug(item);
                     resultSet.add(item);
                 }
-            }
-        }
+            });
+        });
         resultSet.forEach(LOGGER::debug);
         return resultSet;
     }

@@ -25,7 +25,6 @@ import java.util.List;
 @RequestMapping("/rest")
 public class CourseController {
     private static final int MIN = 2;
-    private static final Logger LOGGER = Logger.getLogger(CourseController.class);
     @Autowired
     private CourseDao courseDao;
 
@@ -66,7 +65,6 @@ public class CourseController {
     @ResponseBody
     final List<Course> getCourseNamesWithCode(@PathVariable String courseNamesandCodes) {
         if (courseNamesandCodes.length() >= MIN) {
-            LOGGER.info("RESULTS"+courseDao.findCourseNamesAndCodes(courseNamesandCodes.toLowerCase()));
             return courseDao.findCourseNamesAndCodes(courseNamesandCodes.toLowerCase());
         } else {
             return new ArrayList<>();

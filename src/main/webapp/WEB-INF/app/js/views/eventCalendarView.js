@@ -7,24 +7,33 @@ define([
 ], function (Backbone, calendar, EventView, EventModel) {
     'use strict';
 
-    var array = [];
+    var eventSources = [];
 
     var EventCalendarView = Backbone.View.extend({
 
         el: $('#calendar'),
 
         initialize: function () {
-            _.bindAll(this, 'calendar', 'render', 'createCalendarEvent', 'addEvent', 'appendEvent', 'removeEvent');
+            _.bindAll(this, 'calendar', 'render', 'createCalendarEvent', 'addEvent', 'appendEvent', 'removeCalendarEvent');
             this.render();
         },
 
-        removeEvent: function (code) {
-            var that = this;
-            array.filter(function (e) {
-                return e.toString().substring(0, e.indexOf('#')) === code;
-            }).forEach(function (e) {
-                that.calendar('removeEvents', e);
+        removeCalendarEvent: function (code) {
+            this.calendar('removeEventSource', { events: eventSources[0] });
+            console.log('eventSources=' + eventSources.length);
+
+            var index = eventSources.forEach(function (e) {
+                e.map(function (f) {
+                    //console.log('f.id=' + f.id);
+                    if (f.id.substring(0, f.id.indexOf('#')) === code) {
+                        //console.log('FUCK=' + f.id);
+                        index = eventSources.indexOf(e);
+                    }
+                });
             });
+            console.log('index=' + index);
+            eventSources.splice(index, 1);
+            console.log('updated eventSources=' + eventSources.length);
         },
 
         calendar: function () {
@@ -50,6 +59,7 @@ define([
                 allDaySlot: false,
                 axisFormat: 'HH:mm',
                 weekends: true,
+                allDayDefault: false,
                 hiddenDays: [0],
                 weekNumbers: true,
                 firstDay: 1,
@@ -67,20 +77,14 @@ define([
             });
         },
 
-        createCalendarEvent: function (course, dateStart, dateEnd) {
-            var that = this;
-            var calendarEvent = {
-                title: course.code,
-                description: course.title + '/' + course.t + '\n' + course.cr,
-                start: new Date(dateStart),
-                end: new Date(dateEnd),
-                allDay: false,
-                element: null,
-                view: null,
-                id: course.code + '#' + course.t
-            };
-            array.push(calendarEvent.id);
-            that.calendar('renderEvent', calendarEvent, true);
+        createCalendarEvent: function (courseToBeAdded) {
+            if (eventSources.length > 0) {
+                eventSources[eventSources.length] = courseToBeAdded;
+            } else {
+                eventSources[0] = courseToBeAdded;
+            }
+
+            this.calendar('addEventSource', courseToBeAdded);
         },
 
         addEvent: function (calendarEvent) {

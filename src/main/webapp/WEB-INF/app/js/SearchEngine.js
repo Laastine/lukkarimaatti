@@ -146,15 +146,26 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
             },
 
             addDataToCalendar: function (calendar) {
+                var courseToBeAdded = [];
                 courseCollection.forEach(function (course) {
                     function processWeekNumbers(weekNumber) {
                         var dateStart = moment().lang('fi').day(course.wd).week(weekNumber).hours(course.tof.split('-')[0] || 6).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
                         var dateEnd = moment().lang('fi').day(course.wd).week(weekNumber).hours(course.tof.split('-')[1] || 6).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
-                        calendar.createCalendarEvent(course, dateStart, dateEnd);
+                        var calendarEvent = {
+                            title: course.code,
+                            description: course.title + '/' + course.t + '\n' + course.cr,
+                            start: new Date(dateStart),
+                            end: new Date(dateEnd),
+                            element: null,
+                            view: null,
+                            id: course.code + '#' + course.t
+                        };
+                        courseToBeAdded.push(calendarEvent);
                     }
-
                     JSON.parse('[' + course.wn + ']').forEach(processWeekNumbers);
                 });
+                calendar.createCalendarEvent(courseToBeAdded);
+
                 load.modal('hide');
             },
 

@@ -21,20 +21,20 @@ public interface CourseDao extends CrudRepository<Course, Long>, QueryDslPredica
     public List findByCourseCode(@Param("searchTerm") String searchTerm);
 
     @Query("SELECT DISTINCT(c.courseCode) FROM Course c WHERE courseCode like :searchTerm")
-    public List<String> findCourseCodes(@Param("searchTerm") String searchTerm);
+    public List<String> findDistinctCourseByCourseCodeLike(@Param("searchTerm") String searchTerm);
 
     @Query("SELECT c FROM Course c WHERE lower(c.courseName) = :searchTerm")
-    public List<Course> findByCourseName(@Param("searchTerm") String searchTerm);
+    public List<Course> findCourseByCourseNameIgnoreCase(@Param("searchTerm") String searchTerm);
 
     @Query("SELECT c.courseName FROM Course c WHERE lower(c.courseName) like %:searchTerm%")
-    public List<Course> findCourseNames(@Param("searchTerm") String searchTerm);
+    public List<Course> findCourseByCourseNameLikeIgnoreCase(@Param("searchTerm") String searchTerm);
 
     @Query("SELECT c FROM Course c WHERE LOWER(c.courseName) LIKE %:searchTerm%")
-    public List<Course> findCourseNamesAndCodes(@Param("searchTerm") String searchTerm);
+    public List<Course> findCourseByCourseNameAndCourseCodeLikeIgnoreCase(@Param("searchTerm") String searchTerm);
 
     @Query("SELECT c FROM Course c WHERE lower(c.department) = :searchTerm")
-    public List<Course> findByDepartment(@Param("searchTerm") String searchTerm);
+    public List<Course> findCourseByDepartmentIgnoreCase(@Param("searchTerm") String searchTerm);
 
     @Query("SELECT c.courseName FROM Course c")
-    public List<String> findAllCourseNames();
+    public List<String> findCourseByCourseName();
 }

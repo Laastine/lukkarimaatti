@@ -7,7 +7,7 @@ define([
 ], function (Backbone, calendar, EventView, EventModel) {
     'use strict';
 
-    var eventSources = [];
+    var eventSources = [];  //Contains deep copies of events
 
     var EventCalendarView = Backbone.View.extend({
 
@@ -70,7 +70,7 @@ define([
                 },
                 eventRender: function (event, element) {
                     event.element = element;
-                    element.find('.fc-event-title').append("<br/>" + event.description);
+                    element.find('.fc-title').append("<br/>" + event.description);
                 }
             });
         },

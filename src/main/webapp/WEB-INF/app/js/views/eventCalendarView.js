@@ -19,21 +19,19 @@ define([
         },
 
         removeCalendarEvent: function (code) {
-            this.calendar('removeEventSource', { events: eventSources[0] });
-            console.log('eventSources=' + eventSources.length);
-
-            var index = eventSources.forEach(function (e) {
+            var index = -1;
+            eventSources.forEach(function (e) {
                 e.map(function (f) {
-                    //console.log('f.id=' + f.id);
                     if (f.id.substring(0, f.id.indexOf('#')) === code) {
-                        //console.log('FUCK=' + f.id);
                         index = eventSources.indexOf(e);
+                        return;
                     }
                 });
             });
-            console.log('index=' + index);
-            eventSources.splice(index, 1);
-            console.log('updated eventSources=' + eventSources.length);
+            if (index >= 0) {
+                this.calendar('removeEventSource', { events: eventSources[index] });
+                eventSources.splice(index, 1);
+            }
         },
 
         calendar: function () {

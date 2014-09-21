@@ -4,12 +4,12 @@
     "dependencies": {
         "requirejs": null,
         "jquery": null,
-        "jquery-ui": null,
+        //"jquery-ui": null,
         "backbone": null,
         "underscore": null,
-        "fullcalendar": "2.0.3",
+        "fullcalendar": "2.1.1",
         "bootstrap": null,
-        "moment": "2.5.1",
+        "moment": "2.5.0",
         "handlebars": null,
         "typeahead.js": null,
         "text": "https://github.com/requirejs/text.git"

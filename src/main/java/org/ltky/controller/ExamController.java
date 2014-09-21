@@ -1,6 +1,5 @@
 package org.ltky.controller;
 
-import org.apache.log4j.Logger;
 import org.ltky.dao.ExamDao;
 import org.ltky.dao.model.Exam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ public class ExamController {
     public
     @ResponseBody
     final List<Exam> getExamName(@PathVariable String examName) {
-        return examDao.findByExamName(examName);
+        return examDao.findExamByCourseNameIgnoreCase(examName);
     }
 
     @RequestMapping(value = "/examnames/{examNames}", method = RequestMethod.GET)
@@ -38,7 +37,7 @@ public class ExamController {
     @ResponseBody
     final List<Exam> getExamNames(@PathVariable final String examNames) {
         if (examNames.length() > MIN) {
-            return examDao.findExamNames(examNames);
+            return examDao.findExamByCourseNameLikeIgnoreCase(examNames);
         } else {
             return new ArrayList<>();
         }

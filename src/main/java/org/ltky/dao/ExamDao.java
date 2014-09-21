@@ -18,9 +18,9 @@ import java.util.List;
 @Component
 public interface ExamDao extends CrudRepository<Exam, Long>, QueryDslPredicateExecutor<Exam> {
 
-    @Query("SELECT E.courseName, E.courseCode, E.examTimes FROM Exam E WHERE lower(E.courseName) = lower(:courseName)")
-    List<Exam> findByExamName(@Param("courseName") String courseName);
+    @Query("SELECT E.courseName, E.courseCode, E.examTimes FROM Exam E WHERE lower(E.courseName) = lower(:searchTerm)")
+    List<Exam> findExamByCourseNameIgnoreCase(@Param("searchTerm") String courseName);
 
-    @Query("SELECT E.courseName, E.courseCode, E.examTimes FROM Exam E WHERE lower(E.courseName) like lower(:courseName)")
-    List<Exam> findExamNames(@Param("courseName") String courseName);
+    @Query("SELECT E.courseName, E.courseCode, E.examTimes FROM Exam E WHERE lower(E.courseName) like lower(:searchTerm)")
+    List<Exam> findExamByCourseNameLikeIgnoreCase(@Param("searchTerm") String courseName);
 }

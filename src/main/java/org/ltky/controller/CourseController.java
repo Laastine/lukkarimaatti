@@ -1,9 +1,7 @@
 package org.ltky.controller;
 
-import org.apache.log4j.Logger;
 import org.ltky.dao.CourseDao;
 import org.ltky.dao.model.Course;
-import org.ltky.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,14 +37,14 @@ public class CourseController {
     public
     @ResponseBody
     final List<String> getLikeCourseCodes(@PathVariable String codes) {
-        return courseDao.findCourseCodes(codes);
+        return courseDao.findDistinctCourseByCourseCodeLike(codes);
     }
 
     @RequestMapping(value = "/name/{courseName}", method = RequestMethod.GET)
     public
     @ResponseBody
     final List<Course> getCourseName(@PathVariable String courseName) {
-        return courseDao.findByCourseName(courseName.toLowerCase());
+        return courseDao.findCourseByCourseNameIgnoreCase(courseName.toLowerCase());
     }
 
     @RequestMapping(value = "/names/{courseNames}", method = RequestMethod.GET)
@@ -54,7 +52,7 @@ public class CourseController {
     @ResponseBody
     List<Course> getCourseNames(@PathVariable String courseNames) {
         if (courseNames.length() >= MIN) {
-            return courseDao.findCourseNames(courseNames.toLowerCase());
+            return courseDao.findCourseByCourseNameLikeIgnoreCase(courseNames.toLowerCase());
         } else {
             return new ArrayList<>();
         }
@@ -65,7 +63,7 @@ public class CourseController {
     @ResponseBody
     final List<Course> getCourseNamesWithCode(@PathVariable String courseNamesandCodes) {
         if (courseNamesandCodes.length() >= MIN) {
-            return courseDao.findCourseNamesAndCodes(courseNamesandCodes.toLowerCase());
+            return courseDao.findCourseByCourseNameAndCourseCodeLikeIgnoreCase(courseNamesandCodes.toLowerCase());
         } else {
             return new ArrayList<>();
         }
@@ -75,13 +73,13 @@ public class CourseController {
     public
     @ResponseBody
     final List<Course> getDepartmentInJSON(@PathVariable String department) {
-        return courseDao.findByDepartment(department);
+        return courseDao.findCourseByDepartmentIgnoreCase(department);
     }
 
     @RequestMapping(value = "/all/")
     public
     @ResponseBody
     final List<String> getAllCourseCodes() {
-        return courseDao.findAllCourseNames();
+        return courseDao.findCourseByCourseName();
     }
 }

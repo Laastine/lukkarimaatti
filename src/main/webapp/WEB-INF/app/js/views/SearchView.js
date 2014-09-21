@@ -24,7 +24,7 @@ define(['searchengine', 'eventcalendarview', 'text!templates/search.html'],
             deleteCourse: function (e) {
                 var element = $(e.currentTarget).closest('tr');
                 SearchEngine.removeCourseItem(element, element.attr('id'));
-                calendar.removeEvent(element.attr('id'));
+                calendar.removeCalendarEvent(element.attr('id'));
             },
 
             render: function () {

@@ -4,7 +4,6 @@ require.config({
 
     paths: {
         'jquery': 'lib/jquery/dist/jquery',
-        'jquery-ui': 'lib/jquery-ui/ui/jquery-ui',
         'bootstrap': 'lib/bootstrap/dist/js/bootstrap',
         'fullcalendar': 'lib/fullcalendar/dist/fullcalendar',
         'underscore': 'lib/underscore/underscore',

@@ -7,7 +7,7 @@ define([
 ], function (Backbone, calendar, EventView, EventModel) {
     'use strict';
 
-    var eventSources = [];  //Contains deep copies of events
+    var eventSources = [];
 
     var EventCalendarView = Backbone.View.extend({
 
@@ -57,6 +57,7 @@ define([
                 allDaySlot: false,
                 axisFormat: 'HH:mm',
                 weekends: true,
+                contentHeight: 550,
                 allDayDefault: false,
                 hiddenDays: [0],
                 weekNumbers: true,
@@ -76,12 +77,7 @@ define([
         },
 
         createCalendarEvent: function (courseToBeAdded) {
-            if (eventSources.length > 0) {
-                eventSources[eventSources.length] = courseToBeAdded;
-            } else {
-                eventSources[0] = courseToBeAdded;
-            }
-
+            eventSources[eventSources.length] = courseToBeAdded;
             this.calendar('addEventSource', courseToBeAdded);
         },
 

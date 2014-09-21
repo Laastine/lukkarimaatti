@@ -7,24 +7,31 @@ define([
 ], function (Backbone, calendar, EventView, EventModel) {
     'use strict';
 
-    var array = [];
+    var eventSources = [];
 
     var EventCalendarView = Backbone.View.extend({
 
         el: $('#calendar'),
 
         initialize: function () {
-            _.bindAll(this, 'calendar', 'render', 'createCalendarEvent', 'addEvent', 'appendEvent', 'removeEvent');
+            _.bindAll(this, 'calendar', 'render', 'createCalendarEvent', 'addEvent', 'appendEvent', 'removeCalendarEvent');
             this.render();
         },
 
-        removeEvent: function (code) {
-            var that = this;
-            array.filter(function (e) {
-                return e.toString().substring(0, e.indexOf('#')) === code;
-            }).forEach(function (e) {
-                that.calendar('removeEvents', e);
+        removeCalendarEvent: function (code) {
+            var index = -1;
+            eventSources.forEach(function (e) {
+                e.map(function (f) {
+                    if (f.id.substring(0, f.id.indexOf('#')) === code) {
+                        index = eventSources.indexOf(e);
+                        return;
+                    }
+                });
             });
+            if (index >= 0) {
+                this.calendar('removeEventSource', { events: eventSources[index] });
+                eventSources.splice(index, 1);
+            }
         },
 
         calendar: function () {
@@ -50,6 +57,8 @@ define([
                 allDaySlot: false,
                 axisFormat: 'HH:mm',
                 weekends: true,
+                contentHeight: 550,
+                allDayDefault: false,
                 hiddenDays: [0],
                 weekNumbers: true,
                 firstDay: 1,
@@ -62,25 +71,14 @@ define([
                 },
                 eventRender: function (event, element) {
                     event.element = element;
-                    element.find('.fc-event-title').append("<br/>" + event.description);
+                    element.find('.fc-title').append("<br/>" + event.description);
                 }
             });
         },
 
-        createCalendarEvent: function (course, dateStart, dateEnd) {
-            var that = this;
-            var calendarEvent = {
-                title: course.code,
-                description: course.title + '/' + course.t + '\n' + course.cr,
-                start: new Date(dateStart),
-                end: new Date(dateEnd),
-                allDay: false,
-                element: null,
-                view: null,
-                id: course.code + '#' + course.t
-            };
-            array.push(calendarEvent.id);
-            that.calendar('renderEvent', calendarEvent, true);
+        createCalendarEvent: function (courseToBeAdded) {
+            eventSources[eventSources.length] = courseToBeAdded;
+            this.calendar('addEventSource', courseToBeAdded);
         },
 
         addEvent: function (calendarEvent) {

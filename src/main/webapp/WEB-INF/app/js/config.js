@@ -4,7 +4,6 @@ require.config({
 
     paths: {
         'jquery': 'lib/jquery/dist/jquery',
-        'jquery-ui': 'lib/jquery-ui/ui/jquery-ui',
         'bootstrap': 'lib/bootstrap/dist/js/bootstrap',
         'fullcalendar': 'lib/fullcalendar/dist/fullcalendar',
         'underscore': 'lib/underscore/underscore',
@@ -34,7 +33,7 @@ require.config({
         'fullcalendar': { deps: ['jquery'], exports: 'fullCalendar' }
     },
 
-    urlArgs: "bust=0.8.4.5"
+    urlArgs: "bust=0.8.5.0"
 });
 
 require(['js/main']);

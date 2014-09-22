@@ -147,6 +147,7 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
 
             addDataToCalendar: function (calendar) {
                 var courseToBeAdded = [];
+                var that = this;
                 courseCollection.forEach(function (course) {
                     function processWeekNumbers(weekNumber) {
                         var dateStart = moment().lang('fi').day(course.wd).week(weekNumber).hours(course.tof.split('-')[0] || 6).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
@@ -157,6 +158,7 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
                             start: new Date(dateStart),
                             end: new Date(dateEnd),
                             element: null,
+                            color: that.stringToColour(course.code),
                             view: null,
                             id: course.code + '#' + course.t
                         };
@@ -167,6 +169,18 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
                 calendar.createCalendarEvent(courseToBeAdded);
 
                 load.modal('hide');
+            },
+
+            stringToColour: function(colorSeed) {
+                var hash = 0, colour = '#', value;
+                colorSeed.split("").forEach(function (e) {
+                    hash = colorSeed.charCodeAt(e) + ((hash << 5) - hash);
+                });
+                for (var j = 0; j < 3; j++) {
+                    value = (hash >> (j * 8)) & 0xFF;
+                    colour += ('00' + value.toString(16)).substr(-2);
+                }
+                return colour;
             },
 
             sendLink: function (address) {

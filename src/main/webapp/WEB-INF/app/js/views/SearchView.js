@@ -10,7 +10,7 @@ define(['searchengine', 'eventcalendarview', 'text!templates/search.html'],
             initialize: function() {
                 _.bindAll(this, 'render');
                 SearchEngine.engine.initialize();
-                SearchEngine.refresh(calendar);
+                SearchEngine.getDataOnRefresh(calendar);
             },
 
             events: {

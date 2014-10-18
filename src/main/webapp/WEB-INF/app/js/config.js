@@ -1,6 +1,6 @@
 /* global require */
 require.config({
-    baseUrl: '/lukkarimaatti/app/dist',
+    baseUrl: '/lukkarimaatti/app/js',
 
     paths: {
         'jquery': 'lib/jquery/dist/jquery',
@@ -33,8 +33,8 @@ require.config({
         'fullcalendar': { deps: ['jquery'], exports: 'fullCalendar' }
     },
 
-    urlArgs: "bust=0.8.5.1"
+    //urlArgs: "bust=0.8.5.1"
 });
 
-require(['js/main']);
+require(['main']);
 

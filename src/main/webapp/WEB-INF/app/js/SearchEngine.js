@@ -90,7 +90,7 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
                 }
             },
 
-            refresh: function (calendar) {
+            getDataOnRefresh: function (calendar) {
                 var params = window.location.search;
                 var courseCodes = params.substring(1, params.length).split(/[+]/);
                 var that = this;

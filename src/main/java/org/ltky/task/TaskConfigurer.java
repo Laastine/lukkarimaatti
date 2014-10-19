@@ -2,7 +2,6 @@ package org.ltky.task;
 
 import org.apache.log4j.Logger;
 import org.ltky.dao.CourseDao;
-import org.ltky.dao.ExamDao;
 import org.ltky.parser.URLParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -30,11 +29,7 @@ public class TaskConfigurer {
     @Autowired
     private CourseTask courseTask;
     @Autowired
-    private ExamTask examTask;
-    @Autowired
     private CourseDao courseDao;
-    @Autowired
-    private ExamDao examDao;
 
     private void getLinks() {
         try {
@@ -57,5 +52,4 @@ public class TaskConfigurer {
         LOGGER.info("course data update cron task");
         setUpRunners();
     }
-    
 }

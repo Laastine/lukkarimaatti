@@ -57,11 +57,5 @@ public class TaskConfigurer {
         LOGGER.info("course data update cron task");
         setUpRunners();
     }
-
-    @Scheduled(cron = "0 0 5 * * *")
-    public void updateExamDataCronJob() {
-        LOGGER.info("exam data update cron task");
-        examDao.deleteAll();
-        examTask.saveExamsToDB();
-    }
+    
 }

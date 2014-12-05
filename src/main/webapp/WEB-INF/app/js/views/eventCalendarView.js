@@ -49,7 +49,7 @@ define([
                     ignoreTimezone: false
                 },
                 titleFormat: {
-                    month: 'MMMM',
+                    month: 'MMMM YYYY',
                     week: 'DD.MM.YYYY',
                     day: 'DD.MM',
                     agenda: 'hh:mm'

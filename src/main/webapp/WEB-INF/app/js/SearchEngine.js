@@ -151,9 +151,22 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
 
                 courseCollection.forEach(function (course) {
                     function processWeekNumbers(weekNumber) {
-                        var year = parseInt(weekNumber, 10) > 37 ? moment().year() : moment().add(1, 'y').year();
-                        var dateStart = moment().lang('fi').years(year).day(course.wd).week(weekNumber).hours(course.tof.split('-')[0] || 6).minutes(0).seconds(0).format('YYYY-MM-DDTHH:mm:ssZ');
-                        var dateEnd = moment().lang('fi').years(year).day(course.wd).week(weekNumber).hours(course.tof.split('-')[1] || 6).minutes(0).seconds(0).format('YYYY-MM-DDTHH:mm:ssZ');
+                        var dateStart = moment()
+                            .lang('fi')
+                            .years(that.getYearNumber(weekNumber))
+                            .day(course.wd)
+                            .week(weekNumber)
+                            .hours(course.tof.split('-')[0] || 6).minutes(0)
+                            .seconds(0)
+                            .format('YYYY-MM-DDTHH:mm:ssZ');
+                        var dateEnd = moment()
+                            .lang('fi')
+                            .years(that.getYearNumber(weekNumber))
+                            .day(course.wd).week(weekNumber)
+                            .hours(course.tof.split('-')[1] || 6)
+                            .minutes(0)
+                            .seconds(0)
+                            .format('YYYY-MM-DDTHH:mm:ssZ');
                         var calendarEvent = {
                             title: course.code,
                             description: course.title + '/' + course.t + '\n' + course.cr,
@@ -171,6 +184,15 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
                 calendar.createCalendarEvent(courseToBeAdded);
 
                 load.modal('hide');
+            },
+
+            getYearNumber: function (weekNumber) {
+                var isSpringSemester = moment().week() < 35;
+                if(!isSpringSemester) {
+                    return parseInt(weekNumber, 10) < 35 ? moment().add(1, 'y').year() : moment().year();
+                } else {
+                    return parseInt(weekNumber, 10) >= 35 ? moment().subtract(1, 'y').year() : moment().year();
+                }
             },
 
             stringToColour: function(colorSeed) {

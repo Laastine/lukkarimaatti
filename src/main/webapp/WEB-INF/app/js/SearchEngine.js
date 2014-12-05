@@ -148,10 +148,12 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
             addDataToCalendar: function (calendar) {
                 var courseToBeAdded = [];
                 var that = this;
+
                 courseCollection.forEach(function (course) {
                     function processWeekNumbers(weekNumber) {
-                        var dateStart = moment().lang('fi').day(course.wd).week(weekNumber).hours(course.tof.split('-')[0] || 6).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
-                        var dateEnd = moment().lang('fi').day(course.wd).week(weekNumber).hours(course.tof.split('-')[1] || 6).minutes(0).second(0).format('YYYY-MM-DDTHH:mm:ssZ');
+                        var year = parseInt(weekNumber, 10) > 37 ? moment().year() : moment().add(1, 'y').year();
+                        var dateStart = moment().lang('fi').years(year).day(course.wd).week(weekNumber).hours(course.tof.split('-')[0] || 6).minutes(0).seconds(0).format('YYYY-MM-DDTHH:mm:ssZ');
+                        var dateEnd = moment().lang('fi').years(year).day(course.wd).week(weekNumber).hours(course.tof.split('-')[1] || 6).minutes(0).seconds(0).format('YYYY-MM-DDTHH:mm:ssZ');
                         var calendarEvent = {
                             title: course.code,
                             description: course.title + '/' + course.t + '\n' + course.cr,

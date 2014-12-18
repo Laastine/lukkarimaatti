@@ -2,7 +2,8 @@ package org.ltky.parser;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.FileInputStream;
@@ -13,7 +14,7 @@ import java.util.Properties;
  * @author laastine
  */
 public class ParserConfiguration {
-    private static final Logger LOGGER = Logger.getLogger(ParserConfiguration.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ParserConfiguration.class);
     private static ParserConfiguration instance;
     private String uniURL;
     private String examURL;

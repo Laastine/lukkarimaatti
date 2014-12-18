@@ -1,9 +1,11 @@
-package org.ltky.parser;
+package org.ltky;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.ltky.parser.ParserConfiguration;
+import org.ltky.parser.URLParser;
 import org.ltky.util.Util;
 
 import java.util.ArrayList;

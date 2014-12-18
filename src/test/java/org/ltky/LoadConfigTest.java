@@ -1,8 +1,9 @@
-package org.ltky.parser;
+package org.ltky;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
+import org.ltky.parser.ParserConfiguration;
 
 /**
  * parser

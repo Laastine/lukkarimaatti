@@ -2,13 +2,12 @@ package org.ltky.dao.model;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Id;
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.UUID;
 
 /**
  * parser
@@ -21,125 +20,49 @@ import java.io.Serializable;
 public class Course implements Serializable {
     @Id
     @Column(name = "COURSE_ID", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer courseId;
+    public Long courseId;
     @Column(name = "COURSE_CODE", nullable = false)
-    private String courseCode;
+    public  String courseCode;
     @Column(name = "COURSE_NAME", nullable = false)
-    private String courseName;
+    public  String courseName;
     @Column(name = "PERIOD")
-    private String period = "";
+    public  String period = "";
     @Column(name = "WEEK")
-    private String weekNumber;
+    public  String weekNumber;
     @Column(name = "WEEK_DAY")
-    private String weekDay;
+    public  String weekDay;
     @Column(name = "TIME_OF_DAY")
-    private String timeOfDay;
+    public  String timeOfDay;
     @Column(name = "CLASSROOM")
-    private String classroom = "";
+    public  String classroom;
     @Column(name = "TYPE")
-    private String type;
+    public  String type;
     @Column(name = "DEPARTMENT")
-    private String department;
+    public  String department;
     @Column(name = "TEACHER")
-    private String teacher;
+    public  String teacher;
     @Column(name = "MISC")
-    private String misc;
+    public  String misc;
 
-    public Integer getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(Integer courseId) {
-        this.courseId = courseId;
-    }
-
-    public String getCourseCode() {
-        return courseCode;
-    }
-
-    public void setCourseCode(String courseCode) {
+    public Course(String courseCode, String courseName,
+                  String weekNumber, String weekDay,
+                  String timeOfDay, String classroom,
+                  String type, String department,
+                  String teacher, String misc) {
+        this.courseId = UUID.randomUUID().getLeastSignificantBits();
         this.courseCode = courseCode;
-    }
-
-    public String getWeekNumber() {
-        return weekNumber;
-    }
-
-    public void setWeekNumber(String weekNumber) {
-        this.weekNumber = weekNumber;
-    }
-
-    public String getTimeOfDay() {
-        return timeOfDay;
-    }
-
-    public void setTimeOfDay(String timeOfDay) {
-        this.timeOfDay = timeOfDay;
-    }
-
-    public String getClassroom() {
-        return classroom;
-    }
-
-    public void setClassroom(String classroom) {
-        this.classroom = classroom;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
-    }
-
-    public String getCourseName() {
-        return courseName;
-    }
-
-    public void setCourseName(String courseName) {
         this.courseName = courseName;
-    }
-
-    public String getPeriod() {
-        return period;
-    }
-
-    public void setPeriod(String period) {
-        this.period = period;
-    }
-
-    public String getWeekDay() {
-        return weekDay;
-    }
-
-    public void setWeekDay(String weekDay) {
+        this.weekNumber = weekNumber;
         this.weekDay = weekDay;
-    }
-
-    public String getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(String teacher) {
+        this.timeOfDay = timeOfDay;
+        this.classroom = classroom;
+        this.type = type;
+        this.department = department;
         this.teacher = teacher;
-    }
-
-    public String getMisc() {
-        return misc;
-    }
-
-    public void setMisc(String misc) {
         this.misc = misc;
+    }
+
+    public Course() {
     }
 
     @Override

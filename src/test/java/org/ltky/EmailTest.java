@@ -1,4 +1,4 @@
-package org.ltky.parser;
+package org.ltky;
 
 import org.junit.Assert;
 import org.junit.Before;

@@ -1,7 +1,8 @@
 package org.ltky.util;
 
 import org.apache.commons.validator.routines.EmailValidator;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.ltky.parser.ParserConfiguration;
 
 import javax.mail.*;
@@ -18,7 +19,7 @@ import java.util.Properties;
  */
 public class EmailLink {
     private final ParserConfiguration parserConfiguration;
-    private static final Logger LOGGER = Logger.getLogger(EmailLink.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmailLink.class);
 
     public EmailLink() {
         parserConfiguration = ParserConfiguration.getInstance();

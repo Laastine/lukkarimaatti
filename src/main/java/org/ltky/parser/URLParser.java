@@ -1,7 +1,8 @@
 package org.ltky.parser;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.ltky.util.Util;
 
 import java.io.BufferedReader;
@@ -14,7 +15,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class URLParser {
-    private static final Logger LOGGER = Logger.getLogger(URLParser.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(URLParser.class);
     private static final String prefix = "https://uni.lut.fi";
     private final ParserConfiguration parserConfiguration = ParserConfiguration.getInstance();
     private final Util UTIL = Util.getInstance();

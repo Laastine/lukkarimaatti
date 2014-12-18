@@ -1,7 +1,7 @@
-apply plugin: 'java'
-apply plugin: 'jetty'
 apply plugin: 'idea'
 apply plugin: 'war'
+apply plugin: 'java'
+
 
 group = 'org.ltky'
 
@@ -21,12 +21,6 @@ configurations {
     querydslapt
 }
 
-jettyRun {
-    httpPort = 8085
-    reload = 'automatic'
-    scanIntervalSeconds = 2
-}
-
 war {
     exclude(
             'WEB-INF/app/css',
@@ -34,8 +28,8 @@ war {
             'WEB-INF/app/res',
             'WEB-INF/app/img',
             'WEB-INF/app/build',
+            'WEB-INF/test/',
             'WEB-INF/app/dist/build',
-            'WEB-INF/test',
             'WEB-INF/karma.conf.js',
             'WEB-INF/node_modules',
             'WEB-INF/app/dist/build.txt',
@@ -76,6 +70,7 @@ compileGeneratedJava {
 }
 
 test {
+    maxHeapSize = "2048m"
     testLogging.showStandardStreams = true
     testLogging {
         events 'passed'
@@ -84,6 +79,16 @@ test {
 
 ext {
     springVersion = '4.0.7.RELEASE'
+    seleniumVersion = '2.44.0'
+    jettyVersion = '9.2.6.v20141205'
+}
+
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        if (details.requested.name == 'log4j') {
+            details.useTarget "org.slf4j:log4j-over-slf4j:1.7.5"
+        }
+    }
 }
 
 dependencies {
@@ -101,20 +106,31 @@ dependencies {
             'org.springframework.data:spring-data-rest-webmvc:2.2.0.RELEASE',
             "org.springframework.data:spring-data-jpa:1.7.0.RELEASE",
             'com.mysema.querydsl:querydsl-jpa:3.3.2',
-            'log4j:log4j:1.2.17',
-            'org.slf4j:slf4j-log4j12:1.7.6',
             'postgresql:postgresql:9.1-901.jdbc4',
             'org.jsoup:jsoup:1.7.3',
             'org.codehaus.jackson:jackson-mapper-asl:1.9.13',
-            'javax.mail:mail:1.4.7'
+            'javax.mail:mail:1.4.7',
+            'org.apache.commons:commons-dbcp2:2.0.1'
 
     querydslapt "com.mysema.querydsl:querydsl-apt:3.3.2"
 
     providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
     runtime 'jstl:jstl:1.2'
 
+    runtime 'org.hsqldb:hsqldb:2.3.2'
+
+
     testCompile 'junit:junit:4.11',
             'org.hamcrest:hamcrest-all:1.3',
-            "org.springframework:spring-test:$springVersion"
-
+            "org.springframework:spring-test:$springVersion",
+            'org.mockito:mockito-all:1.9.5',
+            "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion",
+            "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion",
+            "org.seleniumhq.selenium:selenium-api:$seleniumVersion",
+            "org.seleniumhq.selenium:selenium-java:$seleniumVersion",
+            'javax.servlet:javax.servlet-api:3.1.0',
+            "org.eclipse.jetty:jetty-server:${jettyVersion}",
+            "org.eclipse.jetty:jetty-servlet:${jettyVersion}",
+            "org.eclipse.jetty:jetty-servlets:${jettyVersion}",
+            "org.eclipse.jetty:jetty-webapp:${jettyVersion}"
 }

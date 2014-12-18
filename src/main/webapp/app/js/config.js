@@ -1,6 +1,6 @@
 /* global require */
 require.config({
-    baseUrl: '/lukkarimaatti/app/dist',
+    baseUrl: '/lukkarimaatti/app/js',
 
     paths: {
         'jquery': 'lib/jquery/dist/jquery',
@@ -31,10 +31,10 @@ require.config({
         'bloodhound': { deps: ['jquery'], exports: 'Bloodhound' },
         'handlebars': { exports: 'Handlebars' },
         'fullcalendar': { deps: ['jquery'], exports: 'fullCalendar' }
-    },
+    }
 
-    urlArgs: "bust=0.8.7.3"
+    //urlArgs: "bust=0.8.7.3"
 });
 
-require(['js/main']);
+require(['main']);
 

@@ -2,7 +2,8 @@ package org.ltky.util;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
  * Date: 6.12.2013
  */
 public class Util {
-    private static final Logger LOGGER = Logger.getLogger(Util.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Util.class);
     private static Util instance;
 
     public static Util getInstance() {

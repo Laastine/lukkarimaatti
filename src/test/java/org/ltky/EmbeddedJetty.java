@@ -4,6 +4,8 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.ltky.config.WebConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
@@ -16,13 +18,15 @@ import java.io.IOException;
  * User: laastine
  * Date: 16.12.2014
  */
-public class EmbeddedJetty {
+public class EmbeddedJetty implements Runnable {
 
     private static final int DEFAULT_PORT = 8085;
     private static final String CONTEXT_PATH = "/lukkarimaatti";
     private static final String CONFIG_LOCATION = "org.ltky.config";
     private static final String MAPPING_URL = "/";
     private static final String DEFAULT_PROFILE = "dev";
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmbeddedJetty.class);
 
     public static void main(String[] args) throws Exception {
         new EmbeddedJetty().startJetty(getPortFromArgs(args));
@@ -63,4 +67,12 @@ public class EmbeddedJetty {
         return context;
     }
 
+    @Override
+    public void run() {
+        try {
+            new EmbeddedJetty().startJetty(8085);
+        } catch (Exception e) {
+            LOGGER.error("Jetty error=",e);
+        }
+    }
 }

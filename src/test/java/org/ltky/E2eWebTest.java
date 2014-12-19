@@ -20,25 +20,28 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.fail;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = { WebConfig.class })
+@ContextConfiguration(classes = {WebConfig.class})
 public class E2eWebTest {
     private WebDriver driver;
     private String baseUrl;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
     private static final Logger LOGGER = LoggerFactory.getLogger(E2eWebTest.class);
-
+    private ExecutorService executorService = Executors.newFixedThreadPool(1);
     @Autowired
     private TaskConfigurer taskConfigurer;
 
     @Before
     public void setUp() throws Exception {
+        executorService.execute(new EmbeddedJetty());
         /*
         try {
             taskConfigurer.setUpRunners();
@@ -46,7 +49,6 @@ public class E2eWebTest {
             LOGGER.error("Error while saving course data to DB", e);
         }
         */
-
         baseUrl = "http://localhost:8085";
         loadFirefoxDriver();
         //loadChromeDriver();
@@ -69,14 +71,18 @@ public class E2eWebTest {
     }
 
     @Test
-    public void testFirstSelenium() throws Exception {
-        driver.get(baseUrl+ "/lukkarimaatti");
+    public void testAllElementsAreVisible() throws Exception {
+        driver.get(baseUrl + "/lukkarimaatti");
         driver.findElement(By.className("header"));
+        driver.findElement(By.id("searchbar"));
+        driver.findElement(By.id("calendar"));
+        driver.findElement(By.id("footer"));
     }
 
     @After
     public void tearDown() throws Exception {
         driver.quit();
+        executorService.shutdown();
         String verificationErrorString = verificationErrors.toString();
         if (!"".equals(verificationErrorString)) {
             fail(verificationErrorString);

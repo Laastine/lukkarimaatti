@@ -1,4 +1,4 @@
-package org.ltky;
+package org.ltky.util;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;

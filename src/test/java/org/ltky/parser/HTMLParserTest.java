@@ -1,4 +1,4 @@
-package org.ltky;
+package org.ltky.parser;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;
@@ -7,8 +7,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.ltky.dao.model.Course;
-import org.ltky.parser.CourseHtmlParser;
-import org.ltky.parser.URLParser;
 
 import java.io.IOException;
 import java.util.List;

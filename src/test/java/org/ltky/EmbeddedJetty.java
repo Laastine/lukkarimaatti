@@ -47,8 +47,6 @@ public class EmbeddedJetty {
 
     private static ServletContextHandler getServletContextHandler(AnnotationConfigWebApplicationContext context) throws IOException {
         ServletContextHandler contextHandler = new ServletContextHandler();
-        //contextHandler.setErrorHandler(null);
-
         contextHandler.setResourceBase("./src/main/webapp/");
         ServletHolder servletHolder = new ServletHolder("dispatcher-servlet", new DispatcherServlet(context));
         servletHolder.setInitOrder(1);
@@ -60,7 +58,6 @@ public class EmbeddedJetty {
 
     private static AnnotationConfigWebApplicationContext getContext() {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-        //context.setConfigLocation(CONFIG_LOCATION);
         context.register(WebConfig.class);
         //context.getEnvironment().setDefaultProfiles(DEFAULT_PROFILE);
         return context;

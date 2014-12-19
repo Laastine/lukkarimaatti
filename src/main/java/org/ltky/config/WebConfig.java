@@ -57,18 +57,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         viewResolver.setSuffix(".html");
         return viewResolver;
     }
-    /*
-                       @Override
-               public void configureDefaultServletHandling(
-                       DefaultServletHandlerConfigurer configurer) {
-                   configurer.enable();
-               }
 
-               @Override
-               public void addViewControllers(ViewControllerRegistry registry) {
-                   registry.addViewController("/static/**").setViewName("/static");
-               }
-            */
     @Bean
     public DataSource getDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();

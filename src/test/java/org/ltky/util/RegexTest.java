@@ -1,11 +1,9 @@
-package org.ltky;
+package org.ltky.util;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.ltky.util.CoursePattern;
-import org.ltky.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;

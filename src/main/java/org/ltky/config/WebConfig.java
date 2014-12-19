@@ -34,7 +34,7 @@ import javax.sql.DataSource;
         {"org.ltky.dao.model", "org.ltky.dao", "org.ltky.task", "org.ltky.controller"})
 @EnableJpaRepositories(basePackages = {"org.ltky.dao.model", "org.ltky.dao", "org.ltky.task"})
 @EnableTransactionManagement
-@PropertySource("classpath:properties/database.properties")
+@PropertySource("classpath:properties/database-dev.properties")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WebConfig.class);

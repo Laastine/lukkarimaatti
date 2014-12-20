@@ -61,6 +61,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         entityManagerFactoryBean.setDataSource(getDataSource());
         entityManagerFactoryBean.setPackagesToScan("org.ltky.dao.model");
         entityManagerFactoryBean.getJpaPropertyMap().put("hibernate.dialect", environment.getProperty("hibernate.dialect"));
+        entityManagerFactoryBean.getJpaPropertyMap().put("hibernate.temp.use_jdbc_metadata_defaults", false);
         HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
         hibernateJpaVendorAdapter.setGenerateDdl(true);
         hibernateJpaVendorAdapter.setShowSql(false);

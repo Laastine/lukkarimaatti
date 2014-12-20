@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.sql.DataSource;
 
@@ -34,11 +33,9 @@ import javax.sql.DataSource;
         {"org.ltky.dao.model", "org.ltky.dao", "org.ltky.task", "org.ltky.controller"})
 @EnableJpaRepositories(basePackages = {"org.ltky.dao.model", "org.ltky.dao", "org.ltky.task"})
 @EnableTransactionManagement
-@PropertySource("classpath:properties/database-dev.properties")
+@PropertySource("classpath:lukkarimaatti.properties")
 public class WebConfig extends WebMvcConfigurerAdapter {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(WebConfig.class);
-
     @Autowired
     private Environment environment;
 
@@ -46,16 +43,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         LOGGER.debug("Setting up resource handlers");
         registry.addResourceHandler("/app/**").addResourceLocations("/app/**");
-    }
-
-    @Bean
-    public InternalResourceViewResolver viewResolver() {
-        InternalResourceViewResolver viewResolver
-                = new InternalResourceViewResolver();
-        viewResolver.setPrefix("/app");
-        viewResolver.setContentType("text/html");
-        viewResolver.setSuffix(".html");
-        return viewResolver;
     }
 
     @Bean
@@ -69,11 +56,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(){
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(getDataSource());
         entityManagerFactoryBean.setPackagesToScan("org.ltky.dao.model");
-                entityManagerFactoryBean.getJpaPropertyMap().put("hibernate.dialect", environment.getProperty("hibernate.dialect"));
+        entityManagerFactoryBean.getJpaPropertyMap().put("hibernate.dialect", environment.getProperty("hibernate.dialect"));
         HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
         hibernateJpaVendorAdapter.setGenerateDdl(true);
         hibernateJpaVendorAdapter.setShowSql(false);
@@ -82,8 +69,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager(){
+    public PlatformTransactionManager transactionManager() {
         return new JpaTransactionManager(entityManagerFactory().getObject());
     }
-
 }

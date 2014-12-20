@@ -19,6 +19,7 @@ public class LoadConfigTest {
         ParserConfiguration parserConfig = ParserConfiguration.getInstance();
         try {
             Assert.assertNotNull(parserConfig.loadServletInitParameters());
+            Assert.assertEquals("https://uni.lut.fi/fi/web/guest/lukujarjestykset", parserConfig.getUniURL());
         } catch (Exception e) {
             LOGGER.error("Exception caught", e);
         }

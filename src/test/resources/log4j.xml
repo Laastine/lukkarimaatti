@@ -24,6 +24,16 @@
         <appender-ref ref="console"/>
     </logger>
 
+    <logger name="o.s" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="console"/>
+    </logger>
+
+    <logger name="o.h" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="console"/>
+    </logger>
+
     <logger name="org.hibernate" additivity="false">
         <level value="INFO"/>
         <appender-ref ref="console"/>
@@ -35,7 +45,7 @@
     </logger>
 
     <root>
-        <priority value="DEBUG"/>
+        <priority value="INFO"/>
         <appender-ref ref="console"/>
     </root>
 

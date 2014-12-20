@@ -22,12 +22,6 @@ public class ParserConfiguration {
     private String endTag;
     private String examStartTag;
     private String examEndTag;
-    private String folder;
-    private String period1;
-    private String period2;
-    private String period3;
-    private String period4;
-
     private String emailUsername;
     private String emailPassword;
 
@@ -54,11 +48,6 @@ public class ParserConfiguration {
         endTag = getPropertyOrThrowUp(parserProperties, "endTag");
         examStartTag = getPropertyOrThrowUp(parserProperties, "examStartTag");
         examEndTag = getPropertyOrThrowUp(parserProperties, "examEndTag");
-        folder = getPropertyOrThrowUp(parserProperties, "folder");
-        period1 = getPropertyOrThrowUp(parserProperties, "period1");
-        period2 = getPropertyOrThrowUp(parserProperties, "period2");
-        period3 = getPropertyOrThrowUp(parserProperties, "period3");
-        period4 = getPropertyOrThrowUp(parserProperties, "period4");
         emailUsername = getPropertyOrThrowUp(parserProperties, "emailUsername");
         emailPassword = getPropertyOrThrowUp(parserProperties, "emailPassword");
         LOGGER.info("Config=" + this.toString());
@@ -67,7 +56,7 @@ public class ParserConfiguration {
 
     private Properties loadProperties() throws IOException {
         Properties properties = new Properties();
-        String path = "properties/parser.properties";
+        String path = "lukkarimaatti.properties";
         ClassPathResource classPathResource = new ClassPathResource(path);
         FileInputStream fis = new FileInputStream(classPathResource.getFile());
         properties.load(fis);
@@ -108,26 +97,6 @@ public class ParserConfiguration {
 
     public String getExamEndTag() {
         return examEndTag;
-    }
-
-    public String getFolder() {
-        return folder;
-    }
-
-    public String getPeriod1() {
-        return period1;
-    }
-
-    public String getPeriod2() {
-        return period2;
-    }
-
-    public String getPeriod3() {
-        return period3;
-    }
-
-    public String getPeriod4() {
-        return period4;
     }
 
     public String getEmailUsername() {

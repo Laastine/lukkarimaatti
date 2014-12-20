@@ -4,7 +4,7 @@ target/
 logs/
 .idea/
 *.iml
-src/main/resources/properties
+src/main/resources/*.properties
 deploy.sh
 src/main/webapp/app/js/*.min.js
 src/main/webapp/app/css/*.min.css
@@ -20,7 +20,6 @@ src/main/webapp/app/js/lib/
 src/main/webapp/app/node_modules/
 src/main/webapp/app/dist/
 src/main/webapp/app/test/node_modules/
-src/main/resources/properties/parser.properties
 src/main/webapp/node_modules/
 src/main/generated/
 out/

@@ -27,7 +27,6 @@ public class CourseHtmlParser {
     private static final Logger LOGGER = LoggerFactory.getLogger(CourseHtmlParser.class);
     private static final String UNKNOWN = "?";
     private final String department;
-    private final ParserConfiguration config = ParserConfiguration.getInstance();
     private final Util UTIL = Util.getInstance();
     private final CoursePattern coursePattern = new CoursePattern();
 
@@ -197,39 +196,6 @@ public class CourseHtmlParser {
             courseCodeAndNamePair = StringUtils.splitByWholeSeparator(courseNameAndCode, "- ");
         }
         return new CoursePrototype(courseCodeAndNamePair[0], StringUtils.substringBefore(courseCodeAndNamePair[1], "/"), StringUtils.substringAfterLast(courseCodeAndNamePair[1], "/"));
-    }
-
-    /**
-     * Parse period (1-4) from given string
-     *
-     * @param week
-     * @return
-     */
-    private String parsePeriod(String week) {
-        Integer weeks;
-        try {
-            weeks = Integer.parseInt(UTIL.extractWeek(week));
-        } catch (Exception e) {
-            weeks = 0;
-        }
-        if (weeks == null) {
-            weeks = 0;
-        }
-        int period1 = Integer.valueOf(config.getPeriod1());
-        int period2 = Integer.valueOf(config.getPeriod2());
-        int period3 = Integer.valueOf(config.getPeriod3());
-        int period4 = Integer.valueOf(config.getPeriod4());
-        if ((period3 <= weeks) & (weeks < period4)) {
-            return "3";
-        } else if ((period4 <= weeks) & (weeks < period1)) {
-            return "4";
-        } else if ((period1 <= weeks) & (weeks < period2)) {
-            return "1";
-        } else if ((period2 <= weeks) & (weeks < 52)) {
-            return "2";
-        } else {
-            return UNKNOWN;
-        }
     }
 
     private class CoursePrototype {

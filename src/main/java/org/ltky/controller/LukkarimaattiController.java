@@ -31,7 +31,7 @@ public class LukkarimaattiController {
                 + request.getRemoteAddr() +
                 " with user-agent"
                 + request.getHeader("user-agent"));
-        return "redirect:/app/index.html";
+        return "redirect:/app/dist/index.html";
     }
 
     @RequestMapping(value = "app/save",

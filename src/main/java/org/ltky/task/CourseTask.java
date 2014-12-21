@@ -1,7 +1,6 @@
 package org.ltky.task;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.ltky.dao.CourseDao;
 import org.ltky.parser.CourseHtmlParser;
 import org.ltky.validator.CourseValidator;
@@ -16,7 +15,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class CourseTask {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CourseTask.class);
+    private static final Logger LOGGER = Logger.getLogger(CourseTask.class);
     private String department;
     private String departmentData;
 

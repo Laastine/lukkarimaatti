@@ -8,8 +8,6 @@ import org.ltky.dao.model.Course;
 import org.ltky.util.CoursePattern;
 import org.ltky.util.Util;
 import org.ltky.validator.CourseValidator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -24,7 +22,6 @@ import java.util.List;
  * Date: 28.11.2013
  */
 public class CourseHtmlParser {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CourseHtmlParser.class);
     private static final String UNKNOWN = "?";
     private final String department;
     private final Util UTIL = Util.getInstance();

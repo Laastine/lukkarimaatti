@@ -38,12 +38,7 @@ Gradle for building a package.<br>
 <i>gradle clean jettyRun</i> - for quick browser testing
 
 <h3>Testing</h3>
-<b>Front end</b> testing with Karma+Jasmine+Node.js.<br>
-Requires: Node.js with modules:<br>
-karma, karma-cli, karma-requirejs karma-jasmine<br>
-<i>karma start karma.conf.js</i><br>
-<b>Back end:</b><br>
-<i>gradle test</i> - for running unit tests<br>
+<i>gradle test</i> - for running unit tests and selenium<br>
 
 <h2>Copyright and license</h2>
 Copyright &copy; 2013 Mikko Kaistinen, mikko.kaistinen@kapsi.fi

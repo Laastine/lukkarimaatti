@@ -23,7 +23,6 @@ public class CourseTask {
     private CourseDao courseDao;
 
     public void parse(String department, String departmentData) {
-        LOGGER.info("PARSE");
         this.department = department;
         this.departmentData = departmentData;
         LOGGER.info(Thread.currentThread().getName() + " Start, cmd=" + department);
@@ -32,7 +31,11 @@ public class CourseTask {
 
     private void saveCourseToDB() {
         try {
-            (new CourseHtmlParser(department).parse(departmentData)).stream().filter(newCourse -> CourseValidator.validateCourse(newCourse)).forEach(courseDao::save);
+            (new CourseHtmlParser(department)
+                    .parse(departmentData))
+                    .stream()
+                    .filter(course -> CourseValidator.validateCourse(course))
+                    .forEach(courseDao::save);
         } catch (Exception e) {
             LOGGER.error("HtmlParser error", e);
         }

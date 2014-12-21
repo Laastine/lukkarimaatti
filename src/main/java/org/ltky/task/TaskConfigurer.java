@@ -1,17 +1,15 @@
 package org.ltky.task;
 
-import org.apache.log4j.Logger;
 import org.ltky.dao.CourseDao;
 import org.ltky.parser.URLParser;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
-import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Map;
-import java.util.Properties;
 
 /**
  * parser
@@ -23,8 +21,6 @@ import java.util.Properties;
 @EnableScheduling
 public class TaskConfigurer {
     private static final Logger LOGGER = Logger.getLogger(TaskConfigurer.class);
-    @Resource
-    Properties lukkariProperties;
     private Map<String, String> map;
     @Autowired
     private CourseTask courseTask;

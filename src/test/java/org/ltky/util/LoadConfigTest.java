@@ -1,8 +1,9 @@
-package org.ltky.parser;
+package org.ltky.util;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
+import org.ltky.parser.ParserConfiguration;
 
 /**
  * parser
@@ -15,11 +16,15 @@ public class LoadConfigTest {
 
     @Test
     public void loadTest() {
+        LOGGER.info("test="+LOGGER.getEffectiveLevel().toString());
         ParserConfiguration parserConfig = ParserConfiguration.getInstance();
+        Assert.assertNotNull(parserConfig);
         try {
             Assert.assertNotNull(parserConfig.loadServletInitParameters());
+            Assert.assertEquals("https://uni.lut.fi/fi/web/guest/lukujarjestykset", parserConfig.getUniURL());
         } catch (Exception e) {
             LOGGER.error("Exception caught", e);
+            Assert.fail("load config failed");
         }
     }
 }

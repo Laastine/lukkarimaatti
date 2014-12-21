@@ -27,7 +27,7 @@ define([
         $.ajaxSetup({ cache: false });
 
         $.ajaxPrefilter(function (options) {
-            options.url = 'http://83.136.252.198/lukkarimaatti' + options.url;
+            options.url = 'http://localhost:8085/lukkarimaatti' + options.url;
         });
 
         app.eventAggregator = _.extend({}, Backbone.Events);

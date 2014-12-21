@@ -1,7 +1,6 @@
 package org.ltky.validator;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
 import org.ltky.dao.model.Course;
 
 /**
@@ -11,34 +10,33 @@ import org.ltky.dao.model.Course;
  * Date: 6.1.2014
  */
 public class CourseValidator {
-    private static final Logger LOGGER = Logger.getLogger(CourseValidator.class);
 
     public static boolean validateCourse(Course course) {
-        if (StringUtils.isBlank(course.getCourseCode()) || !investigateLength(course.getCourseCode(), 32)) {
+        if (StringUtils.isBlank(course.courseCode) || !investigateLength(course.courseCode, 32)) {
             return false;
         }
-        if (StringUtils.isBlank(course.getCourseName()) || !investigateLength(course.getCourseName(), 256)) {
+        if (StringUtils.isBlank(course.courseName) || !investigateLength(course.courseName, 256)) {
             return false;
         }
-        if (course.getWeekNumber() == null || !investigateLength(course.getWeekNumber(), 128)) {
+        if (course.weekNumber == null || !investigateLength(course.weekNumber, 128)) {
             return false;
         }
-        if (!investigateLength(course.getWeekDay(), 4)) {
+        if (!investigateLength(course.weekDay, 4)) {
             return false;
         }
-        if (course.getTimeOfDay() == null || !investigateLength(course.getTimeOfDay(), 32)) {
+        if (course.timeOfDay == null || !investigateLength(course.timeOfDay, 32)) {
             return false;
         }
-        if (!investigateLength(course.getClassroom(), 64)) {
+        if (!investigateLength(course.classroom, 64)) {
             return false;
         }
-        if (!investigateLength(course.getType(), 4)) {
+        if (!investigateLength(course.type, 4)) {
             return false;
         }
-        if (!investigateLength(course.getDepartment(), 4)) {
+        if (!investigateLength(course.department, 4)) {
             return false;
         }
-        if (!investigateLength(course.getTeacher(), 64)) {
+        if (!investigateLength(course.teacher, 64)) {
             return false;
         }
         return true;

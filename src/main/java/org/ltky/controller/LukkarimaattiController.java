@@ -1,7 +1,7 @@
 package org.ltky.controller;
 
-import org.apache.log4j.Logger;
 import org.ltky.util.EmailLink;
+import org.apache.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -30,7 +30,7 @@ public class LukkarimaattiController {
                 + request.getRemoteAddr() +
                 " with user-agent"
                 + request.getHeader("user-agent"));
-        return "redirect:/app/dist/index.html";
+        return "redirect:/app/index.html";
     }
 
     @RequestMapping(value = "app/save",

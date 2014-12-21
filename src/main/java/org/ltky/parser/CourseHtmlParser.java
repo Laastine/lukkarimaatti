@@ -1,7 +1,6 @@
 package org.ltky.parser;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -23,10 +22,8 @@ import java.util.List;
  * Date: 28.11.2013
  */
 public class CourseHtmlParser {
-    private static final Logger LOGGER = Logger.getLogger(CourseHtmlParser.class);
     private static final String UNKNOWN = "?";
     private final String department;
-    private final ParserConfiguration config = ParserConfiguration.getInstance();
     private final Util UTIL = Util.getInstance();
     private final CoursePattern coursePattern = new CoursePattern();
 
@@ -97,191 +94,116 @@ public class CourseHtmlParser {
     }
 
     private Course parseTableElement(Elements rowItems) {
-        Course course = new Course();
-        for (int elementIndex = 0; elementIndex < rowItems.size(); elementIndex++) {
-            try {
-                String item = new String(rowItems.get(elementIndex).text().getBytes("cp1252"), "UTF-8").trim();
-                course.setDepartment(department);
-                if (!course.getDepartment().equals("kike")) {
-                    course = parseNormalCourse(course, rowItems, elementIndex, item);
-                } else {
-                    course = parseLanguageLabCourse(course, rowItems, elementIndex, item);
-                }
-            } catch (UnsupportedEncodingException e) {
-                LOGGER.error("Encoding conversion error ", e);
+        if (!this.department.equals("kike")) {
+            CoursePrototype coursePrototype = findNameCodeAndType(getElement(rowItems, 0));
+            return new Course(coursePrototype.courseCode,       //courseCode
+                    coursePrototype.courseName,                 //courseName
+                    findWeek(getElement(rowItems, 2)),          //weekNumber
+                    findWeekDay(getElement(rowItems, 3)),       //weekDay
+                    findTimeOfDay(getElement(rowItems, 4), getElement(rowItems, 5)),  //timeOfDay
+                    findClassroom(getElement(rowItems, 6)),     //classRoom
+                    coursePrototype.type,                       //type
+                    department,                                 //department
+                    "",                                         //teacher
+                    findMiscData(getElement(rowItems, 8))       //misc
+            );
+        } else {
+            CoursePrototype coursePrototype = findNameCodeAndType(getElement(rowItems, 0));
+            return new Course(
+                    coursePrototype.courseCode,                 //courseCode
+                    coursePrototype.courseName,                 //courseName
+                    findWeek(getElement(rowItems, 2)),          //weekNumber
+                    findWeekDay(getElement(rowItems, 3)),       //weekDay
+                    findTimeOfDay(getElement(rowItems, 4), getElement(rowItems, 5)),  //timeOfDay
+                    findClassroom(getElement(rowItems, 6)),     //classRoom
+                    coursePrototype.type,                       //type
+                    department,                                 //department
+                    findTeacher(getElement(rowItems, 1)),       //teacher
+                    findMiscData(getElement(rowItems, 8))       //misc
+            );
+        }
+    }
+
+    private String getElement(Elements rowItems, int elementIndex) {
+        try {
+            return new String(rowItems.get(elementIndex).text().getBytes("cp1252"), "UTF-8").trim();
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    private String findTimeOfDay(String startTime, String endTime) {
+        if (UTIL.extractPattern(startTime, coursePattern.getTimeOfDay()) &
+                UTIL.extractPattern(endTime, coursePattern.getTimeOfDay()) &
+                !"Klo".equals(startTime))
+            if (StringUtils.contains(startTime, ":00") || StringUtils.contains(endTime, ":00")) {
+                return StringUtils.removeEndIgnoreCase(startTime, ":00") + "-" + StringUtils.removeEndIgnoreCase(endTime, ":00");
+            } else {
+                return startTime + "-" + endTime;
             }
-        }
-        return course;
+        return "";
     }
 
-    private Course parseNormalCourse(Course course, Elements rowItems, Integer elem, String item) throws UnsupportedEncodingException {
-        if (StringUtils.isBlank(item)) {
-            return course;
-        }
-        switch (elem) {
-            case 0:
-                if (UTIL.extractPattern(item, coursePattern.getCoursePattern()))
-                    course = findNameCodeAndType(item, course);
-                break;
-            case 2:
-                if (UTIL.extractPattern(item, coursePattern.getWeekNumber()) & !"Vko".equals(item))
-                    course = findWeek(item, course);
-                break;
-            case 3:
-                if (UTIL.extractPattern(item, coursePattern.getWeekDays()))
-                    course = findWeekDay(item, course);
-                break;
-            case 4:
-                final String endTime = new String(rowItems.get(elem + 1).text().getBytes("cp1252"), "UTF-8");
-                if (UTIL.extractPattern(item, coursePattern.getTimeOfDay()) &
-                        UTIL.extractPattern(endTime, coursePattern.getTimeOfDay()) &
-                        !"Klo".equals(item))
-                    if (StringUtils.contains(item, ":00") || StringUtils.contains(endTime, ":00")) {
-                        course.setTimeOfDay(StringUtils.removeEndIgnoreCase(item, ":00") + "-" + StringUtils.removeEndIgnoreCase(endTime, ":00"));
-                    } else {
-                        course.setTimeOfDay(item + "-" + endTime);
-                    }
-                break;
-            case 6:
-                if (UTIL.extractPattern(item, coursePattern.getClassRoom()) & !"Sali".equals(item))
-                    course = findClassroom(item, course);
-                break;
-        }
-        return course;
-    }
-
-    private Course parseLanguageLabCourse(Course course, Elements rowItems, int elem, String item) throws UnsupportedEncodingException {
-        if (StringUtils.isBlank(item)) {
-            return course;
-        }
-        switch (elem) {
-            case 0:
-                if (UTIL.extractPattern(item, coursePattern.getCoursePattern()))
-                    course = findNameCodeAndType(item, course);
-                break;
-            case 1:
-                if (UTIL.extractPattern(item, coursePattern.getKikeTeacher()))
-                    course = findTeacher(item, course);
-                break;
-            case 3:
-                if (UTIL.extractPattern(item, coursePattern.getWeekNumber()) & !"Vko".equals(item))
-                    course = findWeek(item, course);
-                break;
-            case 4:
-                if (UTIL.extractPattern(item, coursePattern.getWeekDays()))
-                    course = findWeekDay(item, course);
-                break;
-            case 5:
-                final String endTime = new String(rowItems.get(elem + 1).text().getBytes("cp1252"), "UTF-8");
-                if (UTIL.extractPattern(item, coursePattern.getTimeOfDay()) &
-                        UTIL.extractPattern(endTime, coursePattern.getTimeOfDay()) &
-                        !"Klo".equals(item)) {
-                    course.setTimeOfDay(item + "-" + endTime);
-                }
-                break;
-            case 7:
-                if (UTIL.extractPattern(item, coursePattern.getClassRoom()) & !"Sali".equals(item))
-                    course = findClassroom(item, course);
-                break;
-            case 8:
-                course = findMiscData(item, course);
-                break;
-        }
-        return course;
-    }
-
-    private Course findMiscData(String misc, Course course) {
+    private String findMiscData(String misc) {
         if (StringUtils.isBlank(misc)) {
-            course.setMisc(UNKNOWN);
+            return UNKNOWN;
         } else {
-            course.setMisc(misc);
+            return misc;
         }
-        return course;
     }
 
-    private Course findTeacher(String teacher, Course course) {
+    private String findTeacher(String teacher) {
         if (UTIL.extractPattern(teacher, coursePattern.getKikeTeacher())) {
-            course.setTeacher(teacher);
+            return teacher;
         } else {
-            course.setTeacher(UNKNOWN);
-        }
-        return course;
-    }
-
-    private Course findWeek(String weekNumber, Course course) {
-        if (UTIL.extractPattern(weekNumber, coursePattern.getWeekNumber()))
-            course.setWeekNumber(UTIL.processWeekNumbers(weekNumber));
-        if (StringUtils.isBlank(course.getPeriod())) {
-            course.setPeriod(parsePeriod(course.getWeekNumber()));          //Set period
-            return course;
-        } else {
-            course.setPeriod(UNKNOWN);
-            return course;
+            return UNKNOWN;
         }
     }
 
-    private Course findWeekDay(String weekDay, Course course) {
+    private String findWeek(String weekNumber) {
+        if (UTIL.extractPattern(weekNumber, coursePattern.getWeekNumber())) {
+            return UTIL.processWeekNumbers(weekNumber);
+        } else {
+            return UNKNOWN;
+        }
+    }
+
+    private String findWeekDay(String weekDay) {
         if (UTIL.extractPattern(weekDay, coursePattern.getWeekDays())) {
-            course.setWeekDay(weekDay);
-            return course;
+            return weekDay;
         } else {
-            course.setWeekDay(UNKNOWN);
-            return course;
+            return UNKNOWN;
         }
     }
 
-    private Course findClassroom(String classroom, Course course) {
+    private String findClassroom(String classroom) {
         if (UTIL.extractPattern(classroom, coursePattern.getClassRoom())) {
-            course.setClassroom(classroom);
-            return course;
+            return classroom;
         } else {
-            course.setClassroom(UNKNOWN);
-            return course;
+            return UNKNOWN;
         }
     }
 
-    private Course findNameCodeAndType(String courseNameAndCode, Course course) {
+    private CoursePrototype findNameCodeAndType(String courseNameAndCode) {
+        if(StringUtils.isBlank(courseNameAndCode)) {
+            return new CoursePrototype("", "", "");
+        }
         String[] courseCodeAndNamePair = StringUtils.splitByWholeSeparator(courseNameAndCode, " - ");
         if (courseCodeAndNamePair.length < 2) {
             courseCodeAndNamePair = StringUtils.splitByWholeSeparator(courseNameAndCode, "- ");
         }
-        course.setCourseCode(courseCodeAndNamePair[0]);
-        course.setCourseName(StringUtils.substringBefore(courseCodeAndNamePair[1], "/"));
-        course.setType(StringUtils.substringAfterLast(courseCodeAndNamePair[1], "/"));
-        return course;
+        return new CoursePrototype(courseCodeAndNamePair[0], StringUtils.substringBefore(courseCodeAndNamePair[1], "/"), StringUtils.substringAfterLast(courseCodeAndNamePair[1], "/"));
     }
 
-    /**
-     * Parse period (1-4) from given string
-     *
-     * @param week
-     * @return
-     */
-    private String parsePeriod(String week) {
-        Integer weeks;
-        try {
-            weeks = Integer.parseInt(UTIL.extractWeek(week));
-        } catch (Exception e) {
-            LOGGER.error("Couldn't parse=" + week);
-            weeks = 0;
-        }
-        if (weeks == null) {
-            weeks = 0;
-        }
-        int period1 = Integer.valueOf(config.getPeriod1());
-        int period2 = Integer.valueOf(config.getPeriod2());
-        int period3 = Integer.valueOf(config.getPeriod3());
-        int period4 = Integer.valueOf(config.getPeriod4());
-        if ((period3 <= weeks) & (weeks < period4)) {
-            return "3";
-        } else if ((period4 <= weeks) & (weeks < period1)) {
-            return "4";
-        } else if ((period1 <= weeks) & (weeks < period2)) {
-            return "1";
-        } else if ((period2 <= weeks) & (weeks < 52)) {
-            return "2";
-        } else {
-            return UNKNOWN;
+    private class CoursePrototype {
+        final String courseCode;
+        final String courseName;
+        final String type;
+
+        public CoursePrototype(String courseCode, String courseName, String type) {
+            this.courseCode = courseCode;
+            this.courseName = courseName;
+            this.type = type;
         }
     }
 }

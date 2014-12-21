@@ -34,6 +34,7 @@ Compatible with IE10+ and newest Firefox and Chrome
 Compiles with Java 8 and Gradle 1.10<br>
 Gradle for building a package.<br>
 <i>bower install</i> - for JS stuff<br>
+<i>r.js -o build.js</i> - Compile JS to bundle
 <i>gradle war</i> - for building (release) package<br>
 <i>gradle clean jettyRun</i> - for quick browser testing
 

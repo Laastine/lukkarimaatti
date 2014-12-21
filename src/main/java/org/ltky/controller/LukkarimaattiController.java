@@ -1,8 +1,7 @@
 package org.ltky.controller;
 
 import org.ltky.util.EmailLink;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -22,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping("/")
 public class LukkarimaattiController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(LukkarimaattiController.class);
+    private static final Logger LOGGER = Logger.getLogger(LukkarimaattiController.class);
 
     @RequestMapping(value = "/",
             method = RequestMethod.GET)
@@ -31,7 +30,7 @@ public class LukkarimaattiController {
                 + request.getRemoteAddr() +
                 " with user-agent"
                 + request.getHeader("user-agent"));
-        return "redirect:/app/dist/index.html";
+        return "redirect:/app/index.html";
     }
 
     @RequestMapping(value = "app/save",

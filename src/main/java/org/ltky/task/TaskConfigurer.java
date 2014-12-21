@@ -2,8 +2,7 @@ package org.ltky.task;
 
 import org.ltky.dao.CourseDao;
 import org.ltky.parser.URLParser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -21,7 +20,7 @@ import java.util.Map;
 @Configuration
 @EnableScheduling
 public class TaskConfigurer {
-    private static final Logger LOGGER = LoggerFactory.getLogger(TaskConfigurer.class);
+    private static final Logger LOGGER = Logger.getLogger(TaskConfigurer.class);
     private Map<String, String> map;
     @Autowired
     private CourseTask courseTask;

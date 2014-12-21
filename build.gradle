@@ -78,11 +78,7 @@ ext {
 }
 
 configurations.all {
-    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-        if (details.requested.name == 'log4j') {
-            details.useTarget "org.slf4j:log4j-over-slf4j:1.7.5"
-        }
-    }
+    exclude module: 'slf4j-log4j12'
 }
 
 dependencies {
@@ -103,14 +99,14 @@ dependencies {
             'postgresql:postgresql:9.1-901-1.jdbc4',
             'org.jsoup:jsoup:1.7.3',
             'org.codehaus.jackson:jackson-mapper-asl:1.9.13',
-            'javax.mail:mail:1.4.7'
+            'javax.mail:mail:1.4.7',
+            'log4j:log4j:1.2.17',
+            'org.slf4j:slf4j-log4j12:1.7.7'
 
     querydslapt "com.mysema.querydsl:querydsl-apt:3.3.2"
 
     providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
     runtime 'jstl:jstl:1.2'
-
-    testRuntime 'org.hsqldb:hsqldb:2.3.2'
 
     testCompile 'junit:junit:4.11',
             'org.hamcrest:hamcrest-all:1.3',
@@ -118,6 +114,7 @@ dependencies {
             'org.mockito:mockito-all:1.9.5',
             "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion",
             "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion",
+            "org.seleniumhq.selenium:selenium-ie-driver:$seleniumVersion",
             "org.seleniumhq.selenium:selenium-api:$seleniumVersion",
             "org.seleniumhq.selenium:selenium-java:$seleniumVersion",
             'javax.servlet:javax.servlet-api:3.1.0',
@@ -126,4 +123,6 @@ dependencies {
             "org.eclipse.jetty:jetty-servlet:${jettyVersion}",
             "org.eclipse.jetty:jetty-servlets:${jettyVersion}",
             "org.eclipse.jetty:jetty-webapp:${jettyVersion}"
+
+    testRuntime 'org.hsqldb:hsqldb:2.3.2'
 }

@@ -1,12 +1,8 @@
 package org.ltky.config;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -33,9 +29,12 @@ import javax.sql.DataSource;
         {"org.ltky.dao.model", "org.ltky.dao", "org.ltky.task", "org.ltky.controller"})
 @EnableJpaRepositories(basePackages = {"org.ltky.dao.model", "org.ltky.dao", "org.ltky.task"})
 @EnableTransactionManagement
-@PropertySource("classpath:lukkarimaatti.properties")
+@PropertySources({
+        @PropertySource("classpath:lukkarimaatti.properties"),
+        @PropertySource("classpath:log4j.properties")
+})
 public class WebConfig extends WebMvcConfigurerAdapter {
-    private static final Logger LOGGER = LoggerFactory.getLogger(WebConfig.class);
+    private static final Logger LOGGER = Logger.getLogger(WebConfig.class);
     @Autowired
     private Environment environment;
 

@@ -4,13 +4,10 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.ltky.config.WebConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
-
-import java.io.IOException;
 
 /**
  * lukkarimaatti
@@ -19,37 +16,27 @@ import java.io.IOException;
  * Date: 16.12.2014
  */
 public class EmbeddedJetty implements Runnable {
-
     private static final int DEFAULT_PORT = 8085;
     private static final String CONTEXT_PATH = "/lukkarimaatti";
-    private static final String CONFIG_LOCATION = "org.ltky.config";
     private static final String MAPPING_URL = "/";
-    private static final String DEFAULT_PROFILE = "dev";
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(EmbeddedJetty.class);
+    private static final Logger LOGGER = Logger.getLogger(EmbeddedJetty.class);
 
     public static void main(String[] args) throws Exception {
-        new EmbeddedJetty().startJetty(getPortFromArgs(args));
+        new EmbeddedJetty().startJetty();
     }
 
-    private static int getPortFromArgs(String[] args) {
-        if (args.length > 0) {
-            try {
-                return Integer.valueOf(args[0]);
-            } catch (NumberFormatException ignore) {
-            }
+    private void startJetty() {
+        try {
+            Server server = new Server(DEFAULT_PORT);
+            server.setHandler(getServletContextHandler(getContext()));
+            server.start();
+            server.join();
+        } catch (Exception e) {
+            throw new RuntimeException("Jettyrunner failed ", e);
         }
-        return DEFAULT_PORT;
     }
 
-    private void startJetty(int port) throws Exception {
-        Server server = new Server(port);
-        server.setHandler(getServletContextHandler(getContext()));
-        server.start();
-        server.join();
-    }
-
-    private static ServletContextHandler getServletContextHandler(AnnotationConfigWebApplicationContext context) throws IOException {
+    private static ServletContextHandler getServletContextHandler(AnnotationConfigWebApplicationContext context) {
         ServletContextHandler contextHandler = new ServletContextHandler();
         contextHandler.setResourceBase("./src/main/webapp/");
         ServletHolder servletHolder = new ServletHolder("dispatcher-servlet", new DispatcherServlet(context));
@@ -63,16 +50,15 @@ public class EmbeddedJetty implements Runnable {
     private static AnnotationConfigWebApplicationContext getContext() {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
         context.register(WebConfig.class);
-        //context.getEnvironment().setDefaultProfiles(DEFAULT_PROFILE);
         return context;
     }
 
     @Override
     public void run() {
         try {
-            new EmbeddedJetty().startJetty(8085);
+            new EmbeddedJetty().startJetty();
         } catch (Exception e) {
-            LOGGER.error("Jetty error=",e);
+            LOGGER.error("Jetty error=", e);
         }
     }
 }

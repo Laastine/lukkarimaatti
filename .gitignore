@@ -4,7 +4,7 @@ target/
 logs/
 .idea/
 *.iml
-src/main/resources/*.properties
+src/main/resources/lukkarimaatti.properties
 deploy.sh
 src/main/webapp/app/js/*.min.js
 src/main/webapp/app/css/*.min.css

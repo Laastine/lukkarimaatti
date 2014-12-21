@@ -21,14 +21,15 @@ public class WebAppInitializer implements WebApplicationInitializer {
         final AnnotationConfigWebApplicationContext context =
                 new AnnotationConfigWebApplicationContext();
         context.register(WebConfig.class);
+
         servletContext.setInitParameter("log4jConfigLocation", "classpath:log4j.properties");
         servletContext.setInitParameter("log4jRefreshInterval", "10000");
         servletContext.setInitParameter("log4jExposeWebAppRoot", "false");
         Log4jConfigListener log4jListener = new Log4jConfigListener();
         servletContext.addListener(log4jListener);
+
         ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet(context));
         dispatcher.addMapping("/");
-        //dispatcher.setInitParameter("log4jConfigLocation" , "classpath:log4j.properties");
         dispatcher.setAsyncSupported(true);
         dispatcher.setLoadOnStartup(1);
     }

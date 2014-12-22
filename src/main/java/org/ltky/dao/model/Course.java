@@ -19,30 +19,30 @@ import java.util.UUID;
 @Table(name = "COURSE")
 public class Course implements Serializable {
     @Id
-    @Column(name = "COURSE_ID", nullable = false)
+    @Column(name = "COURSE_ID")
     public Long courseId;
-    @Column(name = "COURSE_CODE", nullable = false)
-    public  String courseCode;
-    @Column(name = "COURSE_NAME", nullable = false)
-    public  String courseName;
+    @Column(name = "COURSE_CODE")
+    public String courseCode;
+    @Column(name = "COURSE_NAME")
+    public String courseName;
     @Column(name = "PERIOD")
-    public  String period = "";
+    public String period = "";
     @Column(name = "WEEK")
-    public  String weekNumber;
+    public String weekNumber;
     @Column(name = "WEEK_DAY")
-    public  String weekDay;
+    public String weekDay;
     @Column(name = "TIME_OF_DAY")
-    public  String timeOfDay;
+    public String timeOfDay;
     @Column(name = "CLASSROOM")
-    public  String classroom;
+    public String classroom;
     @Column(name = "TYPE")
-    public  String type;
+    public String type;
     @Column(name = "DEPARTMENT")
-    public  String department;
+    public String department;
     @Column(name = "TEACHER")
-    public  String teacher;
+    public String teacher;
     @Column(name = "MISC")
-    public  String misc;
+    public String misc;
 
     public Course(String courseCode, String courseName,
                   String weekNumber, String weekDay,
@@ -62,6 +62,7 @@ public class Course implements Serializable {
         this.misc = misc;
     }
 
+    //For Hibernate mutation
     public Course() {
     }
 

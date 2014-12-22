@@ -78,7 +78,7 @@ public class Util {
     public String processWeekNumbers(final String weeks) {
         final String dash = "-";
         final String comma = ",";
-        final Set<Integer> weekSequence = new HashSet();
+        final Set<Integer> weekSequence = new HashSet<>();
         if (StringUtils.isBlank(weeks)) {
             return "";
         } else {
@@ -103,7 +103,7 @@ public class Util {
         Arrays.sort(list, (a, b) -> ((Integer) a) - ((Integer) b));
         final StringBuilder builder = new StringBuilder();
         for (Object o : list) {
-            builder.append(String.valueOf(o) + comma);
+            builder.append(String.valueOf(o)).append(comma);
         }
         return StringUtils.removeEnd(builder.toString(), comma);
     }

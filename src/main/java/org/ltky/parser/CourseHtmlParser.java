@@ -35,7 +35,7 @@ public class CourseHtmlParser {
         return parseElementsData(getTableElements(getUrlData(url)));
     }
 
-    public List<Course> parseHTMLData(String html) throws IOException {
+    public List<Course> parseHTMLData(String html) {
         return parseElementsData(getTableElements(Jsoup.parse(html)));
     }
 

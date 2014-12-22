@@ -34,7 +34,7 @@ import java.util.concurrent.TimeUnit;
 public class E2eWebTest {
     private WebDriver driver;
     private String baseUrl;
-    private ExecutorService executorService = Executors.newFixedThreadPool(1);
+    private final ExecutorService executorService = Executors.newFixedThreadPool(1);
     private static final Logger LOGGER = Logger.getLogger(E2eWebTest.class);
     @Autowired
     private TaskConfigurer taskConfigurer;

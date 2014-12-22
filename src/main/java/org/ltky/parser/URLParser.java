@@ -32,11 +32,10 @@ public class URLParser {
         final String COURSE_URL_PATTERN = "\\/fi\\/c\\/document_library\\/get_file\\?uuid=[a-z0-9\\-]*&amp;groupId=10304";
         String linkList = StringUtils.substringBetween(fetchFromWeb(uniURL), parserConfiguration.getStartTag(), parserConfiguration.getEndTag());
         LOGGER.debug("linkList=" + linkList);
-        String link = "";
         Pattern pattern = Pattern.compile(COURSE_URL_PATTERN);
         Matcher matcher = pattern.matcher(linkList);
         while (matcher.find()) {
-            link = prefix + matcher.group();
+            final String link = prefix + matcher.group();
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Department=" + queue.peek() + ", \nlink=" + link);
             }
@@ -51,14 +50,13 @@ public class URLParser {
         return prefix + StringUtils.substringBetween(fetchFromWeb(examURL), parserConfiguration.getExamStartTag(), parserConfiguration.getExamEndTag());
     }
 
-    private final LinkedList<String> initDepart2UrlMap() {
-        final LinkedList<String> list = new LinkedList() {{
+    private LinkedList<String> initDepart2UrlMap() {
+        return new LinkedList() {{
             add("ente"); add("ymte"); add("kete");
             add("kote"); add("sate"); add("tite");
             add("tuta"); add("kati"); add("mafy");
             add("kike"); add("kv");
         }};
-        return list;
     }
 
     /**

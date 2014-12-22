@@ -1,7 +1,5 @@
 apply plugin: 'idea'
-apply plugin: 'war'
-apply plugin: 'java'
-
+apply plugin: 'jetty'
 
 group = 'org.ltky'
 
@@ -30,6 +28,12 @@ war {
             'app/build',
             'app/dist/build'
     )
+}
+
+jettyRun {
+    httpPort = 8085
+    reload = 'automatic'
+    scanIntervalSeconds = 2
 }
 
 task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates the QueryDSL query types') {

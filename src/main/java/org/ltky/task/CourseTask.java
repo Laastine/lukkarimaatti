@@ -34,7 +34,7 @@ public class CourseTask {
             (new CourseHtmlParser(department)
                     .parse(departmentData))
                     .stream()
-                    .filter(course -> CourseValidator.validateCourse(course))
+                    .filter(CourseValidator::validateCourse)
                     .forEach(courseDao::save);
         } catch (Exception e) {
             LOGGER.error("HtmlParser error", e);

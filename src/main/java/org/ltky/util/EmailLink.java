@@ -50,7 +50,7 @@ public class EmailLink {
         }
     }
 
-    public void sendEmail(Session session, String toEmail, String body) throws Exception {
+    void sendEmail(Session session, String toEmail, String body) throws Exception {
         MimeMessage msg = new MimeMessage(session);
         msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
         msg.addHeader("format", "flowed");

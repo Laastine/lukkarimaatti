@@ -32,5 +32,7 @@ define([
 
         app.eventAggregator = _.extend({}, Backbone.Events);
 
+
+
         return app;
     });

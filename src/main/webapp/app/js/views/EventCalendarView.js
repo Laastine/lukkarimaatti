@@ -95,11 +95,10 @@ define([
         },
 
         appendEvent: function (event) {
-            var eventView = new EventView({
+            return new EventView({
                 model: event,
                 calendar: this.calendar
             });
-            return eventView;
         }
     });
 

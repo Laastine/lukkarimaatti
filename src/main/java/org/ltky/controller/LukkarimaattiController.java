@@ -1,7 +1,7 @@
 package org.ltky.controller;
 
-import org.ltky.util.EmailLink;
 import org.apache.log4j.Logger;
+import org.ltky.util.EmailLink;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

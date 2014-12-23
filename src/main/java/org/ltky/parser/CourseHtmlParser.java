@@ -94,17 +94,18 @@ public class CourseHtmlParser {
     }
 
     private Course parseTableElement(Elements rowItems) {
-        if (!this.department.equals("kike")) {
+        if (this.department.equalsIgnoreCase("kike")) {
             CoursePrototype coursePrototype = findNameCodeAndType(getElement(rowItems, 0));
-            return new Course(coursePrototype.courseCode,       //courseCode
+            return new Course(
+                    coursePrototype.courseCode,                 //courseCode
                     coursePrototype.courseName,                 //courseName
-                    findWeek(getElement(rowItems, 2)),          //weekNumber
-                    findWeekDay(getElement(rowItems, 3)),       //weekDay
-                    findTimeOfDay(getElement(rowItems, 4), getElement(rowItems, 5)),  //timeOfDay
-                    findClassroom(getElement(rowItems, 6)),     //classRoom
+                    findWeek(getElement(rowItems, 3)),          //weekNumber
+                    findWeekDay(getElement(rowItems, 4)),       //weekDay
+                    findTimeOfDay(getElement(rowItems, 5), getElement(rowItems, 6)),  //timeOfDay
+                    findClassroom(getElement(rowItems, 7)),     //classRoom
                     coursePrototype.type,                       //type
                     department,                                 //department
-                    "",                                         //teacher
+                    findTeacher(getElement(rowItems, 1)),       //teacher
                     findMiscData(getElement(rowItems, 8))       //misc
             );
         } else {
@@ -119,7 +120,7 @@ public class CourseHtmlParser {
                     coursePrototype.type,                       //type
                     department,                                 //department
                     findTeacher(getElement(rowItems, 1)),       //teacher
-                    findMiscData(getElement(rowItems, 8))       //misc
+                    findMiscData(getElement(rowItems, 7))       //misc
             );
         }
     }

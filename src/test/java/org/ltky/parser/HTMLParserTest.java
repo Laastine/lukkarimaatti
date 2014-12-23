@@ -28,6 +28,7 @@ public class HTMLParserTest {
     private static final String TUTA_DEPARTMENT = "tuta";
     private static final String KATI_DEPARTMENT = "kati";
     private static final String YMTE_DEPARTMENT = "ymte";
+    private static final String ENTE_DEPARTMENT = "ente";
     private static final String COURSE_TEST_DATA =
             "<table class='spreadsheet' cellspacing='0' cellpadding='2%' border='t'>\n" +
                     "<col class='column0' /><col class='column1' /><col class='column2' /><col class='column3' /><col class='column4' /><col class='column5' /><col class='column6' /><col class='column7' />\n" +
@@ -116,120 +117,67 @@ public class HTMLParserTest {
                     "<td>&nbsp;</td>\n" +
                     "</tr>\n" +
                     "</table>";
-    private static final String LANGUAGE_LAB_TEST_DATA =
-            "<table class='spreadsheet' cellspacing='0' cellpadding='2%' border='t'>\n" +
-                    "<col class='column0' /><col class='column1' /><col class='column2' /><col class='column3' /><col class='column4' /><col class='column5' /><col class='column6' /><col class='column7' /><col class='column8' />\n" +
-                    "<tr class='columnTitles'>\n" +
-                    "<td></td>\n" +
-                    "<td></td>\n" +
-                    "<td>Periodi</td>\n" +
-                    "<td>Vko</td>\n" +
-                    "<td>      </td>\n" +
-                    "<td>Klo</td>\n" +
-                    "<td>      </td>\n" +
-                    "<td>Sali</td>\n" +
-                    "<td></td>\n" +
-                    "</tr>\n" +
-                    "<tr>\n" +
-                    "<td>FV14A1200 - Venäjä 1: D</td>\n" +
-                    "<td>Kullberg, Olesya</td>\n" +
-                    "<td>Periodi 1-2</td>\n" +
-                    "<td>35-41, 43-49</td>\n" +
-                    "<td>to</td>\n" +
-                    "<td>12</td>\n" +
-                    "<td>14</td>\n" +
-                    "<td>1427C*</td>\n" +
-                    "<td>Mainitse ilmoittautuessasi Lisätietoja-kenttään, oletko lukenut kieltä aiemmin jossain muualla ja kuinka monta vuotta.</td>\n" +
-                    "</tr>\n" +
-                    "<tr>\n" +
-                    "<td>FV14A1200 - Venäjä 1: D</td>\n" +
-                    "<td>Kullberg, Olesya</td>\n" +
-                    "<td>Periodi 1-2</td>\n" +
-                    "<td>35-41, 43-49</td>\n" +
-                    "<td>ti</td>\n" +
-                    "<td>8</td>\n" +
-                    "<td>10</td>\n" +
-                    "<td>1407</td>\n" +
-                    "<td>Mainitse ilmoittautuessasi Lisätietoja-kenttään, oletko lukenut kieltä aiemmin jossain muualla ja kuinka monta vuotta.</td>\n" +
-                    "</tr>\n" +
-                    "<tr>\n" +
-                    "<td>FV14A1200 - Venäjä 1: C</td>\n" +
-                    "<td>Bagrova, Natalia</td>\n" +
-                    "<td>&nbsp;</td>\n" +
-                    "<td>2-8, 10-15, 17</td>\n" +
-                    "<td>to</td>\n" +
-                    "<td>10</td>\n" +
-                    "<td>12</td>\n" +
-                    "<td>1407</td>\n" +
-                    "<td>Mainitse ilmoittautuessasi Lisätietoja-kenttään, oletko lukenut kieltä aiemmin jossain muualla ja kuinka monta vuotta.</td>\n" +
-                    "</tr>\n" +
-                    "<tr>\n" +
-                    "<td>FV14A1200 - Venäjä 1: C</td>\n" +
-                    "<td>Bagrova, Natalia</td>\n" +
-                    "<td>&nbsp;</td>\n" +
-                    "<td>2-8, 10-15, 17</td>\n" +
-                    "<td>ti</td>\n" +
-                    "<td>12</td>\n" +
-                    "<td>14</td>\n" +
-                    "<td>1431*</td>\n" +
-                    "<td>Mainitse ilmoittautuessasi Lisätietoja-kenttään, oletko lukenut kieltä aiemmin jossain muualla ja kuinka monta vuotta.</td>\n" +
-                    "</tr>\n" +
-                    "<tr>\n" +
-                    "<td>FV14A1200 - Venäjä 1: A</td>\n" +
-                    "<td>Bagrova, Natalia</td>\n" +
-                    "<td>&nbsp;</td>\n" +
-                    "<td>43</td>\n" +
-                    "<td>ti</td>\n" +
-                    "<td>8</td>\n" +
-                    "<td>10</td>\n" +
-                    "<td>1431*</td>\n" +
-                    "<td>Mainitse ilmoittautuessasi Lisätietoja-kenttään, oletko lukenut kieltä aiemmin jossain muualla ja kuinka monta vuotta.</td>\n" +
-                    "</tr>\n" +
-                    "<tr>\n" +
-                    "<td>FV14A1200 - Venäjä 1: B</td>\n" +
-                    "<td>Kullberg, Olesya</td>\n" +
-                    "<td>Periodi 1-2</td>\n" +
-                    "<td>35-41, 43-49</td>\n" +
-                    "<td>ke</td>\n" +
-                    "<td>12</td>\n" +
-                    "<td>14</td>\n" +
-                    "<td>1427A</td>\n" +
-                    "<td>Mainitse ilmoittautuessasi Lisätietoja-kenttään, oletko lukenut kieltä aiemmin jossain muualla ja kuinka monta vuotta.</td>\n" +
-                    "</tr>\n" +
-                    "<tr>\n" +
-                    "<td>FV14A1200 - Venäjä 1: B</td>\n" +
-                    "<td>Kullberg, Olesya</td>\n" +
-                    "<td>Periodi 1-2</td>\n" +
-                    "<td>35-41, 43-49</td>\n" +
-                    "<td>ma</td>\n" +
-                    "<td>12</td>\n" +
-                    "<td>14</td>\n" +
-                    "<td>1427A</td>\n" +
-                    "<td>Mainitse ilmoittautuessasi Lisätietoja-kenttään, oletko lukenut kieltä aiemmin jossain muualla ja kuinka monta vuotta.</td>\n" +
-                    "</tr>\n" +
-                    "<tr>\n" +
-                    "<td>FV14A1200 - Venäjä 1: A</td>\n" +
-                    "<td>Bagrova, Natalia</td>\n" +
-                    "<td>Periodi 1-2</td>\n" +
-                    "<td>35-41, 43-49</td>\n" +
-                    "<td>to</td>\n" +
-                    "<td>12</td>\n" +
-                    "<td>14</td>\n" +
-                    "<td>1410A</td>\n" +
-                    "<td>Mainitse ilmoittautuessasi Lisätietoja-kenttään, oletko lukenut kieltä aiemmin jossain muualla ja kuinka monta vuotta.</td>\n" +
-                    "</tr>\n" +
-                    "<tr>\n" +
-                    "<td>FV14A1200 - Venäjä 1: A</td>\n" +
-                    "<td>Bagrova, Natalia</td>\n" +
-                    "<td>&nbsp;</td>\n" +
-                    "<td>35-41, 44-49</td>\n" +
-                    "<td>ti</td>\n" +
-                    "<td>8</td>\n" +
-                    "<td>10</td>\n" +
-                    "<td>1410A</td>\n" +
-                    "<td>Mainitse ilmoittautuessasi Lisätietoja-kenttään, oletko lukenut kieltä aiemmin jossain muualla ja kuinka monta vuotta.</td>\n" +
-                    "</tr>\n" +
-                    "</table>";
+    private static final String LANGUAGE_LAB_FRENCH = "<table class='spreadsheet' cellspacing='0' cellpadding='2%' border='t'>\n" +
+            "<col class='column0' /><col class='column1' /><col class='column2' /><col class='column3' /><col class='column4' /><col class='column5' /><col class='column6' /><col class='column7' /><col class='column8' />\n" +
+            "<tr class='columnTitles'>\n" +
+            "<td></td>\n" +
+            "<td></td>\n" +
+            "<td>Periodi</td>\n" +
+            "<td>Vko</td>\n" +
+            "<td>      </td>\n" +
+            "<td>Klo</td>\n" +
+            "<td>      </td>\n" +
+            "<td>Sali</td>\n" +
+            "<td></td>\n" +
+            "</tr>\n" +
+            "<tr>\n" +
+            "<td>FV15A1420 - Ranskan jatkokurssi 2: A</td>\n" +
+            "<td>Paakkonen, Vuokko</td>\n" +
+            "<td>Periodi 4</td>\n" +
+            "<td>11-16</td>\n" +
+            "<td>to</td>\n" +
+            "<td>12</td>\n" +
+            "<td>14</td>\n" +
+            "<td>1427A</td>\n" +
+            "<td>&nbsp;</td>\n" +
+            "</tr>\n" +
+            "<tr>\n" +
+            "<td>FV15A1420 - Ranskan jatkokurssi 2: A</td>\n" +
+            "<td>Paakkonen, Vuokko</td>\n" +
+            "<td>Periodi 4</td>\n" +
+            "<td>11-16</td>\n" +
+            "<td>ti</td>\n" +
+            "<td>12</td>\n" +
+            "<td>14</td>\n" +
+            "<td>1427A</td>\n" +
+            "<td>&nbsp;</td>\n" +
+            "</tr>\n" +
+            "</table>";
+    private static final String LANGUAGE_LAB_FINNISH = "<table class='spreadsheet' cellspacing='0' cellpadding='2%' border='t'>\n" +
+            "<col class='column0' /><col class='column1' /><col class='column2' /><col class='column3' /><col class='column4' /><col class='column5' /><col class='column6' /><col class='column7' /><col class='column8' />\n" +
+            "<tr class='columnTitles'>\n" +
+            "<td></td>\n" +
+            "<td></td>\n" +
+            "<td>Periodi</td>\n" +
+            "<td>Vko</td>\n" +
+            "<td>      </td>\n" +
+            "<td>Klo</td>\n" +
+            "<td>      </td>\n" +
+            "<td>Sali</td>\n" +
+            "<td></td>\n" +
+            "</tr>\n" +
+            "<tr>\n" +
+            "<td>FV18A9301 - Finnish 3: A</td>\n" +
+            "<td>Häkkinen, Elina</td>\n" +
+            "<td>Periodi 3-4</td>\n" +
+            "<td>3-8, 11-16</td>\n" +
+            "<td>to</td>\n" +
+            "<td>10</td>\n" +
+            "<td>12</td>\n" +
+            "<td>1407</td>\n" +
+            "<td>&nbsp;</td>\n" +
+            "</tr>\n" +
+            "</table>";
     private static final String PUPPA_TEST_DATA =
             "<table class='spreadsheet' cellspacing='0' cellpadding='2%' border='t'>\n" +
                     "<col class='column0' /><col class='column1' /><col class='column2' /><col class='column3' /><col class='column4' /><col class='column5' /><col class='column6' /><col class='column7' />\n" +
@@ -352,36 +300,76 @@ public class HTMLParserTest {
                     "<td></td>\n" +
                     "</tr>\n" +
                     "<tr>\n" +
-                    "<td>BH60A0250 - Kiinteiden päästöjen hallinta /S</td>\n" +
-                    "<td>&nbsp;</td>\n" +
-                    "<td>46-47</td>\n" +
-                    "<td>to</td>\n" +
-                    "<td>14</td>\n" +
-                    "<td>16</td>\n" +
-                    "<td>7339*</td>\n" +
-                    "<td>&nbsp;</td>\n" +
-                    "</tr>\n" +
-                    "<tr>\n" +
-                    "<td>BH60A0250 - Kiinteiden päästöjen hallinta /H</td>\n" +
+                    "<td>BH60A1200 - Ilmanvaihto- ja ilmastointitekniikka/HR/02</td>\n" +
                     "<td>Periodi 1-2</td>\n" +
-                    "<td>35-41, 43-49</td>\n" +
+                    "<td>37-42, 44-49</td>\n" +
                     "<td>ke</td>\n" +
                     "<td>10</td>\n" +
                     "<td>12</td>\n" +
-                    "<td>4301+4302*</td>\n" +
+                    "<td>ML 7439 (sini)*</td>\n" +
                     "<td>&nbsp;</td>\n" +
                     "</tr>\n" +
                     "<tr>\n" +
-                    "<td>BH60A0250 - Kiinteiden päästöjen hallinta /L</td>\n" +
-                    "<td>Periodi 1-2</td>\n" +
-                    "<td>35-41, 43-49</td>\n" +
-                    "<td>ti</td>\n" +
-                    "<td>12</td>\n" +
+                    "<td>BH60A1200 - Ilmanvaihto- ja ilmastointitekniikka/H</td>\n" +
+                    "<td>&nbsp;</td>\n" +
+                    "<td>3-4</td>\n" +
+                    "<td>ke</td>\n" +
                     "<td>14</td>\n" +
-                    "<td>1381</td>\n" +
+                    "<td>17</td>\n" +
+                    "<td>ML 7439 (sini)*</td>\n" +
+                    "<td>itsenäistä harjoitustyön tekoa</td>\n" +
+                    "</tr>\n" +
+                    "<tr>\n" +
+                    "<td>BH60A1200 - Ilmanvaihto- ja ilmastointitekniikka/H</td>\n" +
+                    "<td>Periodi 1-2</td>\n" +
+                    "<td>37-42, 44-49</td>\n" +
+                    "<td>ma</td>\n" +
+                    "<td>15</td>\n" +
+                    "<td>17</td>\n" +
+                    "<td>ML 6428*</td>\n" +
+                    "<td>itsenäistä harjoitustyön tekoa</td>\n" +
+                    "</tr>\n" +
+                    "<tr>\n" +
+                    "<td>BH60A1200 - Ilmanvaihto- ja ilmastointitekniikka/L+H</td>\n" +
+                    "<td>&nbsp;</td>\n" +
+                    "<td>37-42, 44</td>\n" +
+                    "<td>ma</td>\n" +
+                    "<td>12</td>\n" +
+                    "<td>15</td>\n" +
+                    "<td>4509</td>\n" +
                     "<td>&nbsp;</td>\n" +
                     "</tr>\n" +
-                    "</table>";
+                    "<tr>\n" +
+                    "<td>BH60A1200 - Ilmanvaihto- ja ilmastointitekniikka/HR/01</td>\n" +
+                    "<td>Periodi 1-2</td>\n" +
+                    "<td>37-42, 44-49</td>\n" +
+                    "<td>ke</td>\n" +
+                    "<td>12</td>\n" +
+                    "<td>14</td>\n" +
+                    "<td>ML 7439 (sini)*</td>\n" +
+                    "<td>&nbsp;</td>\n" +
+                    "</tr>\n" +
+                    "</table>\n" +
+                    "<table class='footer-border-args'  border='0' cellspacing='0' width='100%'><tr>\n" +
+                    "<td>\n" +
+                    "<table cellspacing='0' border='0' width='100%' class='footer-0-args'>\n" +
+                    "<col align='left' /><col align='center' /><col align='right' />\n" +
+                    "  <tr>\n" +
+                    "    <td><span class='footer-0-0-0'></span></td><td></td><td></td>\n" +
+                    "  </tr>\n" +
+                    "</table>\n" +
+                    "</td>\n" +
+                    "</tr><tr>\n" +
+                    "<td>\n" +
+                    "<table cellspacing='0' border='0' width='100%' class='footer-1-args'>\n" +
+                    "<col align='left' /><col align='center' /><col align='right' />\n" +
+                    "  <tr>\n" +
+                    "    <td><span class='footer-1-0-0'>____________________________________  </span><span class='footer-1-0-1'>  </span></td><td></td><td></td>\n" +
+                    "  </tr>\n" +
+                    "</table>\n" +
+                    "</td>\n" +
+                    "</tr>\n" +
+                    "</table>\n";
 
     @Before
     public void init() {
@@ -397,15 +385,29 @@ public class HTMLParserTest {
         CourseHtmlParser courseHtmlParser = new CourseHtmlParser(TITE_DEPARTMENT);
         List<Course> list = courseHtmlParser.parseHTMLData(COURSE_TEST_DATA);
         List<Course> list2 = courseHtmlParser.parseHTMLData(COURSE_TEST_DATA2);
-        Assert.assertFalse(list.isEmpty());
-        Assert.assertFalse(list2.isEmpty());
+        Assert.assertEquals("CT50A6000", list.get(0).courseCode);
+        Assert.assertEquals("Pattern Recognition", list.get(0).courseName);
+        Assert.assertEquals("CT30A9700", list2.get(0).courseCode);
+        Assert.assertEquals("Network Security", list2.get(0).courseName);
     }
 
     @Test
-    public void HTMLanguageLabLDataParsingTest() throws IOException {
+    public void HTMLanguageFinnishParsingTest() throws IOException {
         CourseHtmlParser courseHtmlParser = new CourseHtmlParser(KIKE_DEPARTMENT);
-        List<Course> list = courseHtmlParser.parseHTMLData(LANGUAGE_LAB_TEST_DATA);
-        Assert.assertFalse(list.isEmpty());
+        List<Course> list = courseHtmlParser.parseHTMLData(LANGUAGE_LAB_FINNISH);
+        Assert.assertEquals("Finnish 3: A", list.get(0).courseName);
+        Assert.assertEquals("FV18A9301", list.get(0).courseCode);
+        LOGGER.info("LL=" + list.get(0).toString());
+    }
+
+    @Test
+    public void HTMLanguageFrenchParsingTest() throws IOException {
+        CourseHtmlParser courseHtmlParser = new CourseHtmlParser(KIKE_DEPARTMENT);
+        List<Course> list = courseHtmlParser.parseHTMLData(LANGUAGE_LAB_FRENCH);
+        Assert.assertEquals("Ranskan jatkokurssi 2: A", list.get(0).courseName);
+        Assert.assertEquals("FV15A1420", list.get(0).courseCode);
+        Assert.assertEquals("1427A", list.get(0).classroom);
+        Assert.assertEquals("12-14", list.get(0).timeOfDay);
         LOGGER.info("LL=" + list.get(0).toString());
     }
 
@@ -413,7 +415,9 @@ public class HTMLParserTest {
     public void PuppaDataParsingTest() throws IOException {
         CourseHtmlParser courseHtmlParser = new CourseHtmlParser(TUTA_DEPARTMENT);
         List<Course> list = courseHtmlParser.parseHTMLData(PUPPA_TEST_DATA);
-        Assert.assertFalse(list.isEmpty());
+        Assert.assertEquals("Kustannusjohtamisen peruskurssi", list.get(0).courseName);
+        Assert.assertEquals("CS31A0101", list.get(0).courseCode);
+        Assert.assertEquals("Viipuri-sali*", list.get(0).classroom);
         LOGGER.info("TUTA=" + list.get(0).toString());
     }
 
@@ -421,7 +425,10 @@ public class HTMLParserTest {
     public void KatiDataParsingTest() throws IOException {
         CourseHtmlParser courseHtmlParser = new CourseHtmlParser(KATI_DEPARTMENT);
         List<Course> list = courseHtmlParser.parseHTMLData(KATI_TEST_DATA);
-        Assert.assertFalse(list.isEmpty());
+        Assert.assertEquals("Makroteoria", list.get(0).courseName);
+        Assert.assertEquals("A250A0350", list.get(0).courseCode);
+        Assert.assertEquals("1382", list.get(0).classroom);
+        Assert.assertEquals("9-15", list.get(0).timeOfDay);
         LOGGER.info("KATI=" + list.get(0).toString());
     }
 
@@ -429,7 +436,10 @@ public class HTMLParserTest {
     public void YmteDataParsingTest() throws IOException {
         CourseHtmlParser courseHtmlParser = new CourseHtmlParser(YMTE_DEPARTMENT);
         List<Course> list = courseHtmlParser.parseHTMLData(YMTE_TEST_DATA);
-        Assert.assertFalse(list.isEmpty());
+        Assert.assertEquals("Ilmanvaihto- ja ilmastointitekniikka", list.get(0).courseName);
+        Assert.assertEquals("BH60A1200", list.get(0).courseCode);
+        Assert.assertEquals("ML 7439 (sini)*", list.get(0).classroom);
+        Assert.assertEquals("10-12", list.get(0).timeOfDay);
         LOGGER.info("YMTE=" + list.get(0).toString());
     }
 

@@ -397,6 +397,11 @@ public class HTMLParserTest {
         List<Course> list = courseHtmlParser.parseHTMLData(LANGUAGE_LAB_FINNISH);
         Assert.assertEquals("Finnish 3: A", list.get(0).courseName);
         Assert.assertEquals("FV18A9301", list.get(0).courseCode);
+        Assert.assertEquals("1407", list.get(0).classroom);
+        Assert.assertEquals("10-12", list.get(0).timeOfDay);
+        Assert.assertEquals("to", list.get(0).weekDay);
+        Assert.assertEquals("3,4,5,6,7,8,11,12,13,14,15,16", list.get(0).weekNumber);
+        Assert.assertEquals("kike", list.get(0).department);
         LOGGER.info("LL=" + list.get(0).toString());
     }
 
@@ -406,18 +411,26 @@ public class HTMLParserTest {
         List<Course> list = courseHtmlParser.parseHTMLData(LANGUAGE_LAB_FRENCH);
         Assert.assertEquals("Ranskan jatkokurssi 2: A", list.get(0).courseName);
         Assert.assertEquals("FV15A1420", list.get(0).courseCode);
+        Assert.assertEquals("Paakkonen, Vuokko", list.get(0).teacher);
         Assert.assertEquals("1427A", list.get(0).classroom);
         Assert.assertEquals("12-14", list.get(0).timeOfDay);
+        Assert.assertEquals("to", list.get(0).weekDay);
+        Assert.assertEquals("11,12,13,14,15,16", list.get(0).weekNumber);
+        Assert.assertEquals("kike", list.get(0).department);
         LOGGER.info("LL=" + list.get(0).toString());
     }
 
     @Test
-    public void PuppaDataParsingTest() throws IOException {
+    public void TutaDataParsingTest() throws IOException {
         CourseHtmlParser courseHtmlParser = new CourseHtmlParser(TUTA_DEPARTMENT);
         List<Course> list = courseHtmlParser.parseHTMLData(PUPPA_TEST_DATA);
         Assert.assertEquals("Kustannusjohtamisen peruskurssi", list.get(0).courseName);
         Assert.assertEquals("CS31A0101", list.get(0).courseCode);
         Assert.assertEquals("Viipuri-sali*", list.get(0).classroom);
+        Assert.assertEquals("15-17", list.get(0).timeOfDay);
+        Assert.assertEquals("ti", list.get(0).weekDay);
+        Assert.assertEquals("41", list.get(0).weekNumber);
+        Assert.assertEquals("tuta", list.get(0).department);
         LOGGER.info("TUTA=" + list.get(0).toString());
     }
 
@@ -429,6 +442,9 @@ public class HTMLParserTest {
         Assert.assertEquals("A250A0350", list.get(0).courseCode);
         Assert.assertEquals("1382", list.get(0).classroom);
         Assert.assertEquals("9-15", list.get(0).timeOfDay);
+        Assert.assertEquals("pe", list.get(0).weekDay);
+        Assert.assertEquals("9", list.get(0).weekNumber);
+        Assert.assertEquals("kati", list.get(0).department);
         LOGGER.info("KATI=" + list.get(0).toString());
     }
 
@@ -440,6 +456,9 @@ public class HTMLParserTest {
         Assert.assertEquals("BH60A1200", list.get(0).courseCode);
         Assert.assertEquals("ML 7439 (sini)*", list.get(0).classroom);
         Assert.assertEquals("10-12", list.get(0).timeOfDay);
+        Assert.assertEquals("ke", list.get(0).weekDay);
+        Assert.assertEquals("37,38,39,40,41,42,44,45,46,47,48,49", list.get(0).weekNumber);
+        Assert.assertEquals("ymte", list.get(0).department);
         LOGGER.info("YMTE=" + list.get(0).toString());
     }
 

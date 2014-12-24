@@ -26,7 +26,6 @@ Compatible with IE10+ and newest Firefox and Chrome
 * [Jasmine 2.0.x](http://jasmine.github.io/)
 * [PhantomJS 1.9](http://phantomjs.org/)
 * [RequireJS](http://requirejs.org/)
-* [Karma](http://karma-runner.github.io/)
 * [JSHint](http://www.jshint.com/)
 * [Bower](http://bower.io/)<br>
 
@@ -36,7 +35,7 @@ Gradle for building a package.<br>
 <i>bower install</i> - for JS stuff<br>
 <i>r.js -o build.js</i> - Compile JS to bundle<br>
 <i>gradle war</i> - for building (release) package<br>
-<i>For quick browser testing run EmbeddedJetty class</i>
+For quick browser testing run EmbeddedJetty class
 
 <h3>Testing</h3>
 <i>gradle test</i> - for running unit tests and selenium<br>

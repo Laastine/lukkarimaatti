@@ -13,8 +13,7 @@ Compatible with IE10+ and newest Firefox and Chrome
 * [Hibernate 4.x](http://hibernate.org/)
 * [Jsoup 1.7.x](http://jsoup.org/)
 * [Jetty 9](http://www.eclipse.org/jetty/)
-* [PostgreSQL 9.1](http://www.postgresql.org/)
-* [SonarQube 4.1.2](http://www.sonarqube.org/)<br>
+* [PostgreSQL 9.1](http://www.postgresql.org/)<br>
  
 <h3>Front-end</h3>
 * [jQuery 2.1.1](http://jquery.com/)

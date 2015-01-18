@@ -23,7 +23,6 @@ Compatible with IE10+ and newest Firefox and Chrome
 * [typeahead.js 0.10.x](http://twitter.github.io/typeahead.js/)
 * [FullCalendar 2.0.2](http://arshaw.com/fullcalendar/)
 * [Jasmine 2.0.x](http://jasmine.github.io/)
-* [PhantomJS 1.9](http://phantomjs.org/)
 * [RequireJS](http://requirejs.org/)
 * [JSHint](http://www.jshint.com/)
 * [Bower](http://bower.io/)<br>

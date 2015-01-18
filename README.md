@@ -40,5 +40,3 @@ For quick browser testing run EmbeddedJetty class
 
 <h2>Copyright and license</h2>
 Copyright &copy; 2013 Mikko Kaistinen, mikko.kaistinen@kapsi.fi
-
-The MIT License

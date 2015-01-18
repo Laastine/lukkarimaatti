@@ -57,7 +57,7 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
                             return el.code === item.code;
                         });
                         if (courseCollection[0].title.length !== 0) {
-                            that.addCourseLink(courseCollection[0].title, courseCollection[0].code);
+                            that.addCourseLink(courseCollection[0].title, courseCollection[0].code, courseCollection.length);
                         }
                         load.modal('toggle');
                         setTimeout(function () {
@@ -114,7 +114,7 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
                                             t: course.type
                                         };
                                     });
-                                    that.addCourseLink(data[0].courseName, data[0].courseCode);
+                                    that.addCourseLink(data[0].courseName, data[0].courseCode, data.length);
                                     that.addDataToCalendar(calendar);
                                 },
                                 error: function (xhr, status, error) {
@@ -129,10 +129,13 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
                 }
             },
 
-            addCourseLink: function (courseName, courseCode) {
+            addCourseLink: function (courseName, courseCode, occ) {
+                if(typeof occ === 'undefined') {
+                    occ = 0;
+                }
                 var noppa = 'https://noppa.lut.fi/noppa/opintojakso/';
                 $('#courseList').append('<tr id="' + courseCode + '"><td>' +
-                    '<a href=' + noppa + courseCode + ' target="_blank">' + courseName + '</a>' +
+                    '<a href=' + noppa + courseCode + ' target="_blank">' + occ + ', ' +courseCode + ' - ' + courseName + '</a>' +
                     '</td><td>' +
                     '<button id="deleteButton" class="button" type="button">' +
                     '<span class="glyphicon glyphicon-remove"></span>' +

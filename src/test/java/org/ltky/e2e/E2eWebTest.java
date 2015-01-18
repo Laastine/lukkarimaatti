@@ -1,4 +1,4 @@
-package org.ltky;
+package org.ltky.e2e;
 
 import org.apache.log4j.Logger;
 import org.junit.After;
@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.ltky.EmbeddedJetty;
 import org.ltky.config.WebConfig;
 import org.ltky.task.TaskConfigurer;
 import org.openqa.selenium.By;

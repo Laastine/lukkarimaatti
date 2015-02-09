@@ -5,42 +5,22 @@ body {
     padding-bottom: 10px;
 }
 
-.header,
-.footer {
-    padding-right: 15px;
-    padding-left: 15px;
-}
-
-.header {
-    border-bottom: 1px solid #e5e5e5;
-}
-
-.footer {
-    border-top: 1px solid #e5e5e5;
-}
-
-@media (min-width: 768px) {
-    .container {
-        max-width: 1024px;
-        padding-bottom: 20px;
-    }
-}
-
 .container-narrow > hr {
     margin: 40px 0;
-}
-
-@media screen and (min-width: 768px) {
-    .header,
-    .footer {
-        padding-right: 0;
-        padding-left: 0;
-    }
 }
 
 html {
     overflow-y: scroll;
     *overflow-x: hidden;
+}
+
+@media (max-width: 500px) {
+    .github-fork-ribbon-wrapper {
+        display: none !important;
+    }
+    .fc-month-button {
+        display: none !important;
+    }
 }
 
 html {
@@ -56,7 +36,7 @@ html {
 }
 
 .dialog {
-    width: 170px;
+    width: 70px;
 }
 
 a {
@@ -72,24 +52,12 @@ p {
     margin: 0 0 10px 0;
 }
 
-.footer {
-    max-width: 80px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-.title {
-    margin: 20px 0 0 0;
-    font-size: 64px;
-    text-align: center;
-}
-
 .typeahead,
 .tt-hint {
-    width: 574px;
-    height: 45px;
+    width: 40vw;
+    height: 40px;
     padding: 8px 12px;
-    font-size: 24px;
+    font-size: 20px;
     line-height: 30px;
     border: 1px solid #024e6a;
     -webkit-border-radius: 8px;
@@ -107,8 +75,8 @@ p {
 }
 
 .tt-dropdown-menu {
-    width: 600px;
-    margin-top: 12px;
+    width: 40vw;
+    margin-top: 10px;
     background-color: #fff;
     border: 1px solid #ccc;
     border: 1px solid rgba(0, 0, 0, 0.2);

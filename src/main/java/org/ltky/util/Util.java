@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * lukkarimaatti
@@ -88,23 +89,20 @@ public class Util {
                 while (m.find()) {
                     allMatches.add(m.group());
                 }
-                for (String match : allMatches) {
-                    final int start = Integer.valueOf(StringUtils.substringBefore(match, dash));
-                    final int end = Integer.valueOf(StringUtils.substringAfterLast(match, dash));
-                    for (int i = start; i < end; i++, weekSequence.add(i)) ;
-                }
+                allMatches.stream().forEach(match ->
+                        weekSequence.addAll(IntStream.rangeClosed(Integer.valueOf(StringUtils.substringBefore(match, dash)), Integer.valueOf(StringUtils.substringAfterLast(match, dash)))
+                                .boxed()
+                                .collect(Collectors.toList())));
             }
-            final Matcher m = Pattern.compile("[0-9]+").matcher(weeks);
-            while (m.find()) {
-                weekSequence.add(Integer.valueOf(m.group()));
-            }
+        }
+        final Matcher m = Pattern.compile("[0-9]+").matcher(weeks);
+        while (m.find()) {
+            weekSequence.add(Integer.valueOf(m.group()));
         }
         final Object[] list = weekSequence.toArray();
         Arrays.sort(list, (a, b) -> ((Integer) a) - ((Integer) b));
         final StringBuilder builder = new StringBuilder();
-        for (Object o : list) {
-            builder.append(String.valueOf(o)).append(comma);
-        }
+        Arrays.asList(list).stream().forEach(number -> builder.append(String.valueOf(number)).append(comma));
         return StringUtils.removeEnd(builder.toString(), comma);
     }
 

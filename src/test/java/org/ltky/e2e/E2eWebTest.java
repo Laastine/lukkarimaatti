@@ -81,10 +81,6 @@ public class E2eWebTest {
         driver.findElement(By.id("aboutModalButton")).click();
         Assert.assertTrue(driver.findElement(By.id("aboutModalButton")).isDisplayed());
         driver.findElement(By.id("aboutClose")).click();
-
-        driver.findElement(By.id("contactModalButton")).click();
-        Assert.assertTrue(driver.findElement(By.id("aboutModalButton")).isDisplayed());
-        driver.findElement(By.id("contactClose")).click();
     }
 
     @After

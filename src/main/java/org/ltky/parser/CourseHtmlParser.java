@@ -134,8 +134,8 @@ public class CourseHtmlParser {
     }
 
     private String findTimeOfDay(String startTime, String endTime) {
-        if (UTIL.extractPattern(startTime, coursePattern.getTimeOfDay()) &
-                UTIL.extractPattern(endTime, coursePattern.getTimeOfDay()) &
+        if (UTIL.extractPattern(startTime, coursePattern.timeOfDay) &
+                UTIL.extractPattern(endTime, coursePattern.timeOfDay) &
                 !"Klo".equals(startTime))
             if (StringUtils.contains(startTime, ":00") || StringUtils.contains(endTime, ":00")) {
                 return StringUtils.removeEndIgnoreCase(startTime, ":00") + "-" + StringUtils.removeEndIgnoreCase(endTime, ":00");
@@ -154,7 +154,7 @@ public class CourseHtmlParser {
     }
 
     private String findTeacher(String teacher) {
-        if (UTIL.extractPattern(teacher, coursePattern.getKikeTeacher())) {
+        if (UTIL.extractPattern(teacher, coursePattern.kikeTeacher)) {
             return teacher;
         } else {
             return UNKNOWN;
@@ -162,7 +162,7 @@ public class CourseHtmlParser {
     }
 
     private String findWeek(String weekNumber) {
-        if (UTIL.extractPattern(weekNumber, coursePattern.getWeekNumber())) {
+        if (UTIL.extractPattern(weekNumber, coursePattern.weekNumber)) {
             return UTIL.processWeekNumbers(weekNumber);
         } else {
             return UNKNOWN;
@@ -170,7 +170,7 @@ public class CourseHtmlParser {
     }
 
     private String findWeekDay(String weekDay) {
-        if (UTIL.extractPattern(weekDay, coursePattern.getWeekDays())) {
+        if (UTIL.extractPattern(weekDay, coursePattern.weekDays)) {
             return weekDay;
         } else {
             return UNKNOWN;
@@ -178,7 +178,7 @@ public class CourseHtmlParser {
     }
 
     private String findClassroom(String classroom) {
-        if (UTIL.extractPattern(classroom, coursePattern.getClassRoom())) {
+        if (UTIL.extractPattern(classroom, coursePattern.classRoom)) {
             return classroom;
         } else {
             return UNKNOWN;

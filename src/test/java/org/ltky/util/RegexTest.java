@@ -33,7 +33,7 @@ public class RegexTest {
     public void simpleTest() {
         init();
         for (String s : list) {
-            LOGGER.debug("\n"+s+" = \n"+ UTIL.extractPattern(s, coursePattern.getWeekNumber())+"\n");
+            LOGGER.debug("\n"+s+" = \n"+ UTIL.extractPattern(s, coursePattern.weekNumber)+"\n");
         }
         Assert.assertTrue(true);
     }

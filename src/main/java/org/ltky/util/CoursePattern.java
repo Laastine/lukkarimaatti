@@ -7,79 +7,23 @@ package org.ltky.util;
  * Date: 29.11.2013
  */
 public class CoursePattern {
-    public String getExamDate() {
-        return "[0-9]{1,2}.[0-9]{1,2}/[0-9]{1,2}";
-    }
-
-    public String getKikeTeacher() {
-        return "^[A-ZÄÖÅ][A-Za-zÄäÖöÅå,\\- ]+";
-    }
-
-    public String getClassRoom() {
-        return "[A-Z0-9a-zÄäÖö,.\\- *]+";
-    }
-
-    public String getTimeOfDay() {
-        return "^([0-9]|0[0-9]|1[0-9]|2[0-3])(:[0-5][0-9]){0,1}$";
-    }
-
-    public String getCoursePattern() {
-        return "^(CT|CS|BH|BL|BM|FV|BK|BJ|A1|A3){1}[0-9]{2}A[0-9]{4} - [A-ZÄÖ]{1}";
-    }
-
-    public String getCourseTypePattern() {
-        return "/[A-Z+]";
-    }
-
-    public String getWeekNumber() {
-        return "^[0-9,\\- ]+$";
-    }
-
-    public String getWeekDays() {
-        return "(ma|ti|ke|to|pe|la|su)";
-    }
-
-    public String getKvPattern() {
-        return "A3[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
-    }
-
-    public String getTitePattern() {
-        return "C[TS]{1}[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
-    }
-
-    public String getKatiPattern() {
-        return "A1[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
-    }
-
-    public String getKetePattern() {
-        return "BJ[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
-    }
-
-    public String getKotePattern() {
-        return "BK[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
-    }
-
-    public String getKikePattern() {
-        return "FV[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
-    }
-
-    public String getMafyPattern() {
-        return "BM[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
-    }
-
-    public String getSatePattern() {
-        return "BL[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
-    }
-
-    public String getTutaPattern() {
-        return "CS[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
-    }
-
-    public String getYmtePattern() {
-        return "BH60A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
-    }
-
-    public String getEntePattern() {
-        return "BH[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
-    }
+    public static String examDate = "[0-9]{1,2}.[0-9]{1,2}/[0-9]{1,2}";
+    public static String kikeTeacher = "^[A-ZÄÖÅ][A-Za-zÄäÖöÅå,\\- ]+";
+    public static String classRoom = "[A-Z0-9a-zÄäÖö,.\\- *]+";
+    public static String timeOfDay = "^([0-9]|0[0-9]|1[0-9]|2[0-3])(:[0-5][0-9]){0,1}$";
+    public static String coursePattern = "^(CT|CS|BH|BL|BM|FV|BK|BJ|A1|A3){1}[0-9]{2}A[0-9]{4} - [A-ZÄÖ]{1}";
+    public static String courseTypePattern = "/[A-Z+]";
+    public static String weekNumber = "^[0-9,\\- ]+$";
+    public static String weekDays = "(ma|ti|ke|to|pe|la|su)";
+    public static String kvPattern = "A3[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
+    public static String titePattern = "C[TS]{1}[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
+    public static String katiPattern = "A1[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
+    public static String ketePattern = "BJ[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
+    public static String kotePattern = "BK[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
+    public static String kikePattern = "FV[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
+    public static String mafyPattern = "BM[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
+    public static String satePattern = "BL[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
+    public static String tutaPattern = "CS[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
+    public static String ymtePattern = "BH60A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
+    public static String entePattern = "BH[0-9]{2}A[0-9]{4} - [A-Za-zÄäÖö,.\\- ]+[ ]{1}";
 }

@@ -8,7 +8,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.ltky.EmbeddedJetty;
 import org.ltky.config.WebConfig;
-import org.ltky.task.TaskConfigurer;
+import org.ltky.parser.URLParser;
+import org.ltky.task.CourseTask;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -17,6 +18,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +27,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.net.URL;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -38,22 +42,32 @@ public class E2eWebTest {
     private final ExecutorService executorService = Executors.newFixedThreadPool(1);
     private static final Logger LOGGER = Logger.getLogger(E2eWebTest.class);
     @Autowired
-    private TaskConfigurer taskConfigurer;
+    private CourseTask courseTask;
     private static final int TIMEOUT = 5;
 
     @Before
     public void setUp() throws Exception {
         executorService.execute(new EmbeddedJetty());
+        baseUrl = "http://localhost:8085";
+        loadFirefoxDriver();
+        driver.manage().timeouts().implicitlyWait(TIMEOUT, TimeUnit.SECONDS);
+    }
 
+    private void setUpDB() throws Exception {
         try {
-            taskConfigurer.setUpRunners();
+            Map<String, String> data = new URLParser()
+                    .fetchStuff()
+                    .entrySet()
+                    .stream()
+                    .filter(d -> d.getKey() == "tite")
+                    .collect(Collectors.toMap(d -> d.getKey(), d -> d.getValue()));
+            data
+                    .entrySet()
+                    .stream()
+                    .forEach(entry -> courseTask.parse(entry.getKey(), entry.getValue()));
         } catch (Exception e) {
             LOGGER.error("Error while saving course data to DB", e);
         }
-
-        baseUrl = "http://localhost:8085";
-        loadFirefoxDriver();
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     @Test
@@ -66,13 +80,27 @@ public class E2eWebTest {
     }
 
     @Test
-    public void testSearchField() {
+    public void testSearchField() throws Exception {
+        setUpDB();
         driver.get(baseUrl + "/lukkarimaatti");
-        driver.findElement(By.id("courseSearchBox")).sendKeys("pattern recognition");
+        driver.findElement(By.id("courseSearchBox")).sendKeys("WWW");
         new WebDriverWait(driver, TIMEOUT)
                 .until(ExpectedConditions.visibilityOfElementLocated(By.className("tt-dropdown-menu")));
         driver.findElement(By.id("courseSearchBox")).sendKeys(Keys.ARROW_DOWN, Keys.ENTER);
-        Assert.assertTrue(driver.findElement(By.id("BM40A0700")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.id("CT30A3201")).isDisplayed());
+        driver.findElement(By.id("courseSearchBox")).clear();
+        new WebDriverWait(driver, TIMEOUT)
+                .until(new ExpectedCondition<String>() {
+                    public String apply(WebDriver driver) {
+                        String val = driver.findElement(By.id("courseSearchBox")).getAttribute("value");
+                        return val.isEmpty() ? val : null;
+                    }
+                });
+        driver.findElement(By.id("courseSearchBox")).sendKeys("Ohjelmoinnin perusteet");
+        new WebDriverWait(driver, TIMEOUT)
+                .until(ExpectedConditions.visibilityOfElementLocated(By.className("tt-dropdown-menu")));
+        driver.findElement(By.id("courseSearchBox")).sendKeys(Keys.ARROW_DOWN, Keys.ENTER);
+        Assert.assertTrue(driver.findElement(By.id("CT60A0200")).isDisplayed());
     }
 
     @Test
@@ -100,7 +128,7 @@ public class E2eWebTest {
     private void loadIEDriver() {
         System.setProperty("webdriver.ie.driver", "C:\\\\dev\\IEDriverServer.exe");
         driver = new InternetExplorerDriver();
-        if(driver == null) {
+        if (driver == null) {
             Assert.fail("InternetExplorerDriver null");
         }
     }
@@ -120,10 +148,9 @@ public class E2eWebTest {
             LOGGER.error("Could not load Chrome driver ", e);
             Assert.fail();
         }
-        if(driver == null) {
+        if (driver == null) {
             Assert.fail("ChromeDriver null");
         }
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-
     }
 }

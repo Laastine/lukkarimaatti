@@ -49,6 +49,7 @@ public class CourseValidator {
             LOGGER.debug("teacher fails");
             return false;
         }
+        LOGGER.debug("Saving="+course);
         return true;
     }
 

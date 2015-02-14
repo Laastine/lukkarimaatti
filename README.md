@@ -8,7 +8,7 @@ Information is retrieved from [the official LUT teaching schedule info site] (ht
 Compatible with IE10+ and newest Firefox and Chrome
 
 
-<h3>Back-end</h3>
+<h5>Back-end</h5>
 * [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 * [Spring 4.x](http://spring.io/)
 * [Hibernate 4.x](http://hibernate.org/)
@@ -16,7 +16,7 @@ Compatible with IE10+ and newest Firefox and Chrome
 * [Jetty 9](http://www.eclipse.org/jetty/)
 * [PostgreSQL 9.1](http://www.postgresql.org/)<br>
  
-<h3>Front-end</h3>
+<h5>Front-end</h5>
 * [jQuery 2.1.1](http://jquery.com/)
 * [Bootstrap 3](http://getbootstrap.com/)
 * [underscore.js 1.6.x](http://underscorejs.org/)
@@ -37,7 +37,7 @@ Gradle for building a package.<br>
 For quick browser testing run EmbeddedJetty class
 
 <h3>Testing</h3>
-<i>gradle test</i> - for running unit tests and selenium<br>
+<i>gradle test</i> - for running unit tests and selenium E2E tests<br>
 
 <h2>Copyright and license</h2>
 Copyright &copy; 2013 Mikko Kaistinen, mikko.kaistinen@kapsi.fi

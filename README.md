@@ -9,6 +9,7 @@ Compatible with IE10+ and newest Firefox and Chrome
 
 
 <h3>Back-end</h3>
+* [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 * [Spring 4.x](http://spring.io/)
 * [Hibernate 4.x](http://hibernate.org/)
 * [Jsoup 1.7.x](http://jsoup.org/)

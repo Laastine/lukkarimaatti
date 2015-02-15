@@ -1,6 +1,6 @@
 {
     "name": "Lukkarimaatti frontend",
-    "version": "0.9.3",
+    "version": "0.9.3.1",
     "dependencies": {
         "requirejs": "*",
         "jquery": "*",

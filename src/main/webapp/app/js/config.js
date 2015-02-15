@@ -33,7 +33,7 @@ require.config({
         'fullcalendar': { deps: ['jquery'], exports: 'fullCalendar' }
     },
 
-    urlArgs: "bust=0.9.3"
+    urlArgs: "bust=0.9.3.1"
 });
 
 require(['js/main']);

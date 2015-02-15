@@ -99,7 +99,7 @@ dependencies {
             "org.springframework.data:spring-data-jpa:1.7.1.RELEASE",
             'com.mysema.querydsl:querydsl-jpa:3.3.2',
             'postgresql:postgresql:9.1-901-1.jdbc4',
-            'org.jsoup:jsoup:1.7.3',
+            'org.jsoup:jsoup:1.8.1',
             'org.codehaus.jackson:jackson-mapper-asl:1.9.13',
             'javax.mail:mail:1.4.7',
             'log4j:log4j:1.2.17',

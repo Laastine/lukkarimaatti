@@ -16,7 +16,7 @@ import org.springframework.web.servlet.DispatcherServlet;
  * Date: 16.12.2014
  */
 public class EmbeddedJetty implements Runnable {
-    private static final int DEFAULT_PORT = 8085;
+    private static final int DEFAULT_PORT = 80;
     private static final String CONTEXT_PATH = "/lukkarimaatti";
     private static final String MAPPING_URL = "/";
     private static final Logger LOGGER = Logger.getLogger(EmbeddedJetty.class);

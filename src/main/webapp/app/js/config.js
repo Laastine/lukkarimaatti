@@ -12,7 +12,7 @@ require.config({
         'bloodhound': 'lib/typeahead.js/dist/bloodhound',
         'typeahead': 'lib/typeahead.js/dist/typeahead.bundle',
         'moment': 'lib/moment/min/moment-with-langs',
-        'text': 'lib/text/text',
+        'text': 'lib/requirejs-text/text',
 
         'app': 'app',
         'router': 'router',
@@ -33,7 +33,7 @@ require.config({
         'fullcalendar': { deps: ['jquery'], exports: 'fullCalendar' }
     },
 
-    urlArgs: "bust=0.9.2"
+    urlArgs: "bust=0.9.3"
 });
 
 require(['js/main']);

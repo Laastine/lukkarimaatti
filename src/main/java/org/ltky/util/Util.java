@@ -89,10 +89,13 @@ public class Util {
                 while (m.find()) {
                     allMatches.add(m.group());
                 }
-                allMatches.stream().forEach(match ->
-                        weekSequence.addAll(IntStream.rangeClosed(Integer.valueOf(StringUtils.substringBefore(match, dash)), Integer.valueOf(StringUtils.substringAfterLast(match, dash)))
-                                .boxed()
-                                .collect(Collectors.toList())));
+                allMatches.stream().forEach(match -> {
+                    int start = Integer.valueOf(StringUtils.substringBefore(String.valueOf(match), dash));
+                    int end = Integer.valueOf(StringUtils.substringAfterLast(String.valueOf(match), dash));
+                    weekSequence.addAll(IntStream.rangeClosed(start, end)
+                            .boxed()
+                            .collect(Collectors.toList()));
+                });
             }
         }
         final Matcher m = Pattern.compile("[0-9]+").matcher(weeks);
@@ -119,13 +122,5 @@ public class Util {
      */
     public void writeToFile(String toFile, String fileName) throws IOException {
         FileUtils.write(new File(fileName), toFile, "ISO-8859-1");
-    }
-
-    public void writeToFile(List<String> toFile, String fileName) throws IOException {
-        String tmp = "";
-        for (String s : toFile) {
-            tmp += s + "\n";
-        }
-        FileUtils.write(new File(fileName), tmp, "ISO-8859-1");
     }
 }

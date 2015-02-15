@@ -1,0 +1,16 @@
+{
+    "name": "Lukkarimaatti frontend",
+    "version": "0.9.3",
+    "dependencies": {
+        "requirejs": "*",
+        "jquery": "*",
+        "backbone": "*",
+        "underscore": "*",
+        "fullcalendar": "2.1.1",
+        "bootstrap": "*",
+        "moment": "2.5.0",
+        "handlebars": "*",
+        "typeahead.js": "*",
+        "requirejs-text": "*"
+    }
+}

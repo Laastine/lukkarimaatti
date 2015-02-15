@@ -14,7 +14,8 @@ Compatible with IE10+ and newest Firefox and Chrome
 * [Hibernate 4.x](http://hibernate.org/)
 * [Jsoup 1.7.x](http://jsoup.org/)
 * [Jetty 9](http://www.eclipse.org/jetty/)
-* [PostgreSQL 9.1](http://www.postgresql.org/)<br>
+* [PostgreSQL 9.1](http://www.postgresql.org/)
+* [Selenium](http://www.seleniumhq.org/)<br>
  
 <h5>Front-end</h5>
 * [jQuery 2.1.1](http://jquery.com/)
@@ -23,7 +24,6 @@ Compatible with IE10+ and newest Firefox and Chrome
 * [Backbone.js 1.1.x](http://backbonejs.org/)
 * [typeahead.js 0.10.x](http://twitter.github.io/typeahead.js/)
 * [FullCalendar 2.0.2](http://arshaw.com/fullcalendar/)
-* [Jasmine 2.0.x](http://jasmine.github.io/)
 * [RequireJS](http://requirejs.org/)
 * [JSHint](http://www.jshint.com/)
 * [Bower](http://bower.io/)<br>
@@ -35,6 +35,7 @@ Gradle for building a package.<br>
 <i>r.js -o build.js</i> - Compile JS to bundle<br>
 <i>gradle war</i> - for building (release) package<br>
 For quick browser testing run EmbeddedJetty class
+and open http://localhost/lukkarimaatti in your web browser
 
 <h3>Testing</h3>
 <i>gradle test</i> - for running unit tests and selenium E2E tests<br>

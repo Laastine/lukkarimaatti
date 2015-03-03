@@ -146,47 +146,27 @@ public class CourseHtmlParser {
     }
 
     private String findMiscData(String misc) {
-        if (StringUtils.isBlank(misc)) {
-            return UNKNOWN;
-        } else {
-            return misc;
-        }
+        return StringUtils.isNotBlank(misc) ? misc : UNKNOWN;
     }
 
     private String findTeacher(String teacher) {
-        if (UTIL.extractPattern(teacher, coursePattern.kikeTeacher)) {
-            return teacher;
-        } else {
-            return UNKNOWN;
-        }
+        return UTIL.extractPattern(teacher, coursePattern.kikeTeacher) ? teacher : UNKNOWN;
     }
 
     private String findWeek(String weekNumber) {
-        if (UTIL.extractPattern(weekNumber, coursePattern.weekNumber)) {
-            return UTIL.processWeekNumbers(weekNumber);
-        } else {
-            return UNKNOWN;
-        }
+        return UTIL.extractPattern(weekNumber, coursePattern.weekNumber) ? UTIL.processWeekNumbers(weekNumber) : UNKNOWN;
     }
 
     private String findWeekDay(String weekDay) {
-        if (UTIL.extractPattern(weekDay, coursePattern.weekDays)) {
-            return weekDay;
-        } else {
-            return UNKNOWN;
-        }
+        return UTIL.extractPattern(weekDay, coursePattern.weekDays) ? weekDay : UNKNOWN;
     }
 
     private String findClassroom(String classroom) {
-        if (UTIL.extractPattern(classroom, coursePattern.classRoom)) {
-            return classroom;
-        } else {
-            return UNKNOWN;
-        }
+        return UTIL.extractPattern(classroom, coursePattern.classRoom) ? classroom : UNKNOWN;
     }
 
     private CoursePrototype findNameCodeAndType(String courseNameAndCode) {
-        if(StringUtils.isBlank(courseNameAndCode)) {
+        if (StringUtils.isBlank(courseNameAndCode)) {
             return new CoursePrototype("", "", "");
         }
         String[] courseCodeAndNamePair = StringUtils.splitByWholeSeparator(courseNameAndCode, " - ");

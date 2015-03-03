@@ -1,14 +1,13 @@
 package org.ltky.task;
 
+import org.apache.log4j.Logger;
 import org.ltky.dao.CourseDao;
 import org.ltky.parser.URLParser;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
-import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -27,19 +26,19 @@ public class TaskConfigurer {
     @Autowired
     private CourseDao courseDao;
 
-    private void getLinks() {
-        try {
-            map = new URLParser().fetchStuff();
-        } catch (IOException e) {
-            LOGGER.error("Malformed UNI URL", e);
-        }
+    private void getLinks() throws Exception {
+        map = new URLParser().fetchStuff();
     }
 
     public void setUpRunners() {
-        getLinks();
-        courseDao.deleteAll();      //clean old courses
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            ((Runnable) () -> courseTask.parse(entry.getKey(), entry.getValue())).run();
+        try {
+            getLinks();
+            courseDao.deleteAll();      //clean old courses
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                ((Runnable) () -> courseTask.parse(entry.getKey(), entry.getValue())).run();
+            }
+        } catch (Exception e) {
+            LOGGER.error("Error while updating DB ", e);
         }
     }
 

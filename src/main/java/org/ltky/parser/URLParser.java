@@ -25,7 +25,7 @@ public class URLParser {
      * @return
      * @throws IOException
      */
-    public Map<String, String> fetchStuff() throws IOException {
+    public Map<String, String> fetchStuff() throws Exception {
         final String uniURL = parserConfiguration.getUniURL();
         final Map<String, String> dependencies = new LinkedHashMap<>();
         final Queue<String> queue = initDepart2UrlMap();
@@ -44,7 +44,7 @@ public class URLParser {
         return dependencies;
     }
 
-    public String fetchExamURL() throws IOException {
+    public String fetchExamURL() throws Exception {
         final String examURL = parserConfiguration.getExamURL();
         UTIL.writeToFile(fetchFromWeb(examURL), "test.txt");
         return prefix + StringUtils.substringBetween(fetchFromWeb(examURL), parserConfiguration.getExamStartTag(), parserConfiguration.getExamEndTag());
@@ -66,7 +66,7 @@ public class URLParser {
      * @return
      * @throws IOException
      */
-    private String fetchFromWeb(final String fromUrl) throws IOException {
+    private String fetchFromWeb(final String fromUrl) throws Exception {
         final List<String> list = new BufferedReader(new InputStreamReader(new URL(fromUrl).openStream()))
                 .lines().collect(Collectors.toList());
         return StringUtils.join(list.toArray());

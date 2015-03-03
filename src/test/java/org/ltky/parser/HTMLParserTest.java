@@ -2,7 +2,6 @@ package org.ltky.parser;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -371,15 +370,6 @@ public class HTMLParserTest {
                     "</tr>\n" +
                     "</table>\n";
 
-    @Before
-    public void init() {
-        try {
-            map = new URLParser().fetchStuff();
-        } catch (IOException e) {
-            LOGGER.error(e);
-        }
-    }
-
     @Test
     public void HTMLDataParsingTest() throws IOException {
         CourseHtmlParser courseHtmlParser = new CourseHtmlParser(TITE_DEPARTMENT);
@@ -463,7 +453,8 @@ public class HTMLParserTest {
     }
 
     @Test
-    public void testDepartmentData() {
+    public void testDepartmentData() throws Exception {
+        map = new URLParser().fetchStuff();
         testCourseData(TITE_DEPARTMENT);
         testCourseData(KIKE_DEPARTMENT);
     }

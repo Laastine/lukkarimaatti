@@ -75,7 +75,7 @@ test {
 
 ext {
     springVersion = '4.0.7.RELEASE'
-    seleniumVersion = '2.44.0'
+    seleniumVersion = '2.45.0'
     jettyVersion = '9.2.6.v20141205'
 }
 

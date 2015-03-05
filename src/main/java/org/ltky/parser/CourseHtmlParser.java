@@ -84,8 +84,7 @@ public class CourseHtmlParser {
     private List parseElementsData(Elements tableRowElements) {
         final List<Course> resultList = new ArrayList();
         tableRowElements.stream().forEach(t -> {
-            Elements rowItems = t.select("td");
-            Course course = parseTableElement(rowItems);
+            Course course = parseTableElement(t.select("td"));
             if (CourseValidator.validateCourse(course)) {
                 resultList.add(course);
             }

@@ -34,7 +34,7 @@ public class ParserTest {
     @Test
     public void parserTest() {
         try {
-            Map<String, String> map = parser.fetchStuff();
+            Map<String, String> map = parser.parseLinks();
             Assert.assertTrue(map.size() == 11);
             for (String s : map.keySet()) {
                 LOGGER.debug("Department=" + s);

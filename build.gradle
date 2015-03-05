@@ -85,7 +85,7 @@ configurations.all {
 
 dependencies {
 
-    compile 'org.apache.commons:commons-lang3:3.1',
+    compile 'org.apache.commons:commons-lang3:3.3.2',
             'commons-io:commons-io:2.4',
             'commons-validator:commons-validator:1.4.0',
             'cglib:cglib:3.1',

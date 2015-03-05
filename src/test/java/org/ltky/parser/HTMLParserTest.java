@@ -454,7 +454,7 @@ public class HTMLParserTest {
 
     @Test
     public void testDepartmentData() throws Exception {
-        map = new URLParser().fetchStuff();
+        map = new URLParser().parseLinks();
         testCourseData(TITE_DEPARTMENT);
         testCourseData(KIKE_DEPARTMENT);
     }

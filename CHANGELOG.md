@@ -13,6 +13,10 @@ And constructed with the following guidelines:
 
 ---
 
+### 0.9.5 March 5, 2015
+
+* Parsing process update after uni.lut.fi update
+
 ### 0.9.4 March 3, 2015
 
 * Selenium version update

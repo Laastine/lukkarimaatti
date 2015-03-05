@@ -56,7 +56,7 @@ public class E2eWebTest {
     private void setUpDB() throws Exception {
         try {
             Map<String, String> data = new URLParser()
-                    .fetchStuff()
+                    .parseLinks()
                     .entrySet()
                     .stream()
                     .filter(d -> d.getKey() == "tite")

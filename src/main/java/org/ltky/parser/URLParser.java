@@ -1,16 +1,21 @@
 package org.ltky.parser;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.ltky.util.Util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class URLParser {
@@ -18,29 +23,38 @@ public class URLParser {
     private static final String prefix = "https://uni.lut.fi";
     private final ParserConfiguration parserConfiguration = ParserConfiguration.getInstance();
     private final Util UTIL = Util.getInstance();
+    private final HashMap acronymMap = new HashMap<String, String>() {{
+        put("Energiatekniikka", "ente");
+        put("Ymp&Atilde;&curren;rist&Atilde;&para;tekniikka", "ymte");
+        put("Kemiantekniikka", "kete");
+        put("Konetekniikka", "kote");
+        put("S&Atilde;&curren;hk&Atilde;&para;tekniikka", "sate");
+        put("Tietotekniikka", "tite");
+        put("Tuotantotalous", "tuta");
+        put("Kauppatieteet", "kati");
+        put("Laskennallinen&nbsp; tekniikka", "mafy");
+        put("Kielikeskus", "kike");
+        put("IBTM-intensiivit", "kv");
+    }};
 
     /**
      * Parse each departments url
      *
      * @return
-     * @throws IOException
+     * @throws Exception
      */
-    public Map<String, String> fetchStuff() throws Exception {
+    public Map<String, String> parseLinks() throws Exception {
         final String uniURL = parserConfiguration.getUniURL();
         final Map<String, String> dependencies = new LinkedHashMap<>();
-        final Queue<String> queue = initDepart2UrlMap();
-        final String COURSE_URL_PATTERN = "\\/fi\\/c\\/document_library\\/get_file\\?uuid=[a-z0-9\\-]*&amp;groupId=10304";
-        String linkList = StringUtils.substringBetween(fetchFromWeb(uniURL), parserConfiguration.getStartTag(), parserConfiguration.getEndTag());
-        LOGGER.debug("linkList=" + linkList);
-        Pattern pattern = Pattern.compile(COURSE_URL_PATTERN);
-        Matcher matcher = pattern.matcher(linkList);
-        while (matcher.find()) {
-            final String link = prefix + matcher.group();
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Department=" + queue.peek() + ", \nlink=" + link);
+        Document document = Jsoup.parse(new URL(uniURL).openStream(), "cp1252", uniURL);
+        Elements elements = document.select(".journal-content-article").select("a");
+        elements.stream().forEach(a -> {
+            if (a.attr("href").contains("/c/document_library/get_file") && !a.text().equals("") && !a.text().equals("täältä")) {
+                dependencies.put(acronymMap.get(StringEscapeUtils.escapeHtml4(a.text())).toString(), "https://uni.lut.fi" + a.attr("href"));
             }
-            dependencies.put(queue.poll(), link);
-        }
+        });
+        dependencies.entrySet().stream().map(d -> dependencies.put(acronymMap.get(d.getKey()).toString(), d.getValue()));
+        LOGGER.debug("deps=" + dependencies);
         return dependencies;
     }
 
@@ -48,15 +62,6 @@ public class URLParser {
         final String examURL = parserConfiguration.getExamURL();
         UTIL.writeToFile(fetchFromWeb(examURL), "test.txt");
         return prefix + StringUtils.substringBetween(fetchFromWeb(examURL), parserConfiguration.getExamStartTag(), parserConfiguration.getExamEndTag());
-    }
-
-    private LinkedList<String> initDepart2UrlMap() {
-        return new LinkedList() {{
-            add("ente"); add("ymte"); add("kete");
-            add("kote"); add("sate"); add("tite");
-            add("tuta"); add("kati"); add("mafy");
-            add("kike"); add("kv");
-        }};
     }
 
     /**

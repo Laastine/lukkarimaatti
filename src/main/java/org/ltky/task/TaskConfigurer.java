@@ -27,24 +27,25 @@ public class TaskConfigurer {
     private CourseDao courseDao;
 
     private void getLinks() throws Exception {
-        map = new URLParser().fetchStuff();
+        map = new URLParser().parseLinks();
     }
 
-    public void setUpRunners() {
-        try {
-            getLinks();
-            courseDao.deleteAll();      //clean old courses
-            for (Map.Entry<String, String> entry : map.entrySet()) {
-                ((Runnable) () -> courseTask.parse(entry.getKey(), entry.getValue())).run();
-            }
-        } catch (Exception e) {
-            LOGGER.error("Error while updating DB ", e);
+    public void setUpRunners() throws Exception {
+        getLinks();
+        LOGGER.debug("Deleting old data");
+        courseDao.deleteAll();      //clean old courses
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            ((Runnable) () -> courseTask.parse(entry.getKey(), entry.getValue())).run();
         }
     }
 
     @Scheduled(cron = "0 0 4 * * *")
     public void updateCourseDataCronJob() {
         LOGGER.info("course data update cron task");
-        setUpRunners();
+        try {
+            setUpRunners();
+        } catch (Exception e) {
+            LOGGER.error("Error while updating DB ", e);
+        }
     }
 }

@@ -48,7 +48,7 @@ public class E2eWebTest {
     @Before
     public void setUp() throws Exception {
         executorService.execute(new EmbeddedJetty());
-        baseUrl = "http://localhost:8085";
+        baseUrl = "http://localhost:8080";
         loadFirefoxDriver();
         driver.manage().timeouts().implicitlyWait(TIMEOUT, TimeUnit.SECONDS);
     }

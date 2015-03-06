@@ -18,10 +18,6 @@ public class ParserConfiguration {
     private static ParserConfiguration instance;
     private String uniURL;
     private String examURL;
-    private String startTag;
-    private String endTag;
-    private String examStartTag;
-    private String examEndTag;
     private String emailUsername;
     private String emailPassword;
 
@@ -44,10 +40,6 @@ public class ParserConfiguration {
         Properties parserProperties = loadProperties();
         uniURL = getPropertyOrThrowUp(parserProperties, "uniURL");
         examURL = getPropertyOrThrowUp(parserProperties, "examURL");
-        startTag = getPropertyOrThrowUp(parserProperties, "startTag");
-        endTag = getPropertyOrThrowUp(parserProperties, "endTag");
-        examStartTag = getPropertyOrThrowUp(parserProperties, "examStartTag");
-        examEndTag = getPropertyOrThrowUp(parserProperties, "examEndTag");
         emailUsername = getPropertyOrThrowUp(parserProperties, "emailUsername");
         emailPassword = getPropertyOrThrowUp(parserProperties, "emailPassword");
         LOGGER.info("Config=" + this.toString());
@@ -81,22 +73,6 @@ public class ParserConfiguration {
 
     public String getExamURL() {
         return examURL;
-    }
-
-    public String getStartTag() {
-        return startTag;
-    }
-
-    public String getEndTag() {
-        return endTag;
-    }
-
-    public String getExamStartTag() {
-        return examStartTag;
-    }
-
-    public String getExamEndTag() {
-        return examEndTag;
     }
 
     public String getEmailUsername() {

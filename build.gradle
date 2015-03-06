@@ -93,7 +93,6 @@ dependencies {
             'org.javassist:javassist:3.18.1-GA',
             "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final",
             "org.hibernate:hibernate-entitymanager:4.3.6.Final",
-            'org.springframework.boot:spring-boot-starter-web:1.1.6.RELEASE',
             'org.springframework.data:spring-data-rest-core:2.2.0.RELEASE',
             'org.springframework.data:spring-data-rest-webmvc:2.2.0.RELEASE',
             "org.springframework.data:spring-data-jpa:1.7.1.RELEASE",
@@ -126,5 +125,5 @@ dependencies {
             "org.eclipse.jetty:jetty-servlets:${jettyVersion}",
             "org.eclipse.jetty:jetty-webapp:${jettyVersion}"
 
-    testRuntime 'org.hsqldb:hsqldb:2.3.2'
+    testRuntime 'com.h2database:h2:1.4.186'
 }

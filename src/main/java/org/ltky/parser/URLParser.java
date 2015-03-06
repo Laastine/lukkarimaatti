@@ -58,12 +58,6 @@ public class URLParser {
         return dependencies;
     }
 
-    public String fetchExamURL() throws Exception {
-        final String examURL = parserConfiguration.getExamURL();
-        UTIL.writeToFile(fetchFromWeb(examURL), "test.txt");
-        return prefix + StringUtils.substringBetween(fetchFromWeb(examURL), parserConfiguration.getExamStartTag(), parserConfiguration.getExamEndTag());
-    }
-
     /**
      * Returns UTF-8 string presentation of HTML page from given URL
      *

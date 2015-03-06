@@ -17,7 +17,6 @@ public class ParserConfiguration {
     private static final Logger LOGGER = LoggerFactory.getLogger(ParserConfiguration.class);
     private static ParserConfiguration instance;
     private String uniURL;
-    private String examURL;
     private String emailUsername;
     private String emailPassword;
 
@@ -39,7 +38,6 @@ public class ParserConfiguration {
     public String loadServletInitParameters() throws IOException {
         Properties parserProperties = loadProperties();
         uniURL = getPropertyOrThrowUp(parserProperties, "uniURL");
-        examURL = getPropertyOrThrowUp(parserProperties, "examURL");
         emailUsername = getPropertyOrThrowUp(parserProperties, "emailUsername");
         emailPassword = getPropertyOrThrowUp(parserProperties, "emailPassword");
         LOGGER.info("Config=" + this.toString());
@@ -69,10 +67,6 @@ public class ParserConfiguration {
 
     public String getUniURL() {
         return uniURL;
-    }
-
-    public String getExamURL() {
-        return examURL;
     }
 
     public String getEmailUsername() {

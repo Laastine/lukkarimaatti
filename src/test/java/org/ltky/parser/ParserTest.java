@@ -44,19 +44,6 @@ public class ParserTest {
         }
     }
 
-
-    @Test
-    public void examParserTest() {
-        final String regex = "^https://uni.lut.fi/*";
-        try {
-            String s = parser.fetchExamURL();
-            LOGGER.info("fetchExamURL=" + s);
-            Assert.assertTrue(isMatch(parser.fetchExamURL(), regex));
-        } catch (Exception e) {
-            LOGGER.error("Error while fetching stuff from " + config.getUniURL(), e);
-        }
-    }
-
     private static boolean isMatch(String s, String pattern) {
         try {
             Matcher m = Pattern.compile(pattern).matcher(s);

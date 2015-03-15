@@ -25,4 +25,4 @@ src/main/generated/
 out/
 src/test/java/org/ltky/DBTest.java
 *.log
-data/
+db/

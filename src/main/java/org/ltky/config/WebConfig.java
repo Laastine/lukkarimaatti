@@ -16,6 +16,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.sql.DataSource;
+import java.util.Properties;
 
 /**
  * lukkarimaatti
@@ -64,6 +65,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
         hibernateJpaVendorAdapter.setGenerateDdl(true);
         hibernateJpaVendorAdapter.setShowSql(false);
+        Properties props = new Properties();
+        props.put("hibernate.hbm2ddl.auto", "update");
+        entityManagerFactoryBean.setJpaProperties(props);
         entityManagerFactoryBean.setJpaVendorAdapter(hibernateJpaVendorAdapter);
         return entityManagerFactoryBean;
     }

@@ -152,6 +152,285 @@ public class HTMLParserTest {
             "<td>&nbsp;</td>\n" +
             "</tr>\n" +
             "</table>";
+
+    private static final String LANGUAGE_LAB_MULTI = "<table class='header-border-args'  border='0' cellspacing='0' width='100%'><tr>\n" +
+            "<td>\n" +
+            "<table cellspacing='0' border='0' width='100%' class='header-0-args'>\n" +
+            "<col align='left' /><col align='center' /><col align='right' />\n" +
+            "  <tr>\n" +
+            "    <td></td><td></td><td></td>\n" +
+            "  </tr>\n" +
+            "</table>\n" +
+            "</td>\n" +
+            "</tr><tr>\n" +
+            "<td>\n" +
+            "<table cellspacing='0' border='0' width='100%' class='header-1-args'>\n" +
+            "<col align='left' /><col align='center' /><col align='right' />\n" +
+            "  <tr>\n" +
+            "    <td></td><td></td><td></td>\n" +
+            "  </tr>\n" +
+            "</table>\n" +
+            "</td>\n" +
+            "</tr><tr>\n" +
+            "<td>\n" +
+            "<table cellspacing='0' border='0' width='100%' class='header-2-args'>\n" +
+            "<col align='left' /><col align='center' /><col align='right' />\n" +
+            "  <tr>\n" +
+            "    <td><span class='header-2-0-0'>FV12A1210 - Saksan peruskurssi 1</span></td><td></td><td></td>\n" +
+            "  </tr>\n" +
+            "</table>\n" +
+            "</td>\n" +
+            "</tr><tr>\n" +
+            "<td>\n" +
+            "<table cellspacing='0' border='0' width='100%' class='header-3-args'>\n" +
+            "<col align='left' /><col align='center' /><col align='right' />\n" +
+            "  <tr>\n" +
+            "    <td></td><td></td><td></td>\n" +
+            "  </tr>\n" +
+            "</table>\n" +
+            "</td>\n" +
+            "</tr><tr>\n" +
+            "<td>\n" +
+            "<table cellspacing='0' border='0' width='100%' class='header-4-args'>\n" +
+            "<col align='left' /><col align='center' /><col align='right' />\n" +
+            "  <tr>\n" +
+            "    <td></td><td></td><td></td>\n" +
+            "  </tr>\n" +
+            "</table>\n" +
+            "</td>\n" +
+            "</tr>\n" +
+            "</table>\n" +
+            "<table class='spreadsheet' cellspacing='0' cellpadding='2%' border='t'>\n" +
+            "<col class='column0' /><col class='column1' /><col class='column2' /><col class='column3' /><col class='column4' /><col class='column5' /><col class='column6' /><col class='column7' /><col class='column8' />\n" +
+            "<tr class='columnTitles'>\n" +
+            "<td></td>\n" +
+            "<td></td>\n" +
+            "<td>Periodi</td>\n" +
+            "<td>Vko</td>\n" +
+            "<td>      </td>\n" +
+            "<td>Klo</td>\n" +
+            "<td>      </td>\n" +
+            "<td>Sali</td>\n" +
+            "<td></td>\n" +
+            "</tr>\n" +
+            "<tr>\n" +
+            "<td>FV12A1210 - Saksan peruskurssi 1: D</td>\n" +
+            "<td>Wunderlich, Jörg</td>\n" +
+            "<td>Periodi 3</td>\n" +
+            "<td>3-8</td>\n" +
+            "<td>ke</td>\n" +
+            "<td>10</td>\n" +
+            "<td>12</td>\n" +
+            "<td>1487</td>\n" +
+            "<td>&nbsp;</td>\n" +
+            "</tr>\n" +
+            "<tr>\n" +
+            "<td>FV12A1210 - Saksan peruskurssi 1: C</td>\n" +
+            "<td>Rantonen, Pirjo</td>\n" +
+            "<td>Int.vko 50</td>\n" +
+            "<td>50</td>\n" +
+            "<td>ti</td>\n" +
+            "<td>12</td>\n" +
+            "<td>16</td>\n" +
+            "<td>1487</td>\n" +
+            "<td>&nbsp;</td>\n" +
+            "</tr>\n" +
+            "<tr>\n" +
+            "<td>FV12A1210 - Saksan peruskurssi 1: B</td>\n" +
+            "<td>Wunderlich, Jörg</td>\n" +
+            "<td>Int.vko 43</td>\n" +
+            "<td>43</td>\n" +
+            "<td>ti</td>\n" +
+            "<td>12</td>\n" +
+            "<td>16</td>\n" +
+            "<td>1487</td>\n" +
+            "<td>&nbsp;</td>\n" +
+            "</tr>\n" +
+            "<tr>\n" +
+            "<td>FV12A1210 - Saksan peruskurssi 1: A</td>\n" +
+            "<td>Wunderlich, Jörg</td>\n" +
+            "<td>Int.vko 43</td>\n" +
+            "<td>43</td>\n" +
+            "<td>ma</td>\n" +
+            "<td>12</td>\n" +
+            "<td>16</td>\n" +
+            "<td>1487</td>\n" +
+            "<td>&nbsp;</td>\n" +
+            "</tr>\n" +
+            "<tr>\n" +
+            "<td>FV12A1210 - Saksan peruskurssi 1: F</td>\n" +
+            "<td>Rantonen, Pirjo</td>\n" +
+            "<td>Int.vko 22</td>\n" +
+            "<td>22</td>\n" +
+            "<td>pe</td>\n" +
+            "<td>9</td>\n" +
+            "<td>13</td>\n" +
+            "<td>1487</td>\n" +
+            "<td>&nbsp;</td>\n" +
+            "</tr>\n" +
+            "<tr>\n" +
+            "<td>FV12A1210 - Saksan peruskurssi 1: F</td>\n" +
+            "<td>Rantonen, Pirjo</td>\n" +
+            "<td>Int.vko 22</td>\n" +
+            "<td>22</td>\n" +
+            "<td>ma</td>\n" +
+            "<td>9</td>\n" +
+            "<td>15</td>\n" +
+            "<td>1487</td>\n" +
+            "<td>&nbsp;</td>\n" +
+            "</tr>\n" +
+            "<tr>\n" +
+            "<td>FV12A1210 - Saksan peruskurssi 1: F</td>\n" +
+            "<td>Rantonen, Pirjo</td>\n" +
+            "<td>Int.vko 22</td>\n" +
+            "<td>22</td>\n" +
+            "<td>ti</td>\n" +
+            "<td>9</td>\n" +
+            "<td>15</td>\n" +
+            "<td>1487</td>\n" +
+            "<td>&nbsp;</td>\n" +
+            "</tr>\n" +
+            "<tr>\n" +
+            "<td>FV12A1210 - Saksan peruskurssi 1: F</td>\n" +
+            "<td>Rantonen, Pirjo</td>\n" +
+            "<td>Int.vko 22</td>\n" +
+            "<td>22</td>\n" +
+            "<td>ke</td>\n" +
+            "<td>9</td>\n" +
+            "<td>15</td>\n" +
+            "<td>1487</td>\n" +
+            "<td>&nbsp;</td>\n" +
+            "</tr>\n" +
+            "<tr>\n" +
+            "<td>FV12A1210 - Saksan peruskurssi 1: F</td>\n" +
+            "<td>Rantonen, Pirjo</td>\n" +
+            "<td>Int.vko 22</td>\n" +
+            "<td>22</td>\n" +
+            "<td>to</td>\n" +
+            "<td>9</td>\n" +
+            "<td>15</td>\n" +
+            "<td>1487</td>\n" +
+            "<td>&nbsp;</td>\n" +
+            "</tr>\n" +
+            "<tr>\n" +
+            "<td>FV12A1210 - Saksan peruskurssi 1</td>\n" +
+            "<td>Rantonen, Pirjo</td>\n" +
+            "<td>&nbsp;</td>\n" +
+            "<td>9</td>\n" +
+            "<td>pe</td>\n" +
+            "<td>8</td>\n" +
+            "<td>12</td>\n" +
+            "<td>1487</td>\n" +
+            "<td>Saksan suulliset tentit</td>\n" +
+            "</tr>\n" +
+            "<tr>\n" +
+            "<td>FV12A1210 - Saksan peruskurssi 1:</td>\n" +
+            "<td>Rantonen, Pirjo</td>\n" +
+            "<td>&nbsp;</td>\n" +
+            "<td>50</td>\n" +
+            "<td>pe</td>\n" +
+            "<td>9</td>\n" +
+            "<td>12</td>\n" +
+            "<td>1409</td>\n" +
+            "<td>Saksan suulliset tentit</td>\n" +
+            "</tr>\n" +
+            "<tr>\n" +
+            "<td>FV12A1210 - Saksan peruskurssi 1: A</td>\n" +
+            "<td>Wunderlich, Jörg</td>\n" +
+            "<td>Periodi 1</td>\n" +
+            "<td>37-42</td>\n" +
+            "<td>ke</td>\n" +
+            "<td>10</td>\n" +
+            "<td>12</td>\n" +
+            "<td>1487</td>\n" +
+            "<td>&nbsp;</td>\n" +
+            "</tr>\n" +
+            "<tr>\n" +
+            "<td>FV12A1210 - Saksan peruskurssi 1: D</td>\n" +
+            "<td>Wunderlich, Jörg</td>\n" +
+            "<td>Int.vko 10</td>\n" +
+            "<td>10</td>\n" +
+            "<td>ma</td>\n" +
+            "<td>9</td>\n" +
+            "<td>13</td>\n" +
+            "<td>1487</td>\n" +
+            "<td>&nbsp;</td>\n" +
+            "</tr>\n" +
+            "<tr>\n" +
+            "<td>FV12A1210 - Saksan peruskurssi 1: C</td>\n" +
+            "<td>Rantonen, Pirjo</td>\n" +
+            "<td>Periodi 2</td>\n" +
+            "<td>44-49</td>\n" +
+            "<td>ke</td>\n" +
+            "<td>8</td>\n" +
+            "<td>10</td>\n" +
+            "<td>1487</td>\n" +
+            "<td>&nbsp;</td>\n" +
+            "</tr>\n" +
+            "<tr>\n" +
+            "<td>FV12A1210 - Saksan peruskurssi 1: B</td>\n" +
+            "<td>Wunderlich, Jörg</td>\n" +
+            "<td>Periodi 1</td>\n" +
+            "<td>37-42</td>\n" +
+            "<td>ke</td>\n" +
+            "<td>14</td>\n" +
+            "<td>16</td>\n" +
+            "<td>1487</td>\n" +
+            "<td>&nbsp;</td>\n" +
+            "</tr>\n" +
+            "<tr>\n" +
+            "<td>FV12A1210 - Saksan peruskurssi 1: A</td>\n" +
+            "<td>Wunderlich, Jörg</td>\n" +
+            "<td>Periodi 1</td>\n" +
+            "<td>37-42</td>\n" +
+            "<td>ma</td>\n" +
+            "<td>10</td>\n" +
+            "<td>12</td>\n" +
+            "<td>1487</td>\n" +
+            "<td>&nbsp;</td>\n" +
+            "</tr>\n" +
+            "<tr>\n" +
+            "<td>FV12A1210 - Saksan peruskurssi 1: D</td>\n" +
+            "<td>Wunderlich, Jörg</td>\n" +
+            "<td>Periodi 3</td>\n" +
+            "<td>3-8</td>\n" +
+            "<td>ma</td>\n" +
+            "<td>10</td>\n" +
+            "<td>12</td>\n" +
+            "<td>1487</td>\n" +
+            "<td>&nbsp;</td>\n" +
+            "</tr>\n" +
+            "<tr>\n" +
+            "<td>FV12A1210 - Saksan peruskurssi 1: C</td>\n" +
+            "<td>Rantonen, Pirjo</td>\n" +
+            "<td>Periodi 2</td>\n" +
+            "<td>44-49</td>\n" +
+            "<td>ma</td>\n" +
+            "<td>10</td>\n" +
+            "<td>12</td>\n" +
+            "<td>1488</td>\n" +
+            "<td>&nbsp;</td>\n" +
+            "</tr>\n" +
+            "<tr>\n" +
+            "<td>FV12A1210 - Saksan peruskurssi 1: B</td>\n" +
+            "<td>Wunderlich, Jörg</td>\n" +
+            "<td>Periodi 1</td>\n" +
+            "<td>37-42</td>\n" +
+            "<td>ma</td>\n" +
+            "<td>14</td>\n" +
+            "<td>16</td>\n" +
+            "<td>1487</td>\n" +
+            "<td>&nbsp;</td>\n" +
+            "</tr>\n" +
+            "</table>\n" +
+            "<table class='footer-border-args'  border='0' cellspacing='0' width='100%'><tr>\n" +
+            "<td>\n" +
+            "<table cellspacing='0' border='0' width='100%' class='footer-0-args'>\n" +
+            "<col align='left' /><col align='center' /><col align='right' />\n" +
+            "  <tr>\n" +
+            "    <td><span class='footer-0-0-0'></span></td><td></td><td></td>\n" +
+            "  </tr>\n" +
+            "</table>\n";
     private static final String LANGUAGE_LAB_FINNISH = "<table class='spreadsheet' cellspacing='0' cellpadding='2%' border='t'>\n" +
             "<col class='column0' /><col class='column1' /><col class='column2' /><col class='column3' /><col class='column4' /><col class='column5' /><col class='column6' /><col class='column7' /><col class='column8' />\n" +
             "<tr class='columnTitles'>\n" +
@@ -408,6 +687,13 @@ public class HTMLParserTest {
         Assert.assertEquals("11,12,13,14,15,16", list.get(0).weekNumber);
         Assert.assertEquals("kike", list.get(0).department);
         LOGGER.info("LL=" + list.get(0).toString());
+    }
+
+    @Test
+    public void HTMLLanguageLabMultiGroupTest() throws Exception {
+        CourseHtmlParser courseHtmlParser = new CourseHtmlParser(KIKE_DEPARTMENT);
+        List<Course> list = courseHtmlParser.parseHTMLData(LANGUAGE_LAB_MULTI);
+        //TODO: check each group letter
     }
 
     @Test

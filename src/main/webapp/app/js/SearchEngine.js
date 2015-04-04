@@ -1,10 +1,9 @@
 /* global define, $, _, moment, Handlebars, Bloodhound, console */
-define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!templates/loadModal.html', 'typeahead'],
-    function ($, _, moment, Handlebars, Bloodhound, loadModal) {
+define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'typeahead'],
+    function ($, _, moment, Handlebars, Bloodhound) {
         'use strict';
 
         var courseCollection = [];
-        var load = $(loadModal);
 
         var SearchEngine = {
             engine: new Bloodhound({
@@ -21,11 +20,12 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
                                 wd: course.weekDay,
                                 wn: course.weekNumber,
                                 cr: course.classroom,
-                                t: course.type
+                                t: course.type,
+                                g: course.groupName
                             };
                         });
                         return _.uniq(courseCollection, function (item) {
-                            return item.title + item.code;
+                            return item.title + item.code + item.g;
                         });
                     }
                 },
@@ -53,35 +53,46 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
                         }
                     }
                 ).on('typeahead:selected', function (evt, item) {
-                        courseCollection = courseCollection.filter(function (el) {
-                            return el.code === item.code;
+                        courseCollection = courseCollection.filter(function (c) {
+                            return c.code === item.code;
                         });
+
+                        if(item.g.length > 0) {
+                            courseCollection = courseCollection.filter(function (c) {
+                                return c.g === item.g;
+                            });
+                        }
+
                         if (courseCollection[0].title.length !== 0) {
                             that.addCourseLink(courseCollection[0].title, courseCollection[0].code, courseCollection.length);
                         }
-                        load.modal('toggle');
-                        setTimeout(function () {
-                            that.addDataToCalendar(eventCal);
-                        }, 300);
-                        that.addUrlParameter(courseCollection[0].title, courseCollection[0].code);
+
+                        that.addDataToCalendar(eventCal);
+                        that.addUrlParameter(courseCollection[0].code, courseCollection[0].g);
                     });
             },
 
-            addUrlParameter: function (courseName, courseCode) {
+            addUrlParameter: function (courseCode, groupName) {
                 var params = window.location.search;
+                var par = courseCode.substring(0,2) === 'FV' ? courseCode+'&'+groupName : courseCode;
                 if (params.length > 0) {
                     history.pushState(
-                        {}, "", "index.html?" + params.substring(1, params.length) + '+' + courseCode);
+                        {}, "", "index.html?" + params.substring(1, params.length) + '+' + par);
                 } else {
                     history.pushState(
-                        {}, "", "index.html?" + params + courseCode);
+                        {}, "", "index.html?" + params + par);
                 }
             },
 
             removeUrlParameter: function (id) {
                 var params = window.location.search;
                 var updatedParams = params.substring(1, params.length).split('+').filter(function (p) {
-                    return p !== id;
+                    if(p.indexOf('&') > -1) {
+                        var groupLetterStripped = p.substring(0, p.indexOf('&'));
+                        return groupLetterStripped !== id;
+                    } else {
+                        return p !== id;
+                    }
                 });
                 if (updatedParams.length > 0) {
                     history.pushState({}, "", "index.html?" + updatedParams.join('+'));
@@ -95,7 +106,6 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
                 var courseCodes = params.substring(1, params.length).split(/[+]/);
                 var that = this;
                 if (courseCodes[0].length > 0) {
-                    load.modal('toggle');
                     courseCodes.forEach(function (cc) {
                         if (typeof cc !== 'undefined') {
                             $.ajax({
@@ -125,7 +135,6 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
                             console.log('Not a valid course code');
                         }
                     });
-                    load.modal('hide');
                 }
             },
 
@@ -152,7 +161,7 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
                 var courseToBeAdded = [];
                 var that = this;
 
-                courseCollection.forEach(function (course) {
+                courseCollection.map(function (course) {
                     function processWeekNumbers(weekNumber) {
                         var dateStart = moment()
                             .lang('fi')
@@ -182,11 +191,9 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'text!temp
                         };
                         courseToBeAdded.push(calendarEvent);
                     }
-                    JSON.parse('[' + course.wn + ']').forEach(processWeekNumbers);
+                    JSON.parse('[' + course.wn + ']').map(processWeekNumbers);
                 });
                 calendar.createCalendarEvent(courseToBeAdded);
-
-                load.modal('hide');
             },
 
             getYearNumber: function (weekNumber) {

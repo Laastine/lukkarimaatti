@@ -22,18 +22,13 @@ public class EmailTest {
     }
 
     @Test
-    public void sendMail() {
-        emailLink.buildMail("laastine@kapsi.fi", "Hello from Junit!");
-    }
-
-    @Test
     public void isValidEmail() {
-        List<String> valid = new ArrayList() {{
-            add("matti.mallikas@gmail.com");
-            add("matti.mallikas@gmail.com");
-            add("matti.mallikas@gmail.com");
-            add("matti.mallikas@gmail.com");
-            add("matti.mallikas@gmail.com");
+        List<String> valid = new ArrayList<String>() {{
+            add("matti.mall45ikas@gma46il.com");
+            add("maasdbftti.mallikas@gmatyil.com");
+            add("matti.maasdllikas@kapsi.fi");
+            add("matti.mallikas@lut.fi");
+            add("madbfatti.mal23likas@gmail.com");
         }};
         for (String s : valid) {
             Assert.assertTrue(emailLink.isValidEmailAddress(s));
@@ -42,7 +37,7 @@ public class EmailTest {
 
     @Test
     public void notValidEmail() {
-        List<String> notSoValid = new ArrayList() {{
+        List<String> notSoValid = new ArrayList<String>() {{
             add("matti.mallikasgmail.com");
             add("matti.mallikas@gmailcom");
             add("mattimallikasgmailcom");

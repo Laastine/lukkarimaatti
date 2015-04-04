@@ -152,7 +152,6 @@ public class HTMLParserTest {
             "<td>&nbsp;</td>\n" +
             "</tr>\n" +
             "</table>";
-
     private static final String LANGUAGE_LAB_MULTI = "<table class='header-border-args'  border='0' cellspacing='0' width='100%'><tr>\n" +
             "<td>\n" +
             "<table cellspacing='0' border='0' width='100%' class='header-0-args'>\n" +
@@ -671,7 +670,6 @@ public class HTMLParserTest {
         Assert.assertEquals("to", list.get(0).weekDay);
         Assert.assertEquals("3,4,5,6,7,8,11,12,13,14,15,16", list.get(0).weekNumber);
         Assert.assertEquals("kike", list.get(0).department);
-        LOGGER.info("LL=" + list.get(0).toString());
     }
 
     @Test
@@ -686,14 +684,18 @@ public class HTMLParserTest {
         Assert.assertEquals("to", list.get(0).weekDay);
         Assert.assertEquals("11,12,13,14,15,16", list.get(0).weekNumber);
         Assert.assertEquals("kike", list.get(0).department);
-        LOGGER.info("LL=" + list.get(0).toString());
     }
 
     @Test
     public void HTMLLanguageLabMultiGroupTest() throws Exception {
         CourseHtmlParser courseHtmlParser = new CourseHtmlParser(KIKE_DEPARTMENT);
         List<Course> list = courseHtmlParser.parseHTMLData(LANGUAGE_LAB_MULTI);
-        //TODO: check each group letter
+        Assert.assertEquals("D", list.get(0).groupName);
+        Assert.assertEquals("FV12A1210", list.get(0).courseCode);
+        Assert.assertEquals("Saksan peruskurssi 1: D", list.get(0).courseName);
+        Assert.assertEquals("B", list.get(list.size() - 1).groupName);
+        Assert.assertEquals("FV12A1210", list.get(list.size() - 1).courseCode);
+        Assert.assertEquals("Saksan peruskurssi 1: B", list.get(list.size() - 1).courseName);
     }
 
     @Test

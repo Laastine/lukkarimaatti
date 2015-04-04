@@ -37,7 +37,7 @@ public class CourseValidator {
             LOGGER.debug("classroom fails="+course.classroom);
             return false;
         }
-        if (investigateLength(course.type, 4)) {
+        if (investigateLength(course.type, 32)) {
             LOGGER.debug("type fails="+course.type);
             return false;
         }

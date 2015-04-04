@@ -43,12 +43,14 @@ public class Course implements Serializable {
     public String teacher;
     @Column(name = "MISC")
     public String misc;
+    @Column(name = "GROUP_NAME")
+    public String groupName;
 
     public Course(String courseCode, String courseName,
                   String weekNumber, String weekDay,
                   String timeOfDay, String classroom,
                   String type, String department,
-                  String teacher, String misc) {
+                  String teacher, String misc, String groupName) {
         this.courseId = UUID.randomUUID().getLeastSignificantBits();
         this.courseCode = courseCode;
         this.courseName = courseName;
@@ -60,6 +62,7 @@ public class Course implements Serializable {
         this.department = department;
         this.teacher = teacher;
         this.misc = misc;
+        this.groupName = groupName;
     }
 
     //For Hibernate mutation
@@ -70,7 +73,7 @@ public class Course implements Serializable {
     public String toString() {
         return "[courseCode=" + courseCode + ", courseName=" + courseName + ", teacher=" + teacher +
                 ", weekNumber=" + weekNumber + ", weekDay=" + weekDay + ", period=" + period + ", timeOfDay=" + timeOfDay +
-                ", classroom=" + classroom + ", type=" + type + ", department=" + department + "]";
+                ", classroom=" + classroom + ", type=" + type + ", department=" + department + ", groupName=" + groupName +"]";
     }
 
     @Override

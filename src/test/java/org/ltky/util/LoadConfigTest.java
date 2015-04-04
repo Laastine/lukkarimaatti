@@ -21,7 +21,7 @@ public class LoadConfigTest {
         Assert.assertNotNull(parserConfig);
         try {
             Assert.assertNotNull(parserConfig.loadServletInitParameters());
-            Assert.assertEquals("https://uni.lut.fi/fi/web/guest/lukujarjestykset", parserConfig.getUniURL());
+            Assert.assertEquals("https://uni.lut.fi/fi/web/guest/lukujarjestykset1", parserConfig.getUniURL());
         } catch (Exception e) {
             LOGGER.error("Exception caught", e);
             Assert.fail("load config failed");

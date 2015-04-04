@@ -1,6 +1,7 @@
 package org.ltky.parser;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -26,6 +27,7 @@ public class CourseHtmlParser {
     private final String department;
     private final Util UTIL = Util.getInstance();
     private final CoursePattern coursePattern = new CoursePattern();
+    private static final Logger LOGGER = Logger.getLogger(CourseHtmlParser.class);
 
     public CourseHtmlParser(String department) {
         this.department = department;
@@ -96,30 +98,32 @@ public class CourseHtmlParser {
         if (this.department.equalsIgnoreCase("kike")) {
             CoursePrototype coursePrototype = findNameCodeAndType(getElement(rowItems, 0));
             return new Course(
-                    coursePrototype.courseCode,                 //courseCode
-                    coursePrototype.courseName,                 //courseName
-                    findWeek(getElement(rowItems, 3)),          //weekNumber
-                    findWeekDay(getElement(rowItems, 4)),       //weekDay
-                    findTimeOfDay(getElement(rowItems, 5), getElement(rowItems, 6)),  //timeOfDay
-                    findClassroom(getElement(rowItems, 7)),     //classRoom
-                    coursePrototype.type,                       //type
-                    department,                                 //department
-                    findTeacher(getElement(rowItems, 1)),       //teacher
-                    findMiscData(getElement(rowItems, 8))       //misc
+                    coursePrototype.courseCode,                                                 //courseCode
+                    coursePrototype.courseName,                                                 //courseName
+                    (findWeek(getElement(rowItems, 3))),             //weekNumber
+                    (findWeekDay(getElement(rowItems, 4))),          //weekDay
+                    (findTimeOfDay(getElement(rowItems, 5), getElement(rowItems, 6))),  //timeOfDay
+                    (findClassroom(getElement(rowItems, 7))),        //classRoom
+                    (coursePrototype.type),                          //type
+                    department,                                                                 //department
+                    (findTeacher(getElement(rowItems, 1))),          //teacher
+                    (findMiscData(getElement(rowItems, 8))),         //misc
+                    coursePrototype.group
             );
         } else {
             CoursePrototype coursePrototype = findNameCodeAndType(getElement(rowItems, 0));
             return new Course(
-                    coursePrototype.courseCode,                 //courseCode
-                    coursePrototype.courseName,                 //courseName
-                    findWeek(getElement(rowItems, 2)),          //weekNumber
-                    findWeekDay(getElement(rowItems, 3)),       //weekDay
+                    coursePrototype.courseCode,                                             //courseCode
+                    coursePrototype.courseName,                                             //courseName
+                    findWeek(getElement(rowItems, 2)),         //weekNumber
+                    findWeekDay(getElement(rowItems, 3)),      //weekDay
                     findTimeOfDay(getElement(rowItems, 4), getElement(rowItems, 5)),  //timeOfDay
-                    findClassroom(getElement(rowItems, 6)),     //classRoom
-                    coursePrototype.type,                       //type
-                    department,                                 //department
-                    findTeacher(getElement(rowItems, 1)),       //teacher
-                    findMiscData(getElement(rowItems, 7))       //misc
+                    findClassroom(getElement(rowItems, 6)),    //classRoom
+                    coursePrototype.type,                      //type
+                    department,                                                             //department
+                    findTeacher(getElement(rowItems, 1)),      //teacher
+                    findMiscData(getElement(rowItems, 7)),     //misc
+                    coursePrototype.group                                                   //groupName
             );
         }
     }
@@ -142,6 +146,18 @@ public class CourseHtmlParser {
                 return startTime + "-" + endTime;
             }
         return "";
+    }
+
+    private String findGroup(String courseName) {
+        String separator = ": ", groupLetter = "";
+        if (StringUtils.contains(courseName, separator) && this.department.equalsIgnoreCase("kike")) {
+            String lastCharacter = StringUtils.substringAfterLast(courseName, separator);
+            LOGGER.debug("lastCharacter=" + lastCharacter);
+            if (StringUtils.isAlpha(lastCharacter) && StringUtils.isAllUpperCase(lastCharacter) && lastCharacter.length() == 1) {
+                groupLetter = lastCharacter;
+            }
+        }
+        return groupLetter;
     }
 
     private String findMiscData(String misc) {
@@ -179,10 +195,12 @@ public class CourseHtmlParser {
         final String courseCode;
         final String courseName;
         final String type;
+        final String group;
 
         public CoursePrototype(String courseCode, String courseName, String type) {
             this.courseCode = courseCode;
             this.courseName = courseName;
+            this.group = findGroup(courseName);
             this.type = type;
         }
     }

@@ -57,7 +57,7 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'typeahead
                             return c.code === item.code;
                         });
 
-                        if(item.g.length > 0) {
+                        if (item.g.length > 0 && item.code.substring(0, 2) === 'FV') {
                             courseCollection = courseCollection.filter(function (c) {
                                 return c.g === item.g;
                             });
@@ -74,7 +74,7 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'typeahead
 
             addUrlParameter: function (courseCode, groupName) {
                 var params = window.location.search;
-                var par = courseCode.substring(0,2) === 'FV' ? courseCode+'&'+groupName : courseCode;
+                var par = courseCode.substring(0, 2) === 'FV' ? courseCode + '&' + groupName : courseCode;
                 if (params.length > 0) {
                     history.pushState(
                         {}, "", "index.html?" + params.substring(1, params.length) + '+' + par);
@@ -87,7 +87,7 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'typeahead
             removeUrlParameter: function (id) {
                 var params = window.location.search;
                 var updatedParams = params.substring(1, params.length).split('+').filter(function (p) {
-                    if(p.indexOf('&') > -1) {
+                    if (p.indexOf('&') > -1) {
                         var groupLetterStripped = p.substring(0, p.indexOf('&'));
                         return groupLetterStripped !== id;
                     } else {
@@ -107,9 +107,15 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'typeahead
                 var that = this;
                 if (courseCodes[0].length > 0) {
                     courseCodes.forEach(function (cc) {
-                        if (typeof cc !== 'undefined') {
+                        var groupLetter = "";
+                        var param = cc;
+                        if (cc.indexOf('&') > -1) {
+                            groupLetter = cc.substring(cc.indexOf('&') + 1, cc.length);
+                            param = cc.substring(0, cc.indexOf('&'));
+                        }
+                        if (typeof param !== 'undefined') {
                             $.ajax({
-                                url: '/rest/code/' + cc,
+                                url: '/rest/code/' + param,
                                 type: 'GET',
                                 dataType: 'json',
                                 success: function (data) {
@@ -121,14 +127,20 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'typeahead
                                             wd: course.weekDay,
                                             wn: course.weekNumber,
                                             cr: course.classroom,
-                                            t: course.type
+                                            t: course.type,
+                                            g: course.groupName
                                         };
                                     });
+                                    if (groupLetter.length > 0 && data[0].courseCode.substring(0, 2) === 'FV') {
+                                        courseCollection = courseCollection.filter(function (d) {
+                                            return d.g === groupLetter;
+                                        });
+                                    }
                                     that.addCourseLink(data[0].courseName, data[0].courseCode, data.length);
                                     that.addDataToCalendar(calendar);
                                 },
                                 error: function (xhr, status, error) {
-                                    console.log('xhr' + xhr + ', status=' + status + ', error=' + error);
+                                    console.error('param ' + param + 'xhr' + xhr + ', status=' + status + ', error=' + error);
                                 }
                             });
                         } else {
@@ -139,17 +151,17 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'typeahead
             },
 
             addCourseLink: function (courseName, courseCode, occ) {
-                if(typeof occ === 'undefined') {
+                if (typeof occ === 'undefined') {
                     occ = 0;
                 }
                 var noppa = 'https://noppa.lut.fi/noppa/opintojakso/';
                 $('#courseList').append('<tr id="' + courseCode + '"><td>' +
-                    '<a href=' + noppa + courseCode + ' target="_blank">' + occ + ', ' +courseCode + ' - ' + courseName + '</a>' +
-                    '</td><td>' +
-                    '<button id="deleteButton" class="button" type="button">' +
-                    '<span class="glyphicon glyphicon-remove"></span>' +
-                    '</button>' +
-                    '</td></tr>');
+                '<a href=' + noppa + courseCode + ' target="_blank">' + occ + ', ' + courseCode + ' - ' + courseName + '</a>' +
+                '</td><td>' +
+                '<button id="deleteButton" class="button" type="button">' +
+                '<span class="glyphicon glyphicon-remove"></span>' +
+                '</button>' +
+                '</td></tr>');
             },
 
             removeCourseItem: function (element, id) {
@@ -161,7 +173,7 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'typeahead
                 var courseToBeAdded = [];
                 var that = this;
 
-                courseCollection.map(function (course) {
+                courseCollection.forEach(function (course) {
                     function processWeekNumbers(weekNumber) {
                         var dateStart = moment()
                             .lang('fi')
@@ -191,6 +203,7 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'typeahead
                         };
                         courseToBeAdded.push(calendarEvent);
                     }
+
                     JSON.parse('[' + course.wn + ']').map(processWeekNumbers);
                 });
                 calendar.createCalendarEvent(courseToBeAdded);
@@ -198,14 +211,14 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'typeahead
 
             getYearNumber: function (weekNumber) {
                 var isSpringSemester = moment().week() < 35;
-                if(!isSpringSemester) {
+                if (!isSpringSemester) {
                     return parseInt(weekNumber, 10) < 35 ? moment().add(1, 'y').year() : moment().year();
                 } else {
                     return parseInt(weekNumber, 10) >= 35 ? moment().subtract(1, 'y').year() : moment().year();
                 }
             },
 
-            stringToColour: function(colorSeed) {
+            stringToColour: function (colorSeed) {
                 var hash = 0, colour = '#', value;
                 colorSeed.split("").forEach(function (e) {
                     hash = colorSeed.charCodeAt(e) + ((hash << 5) - hash);
@@ -222,7 +235,7 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'typeahead
                 $.ajax({
                     type: "POST",
                     url: '/app/save',
-                    data: { email: address, link: link },
+                    data: {email: address, link: link},
                     dataType: 'json'
                 });
             }

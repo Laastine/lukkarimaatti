@@ -13,6 +13,10 @@ And constructed with the following guidelines:
 
 ---
 
+### 0.9.6 April 4, 2015
+
+* Language lab courses separated according group letter
+
 ### 0.9.5 March 5, 2015
 
 * Parsing process update after uni.lut.fi update

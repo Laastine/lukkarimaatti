@@ -30,23 +30,23 @@ public class CourseValidator {
             return false;
         }
         if (course.timeOfDay == null || investigateLength(course.timeOfDay, 32)) {
-            LOGGER.debug("timeOfDay fails");
+            LOGGER.debug("timeOfDay fails="+course.timeOfDay);
             return false;
         }
         if (investigateLength(course.classroom, 64)) {
-            LOGGER.debug("classroom fails");
+            LOGGER.debug("classroom fails="+course.classroom);
             return false;
         }
         if (investigateLength(course.type, 4)) {
-            LOGGER.debug("type fails");
+            LOGGER.debug("type fails="+course.type);
             return false;
         }
         if (investigateLength(course.department, 4)) {
-            LOGGER.debug("department fails");
+            LOGGER.debug("department fails="+course.department);
             return false;
         }
         if (investigateLength(course.teacher, 64)) {
-            LOGGER.debug("teacher fails");
+            LOGGER.debug("teacher fails="+course.teacher);
             return false;
         }
         LOGGER.debug("Saving="+course);

@@ -13,6 +13,10 @@ And constructed with the following guidelines:
 
 ---
 
+### 0.9.7 April 5, 2015
+
+* Front-end refactor
+
 ### 0.9.6 April 4, 2015
 
 * Language lab courses separated according group letter

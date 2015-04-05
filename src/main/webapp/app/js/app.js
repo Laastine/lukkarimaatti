@@ -24,7 +24,7 @@ define([
             root: "/"
         };
 
-        $.ajaxSetup({ cache: false });
+        $.ajaxSetup({cache: false});
 
         $.ajaxPrefilter(function (options) {
             options.url = 'http://localhost:8080/lukkarimaatti' + options.url;

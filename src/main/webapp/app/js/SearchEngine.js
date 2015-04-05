@@ -12,20 +12,9 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'typeahead
                 remote: {
                     url: '/rest/cnames/%QUERY',
                     filter: function (data) {
-                        courseCollection = $.map(data, function (course) {
-                            return {
-                                title: course.courseName,
-                                code: course.courseCode,
-                                tof: course.timeOfDay,
-                                wd: course.weekDay,
-                                wn: course.weekNumber,
-                                cr: course.classroom,
-                                t: course.type,
-                                g: course.groupName
-                            };
-                        });
-                        return _.uniq(courseCollection, function (item) {
-                            return item.title + item.code + item.g;
+                        courseCollection = data;
+                        return _.uniq(courseCollection, function (cc) {
+                            return cc.courseName + cc.courseCode + cc.groupName;
                         });
                     }
                 },
@@ -49,26 +38,27 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'typeahead
                                 'Unable to find any courses that match the current query',
                                 '</strong></p>'
                             ].join('\n'),
-                            suggestion: Handlebars.compile('<p><strong>{{title}}</strong> - {{code}}</p>')
+                            suggestion: Handlebars.compile('<p><strong>{{courseName}}</strong> - {{courseCode}}</p>')
                         }
                     }
-                ).on('typeahead:selected', function (evt, item) {
+                ).on('typeahead:selected', function (evt, course) {
+                        console.log('course=' + JSON.stringify(course))
                         courseCollection = courseCollection.filter(function (c) {
-                            return c.code === item.code;
+                            return c.courseCode === course.courseCode;
                         });
 
-                        if (item.g.length > 0 && item.code.substring(0, 2) === 'FV') {
+                        if (course.groupName.length > 0 && course.courseCode.substring(0, 2) === 'FV') {
                             courseCollection = courseCollection.filter(function (c) {
-                                return c.g === item.g;
+                                return c.groupName === course.groupName;
                             });
                         }
 
-                        if (courseCollection[0].title.length !== 0) {
-                            that.addCourseLink(courseCollection[0].title, courseCollection[0].code, courseCollection.length);
+                        if (courseCollection.length > 0) {
+                            that.addCourseLink(courseCollection[0].courseName, courseCollection[0].courseCode, courseCollection.length);
                         }
 
                         that.addDataToCalendar(eventCal);
-                        that.addUrlParameter(courseCollection[0].code, courseCollection[0].g);
+                        that.addUrlParameter(courseCollection[0].courseCode, courseCollection[0].groupName);
                     });
             },
 
@@ -117,21 +107,10 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'typeahead
                                 url: '/rest/code/' + param,
                                 type: 'GET',
                                 success: function (data) {
-                                    courseCollection = $.map(data, function (course) {
-                                        return {
-                                            title: course.courseName,
-                                            code: course.courseCode,
-                                            tof: course.timeOfDay,
-                                            wd: course.weekDay,
-                                            wn: course.weekNumber,
-                                            cr: course.classroom,
-                                            t: course.type,
-                                            g: course.groupName
-                                        };
-                                    });
+                                    courseCollection = data;
                                     if (groupLetter.length > 0 && data[0].courseCode.substring(0, 2) === 'FV') {
                                         courseCollection = courseCollection.filter(function (d) {
-                                            return d.g === groupLetter;
+                                            return d.groupName === groupLetter;
                                         });
                                     }
                                     that.addCourseLink(data[0].courseName, data[0].courseCode, data.length);
@@ -176,32 +155,33 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'typeahead
                         var dateStart = moment()
                             .lang('fi')
                             .years(that.getYearNumber(weekNumber))
-                            .day(course.wd)
+                            .day(course.weekDay)
                             .week(weekNumber)
-                            .hours(course.tof.split('-')[0] || 6).minutes(0)
+                            .hours(course.timeOfDay.split('-')[0] || 6).minutes(0)
                             .seconds(0)
                             .format('YYYY-MM-DDTHH:mm:ssZ');
                         var dateEnd = moment()
                             .lang('fi')
                             .years(that.getYearNumber(weekNumber))
-                            .day(course.wd).week(weekNumber)
-                            .hours(course.tof.split('-')[1] || 6)
+                            .day(course.weekDay).week(weekNumber)
+                            .hours(course.timeOfDay.split('-')[1] || 6)
                             .minutes(0)
                             .seconds(0)
                             .format('YYYY-MM-DDTHH:mm:ssZ');
                         var calendarEvent = {
-                            title: course.code,
-                            description: course.title + '/' + course.t + '\n' + course.cr,
+                            title: course.courseCode,
+                            description: course.courseName + '/' + course.type + '\n' + course.classroom,
                             start: new Date(dateStart),
                             end: new Date(dateEnd),
                             element: null,
-                            color: that.stringToColour(course.code),
+                            color: that.stringToColour(course.courseCode),
                             view: null,
-                            id: course.code + '#' + course.t
+                            id: course.courseCode + '#' + course.type
                         };
                         courseToBeAdded.push(calendarEvent);
                     }
-                    JSON.parse('[' + course.wn + ']').map(processWeekNumbers);
+
+                    JSON.parse('[' + course.weekNumber + ']').map(processWeekNumbers);
                 });
                 calendar.createCalendarEvent(courseToBeAdded);
             },

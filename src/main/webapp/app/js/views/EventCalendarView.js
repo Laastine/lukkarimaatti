@@ -54,6 +54,7 @@ define([
                     day: 'DD.MM',
                     agenda: 'hh:mm'
                 },
+                columnFormat: 'ddd M.D',
                 allDaySlot: false,
                 axisFormat: 'HH:mm',
                 weekends: true,

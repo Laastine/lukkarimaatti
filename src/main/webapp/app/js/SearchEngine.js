@@ -11,8 +11,8 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'typeahead
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
                 remote: {
                     url: '/rest/cnames/%QUERY',
-                    filter: function (response) {
-                        courseCollection = $.map(response, function (course) {
+                    filter: function (data) {
+                        courseCollection = $.map(data, function (course) {
                             return {
                                 title: course.courseName,
                                 code: course.courseCode,
@@ -74,13 +74,13 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'typeahead
 
             addUrlParameter: function (courseCode, groupName) {
                 var params = window.location.search;
-                var par = courseCode.substring(0, 2) === 'FV' ? courseCode + '&' + groupName : courseCode;
+                var urlParam = courseCode.substring(0, 2) === 'FV' ? courseCode + '&' + groupName : courseCode;
                 if (params.length > 0) {
                     history.pushState(
-                        {}, "", "index.html?" + params.substring(1, params.length) + '+' + par);
+                        {}, "", "index.html?" + params.substring(1, params.length) + '+' + urlParam);
                 } else {
                     history.pushState(
-                        {}, "", "index.html?" + params + par);
+                        {}, "", "index.html?" + params + urlParam);
                 }
             },
 
@@ -106,18 +106,16 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'typeahead
                 var courseCodes = params.substring(1, params.length).split(/[+]/);
                 var that = this;
                 if (courseCodes[0].length > 0) {
-                    courseCodes.forEach(function (cc) {
+                    courseCodes.forEach(function (param) {
                         var groupLetter = "";
-                        var param = cc;
-                        if (cc.indexOf('&') > -1) {
-                            groupLetter = cc.substring(cc.indexOf('&') + 1, cc.length);
-                            param = cc.substring(0, cc.indexOf('&'));
+                        if (param.indexOf('&') > -1) {
+                            groupLetter = param.substring(param.indexOf('&') + 1, param.length);
+                            param = param.substring(0, param.indexOf('&'));
                         }
                         if (typeof param !== 'undefined') {
                             $.ajax({
                                 url: '/rest/code/' + param,
                                 type: 'GET',
-                                dataType: 'json',
                                 success: function (data) {
                                     courseCollection = $.map(data, function (course) {
                                         return {
@@ -203,7 +201,6 @@ define(['jquery', 'underscore', 'moment', 'handlebars', 'bloodhound', 'typeahead
                         };
                         courseToBeAdded.push(calendarEvent);
                     }
-
                     JSON.parse('[' + course.wn + ']').map(processWeekNumbers);
                 });
                 calendar.createCalendarEvent(courseToBeAdded);

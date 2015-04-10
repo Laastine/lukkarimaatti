@@ -14,7 +14,7 @@ Compatible with IE10+ and newest Firefox and Chrome
 * [Hibernate 4.x](http://hibernate.org/)
 * [Jsoup 1.7.x](http://jsoup.org/)
 * [Jetty 9](http://www.eclipse.org/jetty/)
-* [PostgreSQL 9.3](http://www.postgresql.org/)
+* [PostgreSQL 9.1](http://www.postgresql.org/)
 * [Selenium](http://www.seleniumhq.org/)<br>
  
 <h5>Front-end</h5>

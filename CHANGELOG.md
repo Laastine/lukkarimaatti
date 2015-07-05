@@ -13,6 +13,10 @@ And constructed with the following guidelines:
 
 ---
 
+### 0.9.8 July 5, 2015
+
+* Encoding fix
+
 ### 0.9.7 April 5, 2015
 
 * Front-end refactor

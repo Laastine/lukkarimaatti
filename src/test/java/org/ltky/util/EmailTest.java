@@ -1,11 +1,13 @@
 package org.ltky.util;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * lukkarimaatti
@@ -31,7 +33,7 @@ public class EmailTest {
             add("madbfatti.mal23likas@gmail.com");
         }};
         for (String s : valid) {
-            Assert.assertTrue(emailLink.isValidEmailAddress(s));
+            assertTrue(emailLink.isValidEmailAddress(s));
         }
     }
 
@@ -45,7 +47,7 @@ public class EmailTest {
             add("matti.mallikas@gmail");
         }};
         for (String s : notSoValid) {
-            Assert.assertFalse(emailLink.isValidEmailAddress(s));
+            assertFalse(emailLink.isValidEmailAddress(s));
         }
     }
 }

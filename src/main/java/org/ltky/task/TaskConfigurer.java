@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import java.util.Map;
 
 /**
- * parser
+ * TaskConfigurer
  * Created with IntelliJ IDEA.
  * User: laastine
  * Date: 26.11.2013

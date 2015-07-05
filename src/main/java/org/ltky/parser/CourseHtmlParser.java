@@ -100,14 +100,14 @@ public class CourseHtmlParser {
             return new Course(
                     coursePrototype.courseCode,                                                 //courseCode
                     coursePrototype.courseName,                                                 //courseName
-                    (findWeek(getElement(rowItems, 3))),             //weekNumber
-                    (findWeekDay(getElement(rowItems, 4))),          //weekDay
-                    (findTimeOfDay(getElement(rowItems, 5), getElement(rowItems, 6))),  //timeOfDay
-                    (findClassroom(getElement(rowItems, 7))),        //classRoom
-                    (coursePrototype.type),                          //type
+                    (findWeek(getElement(rowItems, 3))),                                        //weekNumber
+                    (findWeekDay(getElement(rowItems, 4))),                                     //weekDay
+                    (findTimeOfDay(getElement(rowItems, 5), getElement(rowItems, 6))),          //timeOfDay
+                    (findClassroom(getElement(rowItems, 7))),                                   //classRoom
+                    (coursePrototype.type),                                                     //type
                     department,                                                                 //department
-                    (findTeacher(getElement(rowItems, 1))),          //teacher
-                    (findMiscData(getElement(rowItems, 8))),         //misc
+                    (findTeacher(getElement(rowItems, 1))),                                     //teacher
+                    (findMiscData(getElement(rowItems, 8))),                                    //misc
                     coursePrototype.group
             );
         } else {
@@ -115,14 +115,14 @@ public class CourseHtmlParser {
             return new Course(
                     coursePrototype.courseCode,                                             //courseCode
                     coursePrototype.courseName,                                             //courseName
-                    findWeek(getElement(rowItems, 2)),         //weekNumber
-                    findWeekDay(getElement(rowItems, 3)),      //weekDay
-                    findTimeOfDay(getElement(rowItems, 4), getElement(rowItems, 5)),  //timeOfDay
-                    findClassroom(getElement(rowItems, 6)),    //classRoom
-                    coursePrototype.type,                      //type
+                    findWeek(getElement(rowItems, 2)),                                      //weekNumber
+                    findWeekDay(getElement(rowItems, 3)),                                   //weekDay
+                    findTimeOfDay(getElement(rowItems, 4), getElement(rowItems, 5)),        //timeOfDay
+                    findClassroom(getElement(rowItems, 6)),                                 //classRoom
+                    coursePrototype.type,                                                   //type
                     department,                                                             //department
-                    findTeacher(getElement(rowItems, 1)),      //teacher
-                    findMiscData(getElement(rowItems, 7)),     //misc
+                    findTeacher(getElement(rowItems, 1)),                                   //teacher
+                    findMiscData(getElement(rowItems, 7)),                                  //misc
                     coursePrototype.group                                                   //groupName
             );
         }

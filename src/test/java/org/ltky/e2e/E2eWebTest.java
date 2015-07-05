@@ -18,7 +18,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +31,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -73,10 +74,10 @@ public class E2eWebTest {
     @Test
     public void testAllElementsAreVisible() {
         driver.get(baseUrl + "/lukkarimaatti");
-        Assert.assertTrue(driver.findElement(By.className("header")).isDisplayed());
-        Assert.assertTrue(driver.findElement(By.id("searchbar")).isDisplayed());
-        Assert.assertTrue(driver.findElement(By.id("calendar")).isDisplayed());
-        Assert.assertTrue(driver.findElement(By.id("footer")).isDisplayed());
+        assertTrue(driver.findElement(By.className("header")).isDisplayed());
+        assertTrue(driver.findElement(By.id("searchbar")).isDisplayed());
+        assertTrue(driver.findElement(By.id("calendar")).isDisplayed());
+        assertTrue(driver.findElement(By.id("footer")).isDisplayed());
     }
 
     @Test
@@ -87,27 +88,25 @@ public class E2eWebTest {
         new WebDriverWait(driver, TIMEOUT)
                 .until(ExpectedConditions.visibilityOfElementLocated(By.className("tt-dropdown-menu")));
         driver.findElement(By.id("courseSearchBox")).sendKeys(Keys.ARROW_DOWN, Keys.ENTER);
-        Assert.assertTrue(driver.findElement(By.id("CT30A3201")).isDisplayed());
+        assertTrue(driver.findElement(By.id("CT30A3201")).isDisplayed());
         driver.findElement(By.id("courseSearchBox")).clear();
         new WebDriverWait(driver, TIMEOUT)
-                .until(new ExpectedCondition<String>() {
-                    public String apply(WebDriver driver) {
-                        String val = driver.findElement(By.id("courseSearchBox")).getAttribute("value");
-                        return val.isEmpty() ? val : null;
-                    }
+                .until((WebDriver driver) -> {
+                    String val = driver.findElement(By.id("courseSearchBox")).getAttribute("value");
+                    return val.isEmpty() ? val : null;
                 });
         driver.findElement(By.id("courseSearchBox")).sendKeys("Ohjelmoinnin perusteet");
         new WebDriverWait(driver, TIMEOUT)
                 .until(ExpectedConditions.visibilityOfElementLocated(By.className("tt-dropdown-menu")));
         driver.findElement(By.id("courseSearchBox")).sendKeys(Keys.ARROW_DOWN, Keys.ENTER);
-        Assert.assertTrue(driver.findElement(By.id("CT60A0200")).isDisplayed());
+        assertTrue(driver.findElement(By.id("CT60A0200")).isDisplayed());
     }
 
     @Test
     public void testModals() {
         driver.get(baseUrl + "/lukkarimaatti");
         driver.findElement(By.id("aboutModalButton")).click();
-        Assert.assertTrue(driver.findElement(By.id("aboutModalButton")).isDisplayed());
+        assertTrue(driver.findElement(By.id("aboutModalButton")).isDisplayed());
         driver.findElement(By.id("aboutClose")).click();
     }
 

@@ -1,7 +1,6 @@
 package org.ltky.parser;
 
 import org.apache.log4j.Logger;
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -10,6 +9,9 @@ import org.ltky.dao.model.Course;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * lukkarimaatti
@@ -27,7 +29,6 @@ public class HTMLParserTest {
     private static final String TUTA_DEPARTMENT = "tuta";
     private static final String KATI_DEPARTMENT = "kati";
     private static final String YMTE_DEPARTMENT = "ymte";
-    private static final String ENTE_DEPARTMENT = "ente";
     private static final String COURSE_TEST_DATA =
             "<table class='spreadsheet' cellspacing='0' cellpadding='2%' border='t'>\n" +
                     "<col class='column0' /><col class='column1' /><col class='column2' /><col class='column3' /><col class='column4' /><col class='column5' /><col class='column6' /><col class='column7' />\n" +
@@ -653,91 +654,88 @@ public class HTMLParserTest {
         CourseHtmlParser courseHtmlParser = new CourseHtmlParser(TITE_DEPARTMENT);
         List<Course> list = courseHtmlParser.parseHTMLData(COURSE_TEST_DATA);
         List<Course> list2 = courseHtmlParser.parseHTMLData(COURSE_TEST_DATA2);
-        Assert.assertEquals("CT50A6000", list.get(0).courseCode);
-        Assert.assertEquals("Pattern Recognition", list.get(0).courseName);
-        Assert.assertEquals("CT30A9700", list2.get(0).courseCode);
-        Assert.assertEquals("Network Security", list2.get(0).courseName);
+        assertEquals("CT50A6000", list.get(0).courseCode);
+        assertEquals("Pattern Recognition", list.get(0).courseName);
+        assertEquals("CT30A9700", list2.get(0).courseCode);
+        assertEquals("Network Security", list2.get(0).courseName);
     }
 
     @Test
     public void HTMLanguageFinnishParsingTest() throws IOException {
         CourseHtmlParser courseHtmlParser = new CourseHtmlParser(KIKE_DEPARTMENT);
         List<Course> list = courseHtmlParser.parseHTMLData(LANGUAGE_LAB_FINNISH);
-        Assert.assertEquals("Finnish 3: A", list.get(0).courseName);
-        Assert.assertEquals("FV18A9301", list.get(0).courseCode);
-        Assert.assertEquals("1407", list.get(0).classroom);
-        Assert.assertEquals("10-12", list.get(0).timeOfDay);
-        Assert.assertEquals("to", list.get(0).weekDay);
-        Assert.assertEquals("3,4,5,6,7,8,11,12,13,14,15,16", list.get(0).weekNumber);
-        Assert.assertEquals("kike", list.get(0).department);
+        assertEquals("Finnish 3: A", list.get(0).courseName);
+        assertEquals("FV18A9301", list.get(0).courseCode);
+        assertEquals("1407", list.get(0).classroom);
+        assertEquals("10-12", list.get(0).timeOfDay);
+        assertEquals("to", list.get(0).weekDay);
+        assertEquals("3,4,5,6,7,8,11,12,13,14,15,16", list.get(0).weekNumber);
+        assertEquals("kike", list.get(0).department);
     }
 
     @Test
     public void HTMLanguageFrenchParsingTest() throws IOException {
         CourseHtmlParser courseHtmlParser = new CourseHtmlParser(KIKE_DEPARTMENT);
         List<Course> list = courseHtmlParser.parseHTMLData(LANGUAGE_LAB_FRENCH);
-        Assert.assertEquals("Ranskan jatkokurssi 2: A", list.get(0).courseName);
-        Assert.assertEquals("FV15A1420", list.get(0).courseCode);
-        Assert.assertEquals("Paakkonen, Vuokko", list.get(0).teacher);
-        Assert.assertEquals("1427A", list.get(0).classroom);
-        Assert.assertEquals("12-14", list.get(0).timeOfDay);
-        Assert.assertEquals("to", list.get(0).weekDay);
-        Assert.assertEquals("11,12,13,14,15,16", list.get(0).weekNumber);
-        Assert.assertEquals("kike", list.get(0).department);
+        assertEquals("Ranskan jatkokurssi 2: A", list.get(0).courseName);
+        assertEquals("FV15A1420", list.get(0).courseCode);
+        assertEquals("Paakkonen, Vuokko", list.get(0).teacher);
+        assertEquals("1427A", list.get(0).classroom);
+        assertEquals("12-14", list.get(0).timeOfDay);
+        assertEquals("to", list.get(0).weekDay);
+        assertEquals("11,12,13,14,15,16", list.get(0).weekNumber);
+        assertEquals("kike", list.get(0).department);
     }
 
     @Test
     public void HTMLLanguageLabMultiGroupTest() throws Exception {
         CourseHtmlParser courseHtmlParser = new CourseHtmlParser(KIKE_DEPARTMENT);
         List<Course> list = courseHtmlParser.parseHTMLData(LANGUAGE_LAB_MULTI);
-        Assert.assertEquals("D", list.get(0).groupName);
-        Assert.assertEquals("FV12A1210", list.get(0).courseCode);
-        Assert.assertEquals("Saksan peruskurssi 1: D", list.get(0).courseName);
-        Assert.assertEquals("B", list.get(list.size() - 1).groupName);
-        Assert.assertEquals("FV12A1210", list.get(list.size() - 1).courseCode);
-        Assert.assertEquals("Saksan peruskurssi 1: B", list.get(list.size() - 1).courseName);
+        assertEquals("D", list.get(0).groupName);
+        assertEquals("FV12A1210", list.get(0).courseCode);
+        assertEquals("Saksan peruskurssi 1: D", list.get(0).courseName);
+        assertEquals("B", list.get(list.size() - 1).groupName);
+        assertEquals("FV12A1210", list.get(list.size() - 1).courseCode);
+        assertEquals("Saksan peruskurssi 1: B", list.get(list.size() - 1).courseName);
     }
 
     @Test
     public void TutaDataParsingTest() throws IOException {
         CourseHtmlParser courseHtmlParser = new CourseHtmlParser(TUTA_DEPARTMENT);
         List<Course> list = courseHtmlParser.parseHTMLData(PUPPA_TEST_DATA);
-        Assert.assertEquals("Kustannusjohtamisen peruskurssi", list.get(0).courseName);
-        Assert.assertEquals("CS31A0101", list.get(0).courseCode);
-        Assert.assertEquals("Viipuri-sali*", list.get(0).classroom);
-        Assert.assertEquals("15-17", list.get(0).timeOfDay);
-        Assert.assertEquals("ti", list.get(0).weekDay);
-        Assert.assertEquals("41", list.get(0).weekNumber);
-        Assert.assertEquals("tuta", list.get(0).department);
-        LOGGER.info("TUTA=" + list.get(0).toString());
+        assertEquals("Kustannusjohtamisen peruskurssi", list.get(0).courseName);
+        assertEquals("CS31A0101", list.get(0).courseCode);
+        assertEquals("Viipuri-sali*", list.get(0).classroom);
+        assertEquals("15-17", list.get(0).timeOfDay);
+        assertEquals("ti", list.get(0).weekDay);
+        assertEquals("41", list.get(0).weekNumber);
+        assertEquals("tuta", list.get(0).department);
     }
 
     @Test
     public void KatiDataParsingTest() throws IOException {
         CourseHtmlParser courseHtmlParser = new CourseHtmlParser(KATI_DEPARTMENT);
         List<Course> list = courseHtmlParser.parseHTMLData(KATI_TEST_DATA);
-        Assert.assertEquals("Makroteoria", list.get(0).courseName);
-        Assert.assertEquals("A250A0350", list.get(0).courseCode);
-        Assert.assertEquals("1382", list.get(0).classroom);
-        Assert.assertEquals("9-15", list.get(0).timeOfDay);
-        Assert.assertEquals("pe", list.get(0).weekDay);
-        Assert.assertEquals("9", list.get(0).weekNumber);
-        Assert.assertEquals("kati", list.get(0).department);
-        LOGGER.info("KATI=" + list.get(0).toString());
+        assertEquals("Makroteoria", list.get(0).courseName);
+        assertEquals("A250A0350", list.get(0).courseCode);
+        assertEquals("1382", list.get(0).classroom);
+        assertEquals("9-15", list.get(0).timeOfDay);
+        assertEquals("pe", list.get(0).weekDay);
+        assertEquals("9", list.get(0).weekNumber);
+        assertEquals("kati", list.get(0).department);
     }
 
     @Test
     public void YmteDataParsingTest() throws IOException {
         CourseHtmlParser courseHtmlParser = new CourseHtmlParser(YMTE_DEPARTMENT);
         List<Course> list = courseHtmlParser.parseHTMLData(YMTE_TEST_DATA);
-        Assert.assertEquals("Ilmanvaihto- ja ilmastointitekniikka", list.get(0).courseName);
-        Assert.assertEquals("BH60A1200", list.get(0).courseCode);
-        Assert.assertEquals("ML 7439 (sini)*", list.get(0).classroom);
-        Assert.assertEquals("10-12", list.get(0).timeOfDay);
-        Assert.assertEquals("ke", list.get(0).weekDay);
-        Assert.assertEquals("37,38,39,40,41,42,44,45,46,47,48,49", list.get(0).weekNumber);
-        Assert.assertEquals("ymte", list.get(0).department);
-        LOGGER.info("YMTE=" + list.get(0).toString());
+        assertEquals("Ilmanvaihto- ja ilmastointitekniikka", list.get(0).courseName);
+        assertEquals("BH60A1200", list.get(0).courseCode);
+        assertEquals("ML 7439 (sini)*", list.get(0).classroom);
+        assertEquals("10-12", list.get(0).timeOfDay);
+        assertEquals("ke", list.get(0).weekDay);
+        assertEquals("37,38,39,40,41,42,44,45,46,47,48,49", list.get(0).weekNumber);
+        assertEquals("ymte", list.get(0).department);
     }
 
     @Test
@@ -749,7 +747,7 @@ public class HTMLParserTest {
 
     private void testCourseData(String department) {
         try {
-            Assert.assertNotNull(map);
+            assertNotNull(map);
             final CourseHtmlParser courseHtmlParser = new CourseHtmlParser(department);
             courseHtmlParser.parse(map.get(department));
         } catch (Exception e) {

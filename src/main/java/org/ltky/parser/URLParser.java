@@ -1,22 +1,16 @@
 package org.ltky.parser;
 
 import org.apache.commons.lang3.StringEscapeUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.ltky.util.Util;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class URLParser {
     private static final Logger LOGGER = Logger.getLogger(URLParser.class);
@@ -56,18 +50,5 @@ public class URLParser {
         dependencies.entrySet().stream().map(d -> dependencies.put(acronymMap.get(d.getKey()).toString(), d.getValue()));
         LOGGER.debug("deps=" + dependencies);
         return dependencies;
-    }
-
-    /**
-     * Returns UTF-8 string presentation of HTML page from given URL
-     *
-     * @param fromUrl
-     * @return
-     * @throws IOException
-     */
-    private String fetchFromWeb(final String fromUrl) throws Exception {
-        final List<String> list = new BufferedReader(new InputStreamReader(new URL(fromUrl).openStream()))
-                .lines().collect(Collectors.toList());
-        return StringUtils.join(list.toArray());
     }
 }

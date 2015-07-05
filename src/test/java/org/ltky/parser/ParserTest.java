@@ -1,7 +1,6 @@
 package org.ltky.parser;
 
 import org.apache.log4j.Logger;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.ltky.util.Util;
@@ -9,8 +8,8 @@ import org.ltky.util.Util;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import static org.junit.Assert.*;
 
 /**
  * parser
@@ -35,21 +34,12 @@ public class ParserTest {
     public void parserTest() {
         try {
             Map<String, String> map = parser.parseLinks();
-            Assert.assertTrue(map.size() == 11);
+            assertTrue(map.size() == 11);
             for (String s : map.keySet()) {
                 LOGGER.debug("Department=" + s);
             }
         } catch (Exception e) {
             LOGGER.error("Error while fetching stuff from " + config.getUniURL(), e);
-        }
-    }
-
-    private static boolean isMatch(String s, String pattern) {
-        try {
-            Matcher m = Pattern.compile(pattern).matcher(s);
-            return m.lookingAt();
-        } catch (Exception e) {
-            return false;
         }
     }
 
@@ -62,15 +52,15 @@ public class ParserTest {
         final String t5 = "40-41, 43-49", res5 = "40,41,43,44,45,46,47,48,49";
         final String t6 = "35-37", res6 = "35,36,37";
         final String t7 = "42, 50, 9, 19", res7 = "9,19,42,50";
-        Assert.assertTrue(res1.equals(UTIL.processWeekNumbers(t1)));
-        Assert.assertTrue(res2.equals(UTIL.processWeekNumbers(t2)));
-        Assert.assertTrue(res3.equals(UTIL.processWeekNumbers(t3)));
-        Assert.assertTrue(res4.equals(UTIL.processWeekNumbers(t4)));
-        Assert.assertTrue(res5.equals(UTIL.processWeekNumbers(t5)));
-        Assert.assertTrue(res6.equals(UTIL.processWeekNumbers(t6)));
-        Assert.assertTrue(res7.equals(UTIL.processWeekNumbers(t7)));
-        Assert.assertFalse(res7.equals(UTIL.processWeekNumbers(t1)));
-        Assert.assertFalse(res5.equals(UTIL.processWeekNumbers(t1)));
+        assertEquals(res1, UTIL.processWeekNumbers(t1));
+        assertEquals(res2, UTIL.processWeekNumbers(t2));
+        assertEquals(res3, UTIL.processWeekNumbers(t3));
+        assertEquals(res4, UTIL.processWeekNumbers(t4));
+        assertEquals(res5, UTIL.processWeekNumbers(t5));
+        assertEquals(res6, UTIL.processWeekNumbers(t6));
+        assertEquals(res7, UTIL.processWeekNumbers(t7));
+        assertNotEquals(res7, UTIL.processWeekNumbers(t1));
+        assertNotEquals(res5, UTIL.processWeekNumbers(t1));
     }
 
     @Test
@@ -96,15 +86,15 @@ public class ParserTest {
         res.add("d");
         res.add("e");
         res.add("i");
-        Assert.assertTrue(res.size() == UTIL.removeDuplicates(list).size());
-        Assert.assertTrue(res.contains("a"));
-        Assert.assertTrue(res.contains("b"));
-        Assert.assertTrue(res.contains("c"));
-        Assert.assertTrue(res.contains("g"));
-        Assert.assertTrue(res.contains("d"));
-        Assert.assertTrue(res.contains("e"));
-        Assert.assertTrue(res.contains("i"));
-        Assert.assertFalse(res.contains("k"));
-        Assert.assertFalse(res.contains("p"));
+        assertEquals(res.size(), UTIL.removeDuplicates(list).size());
+        assertTrue(res.contains("a"));
+        assertTrue(res.contains("b"));
+        assertTrue(res.contains("c"));
+        assertTrue(res.contains("g"));
+        assertTrue(res.contains("d"));
+        assertTrue(res.contains("e"));
+        assertTrue(res.contains("i"));
+        assertFalse(res.contains("k"));
+        assertFalse(res.contains("p"));
     }
 }

@@ -27,3 +27,5 @@ src/test/java/org/ltky/DBTest.java
 *.log
 db/
 node_modules/
+src/main/webapp/bundle.js
+src/main/webapp/bundle.css

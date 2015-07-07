@@ -1,20 +1,18 @@
 var gulp = require('gulp'),
-    mocha = require('gulp-mocha'),
     uglify = require('gulp-uglify'),
     livereload = require('gulp-livereload'),
-    sourcemaps = require('gulp-sourcemaps'),
     concatCss = require('gulp-concat-css'),
     browserify = require('browserify'),
     jshint = require('gulp-jshint'),
     source = require('vinyl-source-stream'),
-    buffer = require('vinyl-buffer'),
-    transform = require('vinyl-transform')
+    buffer = require('vinyl-buffer')
 
 var paths = {
-    js: './src/main/webapp/js/main.js',
+    js: './src/main/js/main.js',
+    css: './src/main/styles/main.css',
     tests: './src/test/webapp/*.js',
     styles: './src/main/webapp/*.css',
-    dist: './src/main/webapp/dist/'
+    dist: './src/main/webapp/'
 }
 
 function handleError(err) {
@@ -28,13 +26,12 @@ gulp.task('compile', function () {
         debug: true
     }).bundle()
         .pipe(source('bundle.js'))
-        .pipe(buffer())
         .pipe(gulp.dest(paths.dist))
         .pipe(livereload())
 })
 
 gulp.task('styles', function () {
-    gulp.src('styles/main.css')
+    gulp.src(paths.css)
         .pipe(concatCss("bundle.css"))
         .pipe(gulp.dest(paths.dist))
 })
@@ -60,14 +57,6 @@ gulp.task('compress', function () {
         .pipe(gulp.dest(paths.dist))
 })
 
-gulp.task('mocha', function () {
-    gulp.src(paths.tests)
-        .pipe(mocha({
-            reporter: 'list'
-        }))
-        .on('error', handleError)
-})
-
 gulp.task('watch', function () {
     livereload.listen()
     gulp.watch([paths.styles], ['styles'])
@@ -75,9 +64,7 @@ gulp.task('watch', function () {
     gulp.watch([paths.js], ['compile'])
 })
 
-// Our default test task.
-gulp.task('test', ['mocha'])
-
+// Our default test task
 gulp.task('default', ['lint', 'styles', 'compile', 'watch'])
 
-gulp.task('dist', ['compress', 'lint'])
+gulp.task('dist', ['compress', 'lint', 'styles'])

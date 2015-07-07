@@ -1,4 +1,6 @@
-var Backbone = require('Backbone'),
+var $ = require('jquery'),
+    _ = require('underscore'),
+    Backbone = require('Backbone'),
     fullcalendar = require('fullcalendar')
 
 var EventView = Backbone.View.extend({

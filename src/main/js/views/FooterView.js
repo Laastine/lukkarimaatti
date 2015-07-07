@@ -1,15 +1,17 @@
-var Backbone = require('Backbone'),
-    fullcalendar = require('fullcalendar'),
-    $ = require('jquery')
+var $ = require('jquery'),
+    _ = require('underscore'),
+    Backbone = require('Backbone'),
+    fullcalendar = require('fullcalendar')
 
-var FooterView = Backbone.View.extend({
+var
+    FooterView = Backbone.View.extend({
 
-    template: _.template(FooterTemplate),   //TODO template
+        template: _.template('../templates/footer.html'),
 
-    render: function () {
-        this.$el.html(this.template({}))
-        return this
-    }
-})
+        render: function () {
+            this.$el.html(this.template({}))
+            return this
+        }
+    })
 
 module.exports = FooterView

@@ -1,10 +1,11 @@
-var Backbone = require('Backbone'),
-    fullcalendar = require('fullcalendar'),
-    $ = require('jquery')
+var $ = require('jquery')
+    , _ = require('underscore'),
+    Backbone = require('Backbone'),
+    fullcalendar = require('fullcalendar')
 
 var HeaderView = Backbone.View.extend({
 
-    template: _.template(HeaderTemplate),
+    template: _.template('../templates/header.html'),
 
     render: function () {
         this.$el.html(this.template({}));

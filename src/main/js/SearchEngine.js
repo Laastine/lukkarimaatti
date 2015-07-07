@@ -1,21 +1,26 @@
-var $ = require('jquery'),
+var $ = require('jquery');
+window.jQuery = $; // hack to make typeahead work
+var Handlebars = require('handlebars'),
+    Bloodhound = require("typeahead.js/dist/bloodhound"),
+    typeahead = require("typeahead.js"),
+    moment = require('moment'),
     _ = require('underscore'),
-    Backbone = require('backbone'),
-    Handlebars = require('Handlebars'),
-    typeahead = require('typeahead.js'),
-    moment = require('moment')
+    Backbone = require('backbone')
 
 var SearchEngine = {
     courseCollection: [],
 
     engine: new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+        datumTokenizer: function (d) {
+            return Bloodhound.tokenizers.whitespace(d.num);
+        },
         queryTokenizer: Bloodhound.tokenizers.whitespace,
         remote: {
             url: '/rest/cnames/%QUERY',
             filter: function (data) {
-                courseCollection = data
-                return _.uniq(courseCollection, function (cc) {
+                var that = this
+                that.courseCollection = data
+                return _.uniq(that.courseCollection, function (cc) {
                     return cc.courseName + cc.courseCode + cc.groupName
                 })
             }
@@ -24,6 +29,7 @@ var SearchEngine = {
     }),
 
     searchBox: function (eventCal) {
+        this.engine.initialize()
         var that = this
         $('#courseSearchBox').typeahead({
                 hint: true,
@@ -33,7 +39,7 @@ var SearchEngine = {
             {
                 name: 'courses',
                 displayKey: 'name',
-                source: this.engine.ttAdapter(),
+                source: that.engine.ttAdapter(),
                 templates: {
                     empty: [
                         '<p><strong>',
@@ -45,22 +51,22 @@ var SearchEngine = {
             }
         ).on('typeahead:selected', function (evt, course) {
                 console.log('course=' + JSON.stringify(course))
-                courseCollection = courseCollection.filter(function (c) {
+                this.courseCollection = this.courseCollection.filter(function (c) {
                     return c.courseCode === course.courseCode
                 })
 
                 if (course.groupName.length > 0 && course.courseCode.substring(0, 2) === 'FV') {
-                    courseCollection = courseCollection.filter(function (c) {
+                    this.courseCollection = this.courseCollection.filter(function (c) {
                         return c.groupName === course.groupName
                     })
                 }
 
-                if (courseCollection.length > 0) {
-                    that.addCourseLink(courseCollection[0].courseName, courseCollection[0].courseCode, courseCollection.length)
+                if (this.courseCollection.length > 0) {
+                    that.addCourseLink(this.courseCollection[0].courseName, this.courseCollection[0].courseCode, this.courseCollection.length)
                 }
 
                 that.addDataToCalendar(eventCal)
-                that.addUrlParameter(courseCollection[0].courseCode, courseCollection[0].groupName)
+                that.addUrlParameter(this.courseCollection[0].courseCode, this.courseCollection[0].groupName)
             })
     },
 
@@ -109,9 +115,9 @@ var SearchEngine = {
                         url: '/rest/code/' + param,
                         type: 'GET',
                         success: function (data) {
-                            courseCollection = data
+                            that.courseCollection = data
                             if (groupLetter.length > 0 && data[0].courseCode.substring(0, 2) === 'FV') {
-                                courseCollection = courseCollection.filter(function (d) {
+                                that.courseCollection = that.courseCollection.filter(function (d) {
                                     return d.groupName === groupLetter
                                 })
                             }
@@ -152,7 +158,7 @@ var SearchEngine = {
         var courseToBeAdded = []
         var that = this
 
-        courseCollection.forEach(function (course) {
+        this.courseCollection.forEach(function (course) {
             function processWeekNumbers(weekNumber) {
                 var dateStart = moment()
                     .lang('fi')

@@ -1,10 +1,8 @@
 var $ = require('jquery'),
     _ = require('underscore'),
     Backbone = require('backbone'),
-    EventModel = require('./models/EventModel'),
     HeaderView = require('./views/HeaderView'),
     FooterView = require('./views/FooterView'),
-    EventCalendarView = require('./views/EventCalendarView'),
     SearchView = require('./views/SearchView')
 
 var Router = Backbone.Router.extend({

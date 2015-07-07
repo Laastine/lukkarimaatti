@@ -16,7 +16,6 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.sql.DataSource;
-import java.util.Properties;
 
 /**
  * lukkarimaatti
@@ -42,7 +41,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         LOGGER.debug("Setting up resource handlers");
-        registry.addResourceHandler("/app/**").addResourceLocations("/app/**");
+        registry.addResourceHandler("/**").addResourceLocations("/index.html");
     }
 
     @Bean

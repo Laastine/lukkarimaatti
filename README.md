@@ -18,24 +18,25 @@ Compatible with IE10+ and newest Firefox and Chrome
 * [Selenium](http://www.seleniumhq.org/)<br>
  
 <h5>Front-end</h5>
-* [jQuery 2.1.1](http://jquery.com/)
-* [Bootstrap 3](http://getbootstrap.com/)
-* [underscore.js 1.6.x](http://underscorejs.org/)
-* [Backbone.js 1.1.x](http://backbonejs.org/)
-* [typeahead.js 0.10.x](http://twitter.github.io/typeahead.js/)
-* [FullCalendar 2.0.2](http://arshaw.com/fullcalendar/)
-* [RequireJS](http://requirejs.org/)
+* [jQuery 2.x](http://jquery.com/)
+* [Bootstrap 3.x](http://getbootstrap.com/)
+* [underscore.js 1.8.x](http://underscorejs.org/)
+* [Backbone.js 1.2.x](http://backbonejs.org/)
+* [typeahead.js 0.11.x](http://twitter.github.io/typeahead.js/)
+* [FullCalendar 2.3.2](http://arshaw.com/fullcalendar/)
 * [JSHint](http://www.jshint.com/)
-* [Bower](http://bower.io/)<br>
+* [Browserify](http://browserify.org/)
+* [Gulp](http://gulpjs.com/)<br>
 
 <h2>Requirements & Build</h2>
 Compiles with Java 8 and Gradle 1.10<br>
 Gradle for building a package.<br>
-<i>bower install</i> - for JS stuff<br>
-<i>r.js -o build.js</i> - Compile JS to bundle<br>
+<i>npm install -g gulp</i> - if you don't have it yet<br>
+<i>npm install</i> - download JS stuff<br>
+<i>gulp</i> - Compile JS to bundle<br>
 <i>gradle war</i> - for building (release) package<br>
 For quick browser testing run EmbeddedJetty class
-and open http://localhost/lukkarimaatti in your web browser
+and open http://localhost:8080/lukkarimaatti in your web browser
 
 <h3>Testing</h3>
 <i>gradle test</i> - for running unit tests and selenium E2E tests<br>

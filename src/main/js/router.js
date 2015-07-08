@@ -3,7 +3,8 @@ var $ = require('jquery'),
     Backbone = require('backbone'),
     HeaderView = require('./views/HeaderView'),
     FooterView = require('./views/FooterView'),
-    SearchView = require('./views/SearchView')
+    SearchView = require('./views/SearchView'),
+    EventCalendarView = require('./views/EventCalendarView')
 Backbone.$ = $
 
 module.exports = Backbone.Router.extend({
@@ -22,9 +23,9 @@ module.exports = Backbone.Router.extend({
             this.headerView.setElement($(".header")).render()
         }
 
-        if(this.searchView) {
-            this.currentView = new SearchView()
-            this.currentView.setElement($('#searchbar')).render()
+        if(!this.searchView) {
+            this.searchView = new SearchView({})
+            this.searchView.setElement($('#searchbar')).render()
         }
 
         if (!this.footerView) {

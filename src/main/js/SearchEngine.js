@@ -1,12 +1,11 @@
-var $ = require('jquery')(window);
-//window.$ = $; // hack to make typeahead work
+var $ = require('jquery')
 var Handlebars = require('handlebars'),
     Bloodhound = require("typeahead.js/dist/bloodhound"),
     typeahead = require("typeahead.js"),
     moment = require('moment'),
     _ = require('underscore'),
     Backbone = require('backbone')
-Backbone.$ = $
+
 var SearchEngine = {
     courseCollection: [],
 

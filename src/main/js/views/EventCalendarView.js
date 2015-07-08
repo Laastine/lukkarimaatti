@@ -7,7 +7,7 @@ var $ = require('jquery'),
 Backbone.$ = $
 var eventSources = []
 
-module.exports =  Backbone.View.extend({
+module.exports = Backbone.View.extend({
 
     el: $('#calendar'),
 

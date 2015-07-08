@@ -10,9 +10,9 @@ module.exports = Backbone.View.extend({
     calendar: new EventCalendarView(),
 
     initialize: function () {
-        _.bindAll(this, 'render')
         SearchEngine.engine.initialize()
         SearchEngine.getDataOnRefresh(this.calendar)
+        this.render()
     },
 
     events: {
@@ -30,10 +30,10 @@ module.exports = Backbone.View.extend({
     },
 
     render: function () {
-        this.$el.html(template());
         SearchEngine.searchBox(this.calendar)
         $('#courseSearchBox').focus()
         $('#saveId').bind('click', this.sendLink)
+        this.$el.html(template())
         return this
     }
 })

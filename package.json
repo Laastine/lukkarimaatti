@@ -16,11 +16,12 @@
     "gulp-uglify": "*",
     "gulp-util": "*",
     "handlebars": "3.0.3",
+    "hbsfy": "2.2.1",
     "jquery": "2.1.4",
     "moment": "2.10.3 ",
     "typeahead.js": "0.11.1",
     "underscore": "1.8.3",
-    "vinyl-source-stream": "1.0.0",
-    "vinyl-buffer": "1.0.0"
+    "vinyl-buffer": "1.0.0",
+    "vinyl-source-stream": "1.0.0"
   }
 }

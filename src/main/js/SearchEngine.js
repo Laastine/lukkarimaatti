@@ -1,5 +1,5 @@
 var $ = require('jquery')(window);
-::.://window.$ = $; // hack to make typeahead work
+//window.$ = $; // hack to make typeahead work
 var Handlebars = require('handlebars'),
     Bloodhound = require("typeahead.js/dist/bloodhound"),
     typeahead = require("typeahead.js"),

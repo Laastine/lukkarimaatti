@@ -1,16 +1,22 @@
 var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
+    concat = require('gulp-concat'),
     livereload = require('gulp-livereload'),
     concatCss = require('gulp-concat-css'),
     browserify = require('browserify'),
     jshint = require('gulp-jshint'),
     source = require('vinyl-source-stream'),
-    buffer = require('vinyl-buffer')
+    buffer = require('vinyl-buffer'),
+    hbsfy = require('hbsfy')//.configure({extensions: ["html", "hbs"]})
+
 
 var paths = {
     js: './src/main/js/main.js',
+    header: './src/main/js/templates/header.hbs',
+    footer: './src/main/js/templates/footer.hbs',
+    search: './src/main/js/templates/search.hbs',
     css: './src/main/styles/main.css',
-    tests: './src/test/webapp/*.js',
+    tests: './src/test/webapp/*',
     styles: './src/main/webapp/*.css',
     dist: './src/main/webapp/'
 }
@@ -22,14 +28,22 @@ function handleError(err) {
 
 gulp.task('compile', function () {
     browserify({
-        entries: [paths.js],
-        debug: true
-    }).bundle()
+        entries: [paths.js, paths.header, paths.footer, paths.search],
+        debug: true,
+
+    })
+    .transform('hbsfy')
+        .bundle()
         .pipe(source('bundle.js'))
         .pipe(gulp.dest(paths.dist))
         .pipe(livereload())
 })
-
+/*
+ gulp.task('html', function() {
+ gulp.src(paths.html)
+ .pipe(gulp.dest(paths.templates));
+ });
+ */
 gulp.task('styles', function () {
     gulp.src(paths.css)
         .pipe(concatCss("bundle.css"))
@@ -59,6 +73,7 @@ gulp.task('compress', function () {
 
 gulp.task('watch', function () {
     livereload.listen()
+    gulp.watch(paths.js.concat(paths.templates), ['js']);
     gulp.watch([paths.styles], ['styles'])
     gulp.watch([paths.js, paths.tests, paths.styles], livereload.changed())
     gulp.watch([paths.js], ['compile'])

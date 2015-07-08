@@ -1,8 +1,12 @@
-var Backbone = require('backbone')
+var $ = require('jquery'),
+    Backbone = require('backbone'),
+    _ = require('underscore'),
     SearchEngine = require('../SearchEngine'),
-    EventCalendarView = require('./EventCalendarView')
+    EventCalendarView = require('./EventCalendarView'),
+    template = require('../templates/search.hbs')
+Backbone.$ = $
 
-var SearchView = Backbone.View.extend({
+module.exports = Backbone.View.extend({
     calendar: new EventCalendarView(),
 
     initialize: function () {
@@ -26,13 +30,10 @@ var SearchView = Backbone.View.extend({
     },
 
     render: function () {
-        this.template = _.template('../templates/search.html')
-        this.$el.html(this.template({}))
-        SearchEngine.searchBox(calendar)
+        this.$el.html(template());
+        SearchEngine.searchBox(this.calendar)
         $('#courseSearchBox').focus()
         $('#saveId').bind('click', this.sendLink)
         return this
     }
 })
-
-module.exports = SearchView

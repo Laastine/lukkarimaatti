@@ -1,8 +1,9 @@
-var $ = require('jquery'),
+var $ = require('jquery')(window),
     Backbone = require('Backbone'),
     _ = require('underscore')
+Backbone.$ = $
 
-var EventModel = Backbone.Model.extend({
+module.exports =  Backbone.Model.extend({
     defaults: {
         title: '',
         description: '',
@@ -24,5 +25,3 @@ var EventModel = Backbone.Model.extend({
         return null
     }
 })
-
-module.exports = EventModel

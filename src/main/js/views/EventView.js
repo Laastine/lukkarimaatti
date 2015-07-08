@@ -1,9 +1,8 @@
-var $ = require('jquery'),
-    _ = require('underscore'),
-    Backbone = require('Backbone'),
-    fullcalendar = require('fullcalendar')
+var _ = require('underscore'),
+    Backbone = require('Backbone')
 
-var EventView = Backbone.View.extend({
+
+module.exports =  Backbone.View.extend({
 
     calendar: null,
     calendarEvent: null,
@@ -69,5 +68,3 @@ var EventView = Backbone.View.extend({
         this.model.destroy()
     }
 })
-
-module.exports = EventView

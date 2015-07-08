@@ -4,10 +4,10 @@ var $ = require('jquery'),
     fullcalendar = require('fullcalendar'),
     EventView = require('./EventView'),
     EventModel = require('../models/EventModel')
-
+Backbone.$ = $
 var eventSources = []
 
-var EventCalendarView = Backbone.View.extend({
+module.exports =  Backbone.View.extend({
 
     el: $('#calendar'),
 
@@ -100,5 +100,3 @@ var EventCalendarView = Backbone.View.extend({
         })
     }
 })
-
-module.exports = EventCalendarView

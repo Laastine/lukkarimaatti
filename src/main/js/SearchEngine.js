@@ -1,22 +1,22 @@
 var $ = require('jquery')
+window.jQuery = $
 var Handlebars = require('handlebars'),
-    Bloodhound = require("typeahead.js/dist/bloodhound"),
-    typeahead = require("typeahead.js"),
+    autocomplete = require("jquery-autocomplete"),
     moment = require('moment'),
     _ = require('underscore'),
     Backbone = require('backbone')
 
-var SearchEngine = {
-    courseCollection: [],
+var courseCollection = []
 
+var SearchEngine = {
+/*
     engine: new Bloodhound({
-        datumTokenizer: function (d) {
-            return Bloodhound.tokenizers.whitespace(d.num);
-        },
+        datumTokenizer:  Bloodhound.tokenizers.whitespace('value'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
         remote: {
             url: '/rest/cnames/%QUERY',
             filter: function (data) {
+                console.log('Bloodhound init')
                 var that = this
                 that.courseCollection = data
                 return _.uniq(that.courseCollection, function (cc) {
@@ -26,29 +26,62 @@ var SearchEngine = {
         },
         limit: 10
     }),
+    */
 
     searchBox: function (eventCal) {
-        this.engine.initialize()
         var that = this
-        $('#courseSearchBox').typeahead({
+        $('#courseSearchBox').autocomplete({
+                url: '/rest/cnames/%QUERY',
+                type: 'remote',
                 hint: true,
                 highlight: true,
-                minLength: 2
-            },
+                minLength: 2,
+                focus: function (event, ui) {
+                    $('#courseSearchBox').val(ui.item.courseCode)
+                },
+                select: function (event, ui) {
+                    //TODO: https://jqueryui.com/autocomplete/#custom-data
+                    console.log('course=' + JSON.stringify(course))
+                    this.courseCollection = this.courseCollection.filter(function (c) {
+                        return c.courseCode === course.courseCode
+                    })
+
+                    if (course.groupName.length > 0 && course.courseCode.substring(0, 2) === 'FV') {
+                        this.courseCollection = this.courseCollection.filter(function (c) {
+                            return c.groupName === course.groupName
+                        })
+                    }
+
+                    if (this.courseCollection.length > 0) {
+                        that.addCourseLink(this.courseCollection[0].courseName, this.courseCollection[0].courseCode, this.courseCollection.length)
+                    }
+
+                    that.addDataToCalendar(eventCal)
+                    that.addUrlParameter(this.courseCollection[0].courseCode, this.courseCollection[0].groupName)
+                }
+            }).autocomplete("instance")._renderItem = function (ul, item) {
+            //<p><strong>{{courseName}}</strong> - {{courseCode}}</p>
+                return $( "<li>" )
+                    .append( "<a>" + item.label + "<br>" + item.desc + "</a>" )
+                    .appendTo( ul );
+        }
+            /*
             {
                 name: 'courses',
                 displayKey: 'name',
-                source: that.engine.ttAdapter(),
+                source: this.engine.ttAdapter(),
                 templates: {
                     empty: [
                         '<p><strong>',
                         'Unable to find any courses that match the current query',
                         '</strong></p>'
                     ].join('\n'),
-                    suggestion: Handlebars.compile('<p><strong>{{courseName}}</strong> - {{courseCode}}</p>')
+                    suggestion: Handlebars.compile('')
                 }
             }
-        ).on('typeahead:selected', function (evt, course) {
+            */
+        //).on('typeahead:selected', function (evt, course) {
+                /*
                 console.log('course=' + JSON.stringify(course))
                 this.courseCollection = this.courseCollection.filter(function (c) {
                     return c.courseCode === course.courseCode
@@ -66,7 +99,9 @@ var SearchEngine = {
 
                 that.addDataToCalendar(eventCal)
                 that.addUrlParameter(this.courseCollection[0].courseCode, this.courseCollection[0].groupName)
-            })
+                 */
+            //})
+
     },
 
     addUrlParameter: function (courseCode, groupName) {

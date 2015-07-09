@@ -49,8 +49,8 @@ module.exports = Backbone.View.extend({
             titleFormat: {
                 month: 'MMMM YYYY',
                 week: 'DD.MM.YYYY',
-                day: 'DD.MM',
-                agenda: 'hh:mm'
+                day: 'ddd M.D',
+                agenda: 'DD.MM.YYYY'
             },
             columnFormat: 'ddd M.D',
             allDaySlot: false,

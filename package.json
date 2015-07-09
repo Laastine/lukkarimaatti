@@ -7,8 +7,8 @@
     "bootstrap": "3.3.5",
     "browserify": "^10.2.4",
     "fullcalendar": "git@github.com:arshaw/fullcalendar#v2.3.2",
+    "jquery-autocomplete": "1.2.1",
     "gulp": "^3.9.0",
-    "gulp-cli": "*",
     "gulp-concat": "*",
     "gulp-concat-css": "*",
     "gulp-jshint": "*",
@@ -19,7 +19,6 @@
     "hbsfy": "2.2.1",
     "jquery": "2.1.4",
     "moment": "2.10.3 ",
-    "typeahead.js": "0.11.1",
     "underscore": "1.8.3",
     "vinyl-buffer": "1.0.0",
     "vinyl-source-stream": "1.0.0"

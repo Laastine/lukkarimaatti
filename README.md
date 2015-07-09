@@ -15,7 +15,6 @@ Compatible with IE10+ and newest Firefox and Chrome
 * [Jsoup 1.7.x](http://jsoup.org/)
 * [Jetty 9](http://www.eclipse.org/jetty/)
 * [PostgreSQL 9.1](http://www.postgresql.org/)
-* [Selenium](http://www.seleniumhq.org/)<br>
  
 <h5>Front-end</h5>
 * [jQuery 2.x](http://jquery.com/)

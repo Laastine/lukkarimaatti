@@ -7,14 +7,12 @@ var gulp = require('gulp'),
     jshint = require('gulp-jshint'),
     source = require('vinyl-source-stream'),
     buffer = require('vinyl-buffer'),
-    hbsfy = require('hbsfy')//.configure({extensions: ["html", "hbs"]})
-
+    hbsfy = require('hbsfy')
 
 var paths = {
-    js: './src/main/js/main.js',
-    header: './src/main/js/templates/header.hbs',
-    footer: './src/main/js/templates/footer.hbs',
-    search: './src/main/js/templates/search.hbs',
+    jsMain: './src/main/js/main.js',
+    js: './src/main/js/**/*.js',
+    templates: ['./src/main/js/templates/header.hbs', './src/main/js/templates/footer.hbs', './src/main/js/templates/search.hbs'],
     css: './src/main/styles/main.css',
     tests: './src/test/webapp/*',
     styles: './src/main/webapp/*.css',
@@ -28,22 +26,16 @@ function handleError(err) {
 
 gulp.task('compile', function () {
     browserify({
-        entries: [paths.js, paths.header, paths.footer, paths.search],
-        debug: true,
-
+        entries: [paths.jsMain, paths.templates],
+        debug: true
     })
-    .transform('hbsfy')
+        .transform('hbsfy')
         .bundle()
         .pipe(source('bundle.js'))
         .pipe(gulp.dest(paths.dist))
         .pipe(livereload())
 })
-/*
- gulp.task('html', function() {
- gulp.src(paths.html)
- .pipe(gulp.dest(paths.templates));
- });
- */
+
 gulp.task('styles', function () {
     gulp.src(paths.css)
         .pipe(concatCss("bundle.css"))
@@ -51,7 +43,7 @@ gulp.task('styles', function () {
 })
 
 gulp.task('lint', function () {
-    gulp.src(paths.js)
+    gulp.src(paths.jsMain)
         .pipe(jshint({
             globals: {
                 require: false
@@ -62,7 +54,7 @@ gulp.task('lint', function () {
 })
 
 gulp.task('compress', function () {
-    browserify(paths.js)
+    browserify(paths.jsMain)
         .bundle()
         .pipe(source('bundle.js'))
         .pipe(buffer())
@@ -73,10 +65,10 @@ gulp.task('compress', function () {
 
 gulp.task('watch', function () {
     livereload.listen()
-    gulp.watch(paths.js.concat(paths.templates), ['js']);
+    gulp.watch(paths.jsMain.concat(paths.templates), ['js']);
     gulp.watch([paths.styles], ['styles'])
-    gulp.watch([paths.js, paths.tests, paths.styles], livereload.changed())
-    gulp.watch([paths.js], ['compile'])
+    gulp.watch([paths.jsMain, paths.tests, paths.styles, paths.js], livereload.changed())
+    gulp.watch([paths.jsMain, paths.js], ['compile'])
 })
 
 // Our default test task

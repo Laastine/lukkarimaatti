@@ -10,7 +10,7 @@
         "bootstrap": "*",
         "moment": "2.5.0",
         "handlebars": "*",
-        "typeahead.js": "*",
+        "typeahead.js": "0.10.5",
         "requirejs-text": "*"
     }
 }

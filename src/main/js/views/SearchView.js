@@ -9,8 +9,8 @@ module.exports = Backbone.View.extend({
     calendar: new EventCalendarView(),
 
     initialize: function () {
-
-        //SearchEngine.engine.initialize()
+        console.log('SearchView init')
+        SearchEngine.searchBox(this.calendar)
         SearchEngine.getDataOnRefresh(this.calendar)
     },
 

@@ -1,7 +1,7 @@
 var $ = require('jquery')
 window.jQuery = $
 var Handlebars = require('handlebars'),
-    autocomplete = require("jquery-autocomplete"),
+    select2 = require("select2"),
     moment = require('moment'),
     _ = require('underscore'),
     Backbone = require('backbone')
@@ -9,99 +9,53 @@ var Handlebars = require('handlebars'),
 var courseCollection = []
 
 var SearchEngine = {
-/*
-    engine: new Bloodhound({
-        datumTokenizer:  Bloodhound.tokenizers.whitespace('value'),
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        remote: {
-            url: '/rest/cnames/%QUERY',
-            filter: function (data) {
-                console.log('Bloodhound init')
-                var that = this
-                that.courseCollection = data
-                return _.uniq(that.courseCollection, function (cc) {
-                    return cc.courseName + cc.courseCode + cc.groupName
-                })
-            }
-        },
-        limit: 10
-    }),
-    */
+
 
     searchBox: function (eventCal) {
-        var that = this
-        $('#courseSearchBox').autocomplete({
-                url: '/rest/cnames/%QUERY',
-                type: 'remote',
-                hint: true,
-                highlight: true,
-                minLength: 2,
-                focus: function (event, ui) {
-                    $('#courseSearchBox').val(ui.item.courseCode)
-                },
-                select: function (event, ui) {
-                    //TODO: https://jqueryui.com/autocomplete/#custom-data
-                    console.log('course=' + JSON.stringify(course))
-                    this.courseCollection = this.courseCollection.filter(function (c) {
-                        return c.courseCode === course.courseCode
-                    })
+        var that = this;
+        function formatRepo (repo) {
+            if (repo.loading) return repo.text;
 
-                    if (course.groupName.length > 0 && course.courseCode.substring(0, 2) === 'FV') {
-                        this.courseCollection = this.courseCollection.filter(function (c) {
-                            return c.groupName === course.groupName
-                        })
-                    }
+            var markup = '<p><strong>{{courseName}}</strong> - {{courseCode}}</p>';
 
-                    if (this.courseCollection.length > 0) {
-                        that.addCourseLink(this.courseCollection[0].courseName, this.courseCollection[0].courseCode, this.courseCollection.length)
-                    }
-
-                    that.addDataToCalendar(eventCal)
-                    that.addUrlParameter(this.courseCollection[0].courseCode, this.courseCollection[0].groupName)
-                }
-            }).autocomplete("instance")._renderItem = function (ul, item) {
-            //<p><strong>{{courseName}}</strong> - {{courseCode}}</p>
-                return $( "<li>" )
-                    .append( "<a>" + item.label + "<br>" + item.desc + "</a>" )
-                    .appendTo( ul );
-        }
-            /*
-            {
-                name: 'courses',
-                displayKey: 'name',
-                source: this.engine.ttAdapter(),
-                templates: {
-                    empty: [
-                        '<p><strong>',
-                        'Unable to find any courses that match the current query',
-                        '</strong></p>'
-                    ].join('\n'),
-                    suggestion: Handlebars.compile('')
-                }
+            if (repo.description) {
+                markup += '<div>' + repo.description + '</div>';
             }
-            */
-        //).on('typeahead:selected', function (evt, course) {
-                /*
-                console.log('course=' + JSON.stringify(course))
-                this.courseCollection = this.courseCollection.filter(function (c) {
-                    return c.courseCode === course.courseCode
-                })
 
-                if (course.groupName.length > 0 && course.courseCode.substring(0, 2) === 'FV') {
-                    this.courseCollection = this.courseCollection.filter(function (c) {
-                        return c.groupName === course.groupName
-                    })
-                }
+            markup += '</div></div>';
 
-                if (this.courseCollection.length > 0) {
-                    that.addCourseLink(this.courseCollection[0].courseName, this.courseCollection[0].courseCode, this.courseCollection.length)
-                }
+            return markup;
+        }
 
-                that.addDataToCalendar(eventCal)
-                that.addUrlParameter(this.courseCollection[0].courseCode, this.courseCollection[0].groupName)
-                 */
-            //})
-
+        function formatRepoSelection (repo) {
+            return repo.full_name || repo.text;
+        }
+        //TODO: Korjaa Backendin REST APIa get parametrit oikein
+        $(".js-data-example-ajax").select2({
+            ajax: {
+                url: "http://localhost:8080/lukkarimaatti/rest/cnames/",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        name: params.term,
+                    };
+                },
+                processResults: function (data, page) {
+                    // parse the results into the format expected by Select2.
+                    // since we are using custom formatting functions we do not need to
+                    // alter the remote JSON data
+                    return {
+                        results: data.items
+                    };
+                },
+                cache: true
+            },
+            escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+            minimumInputLength: 1,
+            templateResult: formatRepo, // omitted for brevity, see the source of this page
+            templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
+        })
     },
 
     addUrlParameter: function (courseCode, groupName) {

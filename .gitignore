@@ -26,3 +26,4 @@ out/
 src/test/java/org/ltky/DBTest.java
 *.log
 db/
+classes/

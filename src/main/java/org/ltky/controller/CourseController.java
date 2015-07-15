@@ -4,10 +4,7 @@ import org.ltky.dao.CourseDao;
 import org.ltky.dao.model.Course;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +47,7 @@ public class CourseController {
     @RequestMapping(value = "/names/{courseNames}", method = RequestMethod.GET)
     public
     @ResponseBody
-    List<Course> getCourseNames(@PathVariable String courseNames) {
+    final List<Course> getCourseNames(@PathVariable String courseNames) {
         if (courseNames.length() >= MIN) {
             return courseDao.findCourseByCourseNameLikeIgnoreCase(courseNames.toLowerCase());
         } else {
@@ -64,6 +61,17 @@ public class CourseController {
     final List<Course> getCourseNamesWithCode(@PathVariable String courseNamesandCodes) {
         if (courseNamesandCodes.length() >= MIN) {
             return courseDao.findCourseByCourseNameAndCourseCodeLikeIgnoreCase(courseNamesandCodes.toLowerCase());
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    @RequestMapping(value = "/course", params = {"name"}, method = RequestMethod.GET)
+    public
+    @ResponseBody
+    final List<Course> getCourse(@RequestParam(value = "name") String name) {
+        if (name.length() >= MIN) {
+            return courseDao.findCourseByCourseNameAndCourseCodeLikeIgnoreCase(name.toLowerCase());
         } else {
             return new ArrayList<>();
         }

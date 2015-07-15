@@ -12,34 +12,32 @@ var SearchEngine = {
 
 
     searchBox: function (eventCal) {
-        var that = this;
+        var that = this
         function formatRepo (repo) {
-            if (repo.loading) return repo.text;
+            if (repo.loading) return repo.text
 
-            var markup = '<p><strong>{{courseName}}</strong> - {{courseCode}}</p>';
+            var markup = '<p><strong>{{courseName}}</strong> - {{courseCode}}</p>'
 
-            if (repo.description) {
-                markup += '<div>' + repo.description + '</div>';
-            }
+            if (repo.description) { markup += '<div>' + repo.description + '</div>' }
 
-            markup += '</div></div>';
-
-            return markup;
+            markup += '</div></div>'
+            return markup
         }
 
         function formatRepoSelection (repo) {
-            return repo.full_name || repo.text;
+            return repo.full_name || repo.text
         }
         //TODO: Korjaa Backendin REST APIa get parametrit oikein
         $(".js-data-example-ajax").select2({
+            placeholder: "Select a state",
             ajax: {
-                url: "http://localhost:8080/lukkarimaatti/rest/cnames/",
+                url: "http://localhost:8080/lukkarimaatti/rest/course/",
                 dataType: 'json',
-                delay: 250,
+                delay: 150,
                 data: function (params) {
                     return {
                         name: params.term,
-                    };
+                    }
                 },
                 processResults: function (data, page) {
                     // parse the results into the format expected by Select2.
@@ -47,11 +45,11 @@ var SearchEngine = {
                     // alter the remote JSON data
                     return {
                         results: data.items
-                    };
+                    }
                 },
                 cache: true
             },
-            escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+            escapeMarkup: function (markup) { return markup }, // let our custom formatter work
             minimumInputLength: 1,
             templateResult: formatRepo, // omitted for brevity, see the source of this page
             templateSelection: formatRepoSelection // omitted for brevity, see the source of this page

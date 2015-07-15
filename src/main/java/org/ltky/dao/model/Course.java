@@ -25,8 +25,6 @@ public class Course implements Serializable {
     public String courseCode;
     @Column(name = "COURSE_NAME")
     public String courseName;
-    @Column(name = "PERIOD")
-    public String period = "";
     @Column(name = "WEEK")
     public String weekNumber;
     @Column(name = "WEEK_DAY")
@@ -72,7 +70,7 @@ public class Course implements Serializable {
     @Override
     public String toString() {
         return "[courseCode=" + courseCode + ", courseName=" + courseName + ", teacher=" + teacher +
-                ", weekNumber=" + weekNumber + ", weekDay=" + weekDay + ", period=" + period + ", timeOfDay=" + timeOfDay +
+                ", weekNumber=" + weekNumber + ", weekDay=" + weekDay + ", timeOfDay=" + timeOfDay +
                 ", classroom=" + classroom + ", type=" + type + ", department=" + department + ", groupName=" + groupName +"]";
     }
 

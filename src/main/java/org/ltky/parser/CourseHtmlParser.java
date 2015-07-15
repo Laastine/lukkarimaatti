@@ -121,7 +121,7 @@ public class CourseHtmlParser {
                     findClassroom(getElement(rowItems, 6)),                                 //classRoom
                     coursePrototype.type,                                                   //type
                     department,                                                             //department
-                    findTeacher(getElement(rowItems, 1)),                                   //teacher
+                    "",                                                                     //teacher
                     findMiscData(getElement(rowItems, 7)),                                  //misc
                     coursePrototype.group                                                   //groupName
             );

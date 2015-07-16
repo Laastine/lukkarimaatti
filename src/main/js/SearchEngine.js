@@ -13,21 +13,22 @@ var SearchEngine = {
 
     searchBox: function (eventCal) {
         var that = this
-        function formatRepo (repo) {
+        function formatCourse (repo) {
+            console.log('formatCourse='+JSON.stringify(repo))
             if (repo.loading) return repo.text
 
-            var markup = '<p><strong>{{courseName}}</strong> - {{courseCode}}</p>'
+            var markup = '<p><strong>'+repo.courseName+'</strong> - '+repo.courseCode+'</p>'
 
-            if (repo.description) { markup += '<div>' + repo.description + '</div>' }
+            if (repo.groupName) { markup += '<div>' + repo.groupName + '</div>' }
 
             markup += '</div></div>'
             return markup
         }
 
-        function formatRepoSelection (repo) {
-            return repo.full_name || repo.text
+        function formatCourseSelection (repo) {
+            console.log('formatCourseSelection='+JSON.stringify(repo))
+            return repo.courseName || repo.courseCode
         }
-        //TODO: Korjaa Backendin REST APIa get parametrit oikein
         $(".js-data-example-ajax").select2({
             placeholder: "Select a state",
             ajax: {
@@ -37,22 +38,26 @@ var SearchEngine = {
                 data: function (params) {
                     return {
                         name: params.term,
+                        page: params.page
                     }
                 },
                 processResults: function (data, page) {
                     // parse the results into the format expected by Select2.
                     // since we are using custom formatting functions we do not need to
                     // alter the remote JSON data
+
                     return {
-                        results: data.items
+                        results: _.uniq(data, function (cc) {
+                            return cc.courseName + cc.courseCode + cc.groupName
+                        })
                     }
                 },
                 cache: true
             },
             escapeMarkup: function (markup) { return markup }, // let our custom formatter work
-            minimumInputLength: 1,
-            templateResult: formatRepo, // omitted for brevity, see the source of this page
-            templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
+            minimumInputLength: 2,
+            templateResult: formatCourse, // omitted for brevity, see the source of this page
+            templateSelection: formatCourseSelection // omitted for brevity, see the source of this page
         })
     },
 

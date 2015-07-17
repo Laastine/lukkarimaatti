@@ -1,7 +1,6 @@
 var _ = require('underscore'),
     Backbone = require('Backbone')
 
-
 module.exports =  Backbone.View.extend({
 
     calendar: null,

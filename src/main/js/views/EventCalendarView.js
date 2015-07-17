@@ -1,10 +1,12 @@
 var $ = require('jquery'),
     _ = require('underscore'),
-    Backbone = require('Backbone'),
+    bootstarp = require('bootstrap'),
     fullcalendar = require('fullcalendar'),
     EventView = require('./EventView'),
     EventModel = require('../models/EventModel')
-Backbone.$ = $
+
+global.jQuery = $;
+require('Backbone')
 var eventSources = []
 
 module.exports = Backbone.View.extend({

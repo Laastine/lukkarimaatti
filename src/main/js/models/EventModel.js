@@ -1,4 +1,4 @@
-var $ = require('jquery')(window),
+var $ = require('jquery'),
     Backbone = require('Backbone'),
     _ = require('underscore')
 Backbone.$ = $

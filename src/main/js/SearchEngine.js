@@ -1,6 +1,4 @@
-var $ = require('jquery')
-window.jQuery = $
-var Handlebars = require('handlebars'),
+var $ = require('jquery'),
     select2 = require("select2"),
     moment = require('moment'),
     _ = require('underscore'),
@@ -9,18 +7,12 @@ var Handlebars = require('handlebars'),
 var courseCollection = []
 
 var SearchEngine = {
-
-
     searchBox: function (eventCal) {
         var that = this
         function formatCourse (repo) {
-            console.log('formatCourse='+JSON.stringify(repo))
             if (repo.loading) return repo.text
-
             var markup = '<p><strong>'+repo.courseName+'</strong> - '+repo.courseCode+'</p>'
-
             if (repo.groupName) { markup += '<div>' + repo.groupName + '</div>' }
-
             markup += '</div></div>'
             return markup
         }
@@ -29,8 +21,8 @@ var SearchEngine = {
             console.log('formatCourseSelection='+JSON.stringify(repo))
             return repo.courseName || repo.courseCode
         }
-        $(".js-data-example-ajax").select2({
-            placeholder: "Select a state",
+        $("#searchbar").select2({
+            placeholder: "Select a course",
             ajax: {
                 url: "http://localhost:8080/lukkarimaatti/rest/course/",
                 dataType: 'json',
@@ -45,12 +37,20 @@ var SearchEngine = {
                     // parse the results into the format expected by Select2.
                     // since we are using custom formatting functions we do not need to
                     // alter the remote JSON data
-
+                    courseCollection = data
                     return {
                         results: _.uniq(data, function (cc) {
                             return cc.courseName + cc.courseCode + cc.groupName
                         })
                     }
+                },
+                transport: function (params, success, failure) {
+                    var $request = $.ajax(params);
+
+                    $request.then(success);
+                    $request.fail(failure);
+
+                    return $request;
                 },
                 cache: true
             },
@@ -58,7 +58,25 @@ var SearchEngine = {
             minimumInputLength: 2,
             templateResult: formatCourse, // omitted for brevity, see the source of this page
             templateSelection: formatCourseSelection // omitted for brevity, see the source of this page
-        })
+        }).on('select2:select', function (event, course) {
+            console.log('course=' + JSON.stringify(course))
+            courseCollection = courseCollection.filter(function (c) {
+                return c.courseCode === course.courseCode;
+            });
+
+            if (course.groupName.length > 0 && course.courseCode.substring(0, 2) === 'FV') {
+                courseCollection = courseCollection.filter(function (c) {
+                    return c.groupName === course.groupName;
+                });
+            }
+
+            if (courseCollection.length > 0) {
+                that.addCourseLink(courseCollection[0].courseName, courseCollection[0].courseCode, courseCollection.length);
+            }
+
+            that.addDataToCalendar(eventCal);
+            that.addUrlParameter(courseCollection[0].courseCode, courseCollection[0].groupName);
+        });
     },
 
     addUrlParameter: function (courseCode, groupName) {

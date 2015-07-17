@@ -6,6 +6,7 @@
     "backbone": "1.2.1",
     "bootstrap": "3.3.5",
     "browserify": "^10.2.4",
+    "browserify-shim": "^3.8.9",
     "fullcalendar": "git@github.com:arshaw/fullcalendar#v2.3.2",
     "select2": "4.0.0",
     "jquery.mousewheel": "",
@@ -18,10 +19,19 @@
     "gulp-util": "*",
     "handlebars": "3.0.3",
     "hbsfy": "2.2.1",
-    "jquery": "2.1.4",
+    "jQuery": "2.1.4",
     "moment": "2.10.3 ",
     "underscore": "1.8.3",
     "vinyl-buffer": "1.0.0",
     "vinyl-source-stream": "1.0.0"
+  },
+  "browserify": {
+    "transform": "browserify-shim"
+  },
+
+  "browserify-shim": {
+    "bootstrap": {
+      "depends": ["jquery:jQuery"]
+    }
   }
 }

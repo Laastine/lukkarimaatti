@@ -32,10 +32,12 @@ Compatible with IE10+ and newest Firefox and Chrome
 <h2>Requirements & Build</h2>
 Compiles with Java 8 and Gradle 1.10<br>
 Gradle for building a package.<br>
-<i>npm install -g gulp</i> - if you don't have it yet<br>
-<i>npm install</i> - download JS stuff<br>
-<i>gulp</i> - Compile JS to bundle<br>
-<i>gradle war</i> - for building (release) package<br>
+```
+npm install -g gulp - if you don't have it yet
+npm install - download JS stuff
+gulp - Compile JS & CSS to bundles
+gradle war - for building (release) package
+```
 For quick browser testing run EmbeddedJetty class
 and open http://localhost:8080/lukkarimaatti in your web browser
 

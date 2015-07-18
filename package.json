@@ -22,6 +22,7 @@
     "gulp-concat-css": "*",
     "gulp-jshint": "*",
     "gulp-livereload": "*",
+    "gulp-minify-css": "^1.2.0",
     "gulp-uglify": "*",
     "gulp-util": "*",
     "vinyl-buffer": "1.0.0",

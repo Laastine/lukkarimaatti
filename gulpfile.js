@@ -3,6 +3,7 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     livereload = require('gulp-livereload'),
     concatCss = require('gulp-concat-css'),
+    minifyCss = require('gulp-minify-css'),
     browserify = require('browserify'),
     jshint = require('gulp-jshint'),
     source = require('vinyl-source-stream'),
@@ -53,13 +54,24 @@ gulp.task('lint', function () {
         .pipe(jshint.reporter('default'))
 })
 
-gulp.task('compress', function () {
-    browserify(paths.jsMain)
+gulp.task('compressJS', function () {
+    browserify({
+        entries: [paths.jsMain, paths.templates],
+        debug: true
+    })
+        .transform('hbsfy')
         .bundle()
         .pipe(source('bundle.js'))
         .pipe(buffer())
         .pipe(uglify())
         .on('error', handleError)
+        .pipe(gulp.dest(paths.dist))
+})
+
+gulp.task('stylesCss', function () {
+    gulp.src(paths.css)
+        .pipe(concatCss("bundle.css"))
+        .pipe(minifyCss())
         .pipe(gulp.dest(paths.dist))
 })
 
@@ -74,4 +86,4 @@ gulp.task('watch', function () {
 // Our default test task
 gulp.task('default', ['lint', 'styles', 'compile', 'watch'])
 
-gulp.task('dist', ['compress', 'lint', 'styles'])
+gulp.task('dist', ['lint', 'stylesCss', 'compressJS'])

@@ -47,7 +47,7 @@ public class CourseController {
     @RequestMapping(value = "/names/{courseNames}", method = RequestMethod.GET)
     public
     @ResponseBody
-    List<Course> getCourseNames(@PathVariable String courseNames) {
+    final List<Course> getCourseNames(@PathVariable String courseNames) {
         if (courseNames.length() >= MIN) {
             return courseDao.findCourseByCourseNameLikeIgnoreCase(courseNames.toLowerCase());
         } else {

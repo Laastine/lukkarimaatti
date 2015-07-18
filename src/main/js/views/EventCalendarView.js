@@ -59,7 +59,7 @@ module.exports = Backbone.View.extend({
             weekends: true,
             contentHeight: 550,
             allDayDefault: false,
-            hiddenDays: [],
+            hiddenDays: [0],
             weekNumbers: true,
             firstDay: 1,
             minTime: '05:00:00',

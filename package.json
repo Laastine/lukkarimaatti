@@ -1,0 +1,38 @@
+{
+  "name": "lukkarimaatti",
+  "version": "0.9.8",
+  "private": true,
+  "dependencies": {
+    "backbone": "1.2.1",
+    "select2": "4.0.0",
+    "jquery": "2.1.3",
+    "jquery.mousewheel": "3.1.9",
+    "bootstrap": "3.3.5",
+    "fullcalendar": "git@github.com:arshaw/fullcalendar#v2.3.2",
+    "handlebars": "3.0.3",
+    "hbsfy": "2.2.1",
+    "moment": "2.10.3 ",
+    "underscore": "1.8.3"
+  },
+  "devDependencies": {
+    "browserify": "^10.2.4",
+    "browserify-shim": "^3.8.9",
+    "gulp": "^3.9.0",
+    "gulp-concat": "*",
+    "gulp-concat-css": "*",
+    "gulp-jshint": "*",
+    "gulp-livereload": "*",
+    "gulp-uglify": "*",
+    "gulp-util": "*",
+    "vinyl-buffer": "1.0.0",
+    "vinyl-source-stream": "1.0.0"
+  },
+  "browserify": {
+    "transform": "browserify-shim"
+  },
+  "browserify-shim": {
+    "bootstrap": {
+      "depends": "jquery:jQuery"
+    }
+  }
+}

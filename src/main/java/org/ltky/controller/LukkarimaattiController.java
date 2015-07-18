@@ -33,7 +33,7 @@ public class LukkarimaattiController {
         return "index.html";
     }
 
-    @RequestMapping(value = "app/save",
+    @RequestMapping(value = "save",
             method = RequestMethod.POST,
             produces = "application/json")
     @ResponseBody

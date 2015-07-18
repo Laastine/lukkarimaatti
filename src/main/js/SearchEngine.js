@@ -226,7 +226,7 @@ var SearchEngine = {
         var link = window.location.href.toString()
         $.ajax({
             type: "POST",
-            url: '/app/save',
+            url: 'save',
             data: {email: address, link: link},
             dataType: 'json'
         })

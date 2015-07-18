@@ -11,15 +11,12 @@ import org.ltky.config.WebConfig;
 import org.ltky.parser.URLParser;
 import org.ltky.task.CourseTask;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -77,29 +74,7 @@ public class E2eWebTest {
         assertTrue(driver.findElement(By.className("header")).isDisplayed());
         assertTrue(driver.findElement(By.id("searchbar")).isDisplayed());
         assertTrue(driver.findElement(By.id("calendar")).isDisplayed());
-        assertTrue(driver.findElement(By.id("footer")).isDisplayed());
-    }
-
-    @Test
-    public void testSearchField() throws Exception {
-        setUpDB();
-        driver.get(baseUrl + "/lukkarimaatti");
-        driver.findElement(By.id("courseSearchBox")).sendKeys("WWW");
-        new WebDriverWait(driver, TIMEOUT)
-                .until(ExpectedConditions.visibilityOfElementLocated(By.className("tt-dropdown-menu")));
-        driver.findElement(By.id("courseSearchBox")).sendKeys(Keys.ARROW_DOWN, Keys.ENTER);
-        assertTrue(driver.findElement(By.id("CT30A3201")).isDisplayed());
-        driver.findElement(By.id("courseSearchBox")).clear();
-        new WebDriverWait(driver, TIMEOUT)
-                .until((WebDriver driver) -> {
-                    String val = driver.findElement(By.id("courseSearchBox")).getAttribute("value");
-                    return val.isEmpty() ? val : null;
-                });
-        driver.findElement(By.id("courseSearchBox")).sendKeys("Ohjelmoinnin perusteet");
-        new WebDriverWait(driver, TIMEOUT)
-                .until(ExpectedConditions.visibilityOfElementLocated(By.className("tt-dropdown-menu")));
-        driver.findElement(By.id("courseSearchBox")).sendKeys(Keys.ARROW_DOWN, Keys.ENTER);
-        assertTrue(driver.findElement(By.id("CT60A0200")).isDisplayed());
+        assertTrue(driver.findElement(By.id("foote2r")).isDisplayed());
     }
 
     @Test

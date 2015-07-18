@@ -42,7 +42,8 @@ For quick browser testing run EmbeddedJetty class
 and open http://localhost:8080/lukkarimaatti in your web browser
 
 <h3>Testing</h3>
-<i>gradle test</i> - for running unit tests and selenium E2E tests<br>
-
+```
+gradle test - for running unit tests and selenium E2E tests
+```
 <h2>Copyright and license</h2>
 Copyright &copy; 2013 Mikko Kaistinen, mikko.kaistinen@kapsi.fi

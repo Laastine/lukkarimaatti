@@ -24,22 +24,17 @@ var SearchEngine = {
                     }
                 },
                 processResults: function (data, page) {
-                    // parse the results into the format expected by Select2.
-                    // since we are using custom formatting functions we do not need to
-                    // alter the remote JSON data
-                    that.courseCollection = _.filter(data, function (cc) {
+                    that.courseCollection = _.chain(data).filter(function (cc) {
                         return cc.courseName.toLowerCase().indexOf(page.term.toLowerCase()) > -1
-                    })
-                    var select2Data = $.map(that.courseCollection, function (obj) {
+                    }).map(function (obj) {
                         obj.id = obj.courseId
                         obj.text = obj.courseName + ' - ' + obj.courseCode
                         return obj
-                    })
-                    select2Data = _.uniq(select2Data, function (cc) {
+                    }).uniq(function (cc) {
                         return cc.courseName + cc.courseCode + cc.groupName
-                    })
+                    }).value()
                     var res = {
-                        results: select2Data
+                        results: that.courseCollection
                     }
                     return res
                 },
@@ -213,7 +208,7 @@ var SearchEngine = {
 
     getYearNumber: function (weekNumber) {
         var isSpringSemester = moment().week() < 35
-        if (!isSpringSemester) {
+        if (isSpringSemester) {
             return parseInt(weekNumber, 10) < 35 ? moment().add(1, 'y').year() : moment().year()
         } else {
             return parseInt(weekNumber, 10) >= 35 ? moment().year() : moment().year()

@@ -1,9 +1,11 @@
 var $ = require('jquery'),
-    Backbone = require('backbone'),
     _ = require('underscore'),
     SearchEngine = require('../SearchEngine'),
     EventCalendarView = require('./EventCalendarView'),
+    Backbone = require('backbone'),
     template = require('../templates/search.hbs')
+
+global.jQuery = $;
 
 module.exports = Backbone.View.extend({
     calendar: new EventCalendarView(),

@@ -6,15 +6,14 @@ var $ = jquery = require('jquery'),
 require('moment/locale/fi')
 global.jQuery = $;
 
-
 var SearchEngine = {
     courseCollection: [],
     searchBox: function (eventCal) {
         var that = this
 
-        $("#searchbar").select2({
+        $("#searchbar-select2").select2({
             ajax: {
-                url: "http://localhost:8080/lukkarimaatti/rest/course/",
+                url: "rest/course/",
                 dataType: 'json',
                 delay: 150,
                 data: function (params) {
@@ -33,10 +32,9 @@ var SearchEngine = {
                     }).uniq(function (cc) {
                         return cc.courseName + cc.courseCode + cc.groupName
                     }).value()
-                    var res = {
+                    return {
                         results: that.courseCollection
                     }
-                    return res
                 },
                 cache: true
             },
@@ -55,6 +53,9 @@ var SearchEngine = {
             },
             templateSelection: function (data) {
                 return '<b>' + data.courseName + '</b>'
+            },
+            templateSelection: function (repo) {
+                return repo.courseName || repo.text;
             }
         }).on("select2:select", function (event) {
             var course = event.params.data
@@ -119,7 +120,7 @@ var SearchEngine = {
                 }
                 if (typeof param !== 'undefined') {
                     $.ajax({
-                        url: '/rest/code/' + param,
+                        url: 'rest/code/' + param,
                         type: 'GET',
                         success: function (data) {
                             that.courseCollection = data
@@ -196,14 +197,8 @@ var SearchEngine = {
                 }
                 courseToBeAdded.push(calendarEvent)
             })
-            console.log('to be added='+JSON.stringify(courseToBeAdded[0]))
         })
         calendar.createCalendarEvent(courseToBeAdded)
-    },
-
-    getLocalizedDayOfWeek: function (day) {
-        var weekDays = ['ma', 'ti', 'ke', 'to', 'pe', 'la', 'su']
-        return weekDays.indexOf(day)
     },
 
     getYearNumber: function (weekNumber) {
@@ -236,7 +231,6 @@ var SearchEngine = {
             dataType: 'json'
         })
     }
-
 }
 
 module.exports = SearchEngine

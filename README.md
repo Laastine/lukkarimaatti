@@ -17,12 +17,14 @@ Compatible with IE10+ and newest Firefox and Chrome
 * [PostgreSQL 9.1](http://www.postgresql.org/)
  
 <h5>Front-end</h5>
-* [jQuery 2.x](http://jquery.com/)
-* [Bootstrap 3.x](http://getbootstrap.com/)
+* [jQuery 2.1.x](http://jquery.com/)
+* [Bootstrap 3.3.x](http://getbootstrap.com/)
 * [underscore.js 1.8.x](http://underscorejs.org/)
 * [Backbone.js 1.2.x](http://backbonejs.org/)
-* [typeahead.js 0.11.x](http://twitter.github.io/typeahead.js/)
+* [Select2 4.0.0](https://select2.github.io/)
 * [FullCalendar 2.3.2](http://arshaw.com/fullcalendar/)
+* [Moment.js 2.10.x](http://momentjs.com/)
+* [Handlebars 3.0.x](http://handlebarsjs.com/)
 * [JSHint](http://www.jshint.com/)
 * [Browserify](http://browserify.org/)
 * [Gulp](http://gulpjs.com/)<br>

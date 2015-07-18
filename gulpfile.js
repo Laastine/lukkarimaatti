@@ -83,7 +83,7 @@ gulp.task('watch', function () {
     gulp.watch([paths.jsMain, paths.js], ['compile'])
 })
 
-// Our default test task
+// Our default task
 gulp.task('default', ['lint', 'styles', 'compile', 'watch'])
 
 gulp.task('dist', ['lint', 'stylesCss', 'compressJS'])

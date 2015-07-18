@@ -13,6 +13,12 @@ And constructed with the following guidelines:
 
 ---
 
+### 1.0.0 July 18, 2015
+
+* Javascript converted to CommonJS style
+* Using Gulp to build JS
+* Typeahead replaced by Select2
+
 ### 0.9.8 July 5, 2015
 
 * Encoding fix

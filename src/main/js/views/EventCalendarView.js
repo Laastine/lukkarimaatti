@@ -62,7 +62,7 @@ module.exports = Backbone.View.extend({
             hiddenDays: [0],
             weekNumbers: true,
             firstDay: 1,
-            minTime: '05:00:00',
+            minTime: '08:00:00',
             maxTime: '20:00:00',
             timeFormat: 'hh:mm',
             defaultView: 'agendaWeek',

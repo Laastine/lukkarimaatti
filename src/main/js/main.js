@@ -2,8 +2,6 @@ var $ = require('jquery'),
     _ = require('underscore'),
     Backbone = require('Backbone'),
     Router = require('./router')
-Backbone.$ = $
-
 
 $.ajaxSetup({cache: false})
 /*

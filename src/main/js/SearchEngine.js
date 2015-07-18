@@ -1,28 +1,21 @@
-var $ = require('jquery'),
-    select2 = require("select2"),
+var $ = jquery = require('jquery'),
     moment = require('moment'),
+    select2 = require("select2"),
     _ = require('underscore'),
     Backbone = require('backbone')
 
-var courseCollection = []
+global.jQuery = $;
+
 
 var SearchEngine = {
+    courseCollection: [],
     searchBox: function (eventCal) {
         var that = this
-        function formatCourse (repo) {
-            if (repo.loading) return repo.text
-            var markup = '<p><strong>'+repo.courseName+'</strong> - '+repo.courseCode+'</p>'
-            if (repo.groupName) { markup += '<div>' + repo.groupName + '</div>' }
-            markup += '</div></div>'
-            return markup
-        }
 
-        function formatCourseSelection (repo) {
-            console.log('formatCourseSelection='+JSON.stringify(repo))
-            return repo.courseName || repo.courseCode
-        }
         $("#searchbar").select2({
             placeholder: "Select a course",
+            allowClear: true,
+            tags: true,
             ajax: {
                 url: "http://localhost:8080/lukkarimaatti/rest/course/",
                 dataType: 'json',
@@ -37,46 +30,58 @@ var SearchEngine = {
                     // parse the results into the format expected by Select2.
                     // since we are using custom formatting functions we do not need to
                     // alter the remote JSON data
-                    courseCollection = data
-                    return {
-                        results: _.uniq(data, function (cc) {
-                            return cc.courseName + cc.courseCode + cc.groupName
-                        })
+                    that.courseCollection = data
+                    that.courseCollection = _.uniq(that.courseCollection, function (cc) {
+                        return cc.courseName + cc.courseCode + cc.groupName;
+                    })
+                    var select2Data = $.map(data, function (obj) {
+                        obj.id = obj.courseId
+                        obj.text = obj.courseName + ' - ' + obj.courseCode
+                        return obj
+                    })
+                    var res = {
+                        results: select2Data
                     }
-                },
-                transport: function (params, success, failure) {
-                    var $request = $.ajax(params);
-
-                    $request.then(success);
-                    $request.fail(failure);
-
-                    return $request;
+                    return res
                 },
                 cache: true
             },
-            escapeMarkup: function (markup) { return markup }, // let our custom formatter work
+            escapeMarkup: function (markup) {
+                return markup
+            },
             minimumInputLength: 2,
-            templateResult: formatCourse, // omitted for brevity, see the source of this page
-            templateSelection: formatCourseSelection // omitted for brevity, see the source of this page
-        }).on('select2:select', function (event, course) {
+            templateResult: function (data) {
+                if (data.loading) return data.text
+                var markup = '<p><strong>' + data.courseName + '</strong> - ' + data.courseCode + '</p>'
+                if (data.groupName) {
+                    markup += '<div>' + data.groupName + '</div>'
+                }
+                markup += '</div></div>'
+                return markup
+            },
+            templateSelection: function (data) {
+                return '<b>' + data.courseName + '</b>'
+            }
+        }).on("select2:select", function (event) {
+            var course = event.params.data
             console.log('course=' + JSON.stringify(course))
-            courseCollection = courseCollection.filter(function (c) {
+            that.courseCollection = that.courseCollection.filter(function (c) {
                 return c.courseCode === course.courseCode;
             });
 
             if (course.groupName.length > 0 && course.courseCode.substring(0, 2) === 'FV') {
-                courseCollection = courseCollection.filter(function (c) {
+                that.courseCollection = that.courseCollection.filter(function (c) {
                     return c.groupName === course.groupName;
                 });
             }
 
-            if (courseCollection.length > 0) {
-                that.addCourseLink(courseCollection[0].courseName, courseCollection[0].courseCode, courseCollection.length);
+            if (that.courseCollection.length > 0) {
+                that.addCourseLink(that.courseCollection[0].courseName, that.courseCollection[0].courseCode, that.courseCollection.length);
             }
 
             that.addDataToCalendar(eventCal);
-            that.addUrlParameter(courseCollection[0].courseCode, courseCollection[0].groupName);
-        });
+            that.addUrlParameter(that.courseCollection[0].courseCode, that.courseCollection[0].groupName);
+        })
     },
 
     addUrlParameter: function (courseCode, groupName) {
@@ -167,19 +172,19 @@ var SearchEngine = {
         var courseToBeAdded = []
         var that = this
 
-        this.courseCollection.forEach(function (course) {
+        that.courseCollection.forEach(function (course) {
             function processWeekNumbers(weekNumber) {
                 var dateStart = moment()
-                    .lang('fi')
-                    .years(that.getYearNumber(weekNumber))
+                    .locale('fi')
+                    .weekYear(that.getYearNumber(weekNumber))
                     .day(course.weekDay)
                     .week(weekNumber)
                     .hours(course.timeOfDay.split('-')[0] || 6).minutes(0)
                     .seconds(0)
                     .format('YYYY-MM-DDTHH:mm:ssZ')
                 var dateEnd = moment()
-                    .lang('fi')
-                    .years(that.getYearNumber(weekNumber))
+                    .locale('fi')
+                    .weekYear(that.getYearNumber(weekNumber))
                     .day(course.weekDay).week(weekNumber)
                     .hours(course.timeOfDay.split('-')[1] || 6)
                     .minutes(0)
@@ -199,6 +204,7 @@ var SearchEngine = {
             }
 
             JSON.parse('[' + course.weekNumber + ']').map(processWeekNumbers)
+            console.log('to be added='+JSON.stringify(courseToBeAdded))
         })
         calendar.createCalendarEvent(courseToBeAdded)
     },

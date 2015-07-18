@@ -36,6 +36,10 @@ html {
     color: #333;
 }
 
+#searchbar-select2 {
+    padding-bottom: 20px;
+}
+
 .dialog label {
     width: 90px;
     float: left;

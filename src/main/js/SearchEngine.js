@@ -3,7 +3,7 @@ var $ = jquery = require('jquery'),
     select2 = require("select2"),
     _ = require('underscore'),
     Backbone = require('backbone')
-
+require('moment/locale/fi')
 global.jQuery = $;
 
 
@@ -170,20 +170,21 @@ var SearchEngine = {
         var courseToBeAdded = []
         var that = this
 
-        that.courseCollection.forEach(function (course) {
-            function processWeekNumbers(weekNumber) {
+        this.courseCollection.forEach(function (course) {
+            JSON.parse('[' + course.weekNumber + ']').map(function processWeekNumbers(weekNumber) {
                 var dateStart = moment()
-                    .lang('fi')
-                    .years(that.getYearNumber(weekNumber))
+                    .locale('fi')
+                    .year(that.getYearNumber(weekNumber))
                     .day(course.weekDay)
                     .week(weekNumber)
                     .hours(course.timeOfDay.split('-')[0] || 6).minutes(0)
                     .seconds(0)
                     .format('YYYY-MM-DDTHH:mm:ssZ')
                 var dateEnd = moment()
-                    .lang('fi')
-                    .years(that.getYearNumber(weekNumber))
-                    .day(course.weekDay).week(weekNumber)
+                    .locale('fi')
+                    .year(that.getYearNumber(weekNumber))
+                    .day(course.weekDay)
+                    .week(weekNumber)
                     .hours(course.timeOfDay.split('-')[1] || 6)
                     .minutes(0)
                     .seconds(0)
@@ -199,18 +200,21 @@ var SearchEngine = {
                     id: course.courseCode + '#' + course.type
                 }
                 courseToBeAdded.push(calendarEvent)
-            }
-
-            JSON.parse('[' + course.weekNumber + ']').map(processWeekNumbers)
+            })
             console.log('to be added='+JSON.stringify(courseToBeAdded[0]))
         })
         calendar.createCalendarEvent(courseToBeAdded)
     },
 
+    getLocalizedDayOfWeek: function (day) {
+        var weekDays = ['ma', 'ti', 'ke', 'to', 'pe', 'la', 'su']
+        return weekDays.indexOf(day)
+    },
+
     getYearNumber: function (weekNumber) {
         var isSpringSemester = moment().week() < 35
         if (!isSpringSemester) {
-            return parseInt(weekNumber, 10) < 35 ? moment().add(2, 'y').year() : moment().year()
+            return parseInt(weekNumber, 10) < 35 ? moment().add(1, 'y').year() : moment().year()
         } else {
             return parseInt(weekNumber, 10) >= 35 ? moment().year() : moment().year()
         }

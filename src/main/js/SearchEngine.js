@@ -13,9 +13,6 @@ var SearchEngine = {
         var that = this
 
         $("#searchbar").select2({
-            placeholder: "Select a course",
-            allowClear: true,
-            tags: true,
             ajax: {
                 url: "http://localhost:8080/lukkarimaatti/rest/course/",
                 dataType: 'json',
@@ -30,14 +27,16 @@ var SearchEngine = {
                     // parse the results into the format expected by Select2.
                     // since we are using custom formatting functions we do not need to
                     // alter the remote JSON data
-                    that.courseCollection = data
-                    that.courseCollection = _.uniq(that.courseCollection, function (cc) {
-                        return cc.courseName + cc.courseCode + cc.groupName;
+                    that.courseCollection = _.filter(data, function (cc) {
+                        return cc.courseName.toLowerCase().indexOf(page.term.toLowerCase()) > -1
                     })
-                    var select2Data = $.map(data, function (obj) {
+                    var select2Data = $.map(that.courseCollection, function (obj) {
                         obj.id = obj.courseId
                         obj.text = obj.courseName + ' - ' + obj.courseCode
                         return obj
+                    })
+                    select2Data = _.uniq(select2Data, function (cc) {
+                        return cc.courseName + cc.courseCode + cc.groupName
                     })
                     var res = {
                         results: select2Data
@@ -64,7 +63,6 @@ var SearchEngine = {
             }
         }).on("select2:select", function (event) {
             var course = event.params.data
-            console.log('course=' + JSON.stringify(course))
             that.courseCollection = that.courseCollection.filter(function (c) {
                 return c.courseCode === course.courseCode;
             });
@@ -175,16 +173,16 @@ var SearchEngine = {
         that.courseCollection.forEach(function (course) {
             function processWeekNumbers(weekNumber) {
                 var dateStart = moment()
-                    .locale('fi')
-                    .weekYear(that.getYearNumber(weekNumber))
+                    .lang('fi')
+                    .years(that.getYearNumber(weekNumber))
                     .day(course.weekDay)
                     .week(weekNumber)
                     .hours(course.timeOfDay.split('-')[0] || 6).minutes(0)
                     .seconds(0)
                     .format('YYYY-MM-DDTHH:mm:ssZ')
                 var dateEnd = moment()
-                    .locale('fi')
-                    .weekYear(that.getYearNumber(weekNumber))
+                    .lang('fi')
+                    .years(that.getYearNumber(weekNumber))
                     .day(course.weekDay).week(weekNumber)
                     .hours(course.timeOfDay.split('-')[1] || 6)
                     .minutes(0)
@@ -204,7 +202,7 @@ var SearchEngine = {
             }
 
             JSON.parse('[' + course.weekNumber + ']').map(processWeekNumbers)
-            console.log('to be added='+JSON.stringify(courseToBeAdded))
+            console.log('to be added='+JSON.stringify(courseToBeAdded[0]))
         })
         calendar.createCalendarEvent(courseToBeAdded)
     },
@@ -212,9 +210,9 @@ var SearchEngine = {
     getYearNumber: function (weekNumber) {
         var isSpringSemester = moment().week() < 35
         if (!isSpringSemester) {
-            return parseInt(weekNumber, 10) < 35 ? moment().add(1, 'y').year() : moment().year()
+            return parseInt(weekNumber, 10) < 35 ? moment().add(2, 'y').year() : moment().year()
         } else {
-            return parseInt(weekNumber, 10) >= 35 ? moment().subtract(1, 'y').year() : moment().year()
+            return parseInt(weekNumber, 10) >= 35 ? moment().year() : moment().year()
         }
     },
 

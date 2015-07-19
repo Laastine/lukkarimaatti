@@ -22,8 +22,8 @@
     "gulp-jshint": "^1.11.2",
     "gulp-livereload": "^3.8.0",
     "gulp-minify-css": "^1.2.0",
-    "gulp-uglify": "*",
-    "gulp-util": "*",
+    "gulp-uglify": "^1.2.0",
+    "gulp-util": "^3.0.6",
     "mocha-phantomjs": "3.5.3",
     "vinyl-buffer": "1.0.0",
     "vinyl-source-stream": "1.0.0"

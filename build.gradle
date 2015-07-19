@@ -102,7 +102,7 @@ dependencies {
             'org.codehaus.jackson:jackson-mapper-asl:1.9.13',
             'javax.mail:mail:1.4.7',
             'log4j:log4j:1.2.17',
-            'org.slf4j:slf4j-log4j12:1.7.7'
+            'org.slf4j:slf4j-simple:1.7.12'
 
     querydslapt "com.mysema.querydsl:querydsl-apt:3.3.2"
 

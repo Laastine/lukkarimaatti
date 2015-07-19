@@ -15,7 +15,8 @@ And constructed with the following guidelines:
 
 ### 1.0.1 July 19, 2015
 
-* Selenium out, mocha-phantomjs in 
+* Selenium out, mocha-phantomjs in
+* Courses with groupname are now returned correctly via url params
 
 ### 1.0.0 July 18, 2015
 

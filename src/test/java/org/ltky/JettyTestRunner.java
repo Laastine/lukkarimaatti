@@ -19,21 +19,19 @@ import java.net.ServerSocket;
  * User: laastine
  * Date: 16.12.2014
  */
-public class EmbeddedJetty {
-    private static final Logger LOGGER = Logger.getLogger(EmbeddedJetty.class);
-    public static int PORT = portChecker();
+public class JettyTestRunner {
+    public static final int PORT = portChecker();
+    private static final Logger LOGGER = Logger.getLogger(JettyTestRunner.class);
     private static final String CONTEXT_PATH = "/lukkarimaatti";
     private static final String ROOT = "/";
-    private static Server server = new Server(PORT);
+    public static Server server = new Server(PORT);
 
     public static void main(String[] args) throws Exception {
         Server mainServer = new Server(8080);
         try {
             initServer(mainServer);
             mainServer.start();
-            while (true) {
-                Thread.sleep(200);
-            }
+            mainServer.join();
         } catch (Exception e) {
             LOGGER.error("Something terrible happened during jetty startup", e);
         } finally {
@@ -44,7 +42,6 @@ public class EmbeddedJetty {
     public static void startJetty() throws Exception {
         initServer(server);
         server.start();
-        Thread.sleep(30000);
     }
 
     public static void stopJetty() throws Exception {
@@ -58,7 +55,6 @@ public class EmbeddedJetty {
         String[] resources = {"./src/main/webapp/", "./src/test/webapp/"};
         contextHandler.setBaseResource(new ResourceCollection(resources));
         ServletHolder servletHolder = new ServletHolder("dispatcher-servlet", new DispatcherServlet(context));
-        servletHolder.setInitOrder(1);
         contextHandler.addServlet(servletHolder, ROOT);
         contextHandler.addEventListener(new ContextLoaderListener(context));
         contextHandler.setContextPath(CONTEXT_PATH);

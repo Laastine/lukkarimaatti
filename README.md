@@ -32,7 +32,7 @@ Compatible with IE10+ and newest Firefox and Chrome
 * [Gulp](http://gulpjs.com/)<br>
 
 <h2>Requirements & Build</h2>
-Compiles with Java 8 and Gradle 1.10<br>
+Compiles with Java 8 and Gradle 2.4<br>
 Gradle for building a package.<br>
 ```
 npm install -g gulp - if you don't have it yet

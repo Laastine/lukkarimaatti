@@ -42,6 +42,8 @@ var SearchEngine = {
                 return markup
             },
             minimumInputLength: 2,
+            minimumResultsForSearch: Infinity,
+            theme: "classic",
             templateResult: function (data) {
                 if (data.loading) return data.text
                 var markup = '<p><strong>' + data.courseName + '</strong> - ' + data.courseCode + '</p>'

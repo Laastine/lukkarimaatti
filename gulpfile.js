@@ -67,7 +67,7 @@ gulp.task('compressJS', function () {
         .pipe(gulp.dest(paths.dist))
 })
 
-gulp.task('stylesCss', function () {
+gulp.task('compressCss', function () {
     gulp.src(paths.css)
         .pipe(concatCss("bundle.css"))
         .pipe(minifyCss())
@@ -85,4 +85,4 @@ gulp.task('watch', function () {
 // Our default task
 gulp.task('default', ['lint', 'styles', 'compile', 'watch'])
 
-gulp.task('dist', ['lint', 'stylesCss', 'compressJS'])
+gulp.task('dist', ['lint', 'compressCss', 'compressJS'])

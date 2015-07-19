@@ -130,7 +130,8 @@ public class CourseHtmlParser {
 
     private String getElement(Elements rowItems, int elementIndex) {
         try {
-            return new String(rowItems.get(elementIndex).text().getBytes("cp1252"), "UTF-8").trim();
+            String text = new String(rowItems.get(elementIndex).text().getBytes("cp1252"), "UTF-8").trim();
+            return text.isEmpty() ? "" : text;
         } catch (Exception e) {
             return "";
         }

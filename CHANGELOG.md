@@ -13,6 +13,10 @@ And constructed with the following guidelines:
 
 ---
 
+### 1.0.1 July 19, 2015
+
+* Selenium out, mocha-phantomjs in 
+
 ### 1.0.0 July 18, 2015
 
 * Javascript converted to CommonJS style

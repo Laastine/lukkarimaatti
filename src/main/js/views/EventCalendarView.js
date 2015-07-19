@@ -50,7 +50,7 @@ module.exports = Backbone.View.extend({
             titleFormat: {
                 month: 'MMMM YYYY',
                 week: 'DD.MM.YYYY',
-                day: 'ddd M.D',
+                day: 'ddd D.M',
                 agenda: 'DD.MM.YYYY'
             },
             columnFormat: 'ddd M.D',
@@ -64,7 +64,7 @@ module.exports = Backbone.View.extend({
             firstDay: 1,
             minTime: '08:00:00',
             maxTime: '20:00:00',
-            timeFormat: 'hh:mm',
+            timeFormat: 'H:mm',
             defaultView: 'agendaWeek',
             eventClick: function (event) {
                 that.calendar('removeEvents', event._id)

@@ -23,17 +23,17 @@ var SearchEngine = {
                     }
                 },
                 processResults: function (data, page) {
-                    that.courseCollection = _.chain(data).filter(function (cc) {
+                    that.courseCollection = _.filter(data, function (cc) {
                         return cc.courseName.toLowerCase().indexOf(page.term.toLowerCase()) > -1
-                    }).map(function (obj) {
-                        obj.id = obj.courseId
-                        obj.text = obj.courseName + ' - ' + obj.courseCode
-                        return obj
-                    }).uniq(function (cc) {
-                        return cc.courseName + cc.courseCode + cc.groupName
-                    }).value()
+                    })
                     return {
-                        results: that.courseCollection
+                        results: _.chain(that.courseCollection).uniq(function (cc) {
+                            return cc.courseName + cc.courseCode + cc.groupName
+                        }).map(function (obj) {
+                            obj.id = obj.courseId
+                            obj.text = obj.courseName + ' - ' + obj.courseCode
+                            return obj
+                        }).value()
                     }
                 },
                 cache: true
@@ -122,8 +122,12 @@ var SearchEngine = {
                 }
                 if (typeof param !== 'undefined') {
                     $.ajax({
-                        url: 'rest/code/' + param,
+                        url: 'rest/codeAndGroup/',
                         type: 'GET',
+                        data: {
+                            groupName: groupLetter,
+                            code: param
+                        },
                         success: function (data) {
                             that.courseCollection = data
                             if (groupLetter.length > 0 && data[0].courseCode.substring(0, 2) === 'FV') {

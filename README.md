@@ -45,7 +45,7 @@ and open http://localhost:8080/lukkarimaatti in your web browser
 
 <h3>Testing</h3>
 ```
-gradle test - for running unit tests and selenium E2E tests
+gradle test - for running unit tests and mocha tests
 ```
 <h2>Copyright and license</h2>
 Copyright &copy; 2013 Mikko Kaistinen, mikko.kaistinen@kapsi.fi

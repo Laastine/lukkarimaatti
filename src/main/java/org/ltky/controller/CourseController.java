@@ -66,6 +66,18 @@ public class CourseController {
         }
     }
 
+    @RequestMapping(value = "/codeAndGroup", params = {"code", "groupName"}, method = RequestMethod.GET)
+    public
+    @ResponseBody
+    final List<Course> getCourseWithCodeAndGroup(@RequestParam(value = "code") String code,
+                                                 @RequestParam(value = "groupName") String groupName) {
+        if (code.length() >= MIN && groupName.length() > 0) {
+            return courseDao.findCourseByCourseCodeAndGroup(code.toUpperCase(), groupName.toUpperCase());
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
     @RequestMapping(value = "/course", params = {"name"}, method = RequestMethod.GET)
     public
     @ResponseBody

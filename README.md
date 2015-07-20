@@ -3,7 +3,7 @@
 Hobby project to offer course data easily usable scheduling tool over simple REST interface.<br>
 Information is retrieved from [the official LUT teaching schedule info site] (https://uni.lut.fi/fi/web/guest/lukujarjestykset).<br>
 
-<b>[Test beta version!](http://83.136.252.198/lukkarimaatti/)</b> (Currently on holiday, will be back in fall 2015)
+<b>[http://laastine.kapsi.fi/lukkarimaatti!](http://laastine.kapsi.fi/lukkarimaatti)</b>
 
 Compatible with IE10+ and newest Firefox and Chrome
 

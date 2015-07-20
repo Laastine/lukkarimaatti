@@ -41,6 +41,11 @@ var SearchEngine = {
             escapeMarkup: function (markup) {
                 return markup
             },
+            placeholder: {
+                id: "-1",
+                text: "Select a course"
+            },
+            allowClear: true,
             minimumInputLength: 2,
             minimumResultsForSearch: Infinity,
             theme: "classic",
@@ -165,6 +170,7 @@ var SearchEngine = {
 
     removeCourseItem: function (element, id) {
         $(element).remove()
+        $(".selection .select2-selection")
         this.removeUrlParameter(id)
     },
 

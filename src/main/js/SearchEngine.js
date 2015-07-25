@@ -120,7 +120,7 @@ var SearchEngine = {
                     groupLetter = param.substring(param.indexOf('&') + 1, param.length)
                     param = param.substring(0, param.indexOf('&'))
                 }
-                if (typeof param !== 'undefined') {
+                if (typeof param !== 'undefined' && groupLetter.length > 0) {
                     $.ajax({
                         url: 'rest/codeAndGroup/',
                         type: 'GET',
@@ -142,7 +142,21 @@ var SearchEngine = {
                             console.error('param ' + param + 'xhr' + xhr + ', status=' + status + ', error=' + error)
                         }
                     })
-                } else {
+                } else if (typeof param !== 'undefined') {
+                        $.ajax({
+                            url: 'rest/code/' + param,
+                            type: 'GET',
+                            success: function (data) {
+                                that.courseCollection = data
+                                that.addCourseLink(data[0].courseName, data[0].courseCode, data.length)
+                                that.addDataToCalendar(calendar)
+                            },
+                            error: function (xhr, status, error) {
+                                console.error('param ' + param + 'xhr' + xhr + ', status=' + status + ', error=' + error)
+                            }
+                        })
+                    }
+                 else {
                     console.log('Not a valid course code')
                 }
             })

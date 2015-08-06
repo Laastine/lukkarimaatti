@@ -36,12 +36,14 @@ Compiles with Java 8 and Gradle 2.4<br>
 Gradle for building a package.<br>
 ```
 npm install -g gulp - if you don't have it yet
+```
+```
 npm install - download JS stuff
 gulp - Compile JS & CSS to bundles
 gradle war - for building (release) package
 ```
 For quick browser testing run EmbeddedJetty class
-and open http://localhost:8080/lukkarimaatti in your web browser
+and open http://localhost:8080/lukkarimaatti in your web browser.
 
 <h3>Testing</h3>
 ```

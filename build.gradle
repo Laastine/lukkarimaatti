@@ -75,7 +75,6 @@ test {
 
 ext {
     springVersion = '4.0.7.RELEASE'
-    seleniumVersion = '2.45.0'
     jettyVersion = '9.2.11.v20150529'
 }
 
@@ -86,7 +85,6 @@ configurations.all {
 dependencies {
 
     compile 'org.apache.commons:commons-lang3:3.3.2',
-            'commons-io:commons-io:2.4',
             'commons-validator:commons-validator:1.4.0',
             'cglib:cglib:3.1',
             'asm:asm:3.3.1',
@@ -107,6 +105,7 @@ dependencies {
     querydslapt "com.mysema.querydsl:querydsl-apt:3.3.2"
 
     providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+
     runtime 'jstl:jstl:1.2'
 
     testCompile 'junit:junit:4.11',
@@ -115,6 +114,4 @@ dependencies {
             'org.mockito:mockito-all:1.9.5',
             'javax.servlet:javax.servlet-api:3.1.0',
             "org.eclipse.jetty:jetty-webapp:${jettyVersion}"
-
-    testRuntime 'com.h2database:h2:1.4.186'
 }

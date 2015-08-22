@@ -24,10 +24,9 @@ import java.util.List;
  */
 public class CourseHtmlParser {
     private static final String UNKNOWN = "?";
+    private static final Logger LOGGER = Logger.getLogger(CourseHtmlParser.class);
     private final String department;
     private final Util UTIL = Util.getInstance();
-    private final CoursePattern coursePattern = new CoursePattern();
-    private static final Logger LOGGER = Logger.getLogger(CourseHtmlParser.class);
 
     public CourseHtmlParser(String department) {
         this.department = department;
@@ -138,8 +137,8 @@ public class CourseHtmlParser {
     }
 
     private String findTimeOfDay(String startTime, String endTime) {
-        if (UTIL.extractPattern(startTime, coursePattern.timeOfDay) &
-                UTIL.extractPattern(endTime, coursePattern.timeOfDay) &
+        if (UTIL.extractPattern(startTime, CoursePattern.timeOfDay) &
+                UTIL.extractPattern(endTime, CoursePattern.timeOfDay) &
                 !"Klo".equals(startTime))
             if (StringUtils.contains(startTime, ":00") || StringUtils.contains(endTime, ":00")) {
                 return StringUtils.removeEndIgnoreCase(startTime, ":00") + "-" + StringUtils.removeEndIgnoreCase(endTime, ":00");
@@ -166,19 +165,19 @@ public class CourseHtmlParser {
     }
 
     private String findTeacher(String teacher) {
-        return UTIL.extractPattern(teacher, coursePattern.kikeTeacher) ? teacher : UNKNOWN;
+        return UTIL.extractPattern(teacher, CoursePattern.kikeTeacher) ? teacher : UNKNOWN;
     }
 
     private String findWeek(String weekNumber) {
-        return UTIL.extractPattern(weekNumber, coursePattern.weekNumber) ? UTIL.processWeekNumbers(weekNumber) : UNKNOWN;
+        return UTIL.extractPattern(weekNumber, CoursePattern.weekNumber) ? UTIL.processWeekNumbers(weekNumber) : UNKNOWN;
     }
 
     private String findWeekDay(String weekDay) {
-        return UTIL.extractPattern(weekDay, coursePattern.weekDays) ? weekDay : UNKNOWN;
+        return UTIL.extractPattern(weekDay, CoursePattern.weekDays) ? weekDay : UNKNOWN;
     }
 
     private String findClassroom(String classroom) {
-        return UTIL.extractPattern(classroom, coursePattern.classRoom) ? classroom : UNKNOWN;
+        return UTIL.extractPattern(classroom, CoursePattern.classRoom) ? classroom : UNKNOWN;
     }
 
     private CoursePrototype findNameCodeAndType(String courseNameAndCode) {

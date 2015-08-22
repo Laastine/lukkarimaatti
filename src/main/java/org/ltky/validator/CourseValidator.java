@@ -12,6 +12,7 @@ import org.ltky.dao.model.Course;
  */
 public class CourseValidator {
     private static final Logger LOGGER = Logger.getLogger(CourseValidator.class);
+
     public static boolean validateCourse(Course course) {
         if (StringUtils.isBlank(course.courseCode) || investigateLength(course.courseCode, 32)) {
             LOGGER.debug("courseCode fails=" + course.courseCode);
@@ -30,26 +31,26 @@ public class CourseValidator {
             return false;
         }
         if (course.timeOfDay == null || investigateLength(course.timeOfDay, 32)) {
-            LOGGER.debug("timeOfDay fails="+course.timeOfDay);
+            LOGGER.debug("timeOfDay fails=" + course.timeOfDay);
             return false;
         }
         if (investigateLength(course.classroom, 64)) {
-            LOGGER.debug("classroom fails="+course.classroom);
+            LOGGER.debug("classroom fails=" + course.classroom);
             return false;
         }
         if (investigateLength(course.type, 32)) {
-            LOGGER.debug("type fails="+course.type);
+            LOGGER.debug("type fails=" + course.type);
             return false;
         }
         if (investigateLength(course.department, 4)) {
-            LOGGER.debug("department fails="+course.department);
+            LOGGER.debug("department fails=" + course.department);
             return false;
         }
         if (investigateLength(course.teacher, 64)) {
-            LOGGER.debug("teacher fails="+course.teacher);
+            LOGGER.debug("teacher fails=" + course.teacher);
             return false;
         }
-        LOGGER.debug("Saving="+course);
+        LOGGER.debug("Saving=" + course);
         return true;
     }
 

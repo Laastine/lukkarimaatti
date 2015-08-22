@@ -4,10 +4,5 @@ var $ = require('jquery'),
     Router = require('./router')
 
 $.ajaxSetup({cache: false})
-/*
-$.ajaxPrefilter(function (options) {
-    options.url = 'http://localhost:8080/lukkarimaatti' + options.url
-})
-*/
-var router = new Router()
+new Router()
 Backbone.history.start()

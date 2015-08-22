@@ -40,7 +40,7 @@ public class URLParser {
         Document document = Jsoup.parse(new URL(uniURL).openStream(), null, uniURL);
         Elements elements = document.select(".journal-content-article").select("a");
         elements.stream().forEach(a -> {
-            if (a.attr("href").contains("/c/document_library/get_file") && !a.text().equals("") && !a.text().equals("täältä") ) {
+            if (a.attr("href").contains("/c/document_library/get_file") && !a.text().equals("") && !a.text().equals("täältä")) {
                 dependencies.put(acronymMap.get(a.text()).toString(), prefix + a.attr("href"));
             }
         });

@@ -24,7 +24,7 @@ public class JettyTestRunner {
     private static final Logger LOGGER = Logger.getLogger(JettyTestRunner.class);
     private static final String CONTEXT_PATH = "/lukkarimaatti";
     private static final String ROOT = "/";
-    public static Server server = new Server(PORT);
+    private static final Server server = new Server(PORT);
 
     public static void main(String[] args) throws Exception {
         Server mainServer = new Server(8080);
@@ -61,7 +61,7 @@ public class JettyTestRunner {
         server.setHandler(contextHandler);
     }
 
-    public static int portChecker() {
+    private static int portChecker() {
         try {
             ServerSocket socket = new ServerSocket(0);
             int port = socket.getLocalPort();

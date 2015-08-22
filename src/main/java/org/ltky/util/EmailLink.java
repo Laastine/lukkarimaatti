@@ -43,14 +43,14 @@ public class EmailLink {
             if (isValidEmailAddress(toAddress)) {
                 sendEmail(session, toAddress, "Your lukkarimaatti url=" + link);
             } else {
-                LOGGER.warn(toAddress+" isn't valid email address!");
+                LOGGER.warn(toAddress + " isn't valid email address!");
             }
         } catch (Exception e) {
             LOGGER.error("Email sending failed to " + toAddress, e);
         }
     }
 
-    void sendEmail(Session session, String toEmail, String body) throws Exception {
+    private void sendEmail(Session session, String toEmail, String body) throws Exception {
         MimeMessage msg = new MimeMessage(session);
         msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
         msg.addHeader("format", "flowed");

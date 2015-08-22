@@ -23,7 +23,6 @@ module.exports = Backbone.View.extend({
             e.map(function (f) {
                 if (f.id.substring(0, f.id.indexOf('#')) === code) {
                     index = eventSources.indexOf(e)
-                    return
                 }
             })
         })

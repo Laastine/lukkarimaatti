@@ -71,7 +71,7 @@ public class Course implements Serializable {
     public String toString() {
         return "[courseCode=" + courseCode + ", courseName=" + courseName + ", teacher=" + teacher +
                 ", weekNumber=" + weekNumber + ", weekDay=" + weekDay + ", timeOfDay=" + timeOfDay +
-                ", classroom=" + classroom + ", type=" + type + ", department=" + department + ", groupName=" + groupName +"]";
+                ", classroom=" + classroom + ", type=" + type + ", department=" + department + ", groupName=" + groupName + "]";
     }
 
     @Override

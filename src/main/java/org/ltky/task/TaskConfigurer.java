@@ -30,7 +30,7 @@ public class TaskConfigurer {
         map = new URLParser().parseLinks();
     }
 
-    public void setUpRunners() throws Exception {
+    private void setUpRunners() throws Exception {
         getLinks();
         LOGGER.debug("Deleting old data");
         courseDao.deleteAll();      //clean old courses

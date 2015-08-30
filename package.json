@@ -1,6 +1,6 @@
 {
   "name": "lukkarimaatti",
-  "version": "0.9.8",
+  "version": "1.0.2",
   "private": true,
   "dependencies": {
     "backbone": "1.2.1",

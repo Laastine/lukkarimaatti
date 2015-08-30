@@ -221,12 +221,14 @@ var SearchEngine = {
         calendar.createCalendarEvent(courseToBeAdded)
     },
 
-    getYearNumber: function (weekNumber) {
-        var isSpringSemester = moment().week() < 35
+    getYearNumber: function(courseWeekNumber) {
+        var isSpringSemester = moment().week() < 27
+        var week = parseInt(courseWeekNumber, 10)
+        var springCourse = (week > 0 && week < 35)
         if (isSpringSemester) {
-            return parseInt(weekNumber, 10) < 35 ? moment().add(1, 'y').year() : moment().year()
+            return springCourse ? moment().year() : moment().subtract(1, 'year').year()
         } else {
-            return parseInt(weekNumber, 10) >= 35 ? moment().year() : moment().year()
+            return springCourse ? moment().add(1, 'y').year() : moment().year()
         }
     },
 

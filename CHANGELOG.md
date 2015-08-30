@@ -13,6 +13,11 @@ And constructed with the following guidelines:
 
 ---
 
+### 1.0.2 August 30, 2015
+
+* New languagelab parsing due HTML format change
+* Year detection improved
+
 ### 1.0.1 July 19, 2015
 
 * Selenium out, mocha-phantomjs in

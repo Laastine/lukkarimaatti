@@ -20,6 +20,9 @@ public class ParserConfiguration {
     private String emailUsername;
     private String emailPassword;
 
+
+    private String adminPassword;
+
     private ParserConfiguration() {
         try {
             loadServletInitParameters();
@@ -40,6 +43,7 @@ public class ParserConfiguration {
         uniURL = getPropertyOrThrowUp(parserProperties, "uniURL");
         emailUsername = getPropertyOrThrowUp(parserProperties, "emailUsername");
         emailPassword = getPropertyOrThrowUp(parserProperties, "emailPassword");
+        adminPassword = getPropertyOrThrowUp(parserProperties, "adminPassword");
         LOGGER.info("Config=" + this.toString());
         return this.toString();
     }
@@ -76,4 +80,6 @@ public class ParserConfiguration {
     public String getEmailPassword() {
         return emailPassword;
     }
+
+    public String getAdminPassword() { return adminPassword; }
 }

@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class URLParser {
     private static final Logger LOGGER = Logger.getLogger(URLParser.class);
@@ -45,7 +46,7 @@ public class URLParser {
             }
         });
         dependencies.entrySet().stream().map(d -> dependencies.put(acronymMap.get(d.getKey()).toString(), d.getValue()));
-        LOGGER.debug("deps=" + dependencies);
+        LOGGER.info("deps=" + dependencies.entrySet().stream().map(d -> "\n" + d.getKey() + ":" + d.getValue()).collect(Collectors.toList()));
         return dependencies;
     }
 }

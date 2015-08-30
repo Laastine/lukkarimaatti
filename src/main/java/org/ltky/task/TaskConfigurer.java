@@ -32,7 +32,7 @@ public class TaskConfigurer {
 
     private void setUpRunners() throws Exception {
         getLinks();
-        LOGGER.debug("Deleting old data");
+        LOGGER.info("Deleting old data");
         courseDao.deleteAll();      //clean old courses
         for (Map.Entry<String, String> entry : map.entrySet()) {
             ((Runnable) () -> courseTask.parse(entry.getKey(), entry.getValue())).run();
@@ -41,7 +41,16 @@ public class TaskConfigurer {
 
     @Scheduled(cron = "0 0 4 * * *")
     public void updateCourseDataCronJob() {
-        LOGGER.info("course data update cron task");
+        LOGGER.info("Course data update cron task");
+        try {
+            setUpRunners();
+        } catch (Exception e) {
+            LOGGER.error("Error while updating DB ", e);
+        }
+    }
+
+    public void updateCourseDataManually() {
+        LOGGER.info("Course data update manually task");
         try {
             setUpRunners();
         } catch (Exception e) {

@@ -38,9 +38,13 @@ public class LukkarimaattiController {
             produces = "application/json")
     @ResponseBody
     public ResponseEntity<String> saveCourseData(
+            HttpServletRequest request,
             @RequestParam(value = "email", required = true) String toAddress,
             @RequestParam(value = "link", required = true) String link) {
-        LOGGER.info("Save data with email=" + toAddress + " link=" + link);
+        LOGGER.info("Save data with email from "
+                + request.getRemoteAddr()
+                + " with user-agent"
+                + request.getHeader("user-agent"));
         new EmailLink().buildMail(toAddress, link);
         return new ResponseEntity<>(HttpStatus.OK);
     }

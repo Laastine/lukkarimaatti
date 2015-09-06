@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -94,20 +95,37 @@ public class CourseHtmlParser {
     }
 
     private Course parseTableElement(Elements rowItems) {
+        String[] departmentsWithTeacher = {"kike", "kote", "mafy", "kete"};
         CoursePrototype coursePrototype = findNameCodeAndType(getElement(rowItems, 0));
-        return new Course(
-                coursePrototype.courseCode,                                             //courseCode
-                coursePrototype.courseName,                                             //courseName
-                findWeek(getElement(rowItems, 2)),                                      //weekNumber
-                findWeekDay(getElement(rowItems, 3)),                                   //weekDay
-                findTimeOfDay(getElement(rowItems, 4), getElement(rowItems, 5)),        //timeOfDay
-                findClassroom(getElement(rowItems, 6)),                                 //classRoom
-                coursePrototype.type,                                                   //type
-                department,                                                             //department
-                "",                                                                     //teacher
-                findMiscData(getElement(rowItems, 7)),                                  //misc
-                coursePrototype.group                                                   //groupName
-        );
+        if (Arrays.asList(departmentsWithTeacher).contains(this.department)) {
+            return new Course(
+                    coursePrototype.courseCode,                                                 //courseCode
+                    coursePrototype.courseName,                                                 //courseName
+                    (findWeek(getElement(rowItems, 3))),                                        //weekNumber
+                    (findWeekDay(getElement(rowItems, 4))),                                     //weekDay
+                    (findTimeOfDay(getElement(rowItems, 5), getElement(rowItems, 6))),          //timeOfDay
+                    (findClassroom(getElement(rowItems, 7))),                                   //classRoom
+                    (coursePrototype.type),                                                     //type
+                    department,                                                                 //department
+                    (findTeacher(getElement(rowItems, 1))),                                     //teacher
+                    (findMiscData(getElement(rowItems, 8))),                                    //misc
+                    coursePrototype.group
+            );
+        } else {
+            return new Course(
+                    coursePrototype.courseCode,                                             //courseCode
+                    coursePrototype.courseName,                                             //courseName
+                    findWeek(getElement(rowItems, 2)),                                      //weekNumber
+                    findWeekDay(getElement(rowItems, 3)),                                   //weekDay
+                    findTimeOfDay(getElement(rowItems, 4), getElement(rowItems, 5)),        //timeOfDay
+                    findClassroom(getElement(rowItems, 6)),                                 //classRoom
+                    coursePrototype.type,                                                   //type
+                    department,                                                             //department
+                    "",                                                                     //teacher
+                    findMiscData(getElement(rowItems, 7)),                                  //misc
+                    coursePrototype.group                                                   //groupName
+            );
+        }
     }
 
     private String getElement(Elements rowItems, int elementIndex) {

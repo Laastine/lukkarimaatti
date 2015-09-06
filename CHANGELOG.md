@@ -13,6 +13,10 @@ And constructed with the following guidelines:
 
 ---
 
+### 1.0.3 September 6, 2015
+
+* Kote, kete, mafy and kike HTML parsing fixed due to teacher column
+
 ### 1.0.2 August 30, 2015
 
 * New languagelab parsing due HTML format change

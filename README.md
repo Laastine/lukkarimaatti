@@ -42,7 +42,7 @@ npm install - download JS stuff
 gulp - Compile JS & CSS to bundles
 gradle war - for building (release) package
 ```
-For quick browser testing run EmbeddedJetty class
+For quick browser testing run JettyTestRunner class
 and open http://localhost:8080/lukkarimaatti in your web browser.
 
 <h3>Testing</h3>

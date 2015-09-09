@@ -95,7 +95,7 @@ public class CourseHtmlParser {
 
     private Course parseTableElement(Elements columnItems) {
         CoursePrototype coursePrototype = findNameCodeAndType(getElement(columnItems, 0));
-        if (columnItems.size() == 9) {  //More than eight table rows means that teacher column is present
+        if (columnItems.size() == 9) {  //More than nine table columns means that teacher column is present
             return new Course(
                     coursePrototype.courseCode,                                                 //courseCode
                     coursePrototype.courseName,                                                 //courseName

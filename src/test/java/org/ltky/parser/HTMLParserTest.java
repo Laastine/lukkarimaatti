@@ -194,7 +194,7 @@ public class HTMLParserTest {
                     "<td>&nbsp;</td>\n" +
                     "</tr>\n" +
                     "</table>";
-    private static final String LANGUAGE_LAB_FRENCH = "<table class='spreadsheet' cellspacing='0' cellpadding='2%' border='t'>\n" +
+    private static final String LANGUAGE_LAB_FRENCH_WITH_TEACHER = "<table class='spreadsheet' cellspacing='0' cellpadding='2%' border='t'>\n" +
             "<col class='column0' /><col class='column1' /><col class='column2' /><col class='column3' /><col class='column4' /><col class='column5' /><col class='column6' /><col class='column7' /><col class='column8' />\n" +
             "<tr class='columnTitles'>\n" +
             "<td></td>\n" +
@@ -230,6 +230,39 @@ public class HTMLParserTest {
             "<td>&nbsp;</td>\n" +
             "</tr>\n" +
             "</table>";
+    private static final String LANGUAGE_LAB_FRENCH_WITHOUT_TEACHER = "<table class='spreadsheet' cellspacing='0' cellpadding='2%' border='t'>\n" +
+            "<col class='column0' /><col class='column1' /><col class='column2' /><col class='column3' /><col class='column4' /><col class='column5' /><col class='column6' /><col class='column7' />\n" +
+            "<tr class='columnTitles'>\n" +
+            "<td></td>\n" +
+            "<td>Periodi</td>\n" +
+            "<td>Vko</td>\n" +
+            "<td>      </td>\n" +
+            "<td>Klo</td>\n" +
+            "<td>      </td>\n" +
+            "<td>Sali</td>\n" +
+            "<td></td>\n" +
+            "</tr>\n" +
+            "<tr>\n" +
+            "<td>FV15A1420 - Ranskan jatkokurssi 2: A</td>\n" +
+            "<td>Periodi 4</td>\n" +
+            "<td>10-15</td>\n" +
+            "<td>ti</td>\n" +
+            "<td>14</td>\n" +
+            "<td>16</td>\n" +
+            "<td>Yo-talo LS 205*</td>\n" +
+            "<td>&nbsp;</td>\n" +
+            "</tr>\n" +
+            "<tr>\n" +
+            "<td>FV15A1420 - Ranskan jatkokurssi 2: A</td>\n" +
+            "<td>Periodi 4</td>\n" +
+            "<td>10-15</td>\n" +
+            "<td>to</td>\n" +
+            "<td>16</td>\n" +
+            "<td>18</td>\n" +
+            "<td>Yo-talo LS 204*</td>\n" +
+            "<td>&nbsp;</td>\n" +
+            "</tr>\n" +
+            "</table>\n";
     private static final String LANGUAGE_LAB_MULTI = "<table cellspacing='0' border='0' width='100%' class='header-2-args'>\n" +
             "<col align='left' /><col align='center' /><col align='right' />\n" +
             "  <tr>\n" +
@@ -734,9 +767,9 @@ public class HTMLParserTest {
     }
 
     @Test
-    public void HTMLanguageFrenchParsingTest() throws IOException {
+    public void HTMLanguageFrenchParsingWithTeacherTest() throws IOException {
         CourseHtmlParser courseHtmlParser = new CourseHtmlParser(KIKE_DEPARTMENT);
-        List<Course> list = courseHtmlParser.parseHTMLData(LANGUAGE_LAB_FRENCH);
+        List<Course> list = courseHtmlParser.parseHTMLData(LANGUAGE_LAB_FRENCH_WITH_TEACHER);
         assertEquals("Ranskan jatkokurssi 2: A", list.get(0).courseName);
         assertEquals("FV15A1420", list.get(0).courseCode);
         assertEquals("Paakkonen, Vuokko", list.get(0).teacher);
@@ -744,6 +777,20 @@ public class HTMLParserTest {
         assertEquals("12-14", list.get(0).timeOfDay);
         assertEquals("to", list.get(0).weekDay);
         assertEquals("11,12,13,14,15,16", list.get(0).weekNumber);
+        assertEquals("kike", list.get(0).department);
+    }
+
+    @Test
+    public void HTMLanguageFrenchParsingWithoutTeacherTest() throws IOException {
+        CourseHtmlParser courseHtmlParser = new CourseHtmlParser(KIKE_DEPARTMENT);
+        List<Course> list = courseHtmlParser.parseHTMLData(LANGUAGE_LAB_FRENCH_WITHOUT_TEACHER);
+        assertEquals("Ranskan jatkokurssi 2: A", list.get(0).courseName);
+        assertEquals("FV15A1420", list.get(0).courseCode);
+        assertEquals("Yo-talo LS 205*", list.get(0).classroom);
+        assertEquals("14-16", list.get(0).timeOfDay);
+        assertEquals("ti", list.get(0).weekDay);
+        assertEquals("10,11,12,13,14,15", list.get(0).weekNumber);
+        assertEquals("A", list.get(0).groupName);
         assertEquals("kike", list.get(0).department);
     }
 

@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -94,37 +93,38 @@ public class CourseHtmlParser {
         return resultList;
     }
 
-    private Course parseTableElement(Elements rowItems) {
-        String[] departmentsWithTeacher = {"kike", "kote", "mafy", "kete"};
-        CoursePrototype coursePrototype = findNameCodeAndType(getElement(rowItems, 0));
-        if (Arrays.asList(departmentsWithTeacher).contains(this.department)) {
+    private Course parseTableElement(Elements columnItems) {
+        CoursePrototype coursePrototype = findNameCodeAndType(getElement(columnItems, 0));
+        if (columnItems.size() == 9) {  //More than eight table rows means that teacher column is present
             return new Course(
                     coursePrototype.courseCode,                                                 //courseCode
                     coursePrototype.courseName,                                                 //courseName
-                    (findWeek(getElement(rowItems, 3))),                                        //weekNumber
-                    (findWeekDay(getElement(rowItems, 4))),                                     //weekDay
-                    (findTimeOfDay(getElement(rowItems, 5), getElement(rowItems, 6))),          //timeOfDay
-                    (findClassroom(getElement(rowItems, 7))),                                   //classRoom
+                    (findWeek(getElement(columnItems, 3))),                                        //weekNumber
+                    (findWeekDay(getElement(columnItems, 4))),                                     //weekDay
+                    (findTimeOfDay(getElement(columnItems, 5), getElement(columnItems, 6))),          //timeOfDay
+                    (findClassroom(getElement(columnItems, 7))),                                   //classRoom
                     (coursePrototype.type),                                                     //type
                     department,                                                                 //department
-                    (findTeacher(getElement(rowItems, 1))),                                     //teacher
-                    (findMiscData(getElement(rowItems, 8))),                                    //misc
+                    (findTeacher(getElement(columnItems, 1))),                                     //teacher
+                    (findMiscData(getElement(columnItems, 8))),                                    //misc
                     coursePrototype.group
             );
-        } else {
+        } else if(columnItems.size() == 8) {
             return new Course(
                     coursePrototype.courseCode,                                             //courseCode
                     coursePrototype.courseName,                                             //courseName
-                    findWeek(getElement(rowItems, 2)),                                      //weekNumber
-                    findWeekDay(getElement(rowItems, 3)),                                   //weekDay
-                    findTimeOfDay(getElement(rowItems, 4), getElement(rowItems, 5)),        //timeOfDay
-                    findClassroom(getElement(rowItems, 6)),                                 //classRoom
+                    findWeek(getElement(columnItems, 2)),                                      //weekNumber
+                    findWeekDay(getElement(columnItems, 3)),                                   //weekDay
+                    findTimeOfDay(getElement(columnItems, 4), getElement(columnItems, 5)),        //timeOfDay
+                    findClassroom(getElement(columnItems, 6)),                                 //classRoom
                     coursePrototype.type,                                                   //type
                     department,                                                             //department
                     "",                                                                     //teacher
-                    findMiscData(getElement(rowItems, 7)),                                  //misc
+                    findMiscData(getElement(columnItems, 7)),                                  //misc
                     coursePrototype.group                                                   //groupName
             );
+        } else {
+            throw new RuntimeException("Broken table format. Department="+this.department+" Course="+coursePrototype.courseCode+", "+coursePrototype.courseName);
         }
     }
 

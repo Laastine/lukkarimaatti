@@ -25,7 +25,6 @@ Compatible with IE10+ and newest Firefox and Chrome
 * [FullCalendar 2.3.2](http://arshaw.com/fullcalendar/)
 * [Moment.js 2.10.x](http://momentjs.com/)
 * [Handlebars 3.0.x](http://handlebarsjs.com/)
-* [JSHint](http://www.jshint.com/)
 * [Mocha](http://mochajs.org/)
 * [PhantomJS](http://phantomjs.org/)
 * [Browserify](http://browserify.org/)

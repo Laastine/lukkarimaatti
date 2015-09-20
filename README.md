@@ -21,7 +21,7 @@ Compatible with IE10+ and newest Firefox and Chrome
 * [Bootstrap 3.3.x](http://getbootstrap.com/)
 * [underscore.js 1.8.x](http://underscorejs.org/)
 * [Backbone.js 1.2.x](http://backbonejs.org/)
-* [Select2 4.0.0](https://select2.github.io/)
+* [Typeahead 0.11.1](https://twitter.github.io/typeahead.js/)
 * [FullCalendar 2.3.2](http://arshaw.com/fullcalendar/)
 * [Moment.js 2.10.x](http://momentjs.com/)
 * [Handlebars 3.0.x](http://handlebarsjs.com/)

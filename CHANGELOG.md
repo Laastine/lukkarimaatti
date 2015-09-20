@@ -13,6 +13,10 @@ And constructed with the following guidelines:
 
 ---
 
+### 1.0.4 September 20, 2015
+
+* Typeahead search hacked back for autocompletion
+
 ### 1.0.3 September 6, 2015
 
 * Kote, kete, mafy and kike HTML parsing fixed due to teacher column

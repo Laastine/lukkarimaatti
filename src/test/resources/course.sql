@@ -1,6 +1,5 @@
-CREATE TABLE course
-(
-  course_id SERIAL PRIMARY KEY NOT NULL,
+CREATE TABLE course(
+  course_id BIGINT PRIMARY KEY NOT NULL,
   course_code VARCHAR(32) NOT NULL,
   course_name VARCHAR(256) NOT NULL,
   period VARCHAR(64),

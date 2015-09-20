@@ -1,100 +1,93 @@
-var $ = jquery = require('jquery'),
+var $ = require('jquery'),
     moment = require('moment'),
-    select2 = require("select2"),
     _ = require('underscore'),
-    Backbone = require('backbone')
+    typeahead = require("typeahead.js-browserify"),
+    Bloodhound = require("typeahead.js-browserify").Bloodhound,
+    Handlebars = require('handlebars')
+
+require('backbone')
+typeahead.loadjQueryPlugin()
 require('moment/locale/fi')
-global.jQuery = $;
+
+var courseCollection = []
 
 var SearchEngine = {
-    courseCollection: [],
-    searchBox: function (eventCal) {
+
+    engine: new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.whitespace('value'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+            url: "rest/course/",
+            replace: function(url, query) {
+                return url + "?name=" + query
+            },
+            filter: function(data) {
+                courseCollection = data
+                return  _.uniq(courseCollection, function(cc) {
+                    return cc.courseName + cc.courseCode + cc.groupName
+                })
+            }
+        },
+        limit: 10
+    }),
+
+    searchBox: function(eventCal) {
         var that = this
-
-        $("#searchbar-select2").select2({
-            ajax: {
-                url: "rest/course/",
-                dataType: 'json',
-                delay: 150,
-                data: function (params) {
-                    return {
-                        name: params.term,
-                        page: params.page
-                    }
-                },
-                processResults: function (data, page) {
-                    that.courseCollection = _.filter(data, function (cc) {
-                        return cc.courseName.toLowerCase().indexOf(page.term.toLowerCase()) > -1
-                    })
-                    return {
-                        results: _.chain(that.courseCollection).uniq(function (cc) {
-                            return cc.courseName + cc.courseCode + cc.groupName
-                        }).map(function (obj) {
-                            obj.id = obj.courseId
-                            obj.text = obj.courseName + ' - ' + obj.courseCode
-                            return obj
-                        }).value()
-                    }
-                },
-                cache: true
+        this.engine.initialize()
+        $('#searchbar .typeahead').typeahead({
+                hint: true,
+                highlight: true,
+                minLength: 2
             },
-            escapeMarkup: function (markup) {
-                return markup
-            },
-            minimumInputLength: 2,
-            minimumResultsForSearch: Infinity,
-            theme: "classic",
-            templateResult: function (data) {
-                if (data.loading) return data.text
-                var markup = '<p><strong>' + data.courseName + '</strong> - ' + data.courseCode + '</p>'
-                if (data.groupName) {
-                    markup += '<div>' + data.groupName + '</div>'
+            {
+                name: 'courses',
+                displayKey: 'name',
+                source: that.engine.ttAdapter(),
+                templates: {
+                    empty: [
+                        '<p><strong>',
+                        'Unable to find any courses that match the current query',
+                        '</strong></p>'
+                    ].join('\n'),
+                    suggestion: Handlebars.compile('<p><strong>{{courseName}}</strong> - {{courseCode}}</p>')
                 }
-                markup += '</div></div>'
-                return markup
-            },
-            templateSelection: function (data) {
-                return '<b>' + data.courseName + '</b>'
-            },
-            templateSelection: function (repo) {
-                return repo.courseName || repo.text;
             }
-        }).on("select2:select", function (event) {
-            var course = event.params.data
-            that.courseCollection = that.courseCollection.filter(function (c) {
-                return c.courseCode === course.courseCode;
-            });
+        )
+            .on('typeahead:selected', function(evt, course) {
+                courseCollection = courseCollection.filter(function(c) {
+                    return c.courseCode === course.courseCode
+                })
 
-            if (course.groupName.length > 0 && course.courseCode.substring(0, 2) === 'FV') {
-                that.courseCollection = that.courseCollection.filter(function (c) {
-                    return c.groupName === course.groupName;
-                });
-            }
+                if (course.groupName.length > 0 && course.courseCode.substring(0, 2) === 'FV') {
+                    courseCollection = courseCollection.filter(function(c) {
+                        return c.groupName === course.groupName
+                    })
+                }
 
-            if (that.courseCollection.length > 0) {
-                that.addCourseLink(that.courseCollection[0].courseName, that.courseCollection[0].courseCode, that.courseCollection.length);
-            }
+                if (courseCollection.length > 0) {
+                    that.addCourseLink(courseCollection[0].courseName, courseCollection[0].courseCode, courseCollection.length)
+                }
 
-            that.addDataToCalendar(eventCal);
-            that.addUrlParameter(that.courseCollection[0].courseCode, that.courseCollection[0].groupName);
-        })
+                that.addDataToCalendar(eventCal)
+                that.addUrlParameter(courseCollection[0].courseCode, courseCollection[0].groupName)
+            })
     },
 
-    addUrlParameter: function (courseCode, groupName) {
+    addUrlParameter: function(courseCode, groupName) {
         var params = window.location.search
         var urlParam = courseCode.substring(0, 2) === 'FV' ? courseCode + '&' + groupName : courseCode
         if (params.length > 0) {
             history.pushState(
-                {}, "", "index.html?" + params.substring(1, params.length) + '+' + urlParam)
+                {}, "", "?" + params.substring(1, params.length) + '+' + urlParam)
         } else {
             history.pushState(
-                {}, "", "index.html?" + params + urlParam)
+                {}, "", "?" + params + urlParam)
         }
     },
 
-    removeUrlParameter: function (id) {
+    removeUrlParameter: function(id) {
         var params = window.location.search
-        var updatedParams = params.substring(1, params.length).split('+').filter(function (p) {
+        var updatedParams = params.substring(1, params.length).split('+').filter(function(p) {
             if (p.indexOf('&') > -1) {
                 var groupLetterStripped = p.substring(0, p.indexOf('&'))
                 return groupLetterStripped !== id
@@ -103,22 +96,23 @@ var SearchEngine = {
             }
         })
         if (updatedParams.length > 0) {
-            history.pushState({}, "", "index.html?" + updatedParams.join('+'))
+            history.pushState({}, "", "?" + updatedParams.join('+'))
         } else {
-            history.pushState({}, "", "index.html")
+            history.pushState({}, "", "?");
         }
     },
 
-    getDataOnRefresh: function (calendar) {
+    getDataOnRefresh: function(calendar) {
         var params = window.location.search
         var courseCodes = params.substring(1, params.length).split(/[+]/)
         var that = this
         if (courseCodes[0].length > 0) {
-            courseCodes.forEach(function (param) {
+            courseCodes.forEach(function(param) {
                 var groupLetter = ""
                 if (param.indexOf('&') > -1) {
                     groupLetter = param.substring(param.indexOf('&') + 1, param.length)
                     param = param.substring(0, param.indexOf('&'))
+                    console.log('groupLetter'+groupLetter)
                 }
                 if (typeof param !== 'undefined' && groupLetter.length > 0) {
                     $.ajax({
@@ -128,43 +122,43 @@ var SearchEngine = {
                             groupName: groupLetter,
                             code: param
                         },
-                        success: function (data) {
-                            that.courseCollection = data
+                        success: function(data) {
+                            courseCollection = data
                             if (groupLetter.length > 0 && data[0].courseCode.substring(0, 2) === 'FV') {
-                                that.courseCollection = that.courseCollection.filter(function (d) {
+                                courseCollection = courseCollection.filter(function(d) {
                                     return d.groupName === groupLetter
                                 })
                             }
-                            that.addCourseLink(data[0].courseName, data[0].courseCode, data.length)
+                            that.addCourseLink(data[0].courseCode, data[0].courseCode, data.length)
                             that.addDataToCalendar(calendar)
                         },
-                        error: function (xhr, status, error) {
+                        error: function(xhr, status, error) {
                             console.error('param ' + param + 'xhr' + xhr + ', status=' + status + ', error=' + error)
                         }
                     })
                 } else if (typeof param !== 'undefined') {
-                        $.ajax({
-                            url: 'rest/code/' + param,
-                            type: 'GET',
-                            success: function (data) {
-                                that.courseCollection = data
-                                that.addCourseLink(data[0].courseName, data[0].courseCode, data.length)
-                                that.addDataToCalendar(calendar)
-                            },
-                            error: function (xhr, status, error) {
-                                console.error('param ' + param + 'xhr' + xhr + ', status=' + status + ', error=' + error)
-                            }
-                        })
-                    }
-                 else {
-                    console.log('Not a valid course code')
+                    $.ajax({
+                        url: 'rest/code/' + param,
+                        type: 'GET',
+                        success: function(data) {
+                            courseCollection = data
+                            that.addCourseLink(data[0].courseName, data[0].courseCode, data.length)
+                            that.addDataToCalendar(calendar)
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('param ' + param + 'xhr' + xhr + ', status=' + status + ', error=' + error)
+                        }
+                    })
+                }
+                else {
+                    console.error('Not a valid course code')
                 }
             })
         }
     },
 
-    addCourseLink: function (courseName, courseCode, occ) {
-        if (typeof occ === 'undefined') {
+    addCourseLink: function(courseName, courseCode, occ) {
+        if (!occ) {
             occ = 0
         }
         var noppa = 'https://noppa.lut.fi/noppa/opintojakso/'
@@ -177,46 +171,47 @@ var SearchEngine = {
             '</td></tr>')
     },
 
-    removeCourseItem: function (element, id) {
+    removeCourseItem: function(element, id) {
         $(element).remove()
         this.removeUrlParameter(id)
     },
 
-    addDataToCalendar: function (calendar) {
+    addDataToCalendar: function(calendar) {
         var courseToBeAdded = []
         var that = this
 
-        this.courseCollection.forEach(function (course) {
-            JSON.parse('[' + course.weekNumber + ']').map(function processWeekNumbers(weekNumber) {
-                var dateStart = moment()
-                    .locale('fi')
-                    .year(that.getYearNumber(weekNumber))
-                    .day(course.weekDay)
-                    .week(weekNumber)
-                    .hours(course.timeOfDay.split('-')[0] || 6).minutes(0)
-                    .seconds(0)
-                    .format('YYYY-MM-DDTHH:mm:ssZ')
-                var dateEnd = moment()
-                    .locale('fi')
-                    .year(that.getYearNumber(weekNumber))
-                    .day(course.weekDay)
-                    .week(weekNumber)
-                    .hours(course.timeOfDay.split('-')[1] || 6)
-                    .minutes(0)
-                    .seconds(0)
-                    .format('YYYY-MM-DDTHH:mm:ssZ')
-                var calendarEvent = {
-                    title: course.courseCode,
-                    description: course.courseName + '/' + course.type + '\n' + course.classroom,
-                    start: new Date(dateStart),
-                    end: new Date(dateEnd),
-                    element: null,
-                    color: that.stringToColour(course.courseCode),
-                    view: null,
-                    id: course.courseCode + '#' + course.type
-                }
-                courseToBeAdded.push(calendarEvent)
-            })
+        courseCollection.forEach(function(course) {
+            JSON.parse('[' + course.weekNumber + ']')
+                .map(function processWeekNumbers(weekNumber) {
+                    var dateStart = moment()
+                        .locale('fi')
+                        .year(that.getYearNumber(weekNumber))
+                        .day(course.weekDay)
+                        .week(weekNumber)
+                        .hours(course.timeOfDay.split('-')[0] || 6).minutes(0)
+                        .seconds(0)
+                        .format('YYYY-MM-DDTHH:mm:ssZ')
+                    var dateEnd = moment()
+                        .locale('fi')
+                        .year(that.getYearNumber(weekNumber))
+                        .day(course.weekDay)
+                        .week(weekNumber)
+                        .hours(course.timeOfDay.split('-')[1] || 6)
+                        .minutes(0)
+                        .seconds(0)
+                        .format('YYYY-MM-DDTHH:mm:ssZ')
+                    var calendarEvent = {
+                        title: course.courseCode,
+                        description: course.courseName + '/' + course.type + '\n' + course.classroom,
+                        start: new Date(dateStart),
+                        end: new Date(dateEnd),
+                        element: null,
+                        color: that.stringToColour(course.courseCode),
+                        view: null,
+                        id: course.courseCode + '#' + course.type
+                    }
+                    courseToBeAdded.push(calendarEvent)
+                })
         })
         calendar.createCalendarEvent(courseToBeAdded)
     },
@@ -232,9 +227,9 @@ var SearchEngine = {
         }
     },
 
-    stringToColour: function (colorSeed) {
+    stringToColour: function(colorSeed) {
         var hash = 0, colour = '#', value
-        colorSeed.split("").forEach(function (e) {
+        colorSeed.split("").forEach(function(e) {
             hash = colorSeed.charCodeAt(e) + ((hash << 5) - hash)
         })
         for (var j = 0; j < 3; j++) {
@@ -244,7 +239,7 @@ var SearchEngine = {
         return colour
     },
 
-    sendLink: function (address) {
+    sendLink: function(address) {
         var link = window.location.href.toString()
         $.ajax({
             type: "POST",

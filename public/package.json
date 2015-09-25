@@ -1,0 +1,42 @@
+{
+  "name": "lukkarimaatti",
+  "version": "1.1.0",
+  "private": true,
+  "dependencies": {
+    "backbone": "1.2.1",
+    "bootstrap": "^3.3.5",
+    "browserify": "^10.2.4",
+    "browserify-shim": "^3.8.9",
+    "fullcalendar": "2.4.0",
+    "handlebars": "3.0.3",
+    "hbsfy": "2.2.1",
+    "jquery": "2.1.3",
+    "moment": "2.10.3 ",
+    "typeahead.js-browserify": "^1.0.7",
+    "underscore": "1.8.3"
+  },
+  "devDependencies": {
+    "catw": "^1.0.1",
+    "watchify": "3.4.0"
+  },
+  "browserify": {
+    "transform": "browserify-shim"
+  },
+  "browserify-shim": {
+    "bootstrap": {
+      "depends": "jquery:jQuery"
+    }
+  },
+  "scripts": {
+    "build-css": "cat styles/*.css > dist/bundle.css",
+    "build-js": "browserify -t hbsfy js/main.js -o dist/bundle.js",
+    "watch-css": "catw styles/*.css -o dist/bundle.css -v",
+    "watch-js": "watchify js/main.js -o dist/bundle.js -v -t hbsfy",
+    "watch": "npm run watch-js & npm run watch-css",
+    "build": "mkdir -p dist/ && npm run build-js && npm run build-css",
+    "minify": "uglifyjs dist/bundle.js -c -o dist/bundle.min.js",
+    "build-min": "npm run build && npm run minify",
+    "minified": "mkdir -p dist/ && npm run build-js && uglifyjs dist/bundle.js > dist/bundle.min.js && npm run build-css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

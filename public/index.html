@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Lukkarimaatti++</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Lukkarimaatti scheduling tool">
+    <link rel="shortcut icon" href="img/favicon.png">
+    <link rel="stylesheet" href="dist/bundle.css"/>
+</head>
+
+<body>
+<div id="wrap">
+    <div class="header"></div>
+    <div id="searchbar" class="container"></div>
+    <div id="calendar" class="container"></div>
+    <div id="footer" class="container"></div>
+    <script>
+        var $buoop = {vs:{i:10,f:20,o:12.1,s:7},c:2};
+        function $buo_f(){
+            var e = document.createElement("script");
+            e.src = "//browser-update.org/update.min.js";
+            document.body.appendChild(e);
+        };
+        try {document.addEventListener("DOMContentLoaded", $buo_f,false)}
+        catch(e){window.attachEvent("onload", $buo_f)}
+    </script>
+    <script src="dist/bundle.js"></script>
+</div>
+</body>
+</html>

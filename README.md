@@ -1,22 +1,19 @@
 <h1>Lukkarimaatti++</h1>
 
-Hobby project to offer course data easily usable scheduling tool over simple REST interface.<br>
-Information is retrieved from [the official LUT teaching schedule info site] (https://uni.lut.fi/fi/web/guest/lukujarjestykset).<br>
+Hobby project which offers course data in easy to use scheduling tool.<br>
+Information is retrieved from [the official LUT teaching schedule info site] (https://uni.lut.fi/fi/web/guest/lukujarjestykset1).<br>
 
-<b>[http://laastine.kapsi.fi/lukkarimaatti!](http://laastine.kapsi.fi/lukkarimaatti)</b>
+<b>[http://lukkarimaatti.herokuapp.com/](http://lukkarimaatti.herokuapp.com/)</b>
 
 Compatible with IE10+ and newest Firefox and Chrome
 
 
-<h5>Back-end</h5>
-* [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
-* [Spring 4.x](http://spring.io/)
-* [Hibernate 4.x](http://hibernate.org/)
-* [Jsoup 1.7.x](http://jsoup.org/)
-* [Jetty 9](http://www.eclipse.org/jetty/)
-* [PostgreSQL 9.1](http://www.postgresql.org/)
- 
-<h5>Front-end</h5>
+<h5>Ingredients</h5>
+* [Node.js](https://nodejs.org)
+* [Express](http://expressjs.com/)
+* [Bluebird](https://github.com/petkaantonov/bluebird)
+* [Ramda](http://ramdajs.com/)
+* [cheerio](https://github.com/cheeriojs/cheerio)
 * [jQuery 2.1.x](http://jquery.com/)
 * [Bootstrap 3.3.x](http://getbootstrap.com/)
 * [underscore.js 1.8.x](http://underscorejs.org/)
@@ -27,26 +24,26 @@ Compatible with IE10+ and newest Firefox and Chrome
 * [Handlebars 3.0.x](http://handlebarsjs.com/)
 * [Mocha](http://mochajs.org/)
 * [PhantomJS](http://phantomjs.org/)
-* [Browserify](http://browserify.org/)
-* [Gulp](http://gulpjs.com/)<br>
+* [Browserify](http://browserify.org/)<br>
 
 <h2>Requirements & Build</h2>
-Compiles with Java 8 and Gradle 2.4<br>
-Gradle for building a package.<br>
+Node.js 0.12.7 or never<br>
+
+Build application:
 ```
-npm install -g gulp - if you don't have it yet
+npm install
+cd public
+npm install
+npm run build
 ```
-```
-npm install - download JS stuff
-gulp - Compile JS & CSS to bundles
-gradle war - for building (release) package
-```
-For quick browser testing run JettyTestRunner class
-and open http://localhost:8080/lukkarimaatti in your web browser.
+For quick browser testing ```npm run start-dev```
+and open http://localhost:8080/ in your web browser.
 
 <h3>Testing</h3>
+Run server
+```npm run start-dev```
 ```
-gradle test - for running unit tests and mocha tests
+on other shell run: npm run test
 ```
 <h2>Copyright and license</h2>
 Copyright &copy; 2013 Mikko Kaistinen, mikko.kaistinen@kapsi.fi

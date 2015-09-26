@@ -13,6 +13,11 @@ And constructed with the following guidelines:
 
 ---
 
+### 1.1.0 September 25, 2015
+
+* Node.js backend
+* Project migrated to Heroku platform
+
 ### 1.0.4 September 20, 2015
 
 * Typeahead search hacked back for autocompletion

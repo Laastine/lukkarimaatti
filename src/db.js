@@ -76,8 +76,8 @@ module.exports = {
             })
     },
 
-    cleanTable: function() {
-        console.log('cleanTable')
+    cleanCourseTable: function() {
+        console.log('cleanCourseTable')
         db.connectAsync(address)
             .spread(function(connection, release) {
                 var query = "TRUNCATE TABLE course"

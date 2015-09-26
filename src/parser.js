@@ -13,6 +13,8 @@ new CronJob({
     cronTime: '00 00 04 * * *',
     onTick: function() {
         console.log('Course data update cron task')
+        DB.cleanCourseTable()
+        updateCourseData()
     },
     start: true,
     timezone: 'Europe/Helsinki'
@@ -22,7 +24,7 @@ module.exports = {
     updateCourseData: function(req, res) {
         console.log('updateCourseData', req.params['secret'])
         if (req.query['secret'] === config.appSecret) {
-            DB.cleanTable()
+            DB.cleanCourseTable()
             updateCourseData()
             res.status(200).json({status: 'ok'})
         } else {

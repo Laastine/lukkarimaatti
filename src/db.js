@@ -83,9 +83,6 @@ module.exports = {
                 var query = "TRUNCATE TABLE course"
                 console.log(query)
                 return connection.queryAsync(query)
-                    .then(function(result) {
-                        res.json(result.rows)
-                    })
                     .error(function(error) {
                         console.log('DB error=', error)
                     })

@@ -110,6 +110,8 @@ function parseCourseData(url) {
                         }
                     })
                 })
+
+
             if (dataBatch.length > 0) {
                 DB.insertCourse(dataBatch)
             }
@@ -119,7 +121,9 @@ function parseCourseData(url) {
 }
 
 var sanitizeInput = function(input) {
-    return input ? input.trim().replace(/(\r\n|\n|\r)/g, '') : ''
+    return input ? input.trim()
+        .replace(/'/g, "")
+        .replace(/(\r\n|\n|\r)/g, '') : ''
 }
 
 var getDepartment = function(input) {
@@ -161,30 +165,30 @@ var getDepartment = function(input) {
 }
 
 var parseBasicData = function(course) {
+    var data = {
+        code: '',
+        name: '',
+        group: '',
+        type: ''
+    }
     var nameAndCode = course.split(' - ')
-    if (nameAndCode.length < 2) {
-        return {
-            code: '',
-            name: '',
-            group: '',
-            type: ''
+    var type = course.split('/')
+    var group = course.split(': ')
+    if (nameAndCode.length >= 2) {
+        data.code = nameAndCode[0]
+        if(data.code.substr(0,2) === 'FV') {
+            data.name = nameAndCode[1]
+        } else {
+            data.name = nameAndCode[1].substr(0, nameAndCode[1].indexOf('/'))
         }
     }
-    var nameAndGroup = nameAndCode[1].split('/')
-    if (nameAndGroup.length < 2) {
-        return {
-            code: nameAndCode[0],
-            name: nameAndCode[1],
-            group: nameAndCode[1].split(': ')[1] || '',
-            type: ''
-        }
+    if (type.length >= 2) {
+        data.type = type[type.length - 1]
     }
-    return {
-        code: nameAndCode[0],
-        name: nameAndGroup[0],
-        group: nameAndCode[1].split(': ')[1] || '',
-        type: nameAndGroup[nameAndGroup.length - 1]
+    if (group.length >= 2) {
+        data.group = group[group.length - 1]
     }
+    return data
 }
 
 function parseWeeks(weeks) {
@@ -207,7 +211,8 @@ function parseWeeks(weeks) {
             }
         })
     }
-    return R.sort(function(a, b) {
-        return a - b
-    }, weekSequence).join()
+    if (/^[0-9]{1,2}$/.test(weeks)) {
+        weekSequence = R.concat(weekSequence, weeks.match(/^[0-9]{1,2}$/))
+    }
+    return weekSequence.join()
 }

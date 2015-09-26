@@ -8,6 +8,15 @@ var cheerio = require('cheerio'),
 
 var links = []
 
+new CronJob({
+    cronTime: '00 00 04 * * 1-5',
+    onTick: function() {
+        console.log('Course data update cron task')
+    },
+    start: true,
+    timezone: 'Europe/Helsinki'
+}).start()
+
 module.exports = {
     updateCourseData: function(req, res) {
         console.log('updateCourseData', req.params['secret'])
@@ -35,6 +44,7 @@ var updateCourseData = function() {
                     }
                 })
             links.forEach(function(link) {
+                console.log(link)
                 parseCourseData(link)
             })
         }).catch(function() {

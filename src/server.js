@@ -3,6 +3,7 @@ var express = require('express'),
     app = express(),
     bodyParser = require('body-parser'),
     router = express.Router(),
+    CronJob = require('cron').CronJob,
     DB = require('./db'),
     Parser = require('./parser'),
     Email = require('./email')
@@ -20,17 +21,14 @@ app.get('/', function(req, res) {
 })
 
 app.get('/course', function(req, res) {
-    console.log('/course called')
     DB.getCourseByName(req, res)
 })
 
 app.get('/codeAndGroup', function(req, res) {
-    console.log('codeAndGroup called' + JSON.stringify(req.params))
     DB.getCourseByCodeAndGroup(req, res)
 })
 
 app.get('/code/:code', function(req, res) {
-    console.log('code called')
     DB.getCourseByCode(req, res)
 })
 
@@ -39,7 +37,6 @@ app.post('/update', function(req, res) {
 })
 
 app.post('/save', function(req, res) {
-    console.log('save called', req.query)
     Email.sendMail(req, res)
 })
 

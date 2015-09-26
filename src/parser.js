@@ -3,19 +3,20 @@ var cheerio = require('cheerio'),
     Promise = require('bluebird'),
     request = require('request'),
     R = require('ramda'),
+    CronJob = require('cron').CronJob,
     config = require('./config'),
     DB = require('./db')
 
 var links = []
 
 new CronJob({
-    cronTime: '00 00 04 * * 1-5',
+    cronTime: '00 00 04 * * *',
     onTick: function() {
         console.log('Course data update cron task')
     },
     start: true,
     timezone: 'Europe/Helsinki'
-}).start()
+})
 
 module.exports = {
     updateCourseData: function(req, res) {

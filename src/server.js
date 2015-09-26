@@ -3,7 +3,6 @@ var express = require('express'),
     app = express(),
     bodyParser = require('body-parser'),
     router = express.Router(),
-    CronJob = require('cron').CronJob,
     DB = require('./db'),
     Parser = require('./parser'),
     Email = require('./email')

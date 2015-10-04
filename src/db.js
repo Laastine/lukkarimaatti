@@ -11,7 +11,6 @@ module.exports = {
         db.connectAsync(address)
             .spread(function(connection, release) {
                 var query = "SELECT * FROM course WHERE LOWER(course_name) LIKE \'%" + req.query['name'] + '%\''
-                console.log(query)
                 return connection.queryAsync(query)
                     .then(function(result) {
                         res.json(result.rows)

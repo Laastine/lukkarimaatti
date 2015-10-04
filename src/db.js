@@ -29,7 +29,6 @@ module.exports = {
         db.connectAsync(address)
             .spread(function(connection, release) {
                 var query = "SELECT * FROM course WHERE course_code = \'" + req.params['code'] + "\'"
-                console.log(query)
                 return connection.queryAsync(query)
                     .then(function(result) {
                         res.json(result.rows)
@@ -47,7 +46,6 @@ module.exports = {
         db.connectAsync(address)
             .spread(function(connection, release) {
                 var query = "SELECT * FROM course WHERE course_code = \'" + req.query['code'] + "\' and group_name = \'" + req.query['groupName'] + "\'"
-                console.log(query)
                 return connection.queryAsync(query)
                     .then(function(result) {
                         res.json(result.rows)
@@ -63,7 +61,6 @@ module.exports = {
 
     insertCourse: function(courseBatch) {
         var query = buildInsertQueryString(courseBatch)
-        console.log('insertCourse', query.length)
         db.connectAsync(address)
             .spread(function(connection, release) {
                 return connection.queryAsync(query)
@@ -81,7 +78,6 @@ module.exports = {
         db.connectAsync(address)
             .spread(function(connection, release) {
                 var query = "TRUNCATE TABLE course"
-                console.log(query)
                 return connection.queryAsync(query)
                     .error(function(error) {
                         console.log('DB error=', error)

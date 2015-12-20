@@ -25,6 +25,7 @@
     "phantomjs": "^1.9.7-15",
     "ramda": "^0.17.1",
     "react": "^0.14.3",
+    "react-big-calendar": "^0.9.7",
     "react-dom": "^0.14.3",
     "request": "^2.62.0",
     "uglify-js": "^2.6.1"

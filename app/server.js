@@ -24,6 +24,7 @@ server.disable('x-powered-by')
 
 const cssFilePath = path.resolve(`${__dirname}/../.generated/style.css`)
 const bundleJsFilePath = path.resolve(`${__dirname}/../.generated/bundle.js`)
+const favicon = path.resolve(`${__dirname}/../app/img/favicon.png`)
 
 server.get('*', (req, res, next) => {
   const page = pages.findPage(req.url)

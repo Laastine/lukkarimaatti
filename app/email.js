@@ -10,9 +10,9 @@ module.exports = {
                 pass: config.emailPassword,
             }
         })
-        console.log('name='+config.emailAddress)
-        console.log('pass='+config.emailPassword)
-        console.log('TO',req.body.email)
+        console.log('name=' + config.emailAddress)
+        console.log('pass=' + config.emailPassword)
+        console.log('TO', req.body.email)
         var mailOptions = {
             from: 'lukkarimaatti@gmail.com',
             to: req.body.email,

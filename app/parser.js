@@ -51,8 +51,8 @@ var updateCourseData = function() {
                 parseCourseData(link)
             })
         }).catch(function() {
-            console.log('Failed to parse links')
-        })
+        console.log('Failed to parse links')
+    })
 }
 
 function parseCourseData(url) {
@@ -118,8 +118,8 @@ function parseCourseData(url) {
                 DB.insertCourse(dataBatch)
             }
         }).catch(function(error) {
-            console.log('Failed to parse HTML', error)
-        })
+        console.log('Failed to parse HTML', error)
+    })
 }
 
 var sanitizeInput = function(input) {
@@ -178,7 +178,7 @@ var parseBasicData = function(course) {
     var group = course.split(': ')
     if (nameAndCode.length >= 2) {
         data.code = nameAndCode[0]
-        if(data.code.substr(0,2) === 'FV') {
+        if (data.code.substr(0, 2) === 'FV') {
             data.name = nameAndCode[1]
         } else {
             data.name = nameAndCode[1].substr(0, nameAndCode[1].indexOf('/'))

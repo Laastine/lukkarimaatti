@@ -2,7 +2,12 @@ import React from 'react'
 import Bacon from 'baconjs'
 import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
+import Promise from 'bluebird'
+const request = Promise.promisify(require('superagent'))
 
+
+const dayBus = new Bacon.Bus()
+const inputBus = new Bacon.Bus()
 
 BigCalendar.setLocalizer(
     BigCalendar.momentLocalizer(moment)
@@ -10,17 +15,26 @@ BigCalendar.setLocalizer(
 
 export const renderPage = applicationState =>
     <body>
-    <h1>Lukkarimaatti++</h1>
-    <div>
-        <BigCalendar
-            events={[]}
-            defaultView="week"
-            min={new Date(2015, 11, 17, 8, 0, 0)}
-            max={new Date(2015, 11, 17, 20, 0, 0)}
-            defaultDate={new Date()}
-        />
+    <div className="container">
+        <div className="search-container">
+            <input id="course-searchbox" onChange={(event) => inputBus.push(event.target.value)}></input>
+        </div>
+        <div>
+            <BigCalendar
+                events={[]}
+                defaultView="week"
+                min={new Date(2015, 11, 17, 8, 0, 0)}
+                max={new Date(2015, 11, 17, 20, 0, 0)}
+                defaultDate={new Date()}
+            />
+        </div>
     </div>
     </body>
+
+inputBus.onValue((val) => {
+    request.get('course').send({name: val})
+})
+
 
 export const initialState = {}
 
@@ -30,4 +44,5 @@ export const pageTitle = 'Lukkarimaatti++'
 
 export const applicationStateProperty = initialState => Bacon.update(
     initialState
-).doLog('application state')
+)
+.doLog('application state')

@@ -28,6 +28,7 @@
     "react-big-calendar": "^0.9.7",
     "react-dom": "^0.14.3",
     "request": "^2.62.0",
+    "superagent": "^1.6.1",
     "uglify-js": "^2.6.1"
   },
   "devDependencies": {

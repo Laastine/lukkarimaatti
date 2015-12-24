@@ -5,7 +5,6 @@ import moment from 'moment'
 import Promise from 'bluebird'
 const request = Promise.promisify(require('superagent'))
 
-
 const dayBus = new Bacon.Bus()
 const inputBus = new Bacon.Bus()
 
@@ -17,7 +16,7 @@ export const renderPage = applicationState =>
     <body>
     <div className="container">
         <div className="search-container">
-            <input id="course-searchbox" onChange={(event) => inputBus.push(event.target.value)}></input>
+            <input id="course-searchbox" onKeyUp={(event) => inputBus.push(event.target.value)}></input>
         </div>
         <div>
             <BigCalendar
@@ -31,8 +30,8 @@ export const renderPage = applicationState =>
     </div>
     </body>
 
-inputBus.onValue((val) => {
-    request.get('course').send({name: val})
+inputBus.onValue((nameVal) => {
+    request.get('course/course').query({ name: nameVal }).end((err, res) => console.log('res',res))
 })
 
 
@@ -43,6 +42,10 @@ export const pagePath = '/'
 export const pageTitle = 'Lukkarimaatti++'
 
 export const applicationStateProperty = initialState => Bacon.update(
-    initialState
+    initialState,
+    inputBus, (applicationState, input) => ({
+        ...applicationState,
+        input
+    })
 )
 .doLog('application state')

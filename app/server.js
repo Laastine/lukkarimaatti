@@ -12,15 +12,14 @@ import bodyParser from 'body-parser'
 import DB from './db'
 import Parser from './parser'
 import Email from './email'
+import CourseRoutes from './routes/course'
 const fs = Promise.promisifyAll(require('fs'))
 
 const server = express()
-const router = express.Router()
-
-server.use('/course', router)
 
 server.use(compression({threshold: 512}))
 server.disable('x-powered-by')
+server.use('/course', CourseRoutes)
 
 const cssFilePath = path.resolve(`${__dirname}/../.generated/style.css`)
 const bundleJsFilePath = path.resolve(`${__dirname}/../.generated/bundle.js`)

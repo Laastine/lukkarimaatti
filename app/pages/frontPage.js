@@ -5,7 +5,7 @@ import moment from 'moment'
 import Promise from 'bluebird'
 import R from 'ramda'
 const request = Promise.promisify(require('superagent'))
-
+require('moment/locale/fi')
 export const pagePath = '/'
 
 export const pageTitle = 'Lukkarimaatti++'
@@ -24,8 +24,12 @@ export const initialState = {
 }
 
 const searchResultsS = inputBus.flatMap((courseName) => {
-    let responseP = request.get('course/course').query({name: courseName})
-    return Bacon.fromPromise(responseP)
+    if (courseName.length > 2) {
+        let responseP = request.get('course/course').query({name: courseName})
+        return Bacon.fromPromise(responseP)
+    } else {
+        return {text: "[]"}
+    }
 })
 
 export const applicationStateProperty = (initialState) => Bacon.update(
@@ -40,7 +44,7 @@ export const applicationStateProperty = (initialState) => Bacon.update(
     }),
     selectedCoursesBus, (applicationState, selectedCourse) => ({
         ...applicationState,
-        selectedCourses: R.append(selectedCourse, R.filter((c) => c.course_name === selectedCourse, applicationState.courses))
+        selectedCourses: R.filter((c) => c.course_name === selectedCourse, applicationState.courses)
     })
 ).doLog('application state')
 
@@ -75,42 +79,29 @@ export const renderPage = (applicationState) =>
     </body>
 
 const addDataToCalendar = (applicationState) => {
-    let courseToBeAdded = []
-    console.log('courses', applicationState)
-    applicationState.courses.forEach((course) => {
-        JSON.parse('[' + course.week + ']')
-            .map(function processWeekNumbers(weekNumber) {
-                let dateStart = moment()
-                    .locale('fi')
-                    .year(getYearNumber(weekNumber))
-                    .day(course.week_day)
-                    .week(weekNumber)
-                    .hours(course.time_of_day.split('-')[0] || 6).minutes(0)
-                    .seconds(0)
-                    .format('YYYY-MM-DDTHH:mm:ssZ')
-                let dateEnd = moment()
-                    .locale('fi')
-                    .year(getYearNumber(weekNumber))
-                    .day(course.week_day)
-                    .week(weekNumber)
-                    .hours(course.time_of_day.split('-')[1] || 6)
-                    .minutes(0)
-                    .seconds(0)
-                    .format('YYYY-MM-DDTHH:mm:ssZ')
-                let calendarEvent = {
-                    title: course.course_code + "-" + course.course_name,
-                    description: course.course_name + '/' + course.type + '\n' + course.classroom,
-                    start: new Date(dateStart),
-                    end: new Date(dateEnd),
-                    element: null,
-                    color: stringToColour(course.course_code),
-                    view: null,
-                    id: course.course_code + '#' + course.type
-                }
-                courseToBeAdded.push(calendarEvent)
-            })
-    })
-    return courseToBeAdded
+    const getTimestamp = (course, weekNumber, hour) => moment()
+        .locale('fi')
+        .year(getYearNumber(course.week))
+        .day(course.week_day)
+        .week(weekNumber)
+        .hours(hour)
+        .minutes(0)
+        .seconds(0)
+        .format()
+    return R.flatten(applicationState.selectedCourses.map((course) =>
+        JSON.parse('[' + course.week + ']').map((weekNumber) => {
+            return {
+                title: course.course_code + "-" + course.course_name,
+                description: course.course_name + '/' + course.type + '\n' + course.classroom,
+                start: new Date(getTimestamp(course, weekNumber, course.time_of_day.split('-')[0] || 6)),
+                end: new Date(getTimestamp(course, weekNumber, course.time_of_day.split('-')[1] || 6)),
+                element: null,
+                color: stringToColour(course.course_code),
+                view: null,
+                id: course.course_code + '#' + course.type
+            }
+        })
+    ))
 }
 
 const getYearNumber = (courseWeekNumber) => {

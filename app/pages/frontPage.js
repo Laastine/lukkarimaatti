@@ -6,16 +6,13 @@ import Promise from 'bluebird'
 import R from 'ramda'
 const request = Promise.promisify(require('superagent'))
 require('moment/locale/fi')
-export const pagePath = '/'
+BigCalendar.momentLocalizer(moment)
 
+export const pagePath = '/'
 export const pageTitle = 'Lukkarimaatti++'
 
 const inputBus = new Bacon.Bus()
 const selectedCoursesBus = new Bacon.Bus()
-
-BigCalendar.setLocalizer(
-    BigCalendar.momentLocalizer(moment)
-)
 
 export const initialState = {
     selectedCourses: [],
@@ -70,10 +67,18 @@ export const renderPage = (applicationState) =>
             <BigCalendar
                 events={addDataToCalendar(applicationState)}
                 defaultView="week"
+                views={['month', 'week', 'day']}
+                formats={{
+                    dayFormat: "ddd D.M"
+                }}
                 min={new Date(moment(applicationState.currentDate).hours(8).minutes(0).format())}
                 max={new Date(moment(applicationState.currentDate).hours(20).minutes(0).format())}
                 defaultDate={new Date(moment(applicationState.currentDate).format())}
             />
+        </div>
+        <div className="footer">
+            <div id="disclaimer">Use with your own risk!</div>
+            <div id="versionInfo">v1.2.0</div>
         </div>
     </div>
     </body>
@@ -91,13 +96,10 @@ const addDataToCalendar = (applicationState) => {
     return R.flatten(applicationState.selectedCourses.map((course) =>
         JSON.parse('[' + course.week + ']').map((weekNumber) => {
             return {
-                title: course.course_code + "-" + course.course_name,
-                description: course.course_name + '/' + course.type + '\n' + course.classroom,
+                title: course.course_code + "-" + course.course_name + '/' + course.type + '\n' + course.classroom,
                 start: new Date(getTimestamp(course, weekNumber, course.time_of_day.split('-')[0] || 6)),
                 end: new Date(getTimestamp(course, weekNumber, course.time_of_day.split('-')[1] || 6)),
-                element: null,
                 color: stringToColour(course.course_code),
-                view: null,
                 id: course.course_code + '#' + course.type
             }
         })
@@ -125,4 +127,33 @@ const stringToColour = (colorSeed) => {
         colour += ('00' + value.toString(16)).substr(-2)
     }
     return colour
+}
+
+const addUrlParameter = (course_code, group_name) => {
+    const params = window.location.search
+    const urlParam = course_code.substring(0, 2) === 'FV' ? course_code + '&' + group_name : course_code
+    if (params.length > 0) {
+        history.pushState(
+            {}, "", "?" + params.substring(1, params.length) + '+' + urlParam)
+    } else {
+        history.pushState(
+            {}, "", "?" + params + urlParam)
+    }
+}
+
+const removeUrlParameter = (id) => {
+    const params = window.location.search
+    const updatedParams = params.substring(1, params.length).split('+').filter((p) => {
+        if (p.indexOf('&') > -1) {
+            var groupLetterStripped = p.substring(0, p.indexOf('&'))
+            return groupLetterStripped !== id
+        } else {
+            return p !== id
+        }
+    })
+    if (updatedParams.length > 0) {
+        history.pushState({}, "", "?" + updatedParams.join('+'))
+    } else {
+        history.pushState({}, "", "?");
+    }
 }

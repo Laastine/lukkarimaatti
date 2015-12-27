@@ -4,6 +4,7 @@ body {
   margin: 0 auto;
   padding: 0;
   height: 100%;
+  overflow: hidden;
   text-align: center;
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -33,10 +34,16 @@ body {
 .search-list-container {
   border: 0;
   width: 300px;
+  position: absolute;
+  z-index: 10;
+  background-color: #eee;
 }
 
 .search-list-coursename {
-  border: 1px solid #333;
   margin: 5px;
   cursor: pointer;
+}
+
+.search-list-coursename + .search-list-coursename {
+  border-top: 1px solid #333;
 }

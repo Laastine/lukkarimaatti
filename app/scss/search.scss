@@ -49,6 +49,14 @@ body {
   background-color: #eee;
 }
 
+.search-list-element {
+  display: inline-flex;
+}
+
+.search-list-remove {
+  padding: 5px;
+}
+
 .search-list-coursename {
   margin: 5px;
   cursor: pointer;

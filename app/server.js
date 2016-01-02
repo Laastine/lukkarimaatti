@@ -5,6 +5,7 @@ import basePage from './pages/basePage.js'
 import * as pages from './pages/pages.js'
 import path from 'path'
 import sass from 'node-sass'
+import R from 'ramda'
 import compression from 'compression'
 import crypto from 'crypto'
 import Promise from 'bluebird'
@@ -26,7 +27,7 @@ const bundleJsFilePath = path.resolve(`${__dirname}/../.generated/bundle.js`)
 const favicon = path.resolve(`${__dirname}/../app/img/favicon.png`)
 
 server.get('*', (req, res, next) => {
-    const page = pages.findPage(req.url)
+    const page = pages.findPage(R.split('?', req.url)[0])
     if (page) {
         Promise
             .all([checksumPromise(cssFilePath), checksumPromise(bundleJsFilePath)])

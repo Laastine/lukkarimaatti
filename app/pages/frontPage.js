@@ -32,7 +32,6 @@ const searchResultsS = inputBus.flatMap((courseName) => {
 }).doLog('input')
 
 const urlParamS = selectedCoursesBus.flatMapLatest((course) => {
-    console.log('stream', course)
     addUrlParameter(course.course_code, course.group_name)
     return [course.group_name ? course.course_code + '&' + course.group_name : course.course_code]
 })
@@ -71,9 +70,11 @@ const searchList = (applicationState) =>
                      }}>{c.course_name}</div>))
         (applicationState.courses) : undefined
 
-const searchResults = (applicationState) =>
-    R.map((c) => <div key={c.course_code}
-                      className="search-list-coursename">{c.course_code + " - " + c.course_name}</div>, applicationState.selectedCourses)
+const searchResults = (applicationState) =>  R.map((c) =>
+        <div key={c.course_code} className="search-list-element">
+            <div className="search-list-coursename">{c.course_code + " - " + c.course_name}</div>
+            <div className="search-list-remove" onClick={(e) => removeUrlParameter(c.course_code)}>X</div>
+        </div>, applicationState.selectedCourses)
 
 export const renderPage = (applicationState) =>
     <body>

@@ -41,7 +41,7 @@ export const applicationStateProperty = (initialState) => Bacon.update(
     }),
     selectedCoursesBus, (applicationState, selectedCourse) => ({
         ...applicationState,
-        selectedCourses: R.filter((c) => c.course_name === selectedCourse, applicationState.courses)
+        selectedCourses: R.append(R.head(R.filter((c) => c.course_name === selectedCourse, applicationState.courses)), applicationState.selectedCourses)
     })
 ).doLog('application state')
 
@@ -54,6 +54,11 @@ const searchList = (applicationState) =>
                  onClick={(e) => selectedCoursesBus.push(e.target.textContent)}>{cname}</div>))
     (applicationState.courses)
 
+const searchResults = (applicationState) =>
+    R.map((c) => <div key={c.course_code}
+                      className="search-list-coursename">{c.course_code}</div>, applicationState.selectedCourses)
+
+
 export const renderPage = (applicationState) =>
     <body>
     <div className="container">
@@ -62,6 +67,9 @@ export const renderPage = (applicationState) =>
         </div>
         <div className="search-list-container">
             {searchList(applicationState)}
+        </div>
+        <div className="selected-courses-list">
+            {searchResults(applicationState)}
         </div>
         <div>
             <BigCalendar
@@ -129,6 +137,8 @@ const stringToColour = (colorSeed) => {
     return colour
 }
 
+const inBrowser = () => typeof window != 'undefined'
+
 const addUrlParameter = (course_code, group_name) => {
     const params = window.location.search
     const urlParam = course_code.substring(0, 2) === 'FV' ? course_code + '&' + group_name : course_code
@@ -155,5 +165,34 @@ const removeUrlParameter = (id) => {
         history.pushState({}, "", "?" + updatedParams.join('+'))
     } else {
         history.pushState({}, "", "?");
+    }
+}
+
+
+const getDataOnRefresh = (calendar) => {
+    const params = window.location.search
+    const courseCodes = params.substring(1, params.length).split(/[+]/)
+    if (courseCodes[0].length > 0) {
+        courseCodes.forEach(function(param) {
+            let groupLetter = ""
+            if (param.indexOf('&') > -1) {
+                groupLetter = param.substring(param.indexOf('&') + 1, param.length)
+                param = param.substring(0, param.indexOf('&'))
+            }
+            if (typeof param !== 'undefined' && groupLetter.length > 0) {
+                request.get('course/codeAndGroup').query({
+                        groupName: groupLetter,
+                        code: param
+                    })
+                    .then((data) => {
+                    })
+                    .error((err) => console.error('Reload error', err))
+            } else if (typeof param !== 'undefined') {
+                request.get('course/code' + param)
+                    .then((data) => {
+                    })
+                    .error((err) =>  console.error('Reload error', err))
+            }
+        })
     }
 }

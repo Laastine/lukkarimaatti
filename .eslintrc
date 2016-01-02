@@ -6,7 +6,8 @@
   },
   "ecmaFeatures": {
     "modules": true,
-    "jsx": true
+    "jsx": true,
+    "spread": true
   },
   "plugins": [
     "react"

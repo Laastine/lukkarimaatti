@@ -152,7 +152,6 @@ const stringToColour = (colorSeed) => {
 const inBrowser = () => typeof window != 'undefined'
 
 const addUrlParameter = (course_code, group_name) => {
-    console.log('addUrlParameter', course_code, group_name)
     const params = window.location.search
     const urlParam = course_code.substring(0, 2) === 'FV' ? course_code + '&' + group_name : course_code
     if (params.length > 0) {

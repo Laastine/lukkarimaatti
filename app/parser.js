@@ -1,39 +1,13 @@
 var cheerio = require('cheerio'),
-    fs = require('fs'),
     Promise = require('bluebird'),
     request = require('request'),
     R = require('ramda'),
-    CronJob = require('cron').CronJob,
     config = require('./config'),
     DB = require('./db')
 
 var links = []
 
-new CronJob({
-    cronTime: '00 00 04 * * *',
-    onTick: function() {
-        console.log('Course data update cron task')
-        DB.cleanCourseTable()
-        updateCourseData()
-    },
-    start: true,
-    timezone: 'Europe/Helsinki'
-})
-
-module.exports = {
-    updateCourseData: function(req, res) {
-        console.log('updateCourseData', req.params['secret'])
-        if (req.query['secret'] === config.appSecret) {
-            DB.cleanCourseTable()
-            updateCourseData()
-            res.status(200).json({status: 'ok'})
-        } else {
-            res.status(403).json({error: 'Unauthorized'})
-        }
-    }
-}
-
-var updateCourseData = function() {
+const updateCourseData = function() {
     Promise.promisify(request)({url: config.uniUrl, json: true})
         .then(function(res) {
             var $ = cheerio.load(res[1])
@@ -55,11 +29,22 @@ var updateCourseData = function() {
     })
 }
 
-var sanitizeInput = function(input) {
-    return input ? input.trim()
+module.exports = {
+    updateCourseData: function(req, res) {
+        console.log('updateCourseData', req.params['secret'])
+        if (req.query['secret'] === config.appSecret) {
+            DB.cleanCourseTable()
+            updateCourseData()
+            res.status(200).json({status: 'ok'})
+        } else {
+            res.status(403).json({error: 'Unauthorized'})
+        }
+    }
+}
+
+const sanitizeInput = (input) =>  input ? input.trim()
         .replace(/'/g, "")
         .replace(/(\r\n|\n|\r)/g, '') : ''
-}
 
 function parseCourseData(url) {
     Promise.promisify(request)({url: 'https://uni.lut.fi' + url})
@@ -128,7 +113,7 @@ function parseCourseData(url) {
     })
 }
 
-var getDepartment = function(input) {
+const getDepartment = (input) => {
     if (input.substring(0, 1) === 'A') {
         return 'kati'
     } else {
@@ -166,16 +151,16 @@ var getDepartment = function(input) {
     }
 }
 
-var parseBasicData = function(course) {
-    var data = {
+const parseBasicData = (course) => {
+    let data = {
         code: '',
         name: '',
         group: '',
         type: ''
     }
-    var nameAndCode = course.split(' - ')
-    var type = course.split('/')
-    var group = course.split(': ')
+    const nameAndCode = course.split(' - ')
+    const type = course.split('/')
+    const group = course.split(': ')
     if (nameAndCode.length >= 2) {
         data.code = nameAndCode[0]
         if (data.code.substr(0, 2) === 'FV') {
@@ -193,21 +178,21 @@ var parseBasicData = function(course) {
     return data
 }
 
-function parseWeeks(weeks) {
+const parseWeeks = (weeks) => {
     var weekSequence = []
     if (R.contains('-', weeks)) {
-        weeks.match(/[0-9]{1,2}-[0-9]{1,2}/g).map(function(m) {
+        weeks.match(/[0-9]{1,2}-[0-9]{1,2}/g).map((m) => {
             return R.range(
                 parseInt(m.substring(0, m.indexOf('-')), 10),
                 parseInt(m.substring(m.indexOf('-') + 1), 10) + 1
             )
-        }).map(function(r) {
+        }).map((r) => {
             weekSequence = R.concat(weekSequence, r)
         })
     }
     if (R.contains(',', weeks)) {
-        weeks.match(/[0-9]+/g).forEach(function(w) {
-            var num = parseInt(w, 10)
+        weeks.match(/[0-9]+/g).forEach((w) => {
+            let num = parseInt(w, 10)
             if (!R.contains(num, weekSequence)) {
                 weekSequence = R.concat(weekSequence, [num])
             }

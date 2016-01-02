@@ -74,13 +74,14 @@ export const renderPage = (applicationState) =>
             {searchList(applicationState)}
         </div>
         <div className="selected-courses-list">
+            <div className="selected-courses-list-topic">Selected courses:</div>
             {searchResults(applicationState)}
         </div>
         <div>
             <BigCalendar
                 events={addDataToCalendar(applicationState)}
                 defaultView="week"
-                views={['month', 'week', 'day']}
+                views={['month', 'week']}
                 formats={{
                     dayFormat: "ddd D.M"
                 }}
@@ -97,15 +98,9 @@ export const renderPage = (applicationState) =>
     </body>
 
 const addDataToCalendar = (applicationState) => {
-    const getTimestamp = (course, weekNumber, hour) => moment()
-        .locale('fi')
-        .year(getYearNumber(course.week))
-        .day(course.week_day)
-        .week(weekNumber)
-        .hours(hour)
-        .minutes(0)
-        .seconds(0)
-        .format()
+    const getTimestamp = (course, weekNumber, hour) =>
+        moment(getYearNumber(course.week) + '-' + weekNumber + '-' + course.week_day + '-' + hour, 'YYYY-ww-dd-hh')
+
     return R.flatten(applicationState.selectedCourses.map((course) =>
         JSON.parse('[' + course.week + ']').map((weekNumber) => {
             return {
@@ -120,9 +115,9 @@ const addDataToCalendar = (applicationState) => {
 }
 
 const getYearNumber = (courseWeekNumber) => {
-    const isSpringSemester = moment().week() < 27
+    const isSpringSemester = moment().week() === 53 || moment().week() < 27
     const week = parseInt(courseWeekNumber, 10)
-    const springCourse = (week > 0 && week < 35)
+    const springCourse = (week > 0 && week < 35 || week === 53)
     if (isSpringSemester) {
         return springCourse ? moment().year() : moment().subtract(1, 'year').year()
     } else {

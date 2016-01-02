@@ -23,7 +23,7 @@ Compatible with IE10+ and newest Firefox and Chrome
 * [Browserify](http://browserify.org/)<br>
 
 <h2>Requirements & Build</h2>
-Node.js 0.12.7 or newer<br>
+Node.js 0.12 or newer<br>
 
 Build application:
 ```

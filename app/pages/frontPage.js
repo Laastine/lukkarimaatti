@@ -18,7 +18,8 @@ export const initialState = {
     selectedCourses: [],
     currentDate: moment(),
     courses: [],
-    isSearchListVisible: false
+    isSearchListVisible: false,
+    urlParams: []
 }
 
 const searchResultsS = inputBus.flatMap((courseName) => {
@@ -28,6 +29,12 @@ const searchResultsS = inputBus.flatMap((courseName) => {
     } else {
         return {text: "[]"}
     }
+}).doLog('input')
+
+const urlParamS = selectedCoursesBus.flatMapLatest((course) => {
+    console.log('stream', course)
+    addUrlParameter(course.course_code, course.group_name)
+    return [course.group_name ? course.course_code + '&' + course.group_name : course.course_code]
 })
 
 export const applicationStateProperty = (initialState) => Bacon.update(
@@ -43,21 +50,25 @@ export const applicationStateProperty = (initialState) => Bacon.update(
     }),
     selectedCoursesBus, (applicationState, selectedCourse) => ({
         ...applicationState,
-        selectedCourses: R.append(R.head(R.filter((c) => c.course_name === selectedCourse, applicationState.courses)), applicationState.selectedCourses)
+        selectedCourses: R.append(selectedCourse, applicationState.selectedCourses)
+    }),
+    urlParamS, (applicationState, param) => ({
+        ...applicationState,
+        urlParams: R.append(param, applicationState.urlParams)
     })
-).doLog('application state')
+).doLog('state')
 
 const searchList = (applicationState) =>
     applicationState.isSearchListVisible ?
-        R.pipe(R.map((c) => c.course_name),
-            R.uniq,
-            R.map((cname) =>
-                <div key={cname}
+        R.pipe(
+            R.uniqBy((c) => c.course_name),
+            R.map((c) =>
+                <div key={c.course_name}
                      className="search-list-coursename"
                      onClick={(e) => {
                      applicationState.isSearchListVisible = false
-                     selectedCoursesBus.push(e.target.textContent)
-                     }}>{cname}</div>))
+                     selectedCoursesBus.push(R.head(R.filter(function(c) {return c.course_name === e.target.textContent}, applicationState.courses)))
+                     }}>{c.course_name}</div>))
         (applicationState.courses) : undefined
 
 const searchResults = (applicationState) =>
@@ -140,6 +151,7 @@ const stringToColour = (colorSeed) => {
 const inBrowser = () => typeof window != 'undefined'
 
 const addUrlParameter = (course_code, group_name) => {
+    console.log('addUrlParameter', course_code, group_name)
     const params = window.location.search
     const urlParam = course_code.substring(0, 2) === 'FV' ? course_code + '&' + group_name : course_code
     if (params.length > 0) {

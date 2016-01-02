@@ -3,7 +3,6 @@ var pg = require("pg"),
     appConfig = require('./config')
 
 var db = Promise.promisifyAll(pg),
-    connection,
     address = "pg://" + appConfig.postgresUsername + ":" + appConfig.postgresPassword + "@" + appConfig.postgresUrl
 
 module.exports = {
@@ -19,8 +18,8 @@ module.exports = {
                         console.log('DB error=', error)
                     })
                     .finally(function() {
-                        release();
-                    });
+                        release()
+                    })
             })
     },
 
@@ -36,8 +35,8 @@ module.exports = {
                         console.log('DB error=', error)
                     })
                     .finally(function() {
-                        release();
-                    });
+                        release()
+                    })
             })
     },
 
@@ -53,8 +52,8 @@ module.exports = {
                         console.log('DB error=', error)
                     })
                     .finally(function() {
-                        release();
-                    });
+                        release()
+                    })
             })
     },
 
@@ -67,8 +66,8 @@ module.exports = {
                         console.log('DB insert error=', error)
                     })
                     .finally(function() {
-                        release();
-                    });
+                        release()
+                    })
             })
     },
 
@@ -82,30 +81,8 @@ module.exports = {
                         console.log('DB error=', error)
                     })
                     .finally(function() {
-                        release();
-                    });
+                        release()
+                    })
             })
     }
 }
-
-var buildInsertQueryString = function(courseBatch) {
-    var query = ''
-    courseBatch.forEach(function(course) {
-        query += "INSERT INTO course (" +
-            "course_code, course_name, week, week_day, time_of_day, classroom, type, department, teacher, misc, group_name) " +
-            "VALUES (\'" +
-            course.course_code + "\',\'" +
-            course.course_name + "\',\'" +
-            course.week + "\',\'" +
-            course.week_day + "\',\'" +
-            course.time_of_day + "\',\'" +
-            course.classroom + "\',\'" +
-            course.type + "\',\'" +
-            course.department + "\',\'" +
-            course.teacher + "\',\'" +
-            course.misc + "\',\'" +
-            course.group_name + "\');"
-    })
-    return query
-}
-

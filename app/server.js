@@ -4,12 +4,10 @@ import ReactDOMServer from 'react-dom/server'
 import basePage from './pages/basePage.js'
 import * as pages from './pages/pages.js'
 import path from 'path'
-import sass from 'node-sass'
 import R from 'ramda'
 import compression from 'compression'
 import crypto from 'crypto'
 import Promise from 'bluebird'
-import bodyParser from 'body-parser'
 import DB from './db'
 import Parser from './parser'
 import Email from './email'
@@ -25,6 +23,13 @@ server.use('/course', CourseRoutes)
 const cssFilePath = path.resolve(`${__dirname}/../.generated/style.css`)
 const bundleJsFilePath = path.resolve(`${__dirname}/../.generated/bundle.js`)
 const favicon = path.resolve(`${__dirname}/../app/img/favicon.png`)
+
+const checksumPromise = filePath =>
+    fs
+        .readFileAsync(filePath)
+        .then(fileContent => crypto.createHash('md5')
+            .update(fileContent)
+            .digest('hex'))
 
 server.get('*', (req, res, next) => {
     const page = pages.findPage(R.split('?', req.url)[0])
@@ -61,13 +66,6 @@ const serveStaticResource = filePath => (req, res, next) => {
 server.get('/style.css', serveStaticResource(cssFilePath))
 
 server.get('/bundle.js', serveStaticResource(bundleJsFilePath))
-
-const checksumPromise = filePath =>
-    fs
-        .readFileAsync(filePath)
-        .then(fileContent => crypto.createHash('md5')
-            .update(fileContent)
-            .digest('hex'))
 
 export const start = port => {
     const reportPages = () => {

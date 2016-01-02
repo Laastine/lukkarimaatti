@@ -55,6 +55,12 @@ var updateCourseData = function() {
     })
 }
 
+var sanitizeInput = function(input) {
+    return input ? input.trim()
+        .replace(/'/g, "")
+        .replace(/(\r\n|\n|\r)/g, '') : ''
+}
+
 function parseCourseData(url) {
     Promise.promisify(request)({url: 'https://uni.lut.fi' + url})
         .then(function(html) {
@@ -122,12 +128,6 @@ function parseCourseData(url) {
     })
 }
 
-var sanitizeInput = function(input) {
-    return input ? input.trim()
-        .replace(/'/g, "")
-        .replace(/(\r\n|\n|\r)/g, '') : ''
-}
-
 var getDepartment = function(input) {
     if (input.substring(0, 1) === 'A') {
         return 'kati'
@@ -135,31 +135,31 @@ var getDepartment = function(input) {
         switch (input.substring(0, 2)) {
             case 'BH':
                 return 'ente/ymte'
-                break;
+                break
             case 'BJ':
                 return 'kete'
-                break;
+                break
             case 'FV':
                 return 'kike'
-                break;
+                break
             case 'BH':
                 return 'ente/ymte'
-                break;
+                break
             case 'BK':
                 return 'kote'
-                break;
+                break
             case 'BM':
                 return 'mafy'
-                break;
+                break
             case 'BL':
                 return 'sate'
-                break;
+                break
             case 'CT':
                 return 'tite'
-                break;
+                break
             case 'CS':
                 return 'tuta'
-                break;
+                break
             default:
                 return 'UNKNOWN'
         }

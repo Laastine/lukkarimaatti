@@ -17,7 +17,8 @@ const selectedCoursesBus = new Bacon.Bus()
 export const initialState = {
     selectedCourses: [],
     currentDate: moment(),
-    courses: []
+    courses: [],
+    isSearchListVisible: false
 }
 
 const searchResultsS = inputBus.flatMap((courseName) => {
@@ -37,7 +38,8 @@ export const applicationStateProperty = (initialState) => Bacon.update(
     }),
     searchResultsS, (applicationState, courseNames) => ({
         ...applicationState,
-        courses: JSON.parse(courseNames.text)
+        courses: JSON.parse(courseNames.text),
+        isSearchListVisible: true
     }),
     selectedCoursesBus, (applicationState, selectedCourse) => ({
         ...applicationState,
@@ -46,18 +48,21 @@ export const applicationStateProperty = (initialState) => Bacon.update(
 ).doLog('application state')
 
 const searchList = (applicationState) =>
-    R.pipe(R.map((c) => c.course_name),
-        R.uniq,
-        R.map((cname) =>
-            <div key={cname}
-                 className="search-list-coursename"
-                 onClick={(e) => selectedCoursesBus.push(e.target.textContent)}>{cname}</div>))
-    (applicationState.courses)
+    applicationState.isSearchListVisible ?
+        R.pipe(R.map((c) => c.course_name),
+            R.uniq,
+            R.map((cname) =>
+                <div key={cname}
+                     className="search-list-coursename"
+                     onClick={(e) => {
+                     applicationState.isSearchListVisible = false
+                     selectedCoursesBus.push(e.target.textContent)
+                     }}>{cname}</div>))
+        (applicationState.courses) : undefined
 
 const searchResults = (applicationState) =>
     R.map((c) => <div key={c.course_code}
-                      className="search-list-coursename">{c.course_code}</div>, applicationState.selectedCourses)
-
+                      className="search-list-coursename">{c.course_code + " - " + c.course_name}</div>, applicationState.selectedCourses)
 
 export const renderPage = (applicationState) =>
     <body>
@@ -127,7 +132,7 @@ const getYearNumber = (courseWeekNumber) => {
 
 const stringToColour = (colorSeed) => {
     let colour = '#', value
-    let hash = colorSeed.split("").map(function(e) {
+    let hash = colorSeed.split("").map(function (e) {
         colorSeed.charCodeAt(e) + ((hash << 5) - hash)
     })
     for (var j = 0; j < 3; j++) {
@@ -173,7 +178,7 @@ const getDataOnRefresh = (calendar) => {
     const params = window.location.search
     const courseCodes = params.substring(1, params.length).split(/[+]/)
     if (courseCodes[0].length > 0) {
-        courseCodes.forEach(function(param) {
+        courseCodes.forEach(function (param) {
             let groupLetter = ""
             if (param.indexOf('&') > -1) {
                 groupLetter = param.substring(param.indexOf('&') + 1, param.length)

@@ -14,6 +14,7 @@ export const pageTitle = 'Lukkarimaatti++'
 
 const inputBus = new Bacon.Bus()
 const selectedCoursesBus = new Bacon.Bus()
+const emailBus = new Bacon.Bus()
 
 export const initialState = (urlCourses = []) => {
     return {
@@ -42,13 +43,33 @@ const urlParamS = selectedCoursesBus.flatMapLatest((event) => {
 
 const selectedCourseS = selectedCoursesBus.flatMapLatest((event) => {
     if (event.type === 'add') {
-        return R.flatten(R.reduce((a,b) => [a].concat([b]), event.applicationState.selectedCourses, event.courses))
+        return R.flatten(R.reduce((a, b) => [a].concat([b]), event.applicationState.selectedCourses, event.courses))
     } else if (event.type === 'remove') {
         return R.filter((c) => c.course_code !== event.courses[0].course_code, event.applicationState.selectedCourses)
     } else {
         throw new Error('Unknown action')
     }
 })
+
+const emailS = emailBus.flatMap((event) => console.log('email send' + event.address, window.location.href))
+
+const Header = (url) =>
+    <div className="header-container">
+        <div id="opensaveModal" className="modal-dialog">
+            <div>
+                <a href="#close" title="Close" className="close">X</a>
+                <div>Send course selection URL to your email.</div>
+                <form className="modal-input-container">
+                    <input type="email" className="modal-input" id="saveEmail" placeholder="Email"/>
+                    <button type="button" id="saveId" className="modal-button" data-dismiss="modal"
+                            onClick={(e) => {console.log('e.target',e.target); emailBus.push({address: e.target.textContent, url})}}>Send
+                    </button>
+                </form>
+            </div>
+        </div>
+        <a className="header-element header-link" href="/">Lukkarimaatti++</a>
+        <a className="header-element header-save" href="#opensaveModal">Save</a>
+    </div>
 
 export const applicationStateProperty = (initialState) => Bacon.update(
     initialState,
@@ -68,6 +89,9 @@ export const applicationStateProperty = (initialState) => Bacon.update(
     urlParamS, (applicationState, param) => ({
         ...applicationState,
         urlParams: R.append(param, applicationState.urlParams)
+    }),
+    emailS, (applicationState) => ({
+        ...applicationState
     })
 ).doLog('state')
 
@@ -93,12 +117,11 @@ const searchResults = (applicationState) =>
             return <div key={c.course_code} className="search-list-element">
                 <div className="search-list-coursename">{c.course_code + " - " + c.course_name}</div>
                 <div className="search-list-remove" onClick={() => {
-        selectedCoursesBus.push({
-                        type: 'remove',
-                        courses,
-                        applicationState})
-        CourseParser.removeUrlParameter(c.course_code)
-        }}>X
+                    selectedCoursesBus.push({
+                            type: 'remove',
+                            courses,
+                            applicationState})
+                    CourseParser.removeUrlParameter(c.course_code)}}>X
                 </div>
             </div>
         }, R.uniqWith(R.eqBy(R.prop('course_code')))(applicationState.selectedCourses)
@@ -106,6 +129,7 @@ const searchResults = (applicationState) =>
 
 export const renderPage = (applicationState) =>
     <body>
+    {Header(applicationState.urlParams)}
     <div className="container">
         <div className="search-container">
             <input id="course-searchbox" onKeyUp={(event) => inputBus.push(event.target.value)}></input>

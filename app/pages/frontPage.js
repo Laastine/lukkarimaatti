@@ -14,12 +14,14 @@ export const pageTitle = 'Lukkarimaatti++'
 const inputBus = new Bacon.Bus()
 const selectedCoursesBus = new Bacon.Bus()
 
-export const initialState = {
-    selectedCourses: [],
-    currentDate: moment(),
-    courses: [],
-    isSearchListVisible: false,
-    urlParams: []
+export const initialState = (urlCourses = []) => {
+    return {
+        selectedCourses: urlCourses,
+        currentDate: moment(),
+        courses: [],
+        isSearchListVisible: false,
+        urlParams: []
+    }
 }
 
 const searchResultsS = inputBus.flatMap((courseName) => {
@@ -29,11 +31,22 @@ const searchResultsS = inputBus.flatMap((courseName) => {
     } else {
         return {text: "[]"}
     }
-}).doLog('input')
+})
 
-const urlParamS = selectedCoursesBus.flatMapLatest((course) => {
+const urlParamS = selectedCoursesBus.flatMapLatest((event) => {
+    const course = R.head(event.courses)
     addUrlParameter(course.course_code, course.group_name)
     return [course.group_name ? course.course_code + '&' + course.group_name : course.course_code]
+})
+
+const selectedCourseS = selectedCoursesBus.flatMapLatest((event) => {
+    if (event.type === 'add') {
+        return R.append(event.courses, event.applicationState.selectedCourses)[0]
+    } else if (event.type === 'remove') {
+        return R.filter((c) => c.course_code !== event.courses[0].course_code, event.applicationState.selectedCourses)
+    } else {
+        throw new Error('Unknown action')
+    }
 })
 
 export const applicationStateProperty = (initialState) => Bacon.update(
@@ -47,9 +60,9 @@ export const applicationStateProperty = (initialState) => Bacon.update(
         courses: JSON.parse(courseNames.text),
         isSearchListVisible: true
     }),
-    selectedCoursesBus, (applicationState, selectedCourse) => ({
+    selectedCourseS, (applicationState, selectedCourses) => ({
         ...applicationState,
-        selectedCourses: R.append(selectedCourse, applicationState.selectedCourses)
+        selectedCourses
     }),
     urlParamS, (applicationState, param) => ({
         ...applicationState,
@@ -66,15 +79,28 @@ const searchList = (applicationState) =>
                      className="search-list-coursename"
                      onClick={(e) => {
                      applicationState.isSearchListVisible = false
-                     selectedCoursesBus.push(R.head(R.filter(function(c) {return c.course_name === e.target.textContent}, applicationState.courses)))
+                     selectedCoursesBus.push({
+                        type: 'add',
+                        courses: R.filter(function(c) {return c.course_name === e.target.textContent}, applicationState.courses),
+                        applicationState})
                      }}>{c.course_name}</div>))
         (applicationState.courses) : undefined
 
-const searchResults = (applicationState) =>  R.map((c) =>
-        <div key={c.course_code} className="search-list-element">
+const searchResults = (applicationState) =>
+    R.map((c) => {
+        let courses = R.filter((cc) => cc.course_code === c.course_code, applicationState.selectedCourses)
+        return <div key={c.course_code} className="search-list-element">
             <div className="search-list-coursename">{c.course_code + " - " + c.course_name}</div>
-            <div className="search-list-remove" onClick={(e) => removeUrlParameter(c.course_code)}>X</div>
-        </div>, applicationState.selectedCourses)
+            <div className="search-list-remove" onClick={() => {
+        selectedCoursesBus.push({
+                        type: 'remove',
+                        courses,
+                        applicationState})
+        removeUrlParameter(c.course_code)
+        }}>X
+            </div>
+        </div>}, R.uniqWith(R.eqBy(R.prop('course_code')))(applicationState.selectedCourses)
+    )
 
 export const renderPage = (applicationState) =>
     <body>
@@ -112,9 +138,8 @@ export const renderPage = (applicationState) =>
 const addDataToCalendar = (applicationState) => {
     const getTimestamp = (course, weekNumber, hour) =>
         moment(getYearNumber(course.week) + '-' + weekNumber + '-' + course.week_day + '-' + hour, 'YYYY-ww-dd-hh')
-
-    return R.flatten(applicationState.selectedCourses.map((course) =>
-        JSON.parse('[' + course.week + ']').map((weekNumber) => {
+    return R.flatten(applicationState.selectedCourses.map((course) => {
+        return JSON.parse('[' + course.week + ']').map((weekNumber) => {
             return {
                 title: course.course_code + "-" + course.course_name + '/' + course.type + '\n' + course.classroom,
                 start: new Date(getTimestamp(course, weekNumber, course.time_of_day.split('-')[0] || 6)),
@@ -123,7 +148,7 @@ const addDataToCalendar = (applicationState) => {
                 id: course.course_code + '#' + course.type
             }
         })
-    ))
+    }))
 }
 
 const getYearNumber = (courseWeekNumber) => {
@@ -148,8 +173,6 @@ const stringToColour = (colorSeed) => {
     }
     return colour
 }
-
-const inBrowser = () => typeof window != 'undefined'
 
 const addUrlParameter = (course_code, group_name) => {
     const params = window.location.search
@@ -177,34 +200,5 @@ const removeUrlParameter = (id) => {
         history.pushState({}, "", "?" + updatedParams.join('+'))
     } else {
         history.pushState({}, "", "?");
-    }
-}
-
-
-const getDataOnRefresh = (calendar) => {
-    const params = window.location.search
-    const courseCodes = params.substring(1, params.length).split(/[+]/)
-    if (courseCodes[0].length > 0) {
-        courseCodes.forEach(function (param) {
-            let groupLetter = ""
-            if (param.indexOf('&') > -1) {
-                groupLetter = param.substring(param.indexOf('&') + 1, param.length)
-                param = param.substring(0, param.indexOf('&'))
-            }
-            if (typeof param !== 'undefined' && groupLetter.length > 0) {
-                request.get('course/codeAndGroup').query({
-                        groupName: groupLetter,
-                        code: param
-                    })
-                    .then((data) => {
-                    })
-                    .error((err) => console.error('Reload error', err))
-            } else if (typeof param !== 'undefined') {
-                request.get('course/code' + param)
-                    .then((data) => {
-                    })
-                    .error((err) =>  console.error('Reload error', err))
-            }
-        })
     }
 }

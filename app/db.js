@@ -1,5 +1,6 @@
-import pg from "pg"
-import Promise from "bluebird"
+import pg from 'pg'
+import Promise from 'bluebird'
+import R from 'ramda'
 const appConfig = require('./config')
 
 const db = Promise.promisifyAll(pg),
@@ -59,6 +60,29 @@ module.exports = {
                         release()
                     })
             })
+    },
+
+    prefetchCoursesByCode: (params) => {
+        if (params.length > 0) {
+            return db.connectAsync(address)
+                .spread((connection, release) => {
+                    let query = "SELECT * FROM course WHERE course_code = \'" + params + "\'"
+                    if (params.length > 1) {
+                        query = R.reduce((a, b) => '' + a + b, query, R.tail(params))
+                    }
+                    console.log('query=', query)
+                    return connection.queryAsync(query)
+                        .then((result) => {
+                            return result.rows
+                        })
+                        .error((error) => {
+                            console.log('DB error=', error)
+                        })
+                        .finally(() => {
+                            release()
+                        })
+                })
+        }
     },
 
     getCourseByCodeAndGroup: (req, res) => {

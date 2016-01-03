@@ -31,15 +31,24 @@ const checksumPromise = filePath =>
             .update(fileContent)
             .digest('hex'))
 
+const preFetchCourses = (params) => {
+    if (!params || params.match('/checksum=.*/')) {
+        return []
+    } else {
+        return R.uniq(params.substring(0, params.length).split(/[+]/))
+    }
+}
+
 server.get('*', (req, res, next) => {
-    const page = pages.findPage(R.split('?', req.url)[0])
+    const urlAndParams = R.split('?', req.url)
+    const page = pages.findPage(urlAndParams[0])
     if (page) {
         Promise
-            .all([checksumPromise(cssFilePath), checksumPromise(bundleJsFilePath)])
-            .then(([cssChecksum, bundleJsChecksum]) => {
+            .all([checksumPromise(cssFilePath), checksumPromise(bundleJsFilePath), DB.prefetchCoursesByCode(preFetchCourses(urlAndParams[1]))])
+            .then(([cssChecksum, bundleJsChecksum, courses]) => {
                 res.send(ReactDOMServer.renderToString(basePage(
                     page,
-                    page.initialState,
+                    page.initialState(courses),
                     {cssChecksum, bundleJsChecksum}
                 )))
             })
@@ -78,11 +87,11 @@ export const start = port => {
     }).then(reportPages)
 }
 
-server.post('/save', function(req, res) {
+server.post('/save', function (req, res) {
     Email.sendMail(req, res)
 })
 
-server.get('/test', function(req, res) {
+server.get('/test', function (req, res) {
     res.sendFile(path.resolve(__dirname + '/../test/', 'runner.html'))
 })
 

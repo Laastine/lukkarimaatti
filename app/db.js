@@ -70,7 +70,6 @@ module.exports = {
                     if (params.length > 1) {
                         query = R.reduce((a, b) => '' + a + b, query, R.tail(params))
                     }
-                    console.log('query=', query)
                     return connection.queryAsync(query)
                         .then((result) => {
                             return result.rows

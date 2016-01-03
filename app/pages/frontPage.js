@@ -41,7 +41,7 @@ const urlParamS = selectedCoursesBus.flatMapLatest((event) => {
 
 const selectedCourseS = selectedCoursesBus.flatMapLatest((event) => {
     if (event.type === 'add') {
-        return R.append(event.courses, event.applicationState.selectedCourses)[0]
+        return R.flatten(R.reduce((a,b) => [a].concat([b]), event.applicationState.selectedCourses, event.courses))
     } else if (event.type === 'remove') {
         return R.filter((c) => c.course_code !== event.courses[0].course_code, event.applicationState.selectedCourses)
     } else {
@@ -88,18 +88,19 @@ const searchList = (applicationState) =>
 
 const searchResults = (applicationState) =>
     R.map((c) => {
-        let courses = R.filter((cc) => cc.course_code === c.course_code, applicationState.selectedCourses)
-        return <div key={c.course_code} className="search-list-element">
-            <div className="search-list-coursename">{c.course_code + " - " + c.course_name}</div>
-            <div className="search-list-remove" onClick={() => {
+            const courses = R.filter((cc) => cc.course_code === c.course_code, applicationState.selectedCourses)
+            return <div key={c.course_code} className="search-list-element">
+                <div className="search-list-coursename">{c.course_code + " - " + c.course_name}</div>
+                <div className="search-list-remove" onClick={() => {
         selectedCoursesBus.push({
                         type: 'remove',
                         courses,
                         applicationState})
         removeUrlParameter(c.course_code)
         }}>X
+                </div>
             </div>
-        </div>}, R.uniqWith(R.eqBy(R.prop('course_code')))(applicationState.selectedCourses)
+        }, R.uniqWith(R.eqBy(R.prop('course_code')))(applicationState.selectedCourses)
     )
 
 export const renderPage = (applicationState) =>

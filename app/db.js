@@ -63,12 +63,14 @@ module.exports = {
     },
 
     prefetchCoursesByCode: (params) => {
+        const insertGroupCondition = (groupName) => groupName ? " AND group_name = \'" + groupName + "\'" : ''
+        const insertCodeCondition = (courseCode) => courseCode ? " OR course_code = \'" + courseCode + "\'" : ''
         if (params.length > 0) {
             return db.connectAsync(address)
                 .spread((connection, release) => {
-                    let query = "SELECT * FROM course WHERE course_code = \'" + params + "\'"
+                    let query = "SELECT * FROM course WHERE course_code = \'" + params[0].courseCode + "\'" + insertGroupCondition(params[0].groupName)
                     if (params.length > 1) {
-                        query = R.reduce((a, b) => '' + a + b, query, R.tail(params))
+                        query += R.reduce((a, b) => a + insertCodeCondition(b.courseCode) + insertGroupCondition(b.groupName), '', R.tail(params))
                     }
                     return connection.queryAsync(query)
                         .then((result) => {

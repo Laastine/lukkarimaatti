@@ -35,7 +35,19 @@ const preFetchCourses = (params) => {
     if (!params || params.match('/checksum=.*/')) {
         return []
     } else {
-        return R.uniq(params.substring(0, params.length).split(/[+]/))
+        return R.map((courseCode) => {
+            if (courseCode.indexOf('&') > -1) {
+                return {
+                    courseCode: courseCode.substring(0, courseCode.indexOf('&')),
+                    groupName: courseCode.substring(courseCode.indexOf('&') + 1, courseCode.length)
+                }
+            } else {
+                return {
+                    courseCode,
+                    groupName: ""
+                }
+            }
+        }, R.uniq(params.substring(0, params.length).split(/[+]/)))
     }
 }
 

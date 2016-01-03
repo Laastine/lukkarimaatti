@@ -177,31 +177,19 @@ var SearchEngine = {
         var courseToBeAdded = []
         var that = this
 
-        courseCollection.forEach(function(course) {
+        var getTimestamp = function getTimestamp(course, weekNumber, hour) {
+            return moment(that.getYearNumber(course.week) + '-' + weekNumber + '-' + course.week_day + '-' + hour, 'YYYY-ww-dd-hh')
+        }
+
+        courseCollection.forEach(function (course) {
             JSON.parse('[' + course.week + ']')
                 .map(function processWeekNumbers(weekNumber) {
-                    var dateStart = moment()
-                        .locale('fi')
-                        .year(that.getYearNumber(weekNumber))
-                        .day(course.week_day)
-                        .week(weekNumber)
-                        .hours(course.time_of_day.split('-')[0] || 6).minutes(0)
-                        .seconds(0)
-                        .format('YYYY-MM-DDTHH:mm:ssZ')
-                    var dateEnd = moment()
-                        .locale('fi')
-                        .year(that.getYearNumber(weekNumber))
-                        .day(course.week_day)
-                        .week(weekNumber)
-                        .hours(course.time_of_day.split('-')[1] || 6)
-                        .minutes(0)
-                        .seconds(0)
-                        .format('YYYY-MM-DDTHH:mm:ssZ')
+
                     var calendarEvent = {
                         title: course.course_code,
                         description: course.course_name + '/' + course.type + '\n' + course.classroom,
-                        start: new Date(dateStart),
-                        end: new Date(dateEnd),
+                        start: new Date(getTimestamp(course, weekNumber, course.time_of_day.split('-')[0] || 6)),
+                        end: new Date(getTimestamp(course, weekNumber, course.time_of_day.split('-')[1] || 6)),
                         element: null,
                         color: that.stringToColour(course.course_code),
                         view: null,
@@ -214,9 +202,9 @@ var SearchEngine = {
     },
 
     getYearNumber: function(courseWeekNumber) {
-        var isSpringSemester = moment().week() < 27
+        var isSpringSemester = moment().week() === 53 || moment().week() < 27
         var week = parseInt(courseWeekNumber, 10)
-        var springCourse = (week > 0 && week < 35)
+        var springCourse = (week > 0 && week < 35 || week === 53)
         if (isSpringSemester) {
             return springCourse ? moment().year() : moment().subtract(1, 'year').year()
         } else {

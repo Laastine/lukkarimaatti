@@ -22,7 +22,8 @@ export const initialState = (urlCourses = []) => {
         currentDate: moment(),
         courses: [],
         isSearchListVisible: false,
-        urlParams: []
+        urlParams: [],
+        isModalOpen: false
     }
 }
 
@@ -51,25 +52,34 @@ const selectedCourseS = selectedCoursesBus.flatMapLatest((event) => {
     }
 })
 
-const emailS = emailBus.flatMap((event) => console.log('email send' + event.address, window.location.href))
+const modalS = emailBus.flatMap((event) => {
+    if (event.isModalOpen && event.address) {
+        console.log('email send' + event.address, window.location.href)
+    }
+    return event.isModalOpen
+})
 
-const Header = (url) =>
-    <div className="header-container">
-        <div id="opensaveModal" className="modal-dialog">
-            <div>
-                <a href="#close" title="Close" className="close">X</a>
-                <div>Send course selection URL to your email.</div>
-                <form className="modal-input-container">
-                    <input type="email" className="modal-input" id="saveEmail" placeholder="Email"/>
-                    <button type="button" id="saveId" className="modal-button" data-dismiss="modal"
-                            onClick={(e) => {console.log('e.target',e.target); emailBus.push({address: e.target.textContent, url})}}>Send
-                    </button>
-                </form>
+const Header = (applicationState) => {
+    const url = applicationState.urlParams
+    const modal = applicationState.isModalOpen ? <div className="modal-dialog">
+        <div>
+            <div onClick={() => {emailBus.push({isModalOpen: false})}} className="close">X
             </div>
+            <div>Send course selection URL to your email.</div>
+            <form className="modal-input-container">
+                <input type="email" className="modal-input" id="saveEmail" placeholder="Email"/>
+                <button type="button" id="saveId" className="modal-button" data-dismiss="modal"
+                        onClick={(e) => {emailBus.push({address: e.target.previousElementSibling.value, url, isModalOpen: true})}}>Send
+                </button>
+            </form>
         </div>
+    </div> : undefined
+    return <div className="header-container">
+        {modal}
         <a className="header-element header-link" href="/">Lukkarimaatti++</a>
-        <a className="header-element header-save" href="#opensaveModal">Save</a>
+        <a className="header-element header-save" onClick={() => emailBus.push({isModalOpen: true})}>Save</a>
     </div>
+}
 
 export const applicationStateProperty = (initialState) => Bacon.update(
     initialState,
@@ -90,8 +100,9 @@ export const applicationStateProperty = (initialState) => Bacon.update(
         ...applicationState,
         urlParams: R.append(param, applicationState.urlParams)
     }),
-    emailS, (applicationState) => ({
-        ...applicationState
+    modalS, (applicationState, isModalOpen) => ({
+        ...applicationState,
+        isModalOpen
     })
 ).doLog('state')
 
@@ -129,7 +140,7 @@ const searchResults = (applicationState) =>
 
 export const renderPage = (applicationState) =>
     <body>
-    {Header(applicationState.urlParams)}
+    {Header(applicationState)}
     <div className="container">
         <div className="search-container">
             <input id="course-searchbox" onKeyUp={(event) => inputBus.push(event.target.value)}></input>

@@ -29,7 +29,7 @@ export const initialState = (urlCourses = []) => {
 
 const searchResultsS = inputBus.flatMap((courseName) => {
     if (courseName.length > 2) {
-        let responseP = request.get('course/course').query({name: courseName})
+        const responseP = request.get('course/course').query({name: courseName})
         return Bacon.fromPromise(responseP)
     } else {
         return {text: "[]"}
@@ -52,9 +52,12 @@ const selectedCourseS = selectedCoursesBus.flatMapLatest((event) => {
     }
 })
 
-const modalS = emailBus.flatMap((event) => {
+const modalS = emailBus.flatMapLatest((event) => {
     if (event.isModalOpen && event.address) {
-        console.log('email send' + event.address, window.location.href)
+        let responseP = request.post('save').send({email: event.address.toString(), link: window.location.href.toString()})
+        return Bacon.fromPromise(responseP)
+            .map({isModalOpen: false})
+            .mapError({isModalOpen: true})
     }
     return event.isModalOpen
 })
@@ -69,7 +72,8 @@ const Header = (applicationState) => {
             <form className="modal-input-container">
                 <input type="email" className="modal-input" id="saveEmail" placeholder="Email"/>
                 <button type="button" id="saveId" className="modal-button" data-dismiss="modal"
-                        onClick={(e) => {emailBus.push({address: e.target.previousElementSibling.value, url, isModalOpen: true})}}>Send
+                        onClick={(e) => {emailBus.push({address: e.target.previousElementSibling.value, url, isModalOpen: true})}}>
+                    Send
                 </button>
             </form>
         </div>

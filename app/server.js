@@ -101,12 +101,8 @@ export const start = port => {
     }).then(reportPages)
 }
 
-server.post('/save', function (req, res) {
-    Email.sendMail(req, res)
-})
+server.post('/save', Email.sendMail)
 
-server.get('/test', function (req, res) {
-    res.sendFile(path.resolve(__dirname + '/../test/', 'runner.html'))
-})
+server.get('/test', (req, res) => res.sendFile(path.resolve(__dirname + '/../test/', 'runner.html')))
 
 server.use('/test', express.static(__dirname + '/../test/'))

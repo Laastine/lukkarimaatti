@@ -1,5 +1,5 @@
-var nodemailer = require('nodemailer'),
-    config = require('./config')
+import nodemailer from 'nodemailer'
+import config from './config'
 
 module.exports = {
     sendMail: (req, res) => {
@@ -11,8 +11,7 @@ module.exports = {
             }
         })
         console.log('name=' + config.emailAddress)
-        console.log('pass=' + config.emailPassword)
-        console.log('TO', req.body.email)
+        console.log('req body', req.body)
         const mailOptions = {
             from: 'lukkarimaatti@gmail.com',
             to: req.body.email,
@@ -21,7 +20,13 @@ module.exports = {
         }
 
         transporter.sendMail(mailOptions, (error, info) => {
-            error ? console.log(error) : console.log('Message sent: ' + info.response)
+            if (error) {
+                console.log(error)
+                res.status(500).json({status: 'email send error'})
+            } else {
+                console.log('Message sent: ' + info.response)
+                res.status(200).json({status: 'ok'})
+            }
         })
     }
 }

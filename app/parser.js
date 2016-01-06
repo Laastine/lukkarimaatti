@@ -29,7 +29,7 @@ const updateCourseData = function() {
     })
 }
 
-module.exports = {
+export default {
     updateCourseData: function(req, res) {
         console.log('updateCourseData', req.params['secret'])
         if (req.query['secret'] === config.appSecret) {

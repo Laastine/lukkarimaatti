@@ -8,6 +8,7 @@ import R from 'ramda'
 import compression from 'compression'
 import crypto from 'crypto'
 import Promise from 'bluebird'
+import bodyParser from 'body-parser'
 import DB from './db'
 import Parser from './parser'
 import Email from './email'
@@ -17,6 +18,7 @@ const fs = Promise.promisifyAll(require('fs'))
 const server = express()
 
 server.use(compression({threshold: 512}))
+server.use(bodyParser.json())
 server.disable('x-powered-by')
 server.use('/course', CourseRoutes)
 

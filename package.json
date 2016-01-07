@@ -15,7 +15,6 @@
     "body-parser": "^1.14.2",
     "browserify": "11.0.1",
     "cheerio": "0.19.0",
-    "colors": "1.1.2",
     "compression": "1.6.0",
     "express": "4.13.3",
     "forever": "0.15.1",
@@ -67,6 +66,7 @@
     "watch": "npm run watch-js & npm run watch-css & node_modules/supervisor/lib/cli-wrapper.js --quiet --ignore node_modules --watch app app/bootstrap.js",
     "start": "node app/bootstrap.js",
     "lint": "eslint app/ ",
+    "clean": "rm .generated/*.js .generated/*.css",
     "start-dev": "export NODE_ENV=development; npm run watch",
     "build-tests": "(cd test && npm install)",
     "test": "mocha-phantomjs http://localhost:8080/test/runner.html"

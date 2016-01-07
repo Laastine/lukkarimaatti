@@ -184,7 +184,7 @@ button.rbc-input::-moz-focus-inner {
 }
 
 .rbc-event-label {
-  font-size: 80%;
+  font-size: 70%;
 }
 
 .rbc-event-overlaps {
@@ -393,6 +393,7 @@ button.rbc-input::-moz-focus-inner {
 
 .rbc-gutter-cell {
   padding: 0 5px;
+  width: 53px;
 }
 
 .rbc-day-slot {
@@ -418,6 +419,7 @@ button.rbc-input::-moz-focus-inner {
 }
 
 .rbc-day-slot .rbc-event-content {
+  font-size: 85%;
   width: 100%;
   flex: 1 1 0;
   word-wrap: break-word;

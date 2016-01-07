@@ -67,7 +67,7 @@ export default {
         if (updatedParams.length > 0) {
             history.pushState({}, "", "?" + updatedParams.join('+'))
         } else {
-            history.pushState({}, "", "?");
+            history.pushState({}, "", "?")
         }
     }
 }

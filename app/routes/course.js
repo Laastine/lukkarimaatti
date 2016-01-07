@@ -1,6 +1,5 @@
 import express from 'express'
 import DB from '../db'
-import Parser from '../parser'
 
 const courseRoutes = express.Router()
 
@@ -14,10 +13,6 @@ courseRoutes.get('/codeAndGroup', function(req, res) {
 
 courseRoutes.get('/code/:code', function(req, res) {
     DB.getCourseByCode(req, res)
-})
-
-courseRoutes.post('/update', function(req, res) {
-    Parser.updateCourseData(req, res)
 })
 
 export default courseRoutes

@@ -29,15 +29,93 @@ const updateCourseData = function() {
     })
 }
 
-export default {
-    updateCourseData: function(req, res) {
-        console.log('updateCourseData', req.params['secret'])
-        if (req.query['secret'] === config.appSecret) {
-            DB.cleanCourseTable()
-            updateCourseData()
-            res.status(200).json({status: 'ok'})
+const parseBasicData = (course) => {
+    let data = {
+        code: '',
+        name: '',
+        group: '',
+        type: ''
+    }
+    const nameAndCode = course.split(' - ')
+    const type = course.split('/')
+    const group = course.split(': ')
+    if (nameAndCode.length >= 2) {
+        data.code = nameAndCode[0]
+        if (data.code.substr(0, 2) === 'FV') {
+            data.name = nameAndCode[1]
         } else {
-            res.status(403).json({error: 'Unauthorized'})
+            data.name = nameAndCode[1].substr(0, nameAndCode[1].indexOf('/'))
+        }
+    }
+    if (type.length >= 2) {
+        data.type = type[type.length - 1]
+    }
+    if (group.length >= 2) {
+        data.group = group[group.length - 1]
+    }
+    return data
+}
+
+const parseWeeks = (weeks) => {
+    var weekSequence = []
+    if (R.contains('-', weeks)) {
+        weeks.match(/[0-9]{1,2}-[0-9]{1,2}/g).map((m) => {
+            return R.range(
+                parseInt(m.substring(0, m.indexOf('-')), 10),
+                parseInt(m.substring(m.indexOf('-') + 1), 10) + 1
+            )
+        }).map((r) => {
+            weekSequence = R.concat(weekSequence, r)
+        })
+    }
+    if (R.contains(',', weeks)) {
+        weeks.match(/[0-9]+/g).forEach((w) => {
+            let num = parseInt(w, 10)
+            if (!R.contains(num, weekSequence)) {
+                weekSequence = R.concat(weekSequence, [num])
+            }
+        })
+    }
+    if (/^[0-9]{1,2}$/.test(weeks)) {
+        weekSequence = R.concat(weekSequence, weeks.match(/^[0-9]{1,2}$/))
+    }
+    return weekSequence.join()
+}
+
+const getDepartment = (input) => {
+    if (input.substring(0, 1) === 'A') {
+        return 'kati'
+    } else {
+        switch (input.substring(0, 2)) {
+            case 'BH':
+                return 'ente/ymte'
+                break
+            case 'BJ':
+                return 'kete'
+                break
+            case 'FV':
+                return 'kike'
+                break
+            case 'BH':
+                return 'ente/ymte'
+                break
+            case 'BK':
+                return 'kote'
+                break
+            case 'BM':
+                return 'mafy'
+                break
+            case 'BL':
+                return 'sate'
+                break
+            case 'CT':
+                return 'tite'
+                break
+            case 'CS':
+                return 'tuta'
+                break
+            default:
+                return 'UNKNOWN'
         }
     }
 }
@@ -113,93 +191,16 @@ function parseCourseData(url) {
     })
 }
 
-const getDepartment = (input) => {
-    if (input.substring(0, 1) === 'A') {
-        return 'kati'
-    } else {
-        switch (input.substring(0, 2)) {
-            case 'BH':
-                return 'ente/ymte'
-                break
-            case 'BJ':
-                return 'kete'
-                break
-            case 'FV':
-                return 'kike'
-                break
-            case 'BH':
-                return 'ente/ymte'
-                break
-            case 'BK':
-                return 'kote'
-                break
-            case 'BM':
-                return 'mafy'
-                break
-            case 'BL':
-                return 'sate'
-                break
-            case 'CT':
-                return 'tite'
-                break
-            case 'CS':
-                return 'tuta'
-                break
-            default:
-                return 'UNKNOWN'
-        }
-    }
-}
-
-const parseBasicData = (course) => {
-    let data = {
-        code: '',
-        name: '',
-        group: '',
-        type: ''
-    }
-    const nameAndCode = course.split(' - ')
-    const type = course.split('/')
-    const group = course.split(': ')
-    if (nameAndCode.length >= 2) {
-        data.code = nameAndCode[0]
-        if (data.code.substr(0, 2) === 'FV') {
-            data.name = nameAndCode[1]
+export default {
+    updateCourseData: function(req, res) {
+        console.log('updateCourseData', req.params['secret'])
+        if (req.query['secret'] === config.appSecret) {
+            DB.cleanCourseTable()
+            updateCourseData()
+            res.status(200).json({status: 'ok'})
         } else {
-            data.name = nameAndCode[1].substr(0, nameAndCode[1].indexOf('/'))
+            res.status(403).json({error: 'Unauthorized'})
         }
     }
-    if (type.length >= 2) {
-        data.type = type[type.length - 1]
-    }
-    if (group.length >= 2) {
-        data.group = group[group.length - 1]
-    }
-    return data
 }
 
-const parseWeeks = (weeks) => {
-    var weekSequence = []
-    if (R.contains('-', weeks)) {
-        weeks.match(/[0-9]{1,2}-[0-9]{1,2}/g).map((m) => {
-            return R.range(
-                parseInt(m.substring(0, m.indexOf('-')), 10),
-                parseInt(m.substring(m.indexOf('-') + 1), 10) + 1
-            )
-        }).map((r) => {
-            weekSequence = R.concat(weekSequence, r)
-        })
-    }
-    if (R.contains(',', weeks)) {
-        weeks.match(/[0-9]+/g).forEach((w) => {
-            let num = parseInt(w, 10)
-            if (!R.contains(num, weekSequence)) {
-                weekSequence = R.concat(weekSequence, [num])
-            }
-        })
-    }
-    if (/^[0-9]{1,2}$/.test(weeks)) {
-        weekSequence = R.concat(weekSequence, weeks.match(/^[0-9]{1,2}$/))
-    }
-    return weekSequence.join()
-}

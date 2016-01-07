@@ -1,8 +1,7 @@
 import express from 'express'
-import React from 'react'
 import ReactDOMServer from 'react-dom/server'
-import basePage from './pages/basePage.js'
-import * as pages from './pages/pages.js'
+import base from './pages/base'
+import * as pages from './pages/pages'
 import path from 'path'
 import R from 'ramda'
 import compression from 'compression'
@@ -10,8 +9,6 @@ import crypto from 'crypto'
 import Promise from 'bluebird'
 import bodyParser from 'body-parser'
 import DB from './db'
-import Parser from './parser'
-import Email from './email'
 import CourseRoutes from './routes/course'
 const fs = Promise.promisifyAll(require('fs'))
 
@@ -24,7 +21,7 @@ server.use('/course', CourseRoutes)
 
 const cssFilePath = path.resolve(`${__dirname}/../.generated/style.css`)
 const bundleJsFilePath = path.resolve(`${__dirname}/../.generated/bundle.js`)
-const favicon = path.resolve(`${__dirname}/../app/img/favicon.png`)
+path.resolve(`${__dirname}/../app/img/favicon.png`)
 
 const checksumPromise = filePath =>
     fs
@@ -60,7 +57,7 @@ server.get('*', (req, res, next) => {
         Promise
             .all([checksumPromise(cssFilePath), checksumPromise(bundleJsFilePath), DB.prefetchCoursesByCode(preFetchCourses(urlAndParams[1]))])
             .then(([cssChecksum, bundleJsChecksum, courses]) => {
-                res.send(ReactDOMServer.renderToString(basePage(
+                res.send(ReactDOMServer.renderToString(base(
                     page,
                     page.initialState(courses),
                     {cssChecksum, bundleJsChecksum}
@@ -100,8 +97,6 @@ export const start = port => {
         server.listen(port, resolve)
     }).then(reportPages)
 }
-
-server.post('/save', Email.sendMail)
 
 server.get('/test', (req, res) => res.sendFile(path.resolve(__dirname + '/../test/', 'runner.html')))
 

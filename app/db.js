@@ -27,7 +27,7 @@ const buildInsertQueryString = (courseBatch) => {
     return query
 }
 
-module.exports = {
+export default {
     getCourseByName: (req, res) => {
         db.connectAsync(address)
             .spread((connection, release) => {

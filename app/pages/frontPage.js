@@ -130,8 +130,8 @@ const searchResults = (applicationState) =>
     R.map((c) => {
             const courses = R.filter((cc) => cc.course_code === c.course_code, applicationState.selectedCourses)
             return <div key={c.course_code} className="search-list-element">
-                <div className="search-list-coursename">{c.course_code + " - " + c.course_name}</div>
-                <div className="search-list-remove" onClick={() => {
+                <div className="result-list-coursename">{c.course_code + " - " + c.course_name}</div>
+                <div className="result-list-remove" onClick={() => {
                     selectedCoursesBus.push({
                             type: 'remove',
                             courses,
@@ -164,6 +164,7 @@ export const renderPage = (applicationState) =>
                 formats={{
                     dayFormat: "ddd D.M"
                 }}
+                onSelectEvent={event => console.log(event)}
                 min={new Date(moment(applicationState.currentDate).hours(8).minutes(0).format())}
                 max={new Date(moment(applicationState.currentDate).hours(20).minutes(0).format())}
                 defaultDate={new Date(moment(applicationState.currentDate).format())}

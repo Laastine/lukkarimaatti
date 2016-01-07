@@ -46,11 +46,11 @@ export default {
         const params = window.location.search
         const urlParam = course_code.substring(0, 2) === 'FV' ? course_code + '&' + group_name : course_code
         if (params.length > 0) {
-            history.pushState(
-                {}, "", "?" + params.substring(1, params.length) + '+' + urlParam)
+            if (params.indexOf(course_code) < 0) {
+                history.pushState({}, "", "?" + params.substring(1, params.length) + '+' + urlParam)
+            }
         } else {
-            history.pushState(
-                {}, "", "?" + params + urlParam)
+            history.pushState({}, "", "?" + params + urlParam)
         }
     },
 

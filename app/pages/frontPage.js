@@ -123,6 +123,7 @@ const searchList = (applicationState) =>
                         type: 'add',
                         courses: R.filter(function(c) {return c.course_name === e.target.textContent}, applicationState.courses),
                         applicationState})
+                     e.target.parentElement.parentElement.firstElementChild.firstElementChild.value = ""
                      }}>{c.course_name}</div>))
         (applicationState.courses) : undefined
 
@@ -160,8 +161,9 @@ export const renderPage = (applicationState) =>
             <BigCalendar
                 events={CourseParser.addDataToCalendar(applicationState)}
                 defaultView="week"
-                views={['month', 'week']}
+                views={['month', 'week', 'day']}
                 formats={{
+                    dayHeaderFormat: "ddd D.M",
                     dayFormat: "ddd D.M"
                 }}
                 onSelectEvent={event => console.log(event)}

@@ -1,3 +1,3 @@
-import Parser from './parser'
+var Parser = require('./parser')
 
 Parser.updateCourseData()

@@ -148,7 +148,7 @@ export const renderPage = (applicationState) =>
     {Header(applicationState)}
     <div className="container">
         <div className="search-container">
-            <input id="course-searchbox" placeholder="Course name" onKeyUp={(event) => inputBus.push(event.target.value)}></input>
+            <input id="course-searchbox" autoFocus placeholder="Course name" onKeyUp={(event) => inputBus.push(event.target.value)}></input>
         </div>
         <div className="search-list-container">
             {searchList(applicationState)}

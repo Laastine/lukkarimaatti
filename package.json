@@ -39,6 +39,7 @@
     "babel-preset-react": "6.3.13",
     "eslint": "1.10.3",
     "eslint-plugin-react": "3.13.1",
+    "mocha-phantomjs": "^4.0.2",
     "nodemon": "1.8.1",
     "supervisor": "0.9.1",
     "watchify": "3.6.1"
@@ -69,6 +70,6 @@
     "clean": "rm .generated/*.js .generated/*.css",
     "start-dev": "export NODE_ENV=development; npm run watch",
     "build-tests": "(cd test && npm install)",
-    "test": "mocha-phantomjs http://localhost:8080/test/runner.html"
+    "test": "node_modules/mocha-phantomjs/bin/mocha-phantomjs http://localhost:8080/test/runner.html"
   }
 }

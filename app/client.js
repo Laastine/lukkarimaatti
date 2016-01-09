@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import * as pages from './pages/pages'
-import base from './pages/base'
+import basePage from './pages/basePage'
 
 const currentPage = pages.findPage(document.location.pathname)
 
@@ -13,7 +13,7 @@ const App = React.createClass({
     },
     render () {
         return this.state ?
-            base(currentPage, this.state, window.CHECKSUMS) : <span>Loading...</span>
+            basePage(currentPage, this.state, window.CHECKSUMS) : <span>Loading...</span>
     }
 })
 

@@ -1,6 +1,6 @@
 import express from 'express'
 import ReactDOMServer from 'react-dom/server'
-import base from './pages/base'
+import basePage from './pages/basePage'
 import * as pages from './pages/pages'
 import path from 'path'
 import R from 'ramda'
@@ -57,7 +57,7 @@ server.get('*', (req, res, next) => {
         Promise
             .all([checksumPromise(cssFilePath), checksumPromise(bundleJsFilePath), DB.prefetchCoursesByCode(preFetchCourses(urlAndParams[1]))])
             .then(([cssChecksum, bundleJsChecksum, courses]) => {
-                res.send(ReactDOMServer.renderToString(base(
+                res.send(ReactDOMServer.renderToString(basePage(
                     page,
                     page.initialState(courses),
                     {cssChecksum, bundleJsChecksum}

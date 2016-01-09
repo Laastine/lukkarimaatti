@@ -10,6 +10,7 @@ import Promise from 'bluebird'
 import bodyParser from 'body-parser'
 import DB from './db'
 import CourseRoutes from './routes/course'
+import ApiRoutes from './routes/api'
 const fs = Promise.promisifyAll(require('fs'))
 
 const server = express()
@@ -18,7 +19,7 @@ server.use(compression({threshold: 512}))
 server.use(bodyParser.json())
 server.disable('x-powered-by')
 server.use('/course', CourseRoutes)
-
+server.use('/api', ApiRoutes)
 const cssFilePath = path.resolve(`${__dirname}/../.generated/style.css`)
 const bundleJsFilePath = path.resolve(`${__dirname}/../.generated/bundle.js`)
 path.resolve(`${__dirname}/../app/img/favicon.png`)

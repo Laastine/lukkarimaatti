@@ -11,7 +11,7 @@ Compatible with IE10+ and newest Firefox and Chrome
 
 Originally (late 2012) started as Java+Spring boilerplate + Backbone/jQuery project.<br>
 Later converted to pure JavaScript project with Node.js server.<br>
-Today it's implemented with universal JavaScript (React/Bacon).
+Today it's implemented with universal JavaScript (Node/React/Bacon) using megablob architecture.
 
 ### Ingredients
 * [Node.js](https://nodejs.org)

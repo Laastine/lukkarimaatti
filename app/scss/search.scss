@@ -55,15 +55,15 @@ body {
   border-top: 1px solid #333;
 }
 
+.search-list-selected {
+  background-color: #555;
+}
+
 .search-list-coursename {
   padding: 5px;
   cursor: pointer;
   float: left;
   width: 390px;
-
-  &:hover {
-    background-color: #555;
-  }
 }
 
 .result-list-coursename {

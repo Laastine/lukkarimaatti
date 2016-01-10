@@ -18,6 +18,7 @@ export const pageTitle = 'Lukkarimaatti++'
 const inputBus = new Bacon.Bus()
 const selectedCoursesBus = new Bacon.Bus()
 const emailBus = new Bacon.Bus()
+const indexBus = new Bacon.Bus()
 
 export const initialState = (urlCourses = []) => {
     return {
@@ -26,7 +27,8 @@ export const initialState = (urlCourses = []) => {
         courses: [],
         isSearchListVisible: false,
         urlParams: [],
-        isModalOpen: false
+        isModalOpen: false,
+        selectedIndex: -1
     }
 }
 
@@ -74,6 +76,10 @@ export const applicationStateProperty = (initialState) => Bacon.update(
         ...applicationState,
         input
     }),
+    indexBus, (applicationState, selectedIndex) => ({
+       ...applicationState,
+        selectedIndex
+    }),
     searchResultsS, (applicationState, courseNames) => ({
         ...applicationState,
         courses: JSON.parse(courseNames.text),
@@ -97,9 +103,7 @@ export const renderPage = (applicationState) =>
     <body>
     {Header(applicationState, emailBus)}
     <div className="container">
-
-        {searchList(applicationState, inputBus, selectedCoursesBus)}
-
+        {searchList(applicationState, inputBus, selectedCoursesBus, indexBus)}
         <div className="selected-courses-list">
             <div className="selected-courses-list-topic">Selected courses:</div>
             {searchResults(applicationState, selectedCoursesBus, CourseParser)}

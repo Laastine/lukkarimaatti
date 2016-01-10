@@ -97,7 +97,7 @@ export const applicationStateProperty = (initialState) => Bacon.update(
         ...applicationState,
         isModalOpen
     })
-).doLog('state')
+)
 
 export const renderPage = (applicationState) =>
     <body>
@@ -117,7 +117,6 @@ export const renderPage = (applicationState) =>
                     dayHeaderFormat: "ddd D.M",
                     dayFormat: "ddd D.M"
                 }}
-                onSelectEvent={event => console.log(event)}
                 min={new Date(moment(applicationState.currentDate).hours(8).minutes(0).format())}
                 max={new Date(moment(applicationState.currentDate).hours(20).minutes(0).format())}
                 defaultDate={new Date(moment(applicationState.currentDate).format())}

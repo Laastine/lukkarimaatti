@@ -15,7 +15,6 @@ const addCourse = (courseName, applicationState, selectedCoursesBus) => {
 export default (applicationState, inputBus, selectedCoursesBus, indexBus) => {
 
     const handleKeyInput = (event) => {
-        console.log('start selectedIndex', applicationState.selectedIndex)
         const foo = R.pipe(R.uniqBy((c) => c.course_name), R.slice(0, 10))(applicationState.courses)
         if (event.keyCode === 40) {  //Down
             if (applicationState.selectedIndex < foo.length - 1 && applicationState.selectedIndex < 10) {
@@ -46,7 +45,7 @@ export default (applicationState, inputBus, selectedCoursesBus, indexBus) => {
                 R.slice(0, 10),
                 mapIndexed((c, index) =>
                     <div key={c.course_name}
-                         onMouseEnter={() => {indexBus.push(index);console.log('onMouseEnter',applicationState.selectedIndex);}}
+                         onMouseEnter={() => indexBus.push(index)}
                          className={index === applicationState.selectedIndex ? "search-list-coursename search-list-selected" : "search-list-coursename"}
                          onClick={selectCourse}>{c.course_name}</div>))(applicationState.courses) : undefined
     }
@@ -59,7 +58,7 @@ export default (applicationState, inputBus, selectedCoursesBus, indexBus) => {
                        onKeyDown={handleKeyInput}></input>
             </div>
             <div className="search-list-container"
-                 onMouseLeave={() => {console.log('onMouseLeave'); indexBus.push(-1)}}>
+                 onMouseLeave={() => indexBus.push(-1)}>
                 {searchList()}
             </div>
         </div>

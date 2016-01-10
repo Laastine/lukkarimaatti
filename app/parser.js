@@ -21,11 +21,10 @@ const updateCourseData = function () {
                     }
                 })
             links.forEach(function (link) {
-                console.log(link)
                 parseCourseData(link)
             })
         }).catch(function () {
-        console.log('Failed to parse links')
+        console.error('Failed to parse links')
     })
 }
 
@@ -187,7 +186,7 @@ function parseCourseData(url) {
                 DB.insertCourse(dataBatch)
             }
         }).catch(function (error) {
-        console.log('Failed to parse HTML', error)
+        console.error('Failed to parse HTML', error)
     })
 }
 

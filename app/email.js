@@ -11,17 +11,17 @@ module.exports = {
             }
         })
         console.log('name=' + config.emailAddress)
-        console.log('req body', req.body)
         const mailOptions = {
             from: 'lukkarimaatti@gmail.com',
             to: req.body.email,
             subject: 'Lukkarimaatti++ course url',
             text: 'Your lukkarimaatti url=' + req.body.link
         }
+        console.log('mailOptions', mailOptions)
 
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
-                console.log(error)
+                console.error(error)
                 res.status(500).json({status: 'email send error'})
             } else {
                 console.log('Message sent: ' + info.response)

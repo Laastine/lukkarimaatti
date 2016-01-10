@@ -1,30 +1,30 @@
-var cheerio = require('cheerio'),
-    Promise = require('bluebird'),
-    request = require('request'),
-    R = require('ramda'),
-    config = require('./config'),
-    DB = require('./db')
+import cheerio from 'cheerio'
+import Promise from 'bluebird'
+const request = Promise.promisify(require('request'))
+import R from 'ramda'
+import config from './config'
+import DB from './db'
 
-var links = []
+let links = []
 
-const updateCourseData = function() {
-    Promise.promisify(request)({url: config.uniUrl, json: true})
-        .then(function(res) {
+const updateCourseData = function () {
+    request({url: config.uniUrl, json: true})
+        .then(function (res) {
             var $ = cheerio.load(res[1])
             $($(".portlet-body .journal-content-article").children()[2])
                 .find('a')
-                .each(function() {
+                .each(function () {
                     var link = $(this).attr('href')
                     console.log('link', link)
                     if (link.substring(0, 34) === '/c/document_library/get_file?uuid=') {
                         links.push(link)
                     }
                 })
-            links.forEach(function(link) {
+            links.forEach(function (link) {
                 console.log(link)
                 parseCourseData(link)
             })
-        }).catch(function() {
+        }).catch(function () {
         console.log('Failed to parse links')
     })
 }
@@ -121,22 +121,22 @@ const getDepartment = (input) => {
 }
 
 const sanitizeInput = (input) =>  input ? input.trim()
-        .replace(/'/g, "")
-        .replace(/(\r\n|\n|\r)/g, '') : ''
+    .replace(/'/g, "")
+    .replace(/(\r\n|\n|\r)/g, '') : ''
 
 function parseCourseData(url) {
-    Promise.promisify(request)({url: 'https://uni.lut.fi' + url})
-        .then(function(html) {
+    request({url: 'https://uni.lut.fi' + url})
+        .then(function (html) {
             var dataBatch = []
             var data = {}
             var $ = cheerio.load(html[1])
             $('table.spreadsheet')
-                .each(function() {
-                    $(this).find('tr:not(.columnTitles)').map(function() {
+                .each(function () {
+                    $(this).find('tr:not(.columnTitles)').map(function () {
                         var courseData = []
                         var tds = $(this).find('td')
                         if (tds.length === 9) {
-                            tds.each(function() {
+                            tds.each(function () {
                                 courseData.push($(this).text())
                             })
                             var args = parseBasicData(courseData[0])
@@ -154,7 +154,7 @@ function parseCourseData(url) {
                                 group_name: sanitizeInput(args.group)
                             }
                         } else if (tds.length === 8) {
-                            tds.each(function() {
+                            tds.each(function () {
                                 courseData.push($(this).text())
                             })
                             var args = parseBasicData(courseData[0])
@@ -186,14 +186,14 @@ function parseCourseData(url) {
             if (dataBatch.length > 0) {
                 DB.insertCourse(dataBatch)
             }
-        }).catch(function(error) {
+        }).catch(function (error) {
         console.log('Failed to parse HTML', error)
     })
 }
 
 export default {
-    updateCourseData: function(req, res) {
-        console.log('updateCourseData', req.params['secret'])
+    updateCourseData: (req, res) => {
+        console.log('update course data')
         if (req.query['secret'] === config.appSecret) {
             DB.cleanCourseTable()
             updateCourseData()

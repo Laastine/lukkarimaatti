@@ -1,13 +1,13 @@
 {
   "env": {
     "browser": true,
-    "es6": true,
-    "jquery": false
+    "node": true,
+    "es6": true
   },
   "ecmaFeatures": {
     "modules": true,
     "jsx": true,
-    "spread": true
+    "experimentalObjectRestSpread": true
   },
   "plugins": [
     "react"
@@ -27,10 +27,11 @@
     "quotes": [0],
     "no-alert": [0],
     "no-extra-bind": [0],
-    "no-sequences": [0]
+    "no-sequences": [0],
+    "react/jsx-uses-react": 2,
+    "react/display-name": 0
   },
   "globals": {
-    "Bacon": false,
-    "React": "false"
+    "Bacon": false
   }
 }

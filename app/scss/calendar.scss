@@ -174,7 +174,7 @@ button.rbc-input::-moz-focus-inner {
 .rbc-event {
   cursor: pointer;
   padding: 2px 5px;
-  background-color: #3174ad;
+  background-color: #ddd;
   border-radius: 5px;
   color: #fff;
 }
@@ -404,7 +404,7 @@ button.rbc-input::-moz-focus-inner {
 }
 
 .rbc-day-slot .rbc-event {
-  border: 1px solid #265985;
+  border: 1px solid #aaa;
   display: flex;
   max-height: 100%;
   flex-flow: column wrap;
@@ -416,6 +416,10 @@ button.rbc-input::-moz-focus-inner {
   flex: none;
   padding-right: 5px;
   width: auto;
+}
+
+.rbc-event-content {
+  font-size: 14px;
 }
 
 .rbc-day-slot .rbc-event-content {
@@ -540,4 +544,8 @@ button.rbc-input::-moz-focus-inner {
 
 .rbc-time-content > .rbc-day-slot {
   width: 100%;
+}
+
+.calendar-event {
+  border-radius: 4px;
 }

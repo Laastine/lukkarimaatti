@@ -99,6 +99,24 @@ export const applicationStateProperty = (initialState) => Bacon.update(
     })
 )
 
+const stringToColour = (colorSeed) => {
+    var hash = 0, colour = '#', value
+    colorSeed.split("").forEach(function(e) {
+        hash = colorSeed.charCodeAt(e) + ((hash << 5) - hash)
+    })
+    for (var j = 0; j < 3; j++) {
+        value = (hash >> (j * 8)) & 0xFF
+        colour += ('00' + value.toString(16)).substr(-2)
+    }
+    return colour
+}
+
+const Event = ({ event }) =>  (
+    <div style={{backgroundColor: stringToColour(event.title)}} className="calendar-event">
+        {event.title}{event.description}
+    </div>
+)
+
 export const renderPage = (applicationState) =>
     <body>
     {Header(applicationState, emailBus)}
@@ -122,6 +140,9 @@ export const renderPage = (applicationState) =>
                 formats={{
                     dayHeaderFormat: "ddd D.M",
                     dayFormat: "ddd D.M"
+                }}
+                components={{
+                    event: Event
                 }}
                 min={new Date(moment(applicationState.currentDate).hours(8).minutes(0).format())}
                 max={new Date(moment(applicationState.currentDate).hours(20).minutes(0).format())}

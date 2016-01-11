@@ -32,7 +32,8 @@ export default {
         return R.flatten(applicationState.selectedCourses.map((course) => {
             return JSON.parse('[' + course.week + ']').map((weekNumber) => {
                 return {
-                    title: course.course_name + '/' + course.type + '\n' + course.classroom,
+                    title: course.course_name,
+                    description: '/' + course.type + '\n' + course.classroom,
                     start: new Date(getTimestamp(course, weekNumber, course.time_of_day.split('-')[0] || 6)),
                     end: new Date(getTimestamp(course, weekNumber, course.time_of_day.split('-')[1] || 6)),
                     color: stringToColour(course.course_code),

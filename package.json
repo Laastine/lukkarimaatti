@@ -5,7 +5,7 @@
   "main": "app/bootstrap.js",
   "private": true,
   "engines": {
-    "node": "5.3.0"
+    "node": "5.4.0"
   },
   "dependencies": {
     "babel": "6.3.13",
@@ -58,14 +58,15 @@
       "babelify"
     ]
   },
+  "cacheDirectories": ["node_modules"],
   "scripts": {
     "build-css": "node_modules/node-sass/bin/node-sass --output-style=compressed app/scss/style.scss --output .generated",
     "build-js": "node_modules/browserify/bin/cmd.js --entry app/client.js | node_modules/uglify-js/bin/uglifyjs --compress --mangle > .generated/bundle.js",
-    "build": "npm run build-css && npm run build-js",
+    "build": "export NODE_ENV=development; npm run build-css && npm run build-js",
     "watch-css": "node_modules/node-sass/bin/node-sass -w app/scss/style.scss --output-style=compressed --output .generated",
     "watch-js": "node_modules/watchify/bin/cmd.js app/client.js --debug -o .generated/bundle.js -v",
     "watch": "npm run watch-js & npm run watch-css & node_modules/supervisor/lib/cli-wrapper.js --quiet --ignore node_modules --watch app app/bootstrap.js",
-    "start": "node app/bootstrap.js",
+    "start": "export NODE_ENV=production; node app/bootstrap.js",
     "lint": "eslint app/ ",
     "clean": "rm .generated/*.js .generated/*.css",
     "start-dev": "export NODE_ENV=development; npm run watch",

@@ -27,6 +27,12 @@ const buildInsertQueryString = (courseBatch) => {
     return query
 }
 
+const buildErrorMessage = (functionName, query, ip, err) => {
+    const ipParam = ip ? ' IP: ' + ip : ''
+    const queryParam = typeof query === 'object' ? JSON.stringify(query) : query
+    console.error(functionName + ', request' + queryParam + ipParam + ' error', err)
+}
+
 export default {
     getCourseByName: (req, res) => {
         db.connectAsync(address)
@@ -42,6 +48,10 @@ export default {
                     .finally(() => {
                         release()
                     })
+            })
+            .catch((err) => {
+                buildErrorMessage('getCourseByName', req.query['name'], req.client.remoteAddress, err)
+                return []
             })
     },
 
@@ -59,6 +69,10 @@ export default {
                     .finally(() => {
                         release()
                     })
+            })
+            .catch((err) => {
+                buildErrorMessage('getCourseByName', req.params['code'], req.client.remoteAddress, err)
+                return []
             })
     },
 
@@ -83,6 +97,10 @@ export default {
                             release()
                         })
                 })
+                .catch((err) => {
+                    buildErrorMessage('prefetchCoursesByCode', params, '', err)
+                    return []
+                })
         }
     },
 
@@ -101,6 +119,10 @@ export default {
                         release()
                     })
             })
+            .catch((err) => {
+                buildErrorMessage('getCourseByCodeAndGroup', req.query['code'] + ' ' + req.query['groupName'], req.client.remoteAddress, err)
+                return []
+            })
     },
 
     insertCourse: (courseBatch) => {
@@ -114,6 +136,10 @@ export default {
                     .finally(()  => {
                         release()
                     })
+            })
+            .catch((err) => {
+                buildErrorMessage('insertCourse', query, '', err)
+                return []
             })
     },
 
@@ -129,6 +155,10 @@ export default {
                     .finally(() => {
                         release()
                     })
+            })
+            .catch((err) => {
+                buildErrorMessage('cleanCourseTable', '', '', err)
+                return []
             })
     }
 }

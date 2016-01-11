@@ -192,10 +192,10 @@ function parseCourseData(url) {
 
 export default {
     updateCourseData: (req, res) => {
-        console.log('update course data')
+        console.log('update course data from IP', req.client.remoteAddress)
         if (req.query['secret'] === config.appSecret) {
-            DB.cleanCourseTable()
-            updateCourseData()
+            DB.cleanCourseTable(req)
+            updateCourseData(req)
             res.status(200).json({status: 'ok'})
         } else {
             res.status(403).json({error: 'Unauthorized'})

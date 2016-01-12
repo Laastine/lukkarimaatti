@@ -7,3 +7,4 @@ public/dist/
 *.log
 setEnv.sh
 .DS_Store
+.generated

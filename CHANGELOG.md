@@ -13,6 +13,11 @@ And constructed with the following guidelines:
 
 ---
 
+### 1.2.0 January 12, 2016
+
+* Dropped old IE-support https://www.microsoft.com/en-us/WindowsForBusiness/End-of-IE-support
+* Front-end rewrite with react/bacon
+
 ### 1.1.0 September 25, 2015
 
 * Node.js backend

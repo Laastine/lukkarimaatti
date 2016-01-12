@@ -144,11 +144,11 @@ export default {
     },
 
     cleanCourseTable: () => {
-        console.log('cleanCourseTable')
-        db.connectAsync(address)
+        return db.connectAsync(address)
             .spread((connection, release) => {
                 var query = "TRUNCATE TABLE course"
                 return connection.queryAsync(query)
+                    .then((res) =>  res)
                     .error((error) => {
                         console.log('DB error=', error)
                     })

@@ -194,8 +194,7 @@ export default {
     updateCourseData: (req, res) => {
         console.log('update course data from IP', req.client.remoteAddress)
         if (req.query['secret'] === config.appSecret) {
-            DB.cleanCourseTable(req)
-            updateCourseData(req)
+            Promise.all([DB.cleanCourseTable()]).then((res) => updateCourseData())
             res.status(200).json({status: 'ok'})
         } else {
             res.status(403).json({error: 'Unauthorized'})

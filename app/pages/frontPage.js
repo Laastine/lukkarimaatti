@@ -64,8 +64,8 @@ const modalS = emailBus.flatMapLatest((event) => {
             link: window.location.href.toString()
         })
         return Bacon.fromPromise(responseP)
-            .map({isModalOpen: false})
-            .mapError({isModalOpen: true})
+            .map((res) => false)
+            .mapError(true)
     }
     return event.isModalOpen
 })

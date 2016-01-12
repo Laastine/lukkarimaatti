@@ -13,7 +13,7 @@ require('moment/locale/fi')
 BigCalendar.momentLocalizer(moment)
 
 export const pagePath = '/'
-export const pageTitle = 'Lukkarimaatti++'
+export const pageTitle = 'Lukkarimaatti'
 
 const inputBus = new Bacon.Bus()
 const selectedCoursesBus = new Bacon.Bus()

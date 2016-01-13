@@ -19,6 +19,7 @@ const inputBus = new Bacon.Bus()
 const selectedCoursesBus = new Bacon.Bus()
 const emailBus = new Bacon.Bus()
 const indexBus = new Bacon.Bus()
+const ajaxBus = new Bacon.Bus()
 
 export const initialState = (urlCourses = []) => {
     return {
@@ -28,7 +29,8 @@ export const initialState = (urlCourses = []) => {
         isSearchListVisible: false,
         urlParams: [],
         isModalOpen: false,
-        selectedIndex: -1
+        selectedIndex: -1,
+        waitingAjax: false
     }
 }
 
@@ -59,12 +61,16 @@ const selectedCourseS = selectedCoursesBus.flatMapLatest((event) => {
 
 const modalS = emailBus.flatMapLatest((event) => {
     if (event.isModalOpen && event.address) {
+        ajaxBus.push(true)
         let responseP = request.post('api/save').send({
             email: event.address.toString(),
             link: window.location.href.toString()
         })
         return Bacon.fromPromise(responseP)
-            .map((res) => false)
+            .map((res) => {
+                ajaxBus.push(false)
+                return false
+            })
             .mapError(true)
     }
     return event.isModalOpen
@@ -79,6 +85,10 @@ export const applicationStateProperty = (initialState) => Bacon.update(
     indexBus, (applicationState, selectedIndex) => ({
         ...applicationState,
         selectedIndex
+    }),
+    ajaxBus, (applicationState, waitingAjax) => ({
+        ...applicationState,
+        waitingAjax
     }),
     searchResultsS, (applicationState, courseNames) => ({
         ...applicationState,
@@ -101,7 +111,7 @@ export const applicationStateProperty = (initialState) => Bacon.update(
 
 const stringToColour = (colorSeed) => {
     var hash = 0, colour = '#', value
-    colorSeed.split("").forEach(function(e) {
+    colorSeed.split("").forEach(function (e) {
         hash = colorSeed.charCodeAt(e) + ((hash << 5) - hash)
     })
     for (var j = 0; j < 3; j++) {

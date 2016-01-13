@@ -5,6 +5,7 @@ export default (page, applicationState, checksums) =>
         <head>
             <link rel="stylesheet" href={`/style.css?checksum=${checksums.cssChecksum}`}/>
             <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
             <title>{page.pageTitle}</title>
             <script type="text/javascript" dangerouslySetInnerHTML={{__html: `
                 window.CHECKSUMS = ${JSON.stringify(checksums)};

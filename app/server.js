@@ -20,9 +20,12 @@ server.use(bodyParser.json())
 server.disable('x-powered-by')
 server.use('/course', CourseRoutes)
 server.use('/api', ApiRoutes)
+
+server.use('/favicon.png', express.static(`${__dirname}/img/favicon.png`))
+server.use('/spinner.gif', express.static(`${__dirname}/img/spinner.gif`))
+
 const cssFilePath = path.resolve(`${__dirname}/../.generated/style.css`)
 const bundleJsFilePath = path.resolve(`${__dirname}/../.generated/bundle.js`)
-path.resolve(`${__dirname}/../app/img/favicon.png`)
 
 const checksumPromise = filePath =>
     fs
@@ -85,7 +88,6 @@ const serveStaticResource = filePath => (req, res, next) => {
 }
 
 server.get('/style.css', serveStaticResource(cssFilePath))
-
 server.get('/bundle.js', serveStaticResource(bundleJsFilePath))
 
 export const start = port => {

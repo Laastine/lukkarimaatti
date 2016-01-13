@@ -138,8 +138,9 @@ body {
 }
 
 .modal-input-container {
+  padding: 10px;
   width: 100%;
-  height: 30px;
+  height: 50px;
 }
 
 .modal-button {
@@ -153,9 +154,19 @@ body {
 .modal-input {
   display: inline-block;
   border-radius: 4px;
-  width: 160px;
-  height: 25px;
-  line-height: 25px;
+  font-size: 15px;
+  width: 220px;
+  height: 30px;
+  line-height: 30px;
+  margin-left: 5px;
+}
+
+.modal-ajax-spinner {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  margin-left: 10px;
 }
 
 .close {

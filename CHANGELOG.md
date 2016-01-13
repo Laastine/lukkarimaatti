@@ -7,6 +7,9 @@ Version numbering:
 
 ---
 
+### 1.2.1 January 13, 2016
+* Ajax spinner added to mail sending
+
 ### 1.2.0 January 12, 2016
 
 * Dropped old IE-support https://www.microsoft.com/en-us/WindowsForBusiness/End-of-IE-support

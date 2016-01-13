@@ -5,12 +5,6 @@ Version numbering:
 
 `<major>.<minor>.<patch>`
 
-And constructed with the following guidelines:
-
-* Major changes bumps the major
-* Small additions bumps the minor
-* Bug fixes and misc changes bump the patch
-
 ---
 
 ### 1.2.0 January 12, 2016

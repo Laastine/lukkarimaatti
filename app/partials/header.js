@@ -11,7 +11,7 @@ export default (applicationState, emailBus) => {
         </button>
     const modal = applicationState.isModalOpen ? <div className="modal-dialog">
         <div>
-            <div onClick={() => {emailBus.push({isModalOpen: false})}} className="close">X
+            <div id="saveClose" onClick={() => {emailBus.push({isModalOpen: false})}} className="close">X
             </div>
             <div>Send course selection URL to your email.</div>
             <form className="modal-input-container">
@@ -23,6 +23,6 @@ export default (applicationState, emailBus) => {
     return <div className="header-container">
         {modal}
         <a className="header-element header-link" href="/">Lukkarimaatti++</a>
-        <a className="header-element header-save" onClick={() => emailBus.push({isModalOpen: true})}>Save</a>
+        <a id="saveModalButton" className="header-element header-save" onClick={() => emailBus.push({isModalOpen: true})}>Save</a>
     </div>
 }

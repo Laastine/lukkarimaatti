@@ -19,7 +19,6 @@
     "compression": "1.6.0",
     "express": "4.13.3",
     "forever": "0.15.1",
-    "mocha-phantomjs": "4.0.2",
     "moment": "^2.11.1",
     "node-sass": "3.4.2",
     "nodemailer": "2.0.0",
@@ -35,12 +34,14 @@
     "uglify-js": "2.6.1"
   },
   "devDependencies": {
+    "babel-cli": "6.4.5",
     "eslint": "1.10.3",
     "eslint-plugin-react": "3.15.0",
-    "mocha-phantomjs": "4.0.2",
+    "mocha": "2.4.4",
     "nodemon": "1.8.1",
     "supervisor": "0.9.1",
-    "watchify": "3.7.0"
+    "watchify": "3.7.0",
+    "zombie": "4.2.1"
   },
   "babel": {
     "presets": [
@@ -67,7 +68,6 @@
     "lint": "eslint app/ ",
     "clean": "rm .generated/*.js .generated/*.css",
     "start-dev": "export NODE_ENV=development; npm run watch",
-    "build-tests": "(cd test && npm install)",
-    "test": "node_modules/mocha-phantomjs/bin/mocha-phantomjs http://localhost:8080/test/runner.html"
+    "test": "./node_modules/.bin/mocha --delay --compilers js:babel-core/register test/test.js"
   }
 }

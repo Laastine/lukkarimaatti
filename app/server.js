@@ -22,6 +22,7 @@ server.use('/course', CourseRoutes)
 server.use('/api', ApiRoutes)
 
 server.use('/favicon.png', express.static(`${__dirname}/img/favicon.png`))
+server.use('/github.png', express.static(`${__dirname}/img/github.png`))
 server.use('/spinner.gif', express.static(`${__dirname}/img/spinner.gif`))
 
 const cssFilePath = path.resolve(`${__dirname}/../.generated/style.css`)

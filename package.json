@@ -19,6 +19,7 @@
     "compression": "1.6.0",
     "express": "4.13.3",
     "forever": "0.15.1",
+    "mocha-phantomjs": "4.0.2",
     "moment": "^2.11.1",
     "node-sass": "3.4.2",
     "nodemailer": "2.0.0",

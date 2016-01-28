@@ -23,12 +23,12 @@ Today it's implemented with universal JavaScript (Node/React/Bacon) using "megab
 * [cheerio](https://github.com/cheeriojs/cheerio)
 * [Moment.js](http://momentjs.com/)
 * [Mocha](http://mochajs.org/)
-* [PhantomJS](http://phantomjs.org/)
+* [Zombie.js](http://zombie.js.org/)
 * [Babel](https://babeljs.io/)
 * [Browserify](http://browserify.org/)<br>
 
 ## Requirements & Build
-Node.js 0.12 or newer<br>
+Node.js 4 LTS or newer<br>
 
 Build application:
 ```
@@ -37,6 +37,13 @@ npm run build
 ```
 For quick browser testing ```npm run start-dev```
 and open http://localhost:8080 in your web browser.
+
+## Tests
+
+Currently WIP
+```
+npm test
+```
 
 ### Copyright and license
 Copyright &copy; 2013 Mikko Kaistinen, mikko.kaistinen@kapsi.fi

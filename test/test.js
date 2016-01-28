@@ -18,6 +18,16 @@ context('User visits the front page', () => {
         it('Open save dialog', () => {
             browser.clickLink('#saveModalButton')
             browser.assert.text('#saveId', 'Send')
+            browser.fire('.close')
+        })
+
+        it('Check calendar navigation', () => {
+            browser.pressButton('day')
+            browser.assert.elements('.rbc-day-slot', 1)
+            browser.pressButton('week')
+            browser.assert.elements('.rbc-day-slot', 7)
+            browser.pressButton('month')
+            browser.assert.elements('.rbc-header', 7)
         })
     })
 })

@@ -4,6 +4,9 @@
   "version": "1.2.1",
   "main": "app/bootstrap.js",
   "private": true,
+  "engines": {
+    "node": "4.2.6"
+  },
   "dependencies": {
     "babel": "6.3.26",
     "babel-plugin-transform-object-rest-spread": "6.3.13",
@@ -14,30 +17,29 @@
     "bluebird": "2.10.2",
     "body-parser": "1.14.2",
     "browserify": "13.0.0",
-    "cheerio": "0.19.0",
-    "colors": "^1.1.2",
-    "compression": "1.6.0",
-    "express": "4.13.3",
+    "cheerio": "0.20.0",
+    "colors": "1.1.2",
+    "compression": "1.6.1",
+    "express": "4.13.4",
     "forever": "0.15.1",
-    "moment": "^2.11.1",
+    "moment": "2.11.1",
     "node-sass": "3.4.2",
-    "nodemailer": "2.0.0",
+    "nodemailer": "2.1.0",
     "path": "0.12.7",
-    "pg": "4.4.3",
-    "pg-bluebird": "1.0.8",
+    "pg": "4.4.4",
     "ramda": "0.19.1",
-    "react": "0.14.6",
-    "react-big-calendar": "0.9.7",
-    "react-dom": "0.14.6",
-    "request": "2.67.0",
-    "superagent": "1.6.1",
+    "react": "0.14.7",
+    "react-big-calendar": "0.9.8",
+    "react-dom": "0.14.7",
+    "request": "2.69.0",
+    "superagent": "1.7.2",
     "uglify-js": "2.6.1"
   },
   "devDependencies": {
     "babel-cli": "6.4.5",
     "eslint": "1.10.3",
-    "eslint-plugin-react": "3.15.0",
-    "mocha": "2.4.4",
+    "eslint-plugin-react": "3.16.1",
+    "mocha": "2.4.5",
     "nodemon": "1.8.1",
     "supervisor": "0.9.1",
     "watchify": "3.7.0",
@@ -68,6 +70,6 @@
     "lint": "eslint app/ ",
     "clean": "rm .generated/*.js .generated/*.css",
     "start-dev": "export NODE_ENV=development; npm run watch",
-    "test": "./node_modules/.bin/mocha --delay --compilers js:babel-core/register test/test.js"
+    "test": "./node_modules/.bin/mocha --delay --compilers js:babelify/node_modules/babel-core/register test/test.js"
   }
 }

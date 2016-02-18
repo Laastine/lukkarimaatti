@@ -5,7 +5,7 @@
   "main": "app/bootstrap.js",
   "private": true,
   "engines": {
-    "node": "4.2.6"
+    "node": "4.3.1"
   },
   "dependencies": {
     "babel": "6.5.2",
@@ -24,9 +24,9 @@
     "forever": "0.15.1",
     "moment": "2.11.2",
     "node-sass": "3.4.2",
-    "nodemailer": "2.1.0",
+    "nodemailer": "2.2.0",
     "path": "0.12.7",
-    "pg": "4.4.4",
+    "pg": "4.4.6",
     "ramda": "0.19.1",
     "react": "0.14.7",
     "react-big-calendar": "0.9.8",
@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "babel-cli": "6.5.1",
-    "eslint": "1.10.3",
+    "eslint": "2.1.0",
     "eslint-plugin-react": "3.16.1",
     "mocha": "2.4.5",
     "nodemon": "1.8.1",

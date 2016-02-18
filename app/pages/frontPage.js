@@ -21,18 +21,16 @@ const emailBus = new Bacon.Bus()
 const indexBus = new Bacon.Bus()
 const ajaxBus = new Bacon.Bus()
 
-export const initialState = (urlCourses = []) => {
-    return {
-        selectedCourses: urlCourses,
-        currentDate: moment(),
-        courses: [],
-        isSearchListVisible: false,
-        urlParams: [],
-        isModalOpen: false,
-        selectedIndex: -1,
-        waitingAjax: false
-    }
-}
+export const initialState = (urlCourses = []) => ({
+    selectedCourses: urlCourses,
+    currentDate: moment(),
+    courses: [],
+    isSearchListVisible: false,
+    urlParams: [],
+    isModalOpen: false,
+    selectedIndex: -1,
+    waitingAjax: false
+})
 
 const searchResultsS = inputBus.flatMap((courseName) => {
     if (courseName.length > 2) {
@@ -121,7 +119,7 @@ const stringToColour = (colorSeed) => {
     return colour
 }
 
-const Event = ({ event }) =>  (
+const Event = ({ event }) => (
     <div style={{backgroundColor: stringToColour(event.title)}} className="calendar-event">
         {event.title}{event.description}
     </div>
@@ -160,7 +158,7 @@ export const renderPage = (applicationState) =>
         </div>
         <div className="footer">
             <div id="disclaimer">Use with your own risk!</div>
-            <div id="versionInfo">v1.2.1</div>
+            <div id="versionInfo">v1.2.2</div>
         </div>
     </div>
     </body>

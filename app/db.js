@@ -32,7 +32,7 @@ const buildErrorMessage = (functionName, query, ip, err) => {
 }
 
 module.exports = {
-    getCourseByName: (req, res) => {
+    getCourseByName: (req, res) =>
         db.connectAsync(address)
             .spread((connection, release) => {
                 const query = "SELECT * FROM course WHERE LOWER(course_name) LIKE \'%" + req.query['name'].toLocaleLowerCase() + '%\''
@@ -44,10 +44,9 @@ module.exports = {
             .catch((err) => {
                 buildErrorMessage('getCourseByName', req.query['name'], req.client.remoteAddress, err)
                 return []
-            })
-    },
+            }),
 
-    getCourseByCode: (req, res) => {
+    getCourseByCode: (req, res) =>
         db.connectAsync(address)
             .spread((connection, release) => {
                 const query = "SELECT * FROM course WHERE course_code = \'" + req.params['code'] + "\'"
@@ -59,8 +58,7 @@ module.exports = {
             .catch((err) => {
                 buildErrorMessage('getCourseByName', req.params['code'], req.client.remoteAddress, err)
                 return []
-            })
-    },
+            }),
 
     prefetchCoursesByCode: (params) => {
         const insertGroupCondition = (groupName) => groupName ? " AND group_name = \'" + groupName + "\'" : ''
@@ -84,7 +82,7 @@ module.exports = {
         }
     },
 
-    getCourseByCodeAndGroup: (req, res) => {
+    getCourseByCodeAndGroup: (req, res) =>
         db.connectAsync(address)
             .spread((connection, release) => {
                 const query = "SELECT * FROM course WHERE course_code = \'" + req.query['code'] + "\' and group_name = \'" + req.query['groupName'] + "\'"
@@ -96,12 +94,10 @@ module.exports = {
             .catch((err) => {
                 buildErrorMessage('getCourseByCodeAndGroup', req.query['code'] + ' ' + req.query['groupName'], req.client.remoteAddress, err)
                 return []
-            })
-    },
+            }),
 
     insertCourse: (courseBatch) => {
         const query = buildInsertQueryString(courseBatch)
-        console.log('query',query)
         db.connectAsync(address)
             .spread((connection, release) => {
                 return connection.queryAsync(query)
@@ -114,18 +110,17 @@ module.exports = {
             })
     },
 
-    cleanCourseTable: () => {
-        return db.connectAsync(address)
-            .spread((connection, release) => {
-                var query = "TRUNCATE TABLE course"
-                return connection.queryAsync(query)
-                    .then((res) => res)
-                    .error((error) => console.log('DB error=', error.stack))
-                    .finally(() => release())
-            })
-            .catch((err) => {
-                buildErrorMessage('cleanCourseTable', '', '', err)
-                return []
-            })
-    }
+
+    cleanCourseTable: () => db.connectAsync(address)
+        .spread((connection, release) => {
+            const query = "TRUNCATE TABLE course"
+            return connection.queryAsync(query)
+                .then((res) => res)
+                .error((error) => console.log('DB error=', error.stack))
+                .finally(() => release())
+        })
+        .catch((err) => {
+            buildErrorMessage('cleanCourseTable', '', '', err)
+            return []
+        })
 }

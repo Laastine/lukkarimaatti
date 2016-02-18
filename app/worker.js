@@ -1,3 +1,3 @@
-var Parser = require('./parser')
+"use strict"
 
-Parser.updateCourseData()
+require('./parser').workerUpdateData()

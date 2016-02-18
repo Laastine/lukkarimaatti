@@ -1,9 +1,11 @@
-import cheerio from 'cheerio'
-import Promise from 'bluebird'
+"use strict"
+
+const cheerio = require('cheerio')
+const Promise = require('bluebird')
+const R = require('ramda')
+const config = require('./config')
+const DB = require('./db')
 const request = Promise.promisify(require('request'))
-import R from 'ramda'
-import config from './config'
-import DB from './db'
 
 let links = []
 
@@ -119,7 +121,7 @@ const getDepartment = (input) => {
     }
 }
 
-const sanitizeInput = (input) =>  input ? input.trim()
+const sanitizeInput = (input) => input ? input.trim()
     .replace(/'/g, "")
     .replace(/(\r\n|\n|\r)/g, '') : ''
 
@@ -190,7 +192,7 @@ function parseCourseData(url) {
     })
 }
 
-export default {
+module.exports = {
     updateCourseData: (req, res) => {
         console.log('update course data from IP', req.client.remoteAddress)
         if (req.query['secret'] === config.appSecret) {
@@ -199,6 +201,11 @@ export default {
         } else {
             res.status(403).json({error: 'Unauthorized'})
         }
+    },
+
+    workerUpdateData: () => {
+        console.log('update course data by worker')
+        Promise.all([DB.cleanCourseTable()]).then((res) => updateCourseData())
     }
 }
 

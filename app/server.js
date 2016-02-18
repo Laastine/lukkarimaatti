@@ -1,3 +1,5 @@
+"use strict"
+
 import express from 'express'
 import ReactDOMServer from 'react-dom/server'
 import basePage from './pages/basePage'

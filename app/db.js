@@ -1,6 +1,8 @@
-import pg from 'pg'
-import Promise from 'bluebird'
-import R from 'ramda'
+"use strict"
+
+const pg = require('pg')
+const Promise = require('bluebird')
+const R = require('ramda')
 const appConfig = require('./config')
 
 const db = Promise.promisifyAll(pg),
@@ -33,7 +35,7 @@ const buildErrorMessage = (functionName, query, ip, err) => {
     console.error(functionName + ', request' + queryParam + ipParam + ' error', err)
 }
 
-export default {
+module.exports = {
     getCourseByName: (req, res) => {
         db.connectAsync(address)
             .spread((connection, release) => {
@@ -133,7 +135,7 @@ export default {
                     .error((error) => {
                         console.log('DB insert error=', error)
                     })
-                    .finally(()  => {
+                    .finally(() => {
                         release()
                     })
             })
@@ -148,7 +150,7 @@ export default {
             .spread((connection, release) => {
                 var query = "TRUNCATE TABLE course"
                 return connection.queryAsync(query)
-                    .then((res) =>  res)
+                    .then((res) => res)
                     .error((error) => {
                         console.log('DB error=', error)
                     })

@@ -60,12 +60,11 @@ const parseBasicData = (course) => {
 const parseWeeks = (weeks) => {
     var weekSequence = []
     if (R.contains('-', weeks)) {
-        weeks.match(/[0-9]{1,2}-[0-9]{1,2}/g).map((m) => {
-            return R.range(
+        weeks.match(/[0-9]{1,2}-[0-9]{1,2}/g).map((m) =>
+            R.range(
                 parseInt(m.substring(0, m.indexOf('-')), 10),
                 parseInt(m.substring(m.indexOf('-') + 1), 10) + 1
-            )
-        }).map((r) => {
+            )).map((r) => {
             weekSequence = R.concat(weekSequence, r)
         })
     }

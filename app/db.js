@@ -41,15 +41,9 @@ module.exports = {
             .spread((connection, release) => {
                 const query = "SELECT * FROM course WHERE LOWER(course_name) LIKE \'%" + req.query['name'].toLocaleLowerCase() + '%\''
                 return connection.queryAsync(query)
-                    .then((result) => {
-                        res.json(result.rows)
-                    })
-                    .error((error) => {
-                        console.log('DB error=', error)
-                    })
-                    .finally(() => {
-                        release()
-                    })
+                    .then((result) => res.json(result.rows))
+                    .error((error) => console.err('DB error=', error.stack))
+                    .finally(() => release())
             })
             .catch((err) => {
                 buildErrorMessage('getCourseByName', req.query['name'], req.client.remoteAddress, err)
@@ -62,15 +56,9 @@ module.exports = {
             .spread((connection, release) => {
                 const query = "SELECT * FROM course WHERE course_code = \'" + req.params['code'] + "\'"
                 return connection.queryAsync(query)
-                    .then((result) => {
-                        res.json(result.rows)
-                    })
-                    .error((error) => {
-                        console.log('DB error=', error)
-                    })
-                    .finally(() => {
-                        release()
-                    })
+                    .then((result) => res.json(result.rows))
+                    .error((error) => console.log('DB error=', error))
+                    .finally(() => release())
             })
             .catch((err) => {
                 buildErrorMessage('getCourseByName', req.params['code'], req.client.remoteAddress, err)
@@ -89,15 +77,9 @@ module.exports = {
                         query += R.reduce((a, b) => a + insertCodeCondition(b.courseCode) + insertGroupCondition(b.groupName), '', R.tail(params))
                     }
                     return connection.queryAsync(query)
-                        .then((result) => {
-                            return result.rows
-                        })
-                        .error((error) => {
-                            console.log('DB error=', error)
-                        })
-                        .finally(() => {
-                            release()
-                        })
+                        .then((result) => result.rows)
+                        .error((error) => console.log('DB error=', error))
+                        .finally(() => release())
                 })
                 .catch((err) => {
                     buildErrorMessage('prefetchCoursesByCode', params, '', err)
@@ -111,15 +93,9 @@ module.exports = {
             .spread((connection, release) => {
                 const query = "SELECT * FROM course WHERE course_code = \'" + req.query['code'] + "\' and group_name = \'" + req.query['groupName'] + "\'"
                 return connection.queryAsync(query)
-                    .then((result) => {
-                        res.json(result.rows)
-                    })
-                    .error((error) => {
-                        console.log('DB error=', error)
-                    })
-                    .finally(() => {
-                        release()
-                    })
+                    .then((result) => res.json(result.rows))
+                    .error((error) => console.log('DB error=', error))
+                    .finally(() => release())
             })
             .catch((err) => {
                 buildErrorMessage('getCourseByCodeAndGroup', req.query['code'] + ' ' + req.query['groupName'], req.client.remoteAddress, err)
@@ -132,12 +108,8 @@ module.exports = {
         db.connectAsync(address)
             .spread((connection, release) => {
                 return connection.queryAsync(query)
-                    .error((error) => {
-                        console.log('DB insert error=', error)
-                    })
-                    .finally(() => {
-                        release()
-                    })
+                    .error((error) => console.error('DB insert error=', error.stack))
+                    .finally(() => release())
             })
             .catch((err) => {
                 buildErrorMessage('insertCourse', query, '', err)
@@ -151,12 +123,8 @@ module.exports = {
                 var query = "TRUNCATE TABLE course"
                 return connection.queryAsync(query)
                     .then((res) => res)
-                    .error((error) => {
-                        console.log('DB error=', error)
-                    })
-                    .finally(() => {
-                        release()
-                    })
+                    .error((error) => console.log('DB error=', error.stack))
+                    .finally(() => release())
             })
             .catch((err) => {
                 buildErrorMessage('cleanCourseTable', '', '', err)

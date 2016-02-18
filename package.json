@@ -1,7 +1,7 @@
 {
   "name": "lukkarimaatti",
   "description": "lukkarimaatti scheduling tool",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "main": "app/bootstrap.js",
   "private": true,
   "engines": {
@@ -69,7 +69,6 @@
     "start": "export NODE_ENV=production; node app/bootstrap.js",
     "lint": "eslint app/ ",
     "clean": "rm .generated/*.js .generated/*.css",
-    "start-dev": "export NODE_ENV=development; npm run watch",
     "test": "./node_modules/.bin/mocha --delay --compilers js:babelify/node_modules/babel-core/register test/test.js"
   }
 }

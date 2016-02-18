@@ -37,7 +37,7 @@ export default {
     getCourseByName: (req, res) => {
         db.connectAsync(address)
             .spread((connection, release) => {
-                const query = "SELECT * FROM course WHERE LOWER(course_name) LIKE \'%" + req.query['name'] + '%\''
+                const query = "SELECT * FROM course WHERE LOWER(course_name) LIKE \'%" + req.query['name'].toLocaleLowerCase() + '%\''
                 return connection.queryAsync(query)
                     .then((result) => {
                         res.json(result.rows)

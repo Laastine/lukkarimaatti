@@ -35,7 +35,7 @@ Build application:
 npm install
 npm run build
 ```
-For quick browser testing ```npm run start-dev```
+For quick browser testing ```npm run watch```
 and open http://localhost:8080 in your web browser.
 
 ## Tests

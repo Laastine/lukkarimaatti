@@ -7,6 +7,9 @@ Version numbering:
 
 ---
 
+### 1.2.2 February 18, 2016
+* Fix case issue
+
 ### 1.2.1 January 13, 2016
 * Ajax spinner added to mail sending
 

@@ -7,9 +7,7 @@ export default (page, applicationState, checksums) =>
             <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
             <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
             <title>{page.pageTitle}</title>
-            <script type="text/javascript" dangerouslySetInnerHTML={{__html: `
-                window.CHECKSUMS = ${JSON.stringify(checksums)};
-            `}}/>
+            <script type="text/javascript" dangerouslySetInnerHTML={{__html: `window.CHECKSUMS = ${JSON.stringify(checksums)}`}}/>
             <script src={`/bundle.js?checksum=${checksums.bundleJsChecksum}`} async/>
         </head>
         {(() => {

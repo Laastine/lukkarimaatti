@@ -8,26 +8,22 @@ const appConfig = require('./config')
 const db = Promise.promisifyAll(pg),
     address = "pg://" + appConfig.postgresUsername + ":" + appConfig.postgresPassword + "@" + appConfig.postgresUrl
 
-const buildInsertQueryString = (courseBatch) => {
-    let query = ''
-    courseBatch.forEach((course) => {
-        query += "INSERT INTO course (" +
-            "course_code, course_name, week, week_day, time_of_day, classroom, type, department, teacher, misc, group_name) " +
-            "VALUES (\'" +
-            course.course_code + "\',\'" +
-            course.course_name + "\',\'" +
-            course.week + "\',\'" +
-            course.week_day + "\',\'" +
-            course.time_of_day + "\',\'" +
-            course.classroom + "\',\'" +
-            course.type + "\',\'" +
-            course.department + "\',\'" +
-            course.teacher + "\',\'" +
-            course.misc + "\',\'" +
-            course.group_name + "\');"
-    })
-    return query
-}
+const buildInsertQueryString = (courseBatch) =>
+    R.reduce((a, course) => a + "INSERT INTO course (" +
+        "course_code, course_name, week, week_day, time_of_day, classroom, type, department, teacher, misc, group_name) " +
+        "VALUES (\'" +
+        course.course_code + "\',\'" +
+        course.course_name + "\',\'" +
+        course.week + "\',\'" +
+        course.week_day + "\',\'" +
+        course.time_of_day + "\',\'" +
+        course.classroom + "\',\'" +
+        course.type + "\',\'" +
+        course.department + "\',\'" +
+        course.teacher + "\',\'" +
+        course.misc + "\',\'" +
+        course.group_name + "\');", ''
+        , courseBatch)
 
 const buildErrorMessage = (functionName, query, ip, err) => {
     const ipParam = ip ? ' IP: ' + ip : ''
@@ -104,7 +100,8 @@ module.exports = {
     },
 
     insertCourse: (courseBatch) => {
-        var query = buildInsertQueryString(courseBatch)
+        const query = buildInsertQueryString(courseBatch)
+        console.log('query',query)
         db.connectAsync(address)
             .spread((connection, release) => {
                 return connection.queryAsync(query)

@@ -25,6 +25,19 @@ body {
   #course-searchbox {
     width: 300px !important;
   }
+
+  .search-list-element {
+    width: 85% !important;
+    display: flex !important;
+    text-align: left;
+    border-top: 0;
+  }
+  .result-list-coursename {
+    width: 260px !important;
+    padding: 5px;
+    cursor: pointer;
+    float: left;
+  }
 }
 
 .search-container {

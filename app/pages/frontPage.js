@@ -145,8 +145,9 @@ export const renderPage = (applicationState) =>
                 defaultView="week"
                 views={['month', 'week', 'day']}
                 formats={{
-                    dayHeaderFormat: "ddd D.M",
-                    dayFormat: "ddd D.M"
+                    dayHeaderFormat: "ddd D.M w",
+                    dayFormat: "ddd D.M",
+                    dayRangeHeaderFormat: "MMM DD.MM"
                 }}
                 components={{
                     event: Event

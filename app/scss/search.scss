@@ -4,6 +4,7 @@ body {
   padding: 0;
   height: 100%;
   width: 100%;
+  min-width: 360px;
   overflow-x: auto;
   text-align: center;
   box-sizing: border-box;
@@ -14,6 +15,16 @@ body {
 .container {
   margin: 20px;
   border: 0;
+}
+
+@media screen and (max-width: 700px) {
+  .github-ribbon {
+    display: none;
+  }
+
+  #course-searchbox {
+    width: 300px !important;
+  }
 }
 
 .search-container {
@@ -38,6 +49,9 @@ body {
 
 .selected-courses-list-topic {
   font-weight: 700;
+  text-align: left;
+  text-align: left;
+  padding: 5px;
 }
 
 .search-list-container {
@@ -51,6 +65,7 @@ body {
 
 .search-list-element {
   display: inline-flex;
+  text-align: left;
   width: 400px;
   border-top: 1px solid #333;
 }

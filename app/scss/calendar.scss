@@ -81,6 +81,32 @@ button.rbc-input::-moz-focus-inner {
   font-size: 16px
 }
 
+@media screen and (max-width: 700px) {
+  .rbc-toolbar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 12px
+  }
+
+  .rbc-toolbar button {
+    padding: .375rem 0.4rem !important;
+  }
+
+  .rbc-btn-group {
+    padding: .375rem 0.4rem !important;
+  }
+
+  .rbc-time-gutter {
+    width: 40px !important;
+    font-size: 11px;
+  }
+
+  .rbc-gutter-cell {
+    width: 40px !important;
+  }
+}
+
 .rbc-toolbar .rbc-toolbar-label {
   width: 100%;
   padding: 0 10px;
@@ -526,7 +552,7 @@ button.rbc-input::-moz-focus-inner {
   align-items: flex-start;
   width: 100%;
   border-top: 2px solid #DDD;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 
 .rbc-time-content > .rbc-time-gutter {

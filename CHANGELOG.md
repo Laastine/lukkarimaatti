@@ -7,6 +7,9 @@ Version numbering:
 
 ---
 
+### 1.2.3 February 19, 2016
+* More mobile friendly layout
+
 ### 1.2.2 February 18, 2016
 * Fix case issue
 

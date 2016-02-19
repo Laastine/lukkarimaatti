@@ -129,7 +129,7 @@ export const renderPage = (applicationState) =>
     <body>
     {Header(applicationState, emailBus)}
     <div className="container">
-        <a href="https://github.com/Laastine/lukkarimaatti">
+        <a className="github-ribbon" href="https://github.com/Laastine/lukkarimaatti">
             <img style={{position: 'absolute', top: '0', right: '0', border: '0'}}
                  src="github.png"
                  alt="Fork me on GitHub"></img>
@@ -158,7 +158,7 @@ export const renderPage = (applicationState) =>
         </div>
         <div className="footer">
             <div id="disclaimer">Use with your own risk!</div>
-            <div id="versionInfo">v1.2.2</div>
+            <div id="versionInfo">v1.2.3</div>
         </div>
     </div>
     </body>

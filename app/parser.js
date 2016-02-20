@@ -25,9 +25,7 @@ const updateCourseData = function () {
             links.forEach(function (link) {
                 parseCourseData(link)
             })
-        }).catch(function () {
-        console.error('Failed to parse links')
-    })
+        }).catch((err) => console.error('Failed to parse links', err.stack))
 }
 
 const parseBasicData = (course) => {
@@ -182,18 +180,16 @@ function parseCourseData(url) {
                     })
                 })
 
-
             if (dataBatch.length > 0) {
                 DB.insertCourse(dataBatch)
             }
-        }).catch(function (error) {
-        console.error('Failed to parse HTML', error)
-    })
+        }).catch((err) => console.error('Failed to parse HTML', err.stack)
+    )
 }
 
 module.exports = {
     updateCourseData: (req, res) => {
-        console.log('update course data from IP', req.client.remoteAddress)
+        console.log('Update course data from IP', req.client.remoteAddress)
         if (req.query['secret'] === config.appSecret) {
             Promise.all([DB.cleanCourseTable()]).then((res) => updateCourseData())
             res.status(200).json({status: 'ok'})
@@ -203,8 +199,10 @@ module.exports = {
     },
 
     workerUpdateData: () => {
-        console.log('update course data by worker')
-        Promise.all([DB.cleanCourseTable()]).then((res) => updateCourseData())
+        console.log('Update course data by worker')
+        Promise.all([DB.cleanCourseTable()])
+            .then((res) => updateCourseData())
+            .catch((err) => console.error("Error while updating DB data", err.stack))
     }
 }
 

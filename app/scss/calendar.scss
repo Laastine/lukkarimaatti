@@ -105,6 +105,10 @@ button.rbc-input::-moz-focus-inner {
   .rbc-gutter-cell {
     width: 40px !important;
   }
+
+  .rbc-event {
+    font-size: 11px;
+  }
 }
 
 .rbc-toolbar .rbc-toolbar-label {
@@ -158,6 +162,10 @@ button.rbc-input::-moz-focus-inner {
   white-space: nowrap;
 }
 
+.rbc-btn-group button {
+  outline: 0;
+}
+
 .rbc-btn-group > button:first-child:not(:last-child) {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
@@ -203,20 +211,15 @@ button.rbc-input::-moz-focus-inner {
   background-color: #ddd;
   border-radius: 5px;
   color: #fff;
-  width: 100% !important;
-  &.rbc-event + .rbc-event-overlaps {
+  font-size: 14px;
+
+  & + &.rbc-event-overlaps {
     left: 50% !important;
     width: 50% !important;
-    border: 1px blue solid !important;
-  }
-  &.rbc-event-overlaps + .rbc-event {
-    width: 100% !important;
-    border: 1px yellow solid !important;
   }
 
   & + & {
     width: 50% !important;
-    border: 1px red solid !important;
   }
 }
 

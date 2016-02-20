@@ -143,7 +143,8 @@ export const renderPage = (applicationState) =>
             <BigCalendar
                 events={CourseParser.addDataToCalendar(applicationState)}
                 defaultView="week"
-                views={['month', 'week', 'day']}
+                views={['month', 'week', 'day', 'agenda']}
+                popup={false}
                 formats={{
                     dayHeaderFormat: "ddd D.M w",
                     dayFormat: "ddd D.M",
@@ -159,7 +160,7 @@ export const renderPage = (applicationState) =>
         </div>
         <div className="footer">
             <div id="disclaimer">Use with your own risk!</div>
-            <div id="versionInfo">v1.2.3</div>
+            <div id="versionInfo">v1.2.4</div>
         </div>
     </div>
     </body>

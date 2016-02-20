@@ -7,6 +7,11 @@ Version numbering:
 
 ---
 
+### 1.2.4 February 20, 2016
+* Simultaneous events render better
+* Default font changed
+* Agenda view added
+
 ### 1.2.3 February 19, 2016
 * More mobile friendly layout
 

@@ -103,7 +103,3 @@ export const start = port => {
         server.listen(port, resolve)
     }).then(reportPages)
 }
-
-server.get('/test', (req, res) => res.sendFile(path.resolve(__dirname + '/../test/', 'runner.html')))
-
-server.use('/test', express.static(__dirname + '/../test/'))

@@ -33,12 +33,12 @@
     "react-dom": "0.14.7",
     "request": "2.69.0",
     "superagent": "1.7.2",
-    "uglify-js": "2.6.1"
+    "uglify-js": "2.6.2"
   },
   "devDependencies": {
     "babel-cli": "6.5.1",
     "eslint": "2.2.0",
-    "eslint-plugin-react": "4.0.0",
+    "eslint-plugin-react": "4.1.0",
     "mocha": "2.4.5",
     "nodemon": "1.9.0",
     "supervisor": "0.9.1",

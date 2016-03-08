@@ -26,6 +26,7 @@
     "nodemailer": "2.2.1",
     "path": "0.12.7",
     "pg": "4.4.6",
+    "pg-db": "1.0.2",
     "ramda": "0.19.1",
     "react": "0.14.7",
     "react-big-calendar": "0.9.8",

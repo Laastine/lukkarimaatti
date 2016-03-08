@@ -9,7 +9,7 @@ const appConfig = require('./config')
 const db = Promise.promisifyAll(pg),
   address = "postgres://" + appConfig.postgresUsername + ":" + appConfig.postgresPassword + "@" + appConfig.postgresUrl
 
-const client = Promise.promisifyAll(pgDb(address));
+const client = Promise.promisifyAll(pgDb(address))
 
 const buildInsertQueryString = (courseBatch) =>
   R.reduce((a, course) => a + "INSERT INTO course (" +

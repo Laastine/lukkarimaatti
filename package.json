@@ -61,13 +61,13 @@
     ]
   },
   "scripts": {
-    "build-css": "cat app/styles/*.css > .generated/style.css",
+    "build-css": "mkdir -p .generated && cat app/styles/*.css > .generated/style.css",
     "build-js": "node_modules/browserify/bin/cmd.js --entry app/client.js | node_modules/uglify-js/bin/uglifyjs --compress --mangle > .generated/bundle.js",
-    "build": "export NODE_ENV=development; npm run build-css && npm run build-js",
+    "build": "npm run build-css && npm run build-js",
     "watch-css": "node_modules/.bin/watch \"npm run build-css\" app/styles/",
     "watch-js": "node_modules/watchify/bin/cmd.js app/client.js --debug -o .generated/bundle.js -v",
     "watch": "npm run watch-js & npm run watch-css & node_modules/supervisor/lib/cli-wrapper.js --quiet --ignore node_modules --watch app app/bootstrap.js",
-    "start": "export NODE_ENV=production; node app/bootstrap.js",
+    "start": "node app/bootstrap.js",
     "lint": "eslint app/ ",
     "clean": "rm .generated/*.js .generated/*.css",
     "test": "./node_modules/.bin/mocha --delay --compilers js:babelify/node_modules/babel-core/register test/test.js"

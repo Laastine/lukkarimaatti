@@ -23,7 +23,6 @@
     "express": "4.13.4",
     "forever": "0.15.1",
     "moment": "2.11.2",
-    "node-sass": "3.4.2",
     "nodemailer": "2.2.1",
     "path": "0.12.7",
     "pg": "4.4.6",
@@ -42,6 +41,7 @@
     "mocha": "2.4.5",
     "nodemon": "1.9.0",
     "supervisor": "0.9.1",
+    "watch": "0.17.1",
     "watchify": "3.7.0",
     "zombie": "4.2.1"
   },
@@ -60,10 +60,10 @@
     ]
   },
   "scripts": {
-    "build-css": "node_modules/node-sass/bin/node-sass --output-style=compressed app/scss/style.scss --output .generated",
+    "build-css": "cat app/styles/*.css > .generated/style.css",
     "build-js": "node_modules/browserify/bin/cmd.js --entry app/client.js | node_modules/uglify-js/bin/uglifyjs --compress --mangle > .generated/bundle.js",
     "build": "export NODE_ENV=development; npm run build-css && npm run build-js",
-    "watch-css": "node_modules/node-sass/bin/node-sass -w app/scss/style.scss --output-style=compressed --output .generated",
+    "watch-css": "node_modules/.bin/watch \"npm run build-css\" app/styles/",
     "watch-js": "node_modules/watchify/bin/cmd.js app/client.js --debug -o .generated/bundle.js -v",
     "watch": "npm run watch-js & npm run watch-css & node_modules/supervisor/lib/cli-wrapper.js --quiet --ignore node_modules --watch app app/bootstrap.js",
     "start": "export NODE_ENV=production; node app/bootstrap.js",

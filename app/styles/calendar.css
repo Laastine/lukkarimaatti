@@ -114,6 +114,7 @@ button.rbc-input::-moz-focus-inner {
 .rbc-toolbar .rbc-toolbar-label {
   width: 100%;
   padding: 0 10px;
+  font-weight: 500;
   text-align: center;
 }
 
@@ -213,14 +214,15 @@ button.rbc-input::-moz-focus-inner {
   color: #fff;
   font-size: 14px;
 
-  & + &.rbc-event-overlaps {
-    left: 50% !important;
-    width: 50% !important;
-  }
+}
 
-  & + & {
-    width: 50% !important;
-  }
+.rbc-event + .rbc-event.rbc-event-overlaps {
+  left: 50% !important;
+  width: 50% !important;
+}
+
+.rbc-event + .rbc-event {
+  width: 50% !important;
 }
 
 .rbc-event-label {

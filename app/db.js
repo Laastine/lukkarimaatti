@@ -43,7 +43,6 @@ module.exports = {
   initializeDb: (table) => client.updateAsync(`CREATE TABLE course(course_id SERIAL,
   course_code VARCHAR(256) NOT NULL,
   course_name VARCHAR(256) NOT NULL,
-  period VARCHAR(256),
   week VARCHAR(256),
   week_day VARCHAR(256),
   time_of_day VARCHAR(256),

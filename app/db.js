@@ -1,14 +1,11 @@
 "use strict"
 
-const pg = require('pg')
 const pgDb = require('pg-db')
 const Promise = require('bluebird')
 const R = require('ramda')
 const appConfig = require('./config')
 
-const db = Promise.promisifyAll(pg),
-  address = "postgres://" + appConfig.postgresUsername + ":" + appConfig.postgresPassword + "@" + appConfig.postgresUrl
-
+const address = "postgres://" + appConfig.postgresUsername + ":" + appConfig.postgresPassword + "@" + appConfig.postgresUrl
 const client = Promise.promisifyAll(pgDb(address))
 
 const buildInsertQueryString = (courseBatch) =>
@@ -27,12 +24,6 @@ const buildInsertQueryString = (courseBatch) =>
     course.misc + "\',\'" +
     course.group_name + "\');", ''
     , courseBatch)
-
-const buildErrorMessage = (functionName, query, ip, err) => {
-  const ipParam = ip ? ' IP: ' + ip : ''
-  const queryParam = typeof query === 'object' ? JSON.stringify(query) : query
-  console.error(functionName + ', request' + queryParam + ipParam + ' error', err)
-}
 
 module.exports = {
 
@@ -53,98 +44,37 @@ module.exports = {
   misc VARCHAR(512),
   group_name VARCHAR(256) DEFAULT '' NOT NULL)`)
     .then(() => client.updateAsync(`CREATE INDEX course_name_search ON course (course_name)`))
-    .catch((err) => console.error('initializeDb', err.stack)),
+    .catch((err) => console.error('initializeDb error', err.stack)),
 
-  getCourseByName: (req, res) =>
-    db.connectAsync(address)
-      .spread((connection, release) => {
-        const query = "SELECT * FROM course WHERE LOWER(course_name) LIKE \'%" + req.query['name'].toLocaleLowerCase() + '%\''
-        return connection.queryAsync(query)
-          .then((result) => res.json(result.rows))
-          .error((error) => console.err('DB error=', error.stack))
-          .finally(() => release())
-      })
-      .catch((err) => {
-        buildErrorMessage('getCourseByName', req.query['name'], req.client.remoteAddress, err)
-        return []
-      }),
+  getCourseByName: (courseName) => client.queryAsync(`SELECT * FROM course WHERE LOWER(course_name) LIKE $1`, ['%' + courseName + '%']),
 
-  getCourseByCode: (req, res) =>
-    db.connectAsync(address)
-      .spread((connection, release) => {
-        const query = "SELECT * FROM course WHERE course_code = \'" + req.params['code'] + "\'"
-        return connection.queryAsync(query)
-          .then((result) => res.json(result.rows))
-          .error((error) => console.log('DB error=', error))
-          .finally(() => release())
-      })
-      .catch((err) => {
-        buildErrorMessage('getCourseByName', req.params['code'], req.client.remoteAddress, err)
-        return []
-      }),
+  getCourseByCode: (code) => client.queryAsync(`SELECT * FROM course WHERE course_code = (:code)`, {code}),
+
+  getCourseByCodeAndGroup: (code, groupName) =>
+    client.queryAsync(`SELECT * FROM course WHERE course_code = (:code) and group_name = (:groupName)`, {
+      code,
+      groupName
+    }),
 
   prefetchCoursesByCode: (params) => {
     const insertGroupCondition = (groupName) => groupName ? " AND group_name = \'" + groupName + "\'" : ''
     const insertCodeCondition = (courseCode) => courseCode ? " OR course_code = \'" + courseCode + "\'" : ''
     if (params.length > 0) {
-      return db.connectAsync(address)
-        .spread((connection, release) => {
-          let query = "SELECT * FROM course WHERE course_code = \'" + params[0].courseCode + "\'" + insertGroupCondition(params[0].groupName)
-          if (params.length > 1) {
-            query += R.reduce((a, b) => a + insertCodeCondition(b.courseCode) + insertGroupCondition(b.groupName), '', R.tail(params))
-          }
-          return connection.queryAsync(query)
-            .then((result) => result.rows)
-            .error((error) => console.log('DB error=', error))
-            .finally(() => release())
-        })
-        .catch((err) => {
-          buildErrorMessage('prefetchCoursesByCode', params, '', err)
-          return []
-        })
+      let query = "SELECT * FROM course WHERE course_code = \'" + params[0].courseCode + "\'" + insertGroupCondition(params[0].groupName)
+      if (params.length > 1) {
+        query += R.reduce((a, b) => a + insertCodeCondition(b.courseCode) + insertGroupCondition(b.groupName), '', R.tail(params))
+      }
+      return client.queryAsync(query)
+        .then((result) => result)
+        .catch((error) => console.log('prefetchCoursesByCode error', error))
     }
   },
 
-  getCourseByCodeAndGroup: (req, res) =>
-    db.connectAsync(address)
-      .spread((connection, release) => {
-        const query = "SELECT * FROM course WHERE course_code = \'" + req.query['code'] + "\' and group_name = \'" + req.query['groupName'] + "\'"
-        return connection.queryAsync(query)
-          .then((result) => res.json(result.rows))
-          .error((error) => console.log('DB error=', error))
-          .finally(() => release())
-      })
-      .catch((err) => {
-        buildErrorMessage('getCourseByCodeAndGroup', req.query['code'] + ' ' + req.query['groupName'], req.client.remoteAddress, err)
-        return []
-      }),
+  insertCourse: (courseBatch) => client.queryAsync(buildInsertQueryString(courseBatch))
+    .catch((error) => console.error('buildInsertQueryString error', error.stack)),
 
-  insertCourse: (courseBatch) => {
-    const query = buildInsertQueryString(courseBatch)
-    db.connectAsync(address)
-      .spread((connection, release) => {
-        return connection.queryAsync(query)
-          .error((error) => console.error('DB insert error=', error.stack))
-          .finally(() => release())
-      })
-      .catch((err) => {
-        buildErrorMessage('insertCourse', query, '', err)
-        return []
-      })
-  },
-
-
-  cleanCourseTable: () => db.connectAsync(address)
-    .spread((connection, release) => {
-      const query = "TRUNCATE TABLE course"
-      return connection.queryAsync(query)
-        .then((res) => res)
-        .error((error) => console.log('DB error=', error.stack))
-        .finally(() => release())
-    })
-    .catch((err) => {
-      buildErrorMessage('cleanCourseTable', '', '', err)
-      return []
-    })
+  cleanCourseTable: () => client.queryAsync("TRUNCATE TABLE course")
+    .then((res) => res)
+    .catch((error) => console.log('DB error', error.stack))
 }
 

@@ -5,18 +5,19 @@ const Promise = require('bluebird')
 const R = require('ramda')
 const config = require('./config')
 const DB = require('./db')
-const request = Promise.promisify(require('request'))
+
+const requestAsync = Promise.promisify(require('request'), {multiArgs: true})
 
 let links = []
 
 const updateCourseData = function () {
-  request({url: config.uniUrl, json: true})
+  requestAsync({url: config.uniUrl, methog: 'GET', json: true})
     .then(function (res) {
-      var $ = cheerio.load(res[1])
+      const $ = cheerio.load(res[1])
       $($(".portlet-body .journal-content-article").children()[2])
         .find('a')
         .each(function () {
-          var link = $(this).attr('href')
+          const link = $(this).attr('href')
           console.log('link', link)
           if (link.substring(0, 34) === '/c/document_library/get_file?uuid=') {
             links.push(link)
@@ -125,11 +126,11 @@ const sanitizeInput = (input) => input ? input.trim()
   .replace(/(\r\n|\n|\r)/g, '') : ''
 
 function parseCourseData(url) {
-  request({url: 'https://uni.lut.fi' + url})
+  requestAsync({url: 'https://uni.lut.fi' + url, methog: 'GET'})
     .then(function (html) {
-      var dataBatch = []
-      var data = {}
-      var $ = cheerio.load(html[1])
+      const dataBatch = []
+      let data = {}
+      const $ = cheerio.load(html[1])
       $('table.spreadsheet')
         .each(function () {
           $(this).find('tr:not(.columnTitles)').map(function () {
@@ -139,7 +140,7 @@ function parseCourseData(url) {
               tds.each(function () {
                 courseData.push($(this).text())
               })
-              var args = parseBasicData(courseData[0])
+              const args = parseBasicData(courseData[0])
               data = {
                 course_code: sanitizeInput(args.code),
                 course_name: sanitizeInput(args.name),
@@ -157,7 +158,7 @@ function parseCourseData(url) {
               tds.each(function () {
                 courseData.push($(this).text())
               })
-              var args = parseBasicData(courseData[0])
+              const args = parseBasicData(courseData[0])
               data = {
                 course_code: sanitizeInput(args.code),
                 course_name: sanitizeInput(args.name),

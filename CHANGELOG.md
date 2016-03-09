@@ -7,6 +7,10 @@ Version numbering:
 
 ---
 
+### 1.2.5 March 9, 2016
+* DB API refactor
+* Bluebird updated to v3.x
+
 ### 1.2.4 February 20, 2016
 * Simultaneous events render better
 * Default font changed

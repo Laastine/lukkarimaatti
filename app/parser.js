@@ -194,7 +194,7 @@ module.exports = {
   updateCourseData: (req, res) => {
     console.log('Update course data from IP', req.client.remoteAddress)
     if (req.query['secret'] === config.appSecret) {
-      Promise.all([DB.cleanCourseTable()]).then((res) => updateCourseData())
+      Promise.all([DB.cleanCourseTable()]).then(() => updateCourseData())
       res.status(200).json({status: 'ok'})
     } else {
       res.status(403).json({error: 'Unauthorized'})

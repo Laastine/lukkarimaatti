@@ -110,6 +110,7 @@ body {
   width: 15px;
   height: 15px;
   line-height: 15px;
+  text-align: center;
 }
 
 .result-list-remove:hover {

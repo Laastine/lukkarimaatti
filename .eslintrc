@@ -24,7 +24,6 @@
     "no-underscore-dangle": [0],
     "no-unused-vars": [2, {"args": "none", "varsIgnorePattern": "App"}],
     "no-unused-expressions": [0],
-    "camelcase": [0],
     "new-cap": [0],
     "space-infix-ops": [0],
     "no-loop-func": [0],
@@ -32,6 +31,7 @@
     "no-alert": [0],
     "no-extra-bind": [0],
     "no-sequences": [0],
+    "no-shadow": [2, {"builtinGlobals": false, "hoist": "all", "allow": []}],
     "react/jsx-uses-react": 2,
     "react/display-name": 0
   }

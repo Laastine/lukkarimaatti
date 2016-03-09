@@ -74,8 +74,8 @@ const modalS = emailBus.flatMapLatest((event) => {
     return event.isModalOpen
 })
 
-export const applicationStateProperty = (initialState) => Bacon.update(
-    initialState,
+export const applicationStateProperty = (state) => Bacon.update(
+    state,
     inputBus, (applicationState, input) => ({
         ...applicationState,
         input

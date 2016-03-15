@@ -8,9 +8,7 @@
     "sourceType": "module",
     "ecmaVersion": "6",
     "ecmaFeatures": {
-      "arrowFunctions": true,
-      "blockBindings": true,
-      "modules": true,
+      "impliedStrict": true,
       "jsx": true,
       "experimentalObjectRestSpread": true
     }

@@ -32,13 +32,13 @@
     "react-big-calendar": "0.9.8",
     "react-dom": "0.14.7",
     "request": "2.69.0",
-    "superagent": "1.7.2",
+    "superagent": "1.8.1",
     "uglify-js": "2.6.2"
   },
   "devDependencies": {
     "babel-cli": "6.6.5",
-    "eslint": "2.3.0",
-    "eslint-plugin-react": "4.2.0",
+    "eslint": "2.4.0",
+    "eslint-plugin-react": "4.2.2",
     "mocha": "2.4.5",
     "nodemon": "1.9.1",
     "supervisor": "0.9.1",

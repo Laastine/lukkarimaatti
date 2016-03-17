@@ -2,18 +2,6 @@ import R from 'ramda'
 import moment from 'moment'
 require('moment/locale/fi')
 
-const stringToColour = (colorSeed) => {
-    let colour = '#', value
-    let hash = colorSeed.split("").map((e) => {
-        colorSeed.charCodeAt(e) + ((hash << 5) - hash)
-    })
-    for (var j = 0; j < 3; j++) {
-        value = (hash >> (j * 8)) & 0xFF
-        colour += ('00' + value.toString(16)).substr(-2)
-    }
-    return colour
-}
-
 const getYearNumber = (courseWeekNumber) => {
     const isSpringSemester = moment().week() === 53 || moment().week() < 27
     const week = parseInt(courseWeekNumber, 10)
@@ -36,7 +24,6 @@ export default {
                     description: '/' + course.type + '\n' + course.classroom,
                     start: new Date(getTimestamp(course, weekNumber, course.time_of_day.split('-')[0] || 6)),
                     end: new Date(getTimestamp(course, weekNumber, course.time_of_day.split('-')[1] || 6)),
-                    color: stringToColour(course.course_code),
                     id: course.course_code + '#' + course.type
                 }
             })

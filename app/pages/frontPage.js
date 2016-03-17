@@ -107,7 +107,7 @@ export const applicationStateProperty = (state) => Bacon.update(
   })
 )
 
-const stringToColour = (colorSeed) => {
+const stringToColor = (colorSeed) => {
   var hash = 0, colour = '#', value
   colorSeed.split("").forEach(function (e) {
     hash = colorSeed.charCodeAt(e) + ((hash << 5) - hash)
@@ -120,7 +120,7 @@ const stringToColour = (colorSeed) => {
 }
 
 const Event = ({ event }) => (
-  <div style={{backgroundColor: stringToColour(event.title)}} className="calendar-event">
+  <div style={{backgroundColor: stringToColor(event.title)}} className="calendar-event">
     {event.title}{event.description}
   </div>
 )

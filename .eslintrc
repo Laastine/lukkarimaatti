@@ -16,6 +16,12 @@
   "plugins": [
     "react"
   ],
+  "settings": {
+    "react": {
+      "pragma": "React",
+      "version": "0.14.7"
+    }
+  },
   "rules": {
     "no-use-before-define": [2, "nofunc"],
     "no-console": [0],
@@ -31,6 +37,13 @@
     "no-sequences": [0],
     "no-shadow": [2, {"builtinGlobals": false, "hoist": "all", "allow": []}],
     "react/jsx-uses-react": 2,
-    "react/display-name": 0
+    "react/display-name": 0,
+    "react/jsx-indent": [2, 2],
+    "react/jsx-no-duplicate-props": [2],
+    "react/jsx-key": [2],
+    "react/jsx-uses-vars": [2],
+    "react/no-set-state": [2],
+    "react/no-deprecated": [2],
+    "react/prefer-stateless-function": [2]
   }
 }

@@ -38,7 +38,7 @@
   "devDependencies": {
     "babel-cli": "6.6.5",
     "eslint": "2.4.0",
-    "eslint-plugin-react": "4.2.2",
+    "eslint-plugin-react": "4.2.3",
     "mocha": "2.4.5",
     "nodemon": "1.9.1",
     "supervisor": "0.9.1",
@@ -68,7 +68,7 @@
     "watch-js": "node_modules/watchify/bin/cmd.js app/client.js --debug -o .generated/bundle.js -v",
     "watch": "npm run watch-js & npm run watch-css & node_modules/supervisor/lib/cli-wrapper.js --quiet --ignore node_modules --watch app app/bootstrap.js",
     "start": "node app/bootstrap.js",
-    "lint": "eslint app/ ",
+    "lint": "eslint app",
     "clean": "rm .generated/*.js .generated/*.css",
     "test": "./node_modules/.bin/mocha --delay --compilers js:babelify/node_modules/babel-core/register test/test.js"
   }

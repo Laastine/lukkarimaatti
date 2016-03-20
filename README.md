@@ -42,7 +42,7 @@ and open http://localhost:8080 in your web browser.
 
 ## Tests
 
-Currently WIP
+WIP
 `
 npm test
 `

@@ -43,9 +43,9 @@ and open http://localhost:8080 in your web browser.
 ## Tests
 
 Currently WIP
-```
+`
 npm test
-```
+`
 
 ### Copyright and license
 Copyright &copy; 2013 Mikko Kaistinen, mikko.kaistinen@kapsi.fi

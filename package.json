@@ -62,7 +62,7 @@
   },
   "scripts": {
     "build-css": "mkdir -p .generated && cat app/styles/*.css > .generated/style.css",
-    "build-js": "node_modules/browserify/bin/cmd.js --entry app/client.js | node_modules/uglify-js/bin/uglifyjs --compress --mangle > .generated/bundle.js",
+    "build-js": "node_modules/browserify/bin/cmd.js --entry app/client.js | node_modules/uglify-js/bin/uglifyjs --compress --screw-ie8 > .generated/bundle.js",
     "build": "npm run build-css && npm run build-js",
     "watch-css": "node_modules/.bin/watch \"npm run build-css\" app/styles/",
     "watch-js": "node_modules/watchify/bin/cmd.js app/client.js --debug -o .generated/bundle.js -v",

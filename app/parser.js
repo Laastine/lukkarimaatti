@@ -19,7 +19,7 @@ const updateCourseData = function () {
         .find('a')
         .each(function () {
           const link = $(this).attr('href')
-          console.log('link', link)
+          Logger.info('link', link)
           if (link.substring(0, 34) === '/c/document_library/get_file?uuid=') {
             links.push(link)
           }

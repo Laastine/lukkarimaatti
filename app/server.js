@@ -13,6 +13,8 @@ import bodyParser from 'body-parser'
 import DB from './db'
 import CourseRoutes from './routes/course'
 import ApiRoutes from './routes/api'
+import Logger from './logger'
+
 const fs = Promise.promisifyAll(require('fs'))
 
 const server = express()
@@ -96,7 +98,7 @@ server.get('/bundle.js', serveStaticResource(bundleJsFilePath))
 export const start = port => {
   const reportPages = () => {
     pages.allPages.forEach(({pagePath}) => {
-      console.log(`Page available at http://localhost:${port}${pagePath}`.green)
+      Logger.info(`Page available at http://localhost:${port}${pagePath}`.green)
     })
   }
   return DB.isTableInitialized("course")

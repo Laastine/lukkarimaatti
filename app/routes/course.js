@@ -1,5 +1,6 @@
 import express from 'express'
 import Promise from 'bluebird'
+import Logger from '../logger'
 import DB from '../db'
 
 const courseRoutes = express.Router()
@@ -7,7 +8,7 @@ const courseRoutes = express.Router()
 const buildErrorMessage = (functionName, query, ip, err) => {
   const ipParam = ip ? ' IP: ' + ip : ''
   const queryParam = typeof query === 'object' ? JSON.stringify(query) : query
-  console.error(functionName + ', request' + queryParam + ipParam + ' error', err.stack)
+  Logger.error(functionName + ', request' + queryParam + ipParam + ' error', err.stack)
 }
 
 courseRoutes.get('/course', (req, res) =>

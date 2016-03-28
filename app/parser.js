@@ -5,6 +5,7 @@ const Promise = require('bluebird')
 const R = require('ramda')
 const config = require('./config')
 const DB = require('./db')
+const Logger = require('./logger')
 
 const requestAsync = Promise.promisify(require('request'), {multiArgs: true})
 
@@ -27,8 +28,8 @@ const updateCourseData = function () {
         parseCourseData(link)
       })
     })
-    .then(() => console.log('Update course worker finished'))
-    .catch((err) => console.error('Failed to parse links', err.stack))
+    .then(() => Logger.info('Update course worker finished'))
+    .catch((err) => Logger.error('Failed to parse links', err.stack))
 }
 
 const parseBasicData = (course) => {
@@ -186,26 +187,27 @@ function parseCourseData(url) {
       if (dataBatch.length > 0) {
         DB.insertCourse(dataBatch)
       }
-    }).catch((err) => console.error('Failed to parse HTML', err.stack)
+    }).catch((err) => Logger.error('Failed to parse HTML', err.stack)
   )
 }
 
 module.exports = {
   updateCourseData: (req, res) => {
-    console.log('Update course data from IP', req.client.remoteAddress)
+    Logger.info('Update course data from IP', req.client.remoteAddress)
     if (req.query['secret'] === config.appSecret) {
       Promise.all([DB.cleanCourseTable()]).then(() => updateCourseData())
       res.status(200).json({status: 'ok'})
     } else {
+      Logger.warn('Unauthorized update attempt from IP', req.client.remoteAddress)
       res.status(403).json({error: 'Unauthorized'})
     }
   },
 
   workerUpdateData: () => {
-    console.log('Update course data by worker')
+    Logger.info('Update course data by worker')
     Promise.all([DB.cleanCourseTable()])
       .then((res) => updateCourseData())
-      .catch((err) => console.error("Error while updating DB data", err.stack))
+      .catch((err) => Logger.error("Error while updating DB data", err.stack))
   }
 }
 

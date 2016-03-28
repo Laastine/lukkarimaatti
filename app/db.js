@@ -4,6 +4,7 @@ const pgDb = require('pg-db')
 const Promise = require('bluebird')
 const R = require('ramda')
 const appConfig = require('./config')
+const Logger = require('./logger')
 
 const address = "postgres://" + appConfig.postgresUsername + ":" + appConfig.postgresPassword + "@" + appConfig.postgresUrl
 const client = Promise.promisifyAll(pgDb(address))
@@ -29,7 +30,7 @@ module.exports = {
 
   isTableInitialized: (table) => client.queryOneAsync(`SELECT to_regclass(:table) IS NOT NULL AS exists`, {table})
     .then(R.prop('exists'))
-    .catch((err) => console.error("isTableInitialized error", err.stack)),
+    .catch((err) => Logger.error("isTableInitialized error", err.stack)),
 
   initializeDb: (table) => client.updateAsync(`CREATE TABLE course(course_id SERIAL,
   course_code VARCHAR(256) NOT NULL,
@@ -44,7 +45,7 @@ module.exports = {
   misc VARCHAR(512),
   group_name VARCHAR(256) DEFAULT '' NOT NULL)`)
     .then(() => client.updateAsync(`CREATE INDEX course_name_search ON course (course_name)`))
-    .catch((err) => console.error('initializeDb error', err.stack)),
+    .catch((err) => Logger.error('initializeDb error', err.stack)),
 
   getCourseByName: (courseName) => client.queryAsync(`SELECT * FROM course WHERE LOWER(course_name) LIKE $1`, ['%' + courseName + '%']),
 
@@ -66,15 +67,15 @@ module.exports = {
       }
       return client.queryAsync(query)
         .then((result) => result)
-        .catch((error) => console.log('prefetchCoursesByCode error', error))
+        .catch((error) => Logger.info('prefetchCoursesByCode error', error))
     }
   },
 
   insertCourse: (courseBatch) => client.queryAsync(buildInsertQueryString(courseBatch))
-    .catch((error) => console.error('buildInsertQueryString error', error.stack)),
+    .catch((error) => Logger.error('buildInsertQueryString error', error.stack)),
 
   cleanCourseTable: () => client.queryAsync("TRUNCATE TABLE course")
     .then((res) => res)
-    .catch((error) => console.log('DB error', error.stack))
+    .catch((error) => Logger.info('DB error', error.stack))
 }
 

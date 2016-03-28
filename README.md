@@ -37,16 +37,14 @@ Build application:
 npm install
 npm run build
 ```
-For quick browser testing ```npm run watch```
+For quick browser testing `npm run watch`
 and open http://localhost:8080 in your web browser.
 
 ## Tests
 
 WIP
 
-`
-npm test
-`
+`npm test`
 
 ### Copyright and license
 Copyright &copy; 2013 Mikko Kaistinen, mikko.kaistinen@kapsi.fi

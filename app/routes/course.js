@@ -1,7 +1,7 @@
-import express from 'express'
-import Promise from 'bluebird'
-import Logger from '../logger'
-import DB from '../db'
+import express from "express"
+import Promise from "bluebird"
+import Logger from "../logger"
+import DB from "../db"
 
 const courseRoutes = express.Router()
 

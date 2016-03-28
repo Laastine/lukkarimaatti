@@ -1,8 +1,8 @@
 "use strict"
 
-import nodemailer from "nodemailer";
-import config from "./config";
-import Logger from "./logger";
+import nodemailer from "nodemailer"
+import config from "./config"
+import Logger from "./logger"
 
 module.exports = {
   sendMail: (req, res) => {

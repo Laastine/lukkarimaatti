@@ -11,10 +11,10 @@ export default (page, applicationState, checksums) =>
       <script src={`/bundle.js?checksum=${checksums.bundleJsChecksum}`} async/>
     </head>
     {(() => {
-    const pageReactElement = page.renderPage(applicationState)
-    pageReactElement.props.children.push(
-      <div id="applicationState" data-state={JSON.stringify(applicationState)} style={{display: 'none'}}/>
-    )
-    return pageReactElement
+      const pageReactElement = page.renderPage(applicationState)
+      pageReactElement.props.children.push(
+        <div id="applicationState" data-state={JSON.stringify(applicationState)} style={{display: 'none'}}/>
+      )
+      return pageReactElement
     })()}
   </html>

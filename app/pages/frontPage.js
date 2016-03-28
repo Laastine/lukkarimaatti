@@ -1,13 +1,13 @@
-import React from 'react'
-import Bacon from 'baconjs'
-import BigCalendar from 'react-big-calendar'
-import moment from 'moment'
-import Promise from 'bluebird'
-import R from 'ramda'
-import Header from '../partials/header'
-import searchResults from '../partials/searchResults'
-import searchList from '../partials/searchList'
-import CourseParser from '../util/courseParser'
+import React from "react"
+import Bacon from "baconjs"
+import BigCalendar from "react-big-calendar"
+import moment from "moment"
+import Promise from "bluebird"
+import R from "ramda"
+import Header from "../partials/header"
+import searchResults from "../partials/searchResults"
+import searchList from "../partials/searchList"
+import CourseParser from "../util/courseParser"
 const request = Promise.promisify(require('superagent'))
 require('moment/locale/fi')
 BigCalendar.momentLocalizer(moment)
@@ -119,7 +119,7 @@ const stringToColor = (colorSeed) => {
   return colour
 }
 
-const Event = ({ event }) => (
+const Event = ({event}) => (
   <div style={{backgroundColor: stringToColor(event.title)}} className="calendar-event">
     {event.title}{event.description}
   </div>
@@ -146,14 +146,8 @@ export const renderPage = (applicationState) =>
           defaultView="week"
           views={['month', 'week', 'day', 'agenda']}
           popup={false}
-          formats={{
-                      dayHeaderFormat: "ddd D.M w",
-                      dayFormat: "ddd D.M",
-                      dayRangeHeaderFormat: "MMM DD.MM"
-                  }}
-          components={{
-                      event: Event
-                  }}
+          formats={{dayHeaderFormat: "ddd D.M w", dayFormat: "ddd D.M", dayRangeHeaderFormat: "MMM DD.MM"}}
+          components={{event: Event}}
           min={new Date(moment(applicationState.currentDate).hours(8).minutes(0).format())}
           max={new Date(moment(applicationState.currentDate).hours(20).minutes(0).format())}
           defaultDate={new Date(moment(applicationState.currentDate).format())}

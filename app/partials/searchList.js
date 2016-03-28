@@ -1,5 +1,5 @@
-import React from 'react'
-import R from 'ramda'
+import React from "react"
+import R from "ramda"
 
 const addCourse = (courseName, applicationState, selectedCoursesBus) => {
   applicationState.isSearchListVisible = false

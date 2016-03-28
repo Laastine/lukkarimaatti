@@ -66,9 +66,8 @@ const parseWeeks = (weeks) => {
       R.range(
         parseInt(m.substring(0, m.indexOf('-')), 10),
         parseInt(m.substring(m.indexOf('-') + 1), 10) + 1
-      )).map((r) => {
-      weekSequence = R.concat(weekSequence, r)
-    })
+      ))
+      .map((r) => weekSequence = R.concat(weekSequence, r))
   }
   if (R.contains(',', weeks)) {
     weeks.match(/[0-9]+/g).forEach((w) => {

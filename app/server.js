@@ -1,19 +1,19 @@
 "use strict"
 
-import express from 'express'
-import ReactDOMServer from 'react-dom/server'
-import basePage from './pages/basePage'
-import * as pages from './pages/pages'
-import path from 'path'
-import R from 'ramda'
-import compression from 'compression'
-import crypto from 'crypto'
-import Promise from 'bluebird'
-import bodyParser from 'body-parser'
-import DB from './db'
-import CourseRoutes from './routes/course'
-import ApiRoutes from './routes/api'
-import Logger from './logger'
+import express from "express"
+import ReactDOMServer from "react-dom/server"
+import basePage from "./pages/basePage"
+import * as pages from "./pages/pages"
+import path from "path"
+import R from "ramda"
+import compression from "compression"
+import crypto from "crypto"
+import Promise from "bluebird"
+import bodyParser from "body-parser"
+import DB from "./db"
+import CourseRoutes from "./routes/course"
+import ApiRoutes from "./routes/api"
+import Logger from "./logger"
 
 const fs = Promise.promisifyAll(require('fs'))
 

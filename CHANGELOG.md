@@ -7,6 +7,9 @@ Version numbering:
 
 ---
 
+### 1.2.6 March 28, 2016
+* Winston logger added
+
 ### 1.2.5 March 9, 2016
 * DB API refactor
 * Bluebird updated to v3.x

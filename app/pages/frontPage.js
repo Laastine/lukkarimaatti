@@ -52,6 +52,8 @@ const selectedCourseS = selectedCoursesBus.flatMapLatest((event) => {
     return R.flatten(R.reduce((a, b) => [a].concat([b]), event.applicationState.selectedCourses, event.courses))
   } else if (event.type === 'remove') {
     return R.filter((c) => c.course_code !== event.courses[0].course_code, event.applicationState.selectedCourses)
+  } else if(event.type === 'removeById') {
+    return R.filter((c) => c.course_id !== event.courses[0].course_id, event.applicationState.selectedCourses)
   } else {
     throw new Error('Unknown action')
   }
@@ -148,6 +150,10 @@ export const renderPage = (applicationState) =>
           popup={false}
           formats={{dayHeaderFormat: "ddd D.M w", dayFormat: "ddd D.M", dayRangeHeaderFormat: "MMM DD.MM"}}
           components={{event: Event}}
+          onSelectEvent={(c) => {
+            const courses = R.filter((cc) => cc.course_code + "#" + cc.type === c.id, applicationState.selectedCourses)
+            selectedCoursesBus.push({type: 'removeById', courses, applicationState})
+          }}
           min={new Date(moment(applicationState.currentDate).hours(8).minutes(0).format())}
           max={new Date(moment(applicationState.currentDate).hours(20).minutes(0).format())}
           defaultDate={new Date(moment(applicationState.currentDate).format())}

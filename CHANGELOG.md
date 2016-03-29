@@ -6,6 +6,8 @@ Version numbering:
 `<major>.<minor>.<patch>`
 
 ---
+### 1.2.7 March 29, 2016
+* Exercise removal added
 
 ### 1.2.6 March 28, 2016
 * Winston logger added

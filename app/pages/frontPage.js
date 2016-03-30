@@ -43,7 +43,9 @@ const searchResultsS = inputBus.flatMap((courseName) => {
 
 const urlParamS = selectedCoursesBus.flatMapLatest((event) => {
   const course = R.head(event.courses)
-  CourseParser.addUrlParameter(course.course_code, course.group_name)
+  if (event.type === 'add') {
+    CourseParser.addUrlParameter(course.course_code, course.group_name)
+  }
   return [course.group_name ? course.course_code + '&' + course.group_name : course.course_code]
 })
 
@@ -52,8 +54,12 @@ const selectedCourseS = selectedCoursesBus.flatMapLatest((event) => {
     return R.flatten(R.reduce((a, b) => [a].concat([b]), event.applicationState.selectedCourses, event.courses))
   } else if (event.type === 'remove') {
     return R.filter((c) => c.course_code !== event.courses[0].course_code, event.applicationState.selectedCourses)
-  } else if(event.type === 'removeById') {
-    return R.filter((c) => c.course_id !== event.courses[0].course_id, event.applicationState.selectedCourses)
+  } else if (event.type === 'removeById') {
+    const coursesLeft = R.filter((c) => c.course_id !== event.courses[0].course_id, event.applicationState.selectedCourses)
+    if (R.isEmpty(R.filter(R.whereEq({course_code: event.courses[0].course_code}), coursesLeft))) {
+      CourseParser.removeUrlParameter(event.courses[0].course_code)
+    }
+    return coursesLeft
   } else {
     throw new Error('Unknown action')
   }
@@ -62,12 +68,12 @@ const selectedCourseS = selectedCoursesBus.flatMapLatest((event) => {
 const modalS = emailBus.flatMapLatest((event) => {
   if (event.isModalOpen && event.address) {
     ajaxBus.push(true)
-    let responseP = request.post('api/save').send({
+    const responseP = request.post('api/save').send({
       email: event.address.toString(),
       link: window.location.href.toString()
     })
     return Bacon.fromPromise(responseP)
-      .map((res) => {
+      .map(() => {
         ajaxBus.push(false)
         return false
       })
@@ -154,10 +160,10 @@ export const renderPage = (applicationState) =>
             const courses = R.filter((cc) => cc.course_code + "#" + cc.type === c.id, applicationState.selectedCourses)
             selectedCoursesBus.push({type: 'removeById', courses, applicationState})
           }}
-          min={new Date(moment(applicationState.currentDate).hours(8).minutes(0).format())}
-          max={new Date(moment(applicationState.currentDate).hours(20).minutes(0).format())}
-          defaultDate={new Date(moment(applicationState.currentDate).format())}
-        />
+        min={new Date(moment(applicationState.currentDate).hours(8).minutes(0).format())}
+        max={new Date(moment(applicationState.currentDate).hours(20).minutes(0).format())}
+        defaultDate={new Date(moment(applicationState.currentDate).format())}
+      />
       </div>
       <div className="footer">
         <div id="disclaimer">Use with your own risk!</div>

@@ -133,41 +133,44 @@ const Event = ({event}) => (
   </div>
 )
 
-export const renderPage = (applicationState) =>
-  <body>
-    {Header(applicationState, emailBus)}
-    <div className="container">
-      <a className="github-ribbon" href="https://github.com/Laastine/lukkarimaatti">
-        <img style={{position: 'absolute', top: '0px', right: '0px', border: '0px'}}
-             src="github.png"
-             alt="Fork me on GitHub">
-        </img>
-      </a>
-      {searchList(applicationState, inputBus, selectedCoursesBus, indexBus)}
-      <div className="selected-courses-list">
-        <div className="selected-courses-list-topic">Selected courses:</div>
-        {searchResults(applicationState, selectedCoursesBus, CourseParser)}
-      </div>
-      <div>
-        <BigCalendar
-          events={CourseParser.addDataToCalendar(applicationState)}
-          defaultView="week"
-          views={['month', 'week', 'day', 'agenda']}
-          popup={false}
-          formats={{dayHeaderFormat: "ddd D.M w", dayFormat: "ddd D.M", dayRangeHeaderFormat: "MMM DD.MM"}}
-          components={{event: Event}}
-          onSelectEvent={(c) => {
+const Calendar = (applicationState) =>
+  <BigCalendar
+    events={CourseParser.addDataToCalendar(applicationState)}
+    defaultView={"week"}
+    views={['month', 'week', 'day', 'agenda']}
+    popup={false}
+    formats={{dayHeaderFormat: "ddd D.M w", dayFormat: "ddd D.M", dayRangeHeaderFormat: "MMM DD.MM"}}
+    components={{event: Event}}
+    onSelectEvent={(c) => {
             const courses = R.filter((cc) => cc.course_code + "#" + cc.type === c.id, applicationState.selectedCourses)
             selectedCoursesBus.push({type: 'removeById', courses, applicationState})
           }}
-        min={new Date(moment(applicationState.currentDate).hours(8).minutes(0).format())}
-        max={new Date(moment(applicationState.currentDate).hours(20).minutes(0).format())}
-        defaultDate={new Date(moment(applicationState.currentDate).format())}
-      />
-      </div>
-      <div className="footer">
-        <div id="disclaimer">Use with your own risk!</div>
-        <div id="versionInfo">v1.2.7</div>
-      </div>
+    min={new Date(moment(applicationState.currentDate).hours(8).minutes(0).format())}
+    max={new Date(moment(applicationState.currentDate).hours(20).minutes(0).format())}
+    defaultDate={new Date(moment(applicationState.currentDate).format())}
+  />
+
+export const renderPage = (applicationState) =>
+  <body>
+  {Header(applicationState, emailBus)}
+  <div className="container">
+    <a className="github-ribbon" href="https://github.com/Laastine/lukkarimaatti">
+      <img style={{position: 'absolute', top: '0px', right: '0px', border: '0px'}}
+           src="github.png"
+           alt="Fork me on GitHub">
+      </img>
+    </a>
+    {searchList(applicationState, inputBus, selectedCoursesBus, indexBus)}
+    <div className="selected-courses-list">
+      <div className="selected-courses-list-topic">Selected courses:</div>
+      {searchResults(applicationState, selectedCoursesBus, CourseParser)}
     </div>
+    <div>
+      {Calendar(applicationState)}
+    </div>
+    <div className="footer">
+      <div id="disclaimer">Use with your own risk!</div>
+      <div id="versionInfo">v1.2.7</div>
+    </div>
+  </div>
   </body>

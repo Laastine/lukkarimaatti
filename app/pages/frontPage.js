@@ -1,6 +1,6 @@
 import React from "react"
 import Bacon from "baconjs"
-import BigCalendar from "react-big-calendar"
+import BigCalendar from "../calendar/index"
 import moment from "moment"
 import Promise from "bluebird"
 import R from "ramda"
@@ -136,10 +136,8 @@ const Event = ({event}) => (
 const Calendar = (applicationState) =>
   <BigCalendar
     events={CourseParser.addDataToCalendar(applicationState)}
-    defaultView={"week"}
     views={['month', 'week', 'day', 'agenda']}
     popup={false}
-    formats={{dayHeaderFormat: "ddd D.M w", dayFormat: "ddd D.M", dayRangeHeaderFormat: "MMM DD.MM"}}
     components={{event: Event}}
     onSelectEvent={(c) => {
             const courses = R.filter((cc) => cc.course_code + "#" + cc.type === c.id, applicationState.selectedCourses)

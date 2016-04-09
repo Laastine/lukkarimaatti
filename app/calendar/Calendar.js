@@ -11,15 +11,11 @@ import localizer from './localizer'
 import { notify } from './utils/helpers';
 import { navigate, views } from './utils/constants';
 import dates from './utils/dates';
-import defaultFormats from './formats';
 import viewLabel from './utils/viewLabel';
 import moveDate from './utils/move';
 import VIEWS from './Views';
 import Toolbar from './Toolbar';
-
-//import omit from 'lodash/object/omit';
-import {omit} from 'ramda'
-import defaults from 'lodash/object/defaults';
+import {omit, defaultTo} from 'ramda'
 
 function viewNames(_views){
   return !Array.isArray(_views) ? Object.keys(_views) : _views
@@ -312,7 +308,7 @@ let Calendar = React.createClass({
     return {
       popup: false,
       toolbar: true,
-      view: views.WEEK,
+      view: views.MONTH,
       views: [views.MONTH, views.WEEK, views.DAY, views.AGENDA],
       date: now,
 
@@ -334,14 +330,12 @@ let Calendar = React.createClass({
       , date: current
       , ...props } = this.props;
 
-    //formats = defaultFormats(formats)
-
     let View = VIEWS[view];
     let names = viewNames(this.props.views)
 
     let elementProps = omit(Object.keys(Calendar.propTypes), this.props)
 
-    let viewComponents = defaults(
+    let viewComponents = defaultTo(
       components[view] || {},
       omit(names, components)
     )

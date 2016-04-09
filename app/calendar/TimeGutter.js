@@ -20,7 +20,7 @@ const TimeGutter = React.createClass({
     const children = [] //<div key={-1} className='rbc-time-slot rbc-day-header'>&nbsp</div>
     let date = min
 
-    for (var i = 0; i < numSlots; i++) {
+    for (let i = 0; i < numSlots; i++) {
       const isEven = (i % 2) === 0
       const next = dates.add(date, step, 'minutes')
       children.push(

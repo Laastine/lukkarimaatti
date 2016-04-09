@@ -20,8 +20,9 @@ const EventCell = React.createClass({
       , continuesPrior = dates.lt(start, slotStart, 'day')
       , continuesAfter = dates.gt(end, slotEnd, 'day')
 
-    if (eventPropGetter)
+    if (eventPropGetter) {
       var {style, className: xClassName} = eventPropGetter(event, start, end, selected)
+    }
 
     return (
       <div

@@ -38,7 +38,7 @@ class DisplayCells extends React.Component {
 
     const children = []
 
-    for (var i = 0; i < slots; i++) {
+    for (let i = 0; i < slots; i++) {
       children.push(
         <div
           key={'bg_' + i}

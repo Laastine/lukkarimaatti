@@ -80,12 +80,13 @@ class Selection {
   }
 
   _mouseDown(e) {
-    var node = this.container()
-      , collides, offsetData
+    const node = this.container()
+    let collides, offsetData
 
     // Right clicks
-    if (e.which === 3 || e.button === 2 || !isOverContainer(node, e.clientX, e.clientY))
+    if (e.which === 3 || e.button === 2 || !isOverContainer(node, e.clientX, e.clientY)) {
       return
+    }
 
     if (!this.globalMouse && node && !contains(node, e.target)) {
 
@@ -101,7 +102,9 @@ class Selection {
         },
         {top: e.pageY, left: e.pageX})
 
-      if (!collides) return
+      if (!collides) {
+        return
+      }
     }
 
     this.emit('mousedown', this._mouseDownData = {
@@ -124,9 +127,9 @@ class Selection {
 
     if (!this._mouseDownData) return
 
-    var inRoot = !this.container || contains(this.container(), e.target)
-    var bounds = this._selectRect
-    var click = this.isClick(e.pageX, e.pageY)
+    const inRoot = !this.container || contains(this.container(), e.target)
+    const bounds = this._selectRect
+    const click = this.isClick(e.pageX, e.pageY)
 
     this._mouseDownData = null
 
@@ -145,9 +148,9 @@ class Selection {
   }
 
   _openSelector(e) {
-    var {x, y} = this._mouseDownData
-    var w = Math.abs(x - e.pageX)
-    var h = Math.abs(y - e.pageY)
+    const {x, y} = this._mouseDownData
+    const w = Math.abs(x - e.pageX)
+    const h = Math.abs(y - e.pageY)
 
     const left = Math.min(e.pageX, x)
       , top = Math.min(e.pageY, y)
@@ -175,7 +178,7 @@ class Selection {
   }
 
   isClick(pageX, pageY) {
-    var {x, y} = this._mouseDownData
+    const {x, y} = this._mouseDownData
     return (
       Math.abs(pageX - x) <= clickTolerance &&
       Math.abs(pageY - y) <= clickTolerance
@@ -225,7 +228,7 @@ export function objectsCollide(nodeA, nodeB, tolerance = 0) {
 export function getBoundsForNode(node) {
   if (!node.getBoundingClientRect) return node
 
-  var rect = node.getBoundingClientRect()
+  const rect = node.getBoundingClientRect()
     , left = rect.left + pageOffset('left')
     , top = rect.top + pageOffset('top')
 

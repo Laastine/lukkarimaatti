@@ -11,7 +11,7 @@ import {accessor} from "./utils/propTypes"
 import {accessor as get} from "./utils/accessors"
 
 function snapToSlot(date, step) {
-  var roundTo = 1000 * 60 * step
+  const roundTo = 1000 * 60 * step
   return new Date(Math.floor(date.getTime() / roundTo) * roundTo)
 }
 
@@ -87,7 +87,7 @@ const DaySlot = React.createClass({
     const numSlots = Math.ceil(totalMin / step)
     const children = []
 
-    for (var i = 0; i < numSlots; i++) {
+    for (let i = 0; i < numSlots; i++) {
       children.push(
         <div key={i} className='rbc-time-slot'/>
       )
@@ -146,8 +146,9 @@ const DaySlot = React.createClass({
       const label = localizer.format({start, end}, formats.eventTimeRangeFormat, culture)
       const _isSelected = isSelected(event, selected)
 
-      if (eventPropGetter)
+      if (eventPropGetter) {
         var {style: xStyle, className} = eventPropGetter(event, start, end, _isSelected)
+      }
 
       return (
         <div
@@ -297,8 +298,8 @@ const DaySlot = React.createClass({
 
 
 function minToDate(min, date) {
-  var dt = new Date(date)
-    , totalMins = dates.diff(dates.startOf(date, 'day'), date, 'minutes')
+  let dt = new Date(date)
+  const totalMins = dates.diff(dates.startOf(date, 'day'), date, 'minutes')
 
   dt = dates.hours(dt, 0)
   dt = dates.minutes(dt, totalMins + min)

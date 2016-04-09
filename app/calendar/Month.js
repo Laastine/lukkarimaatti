@@ -103,7 +103,7 @@ const MonthView = React.createClass({
   },
 
   render() {
-    var {date, culture} = this.props
+    const {date, culture} = this.props
       , month = dates.visibleDays(date, culture)
       , weeks = chunk(month, 7)
 
@@ -111,7 +111,7 @@ const MonthView = React.createClass({
 
     this._weekCount = weeks.length
 
-    var elementProps = omit(Object.keys(propTypes), this.props)
+    const elementProps = omit(Object.keys(propTypes), this.props)
 
     return (
       <div
@@ -232,7 +232,7 @@ const MonthView = React.createClass({
 
   _dates(row){
     return row.map((day, colIdx) => {
-      var offRange = dates.month(day) !== dates.month(this.props.date)
+      const offRange = dates.month(day) !== dates.month(this.props.date)
 
       return (
         <div

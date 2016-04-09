@@ -1,8 +1,8 @@
-import React from 'react';
-import EventRowMixin from './EventRowMixin';
+import React from "react"
+import EventRowMixin from "./EventRowMixin"
 
 
-let EventRow = React.createClass({
+const EventRow = React.createClass({
 
   displayName: 'EventRow',
 
@@ -13,34 +13,34 @@ let EventRow = React.createClass({
   mixins: [EventRowMixin],
 
   render(){
-    let { segments } = this.props;
+    const {segments} = this.props
 
-    let lastEnd = 1;
+    let lastEnd = 1
 
     return (
       <div className='rbc-row'>
-      {
-        segments.reduce((row, { event, left, right, span }, li) => {
-          let key = '_lvl_' + li;
-          let gap = left - lastEnd;
+        {
+          segments.reduce((row, {event, left, right, span}, li) => {
+            const key = '_lvl_' + li
+            const gap = left - lastEnd
 
-          let content = this.renderEvent(event)
+            const content = this.renderEvent(event)
 
-          if (gap)
-            row.push(this.renderSpan(gap, key + '_gap'))
+            if (gap)
+              row.push(this.renderSpan(gap, key + '_gap'))
 
-          row.push(
-            this.renderSpan(span, key, content)
-          )
+            row.push(
+              this.renderSpan(span, key, content)
+            )
 
-          lastEnd = (right + 1);
+            lastEnd = (right + 1)
 
-          return row;
-        }, [])
-      }
+            return row
+          }, [])
+        }
       </div>
     )
   }
-});
+})
 
 export default EventRow

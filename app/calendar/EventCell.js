@@ -1,18 +1,19 @@
-import React from 'react';
-import cn from 'classnames';
-import dates from './utils/dates';
-import { accessor as get } from './utils/accessors';
+import React from "react"
+import cn from "classnames"
+import dates from "./utils/dates"
+import {accessor as get} from "./utils/accessors"
 
-let EventCell = React.createClass({
+const EventCell = React.createClass({
   render() {
-    let {
-        className, event, selected, eventPropGetter
+    const {
+      className, event, selected, eventPropGetter
       , startAccessor, endAccessor, titleAccessor
-      , slotStart, slotEnd, onSelect, component, ...props } = this.props;
+      , slotStart, slotEnd, onSelect, component, ...props
+    } = this.props
 
-    let Component = component;
+    const Component = component
 
-    let title = get(event, titleAccessor)
+    const title = get(event, titleAccessor)
       , end = get(event, endAccessor)
       , start = get(event, startAccessor)
       , isAllDay = get(event, props.allDayAccessor)
@@ -20,7 +21,7 @@ let EventCell = React.createClass({
       , continuesAfter = dates.gt(end, slotEnd, 'day')
 
     if (eventPropGetter)
-      var { style, className: xClassName } = eventPropGetter(event, start, end, selected);
+      var {style, className: xClassName} = eventPropGetter(event, start, end, selected)
 
     return (
       <div
@@ -41,8 +42,8 @@ let EventCell = React.createClass({
           }
         </div>
       </div>
-    );
+    )
   }
-});
+})
 
 export default EventCell

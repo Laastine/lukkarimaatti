@@ -1,32 +1,27 @@
-import React, { PropTypes } from 'react';
-import uncontrollable from 'uncontrollable';
-import cn from 'classnames';
-import {
-    accessor
-  , elementType
-  , dateFormat
-  , views as componentViews } from './utils/propTypes';
+import React, {PropTypes} from "react"
+import uncontrollable from "uncontrollable"
+import cn from "classnames"
+import {accessor, elementType, dateFormat, views as componentViews} from "./utils/propTypes"
+import localizer from "./localizer"
+import {notify} from "./utils/helpers"
+import {navigate, views} from "./utils/constants"
+import dates from "./utils/dates"
+import viewLabel from "./utils/viewLabel"
+import moveDate from "./utils/move"
+import VIEWS from "./Views"
+import Toolbar from "./Toolbar"
+import {omit, defaultTo} from "ramda"
 
-import localizer from './localizer'
-import { notify } from './utils/helpers';
-import { navigate, views } from './utils/constants';
-import dates from './utils/dates';
-import viewLabel from './utils/viewLabel';
-import moveDate from './utils/move';
-import VIEWS from './Views';
-import Toolbar from './Toolbar';
-import {omit, defaultTo} from 'ramda'
-
-function viewNames(_views){
+function viewNames(_views) {
   return !Array.isArray(_views) ? Object.keys(_views) : _views
 }
 
-function isValidView(view, { views: _views }) {
-  let names = viewNames(_views)
+function isValidView(view, {views: _views}) {
+  const names = viewNames(_views)
   return names.indexOf(view) !== -1
 }
 
-let now = new Date();
+const now = new Date()
 
 /**
  * react-big-calendar is full featured Calendar component for managing events and dates. It uses
@@ -34,7 +29,7 @@ let now = new Date();
  * to the browser. __note:__ The default styles use `height: 100%` which means your container must set an explicit
  * height (feel free to adjust the styles to suit your specific needs).
  *
- * Big Calendar is unopiniated about editing and moving events, prefering to let you implement it in a way that makes
+ * Big Calendar is unopiniated about editing and moving events, prefering to const you implement it in a way that makes
  * the most sense to your app. It also tries not to be prescriptive about your event data structures, just tell it
  * how to find the start and end datetimes and you can pass it whatever you want.
  *
@@ -45,7 +40,7 @@ let now = new Date();
  * on `Apr 8th 12:01:00 am` will. If you want _inclusive_ ranges consider providing a
  * function `endAccessor` that returns the end date + 1 day for those events that end at midnight.
  */
-let Calendar = React.createClass({
+const Calendar = React.createClass({
 
   propTypes: {
     /**
@@ -145,7 +140,7 @@ let Calendar = React.createClass({
      */
     popupOffset: PropTypes.oneOfType([
       PropTypes.number,
-      PropTypes.shape({ x: PropTypes.number, y: PropTypes.number })
+      PropTypes.shape({x: PropTypes.number, y: PropTypes.number})
     ]),
     /**
      * Allows mouse selection of ranges of dates/times.
@@ -163,10 +158,10 @@ let Calendar = React.createClass({
      *
      * ```js
      * function(
-     * 	event: object,
-     * 	start: date,
-     * 	end: date,
-     * 	isSelected: bool
+     *  event: object,
+     *  start: date,
+     *  end: date,
+     *  isSelected: bool
      * ) -> { className: string?, style: object? }
      * ```
      */
@@ -265,7 +260,7 @@ let Calendar = React.createClass({
      * provide an individual component for each view type.
      *
      * ```jsx
-     * let components = {
+     * const components = {
      *   event: MyEvent, // used by each view (Month, Day, Week)
      *   agenda: {
      *   	 event: MyAgendaEvent // with the agenda view use a different component to render events
@@ -283,9 +278,9 @@ let Calendar = React.createClass({
         event: elementType
       }),
 
-      day: PropTypes.shape({ event: elementType }),
-      week: PropTypes.shape({ event: elementType }),
-      month: PropTypes.shape({ event: elementType })
+      day: PropTypes.shape({event: elementType}),
+      week: PropTypes.shape({event: elementType}),
+      month: PropTypes.shape({event: elementType})
     }),
 
     /**
@@ -308,7 +303,7 @@ let Calendar = React.createClass({
     return {
       popup: false,
       toolbar: true,
-      view: views.MONTH,
+      view: views.WEEK,
       views: [views.MONTH, views.WEEK, views.DAY, views.AGENDA],
       date: now,
 
@@ -316,26 +311,27 @@ let Calendar = React.createClass({
       allDayAccessor: 'allDay',
       startAccessor: 'start',
       endAccessor: 'end'
-    };
+    }
   },
 
   render() {
-    let {
-        view, toolbar, events
+    const {
+      view, toolbar, events
       , culture
       , components = {}
       , formats = {}
       , style
       , className
       , date: current
-      , ...props } = this.props;
+      , ...props
+    } = this.props
 
-    let View = VIEWS[view];
-    let names = viewNames(this.props.views)
+    const View = VIEWS[view]
+    const names = viewNames(this.props.views)
 
-    let elementProps = omit(Object.keys(Calendar.propTypes), this.props)
+    const elementProps = omit(Object.keys(Calendar.propTypes), this.props)
 
-    let viewComponents = defaultTo(
+    const viewComponents = defaultTo(
       components[view] || {},
       omit(names, components)
     )
@@ -348,15 +344,15 @@ let Calendar = React.createClass({
         style={style}
       >
         { toolbar &&
-          <Toolbar
-            date={current}
-            view={view}
-            views={names}
-            label={viewLabel(current, view, formats, culture)}
-            onViewChange={this._view}
-            onNavigate={this._navigate}
-            messages={this.props.messages}
-          />
+        <Toolbar
+          date={current}
+          view={view}
+          views={names}
+          label={viewLabel(current, view, formats, culture)}
+          onViewChange={this._view}
+          onNavigate={this._navigate}
+          messages={this.props.messages}
+        />
         }
         <View
           ref='view'
@@ -374,11 +370,12 @@ let Calendar = React.createClass({
           onShowMore={this._showMore}
         />
       </div>
-    );
+    )
   },
 
   _navigate(action, newDate) {
-    let { view, date, onNavigate } = this.props;
+    const {view, onNavigate} = this.props
+    let {date} = this.props
 
     date = moveDate(action, newDate || date, view)
 
@@ -389,7 +386,7 @@ let Calendar = React.createClass({
   },
 
   _viewNavigate(nextDate){
-    let { view, date, culture } = this.props;
+    const {view, date, culture} = this.props
 
     if (dates.eq(date, nextDate, view, localizer.startOfWeek(culture))) {
       this._view(views.DAY)
@@ -410,13 +407,13 @@ let Calendar = React.createClass({
   },
 
   _headerClick(date){
-    let { view } = this.props;
+    const {view} = this.props
 
-    if ( view === views.MONTH || view === views.WEEK)
+    if (view === views.MONTH || view === views.WEEK)
       this._view(views.day)
 
     this._navigate(navigate.DATE, date)
   }
-});
+})
 
-export default uncontrollable(Calendar, { view: 'onView', date: 'onNavigate', selected: 'onSelectEvent' })
+export default uncontrollable(Calendar, {view: 'onView', date: 'onNavigate', selected: 'onSelectEvent'})

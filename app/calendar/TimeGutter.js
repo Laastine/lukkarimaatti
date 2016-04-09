@@ -1,10 +1,10 @@
-import React from 'react';
-import cn from 'classnames';
-import dates from './utils/dates';
-import localizer from './localizer'
-import {formats} from './formats'
+import React from "react"
+import cn from "classnames"
+import dates from "./utils/dates"
+import localizer from "./localizer"
+import {formats} from "./formats"
 
-let TimeGutter = React.createClass({
+const TimeGutter = React.createClass({
 
   propTypes: {
     step: React.PropTypes.number.isRequired,
@@ -13,26 +13,26 @@ let TimeGutter = React.createClass({
   },
 
   render() {
-    let { min, max, step, timeGutterFormat, culture } = this.props;
-    let today = new Date()
-    let totalMin = dates.diff(min, max, 'minutes')
-    let numSlots = Math.ceil(totalMin / step)
-    let date = min;
-    let children = []; //<div key={-1} className='rbc-time-slot rbc-day-header'>&nbsp;</div>
+    const {min, max, step, culture} = this.props
+    const today = new Date()
+    const totalMin = dates.diff(min, max, 'minutes')
+    const numSlots = Math.ceil(totalMin / step)
+    const children = [] //<div key={-1} className='rbc-time-slot rbc-day-header'>&nbsp</div>
+    let date = min
 
     for (var i = 0; i < numSlots; i++) {
-      let isEven = (i % 2) === 0;
-      let next = dates.add(date, step, 'minutes');
+      const isEven = (i % 2) === 0
+      const next = dates.add(date, step, 'minutes')
       children.push(
         <div key={i}
-          className={cn('rbc-time-slot', {
+             className={cn('rbc-time-slot', {
             'rbc-now': dates.inRange(today, date, next, 'minutes')
           })}
         >
-        { isEven && (
+          { isEven && (
             <span>{localizer.format(date, formats.timeGutterFormat, culture)}</span>
           )
-        }
+          }
         </div>
       )
 
@@ -43,8 +43,8 @@ let TimeGutter = React.createClass({
       <div className='rbc-time-gutter'>
         {children}
       </div>
-    );
+    )
   }
-});
+})
 
 export default TimeGutter

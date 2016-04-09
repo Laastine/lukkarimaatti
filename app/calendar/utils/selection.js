@@ -1,46 +1,45 @@
-
-export function isSelected(event, selected){
-  if (!event || selected == null) return false;
+export function isSelected(event, selected) {
+  if (!event || selected == null) return false
   return [].concat(selected).indexOf(event) !== -1
 }
 
-export function slotWidth(rowBox, slots){
-  let rowWidth = rowBox.right - rowBox.left;
-  let cellWidth = rowWidth / slots
+export function slotWidth(rowBox, slots) {
+  const rowWidth = rowBox.right - rowBox.left
+  const cellWidth = rowWidth / slots
 
   return cellWidth
 }
 
 export function getCellAtX(rowBox, x, cellWidth) {
-   return Math.floor((x - rowBox.left) / cellWidth);
+  return Math.floor((x - rowBox.left) / cellWidth)
 }
 
-export function pointInBox(box, { x, y }) {
-   return (
-      (y >= box.top && y <= box.bottom) &&
-      (x >= box.left && x <= box.right)
-   )
+export function pointInBox(box, {x, y}) {
+  return (
+    (y >= box.top && y <= box.bottom) &&
+    (x >= box.left && x <= box.right)
+  )
 }
 
-export function dateCellSelection(start, rowBox, box, slots){
-  let startIdx = -1;
-  let endIdx = -1;
-  let lastSlotIdx = slots - 1
+export function dateCellSelection(start, rowBox, box, slots) {
+  let startIdx = -1
+  let endIdx = -1
+  const lastSlotIdx = slots - 1
 
-  let cellWidth = slotWidth(rowBox, slots);
+  const cellWidth = slotWidth(rowBox, slots)
 
   // cell under the mouse
-  let currentSlot = getCellAtX(rowBox, box.x, cellWidth);
+  const currentSlot = getCellAtX(rowBox, box.x, cellWidth)
 
   // Identify row as either the initial row
   // or the row under the current mouse point
-  let isCurrentRow = rowBox.top < box.y && rowBox.bottom > box.y
-  let isStartRow = rowBox.top < start.y && rowBox.bottom > start.y
+  const isCurrentRow = rowBox.top < box.y && rowBox.bottom > box.y
+  const isStartRow = rowBox.top < start.y && rowBox.bottom > start.y
 
   // this row's position relative to the start point
-  let isAboveStart = start.y > rowBox.bottom;
-  let isBelowStart = rowBox.top > start.y
-  let isBetween = box.top < rowBox.top && box.bottom > rowBox.bottom
+  const isAboveStart = start.y > rowBox.bottom
+  const isBelowStart = rowBox.top > start.y
+  const isBetween = box.top < rowBox.top && box.bottom > rowBox.bottom
 
   // this row is between the current and start rows, so entirely selected
   if (isBetween) {
@@ -51,11 +50,11 @@ export function dateCellSelection(start, rowBox, box, slots){
   if (isCurrentRow) {
     if (isBelowStart) {
       startIdx = 0
-      endIdx = currentSlot;
+      endIdx = currentSlot
     }
     else if (isAboveStart) {
       startIdx = currentSlot
-      endIdx = lastSlotIdx;
+      endIdx = lastSlotIdx
     }
   }
 
@@ -65,7 +64,7 @@ export function dateCellSelection(start, rowBox, box, slots){
 
     if (isCurrentRow) {
       if (currentSlot < startIdx) startIdx = currentSlot
-      else endIdx = currentSlot; //select current range
+      else endIdx = currentSlot //select current range
     }
     // the current row is below start row
     else if (start.y < box.y) {
@@ -78,5 +77,5 @@ export function dateCellSelection(start, rowBox, box, slots){
     }
   }
 
-  return { startIdx, endIdx }
+  return {startIdx, endIdx}
 }

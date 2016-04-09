@@ -1,6 +1,5 @@
-
-export function accessor(data, field){
-  var value = null;
+export function accessor(data, field) {
+  let value = null
 
   if (typeof field === 'function')
     value = field(data)

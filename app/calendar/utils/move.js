@@ -1,13 +1,13 @@
-import { navigate } from './constants';
-import VIEWS from '../Views';
+import {navigate} from "./constants"
+import VIEWS from "../Views"
 
-export default function moveDate(action, date, view){
-  switch (action){
+export default function moveDate(action, date, view) {
+  switch (action) {
     case navigate.TODAY:
       date = new Date()
-      break;
+      break
     case navigate.DATE:
-      break;
+      break
     default:
       date = VIEWS[view].navigate(date, action)
   }

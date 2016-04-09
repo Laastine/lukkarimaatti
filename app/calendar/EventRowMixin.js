@@ -1,10 +1,10 @@
-import React, { PropTypes } from 'react';
-import { findDOMNode } from 'react-dom';
-import EventCell from './EventCell';
-import getHeight from 'dom-helpers/query/height';
-import { accessor, elementType } from './utils/propTypes';
-import { segStyle } from './utils/eventLevels';
-import { isSelected } from './utils/selection';
+import React, {PropTypes} from "react"
+import {findDOMNode} from "react-dom"
+import EventCell from "./EventCell"
+import getHeight from "dom-helpers/query/height"
+import {accessor, elementType} from "./utils/propTypes"
+import {segStyle} from "./utils/eventLevels"
+import {isSelected} from "./utils/selection"
 
 
 export default {
@@ -33,10 +33,11 @@ export default {
   },
 
   renderEvent(event){
-    let {
-        eventPropGetter, selected, start, end
+    const {
+      eventPropGetter, selected, start, end
       , startAccessor, endAccessor, titleAccessor
-      , allDayAccessor, eventComponent, onSelect } = this.props;
+      , allDayAccessor, eventComponent, onSelect
+    } = this.props
 
     return (
       <EventCell
@@ -56,7 +57,7 @@ export default {
   },
 
   renderSpan(len, key, content = ' '){
-    let { slots } = this.props;
+    const {slots} = this.props
 
     return (
       <div key={key} className='rbc-row-segment' style={segStyle(Math.abs(len), slots)}>

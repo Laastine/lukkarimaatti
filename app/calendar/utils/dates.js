@@ -1,7 +1,7 @@
 /* eslint no-fallthrough: 0 */
-import dateMath from 'date-arithmetic';
-import localizer from '../localizer';
-import { directions } from './constants';
+import dateMath from "date-arithmetic"
+import localizer from "../localizer"
+import {directions} from "./constants"
 
 const MILLI = {
   seconds: 1000,
@@ -11,32 +11,31 @@ const MILLI = {
 }
 
 
-let dates = Object.assign(dateMath, {
+const dates = Object.assign(dateMath, {
 
   monthsInYear(year){
-    let months = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    const months = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
       , date = new Date(year, 0, 1)
 
     return months.map(i => dates.month(date, i))
   },
 
   firstVisibleDay(date, culture){
-    let firstOfMonth = dates.startOf(date, 'month')
+    const firstOfMonth = dates.startOf(date, 'month')
 
-    return dates.startOf(firstOfMonth, 'week', localizer.startOfWeek(culture));
+    return dates.startOf(firstOfMonth, 'week', localizer.startOfWeek(culture))
   },
 
   lastVisibleDay(date, culture){
-    let endOfMonth = dates.endOf(date, 'month')
+    const endOfMonth = dates.endOf(date, 'month')
 
-    return dates.endOf(endOfMonth, 'week', localizer.startOfWeek(culture));
+    return dates.endOf(endOfMonth, 'week', localizer.startOfWeek(culture))
   },
 
   visibleDays(date, culture){
+    const last = dates.lastVisibleDay(date, culture)
+      , days = []
     let current = dates.firstVisibleDay(date, culture)
-      , last = dates.lastVisibleDay(date, culture)
-      , days = [];
-
     while (dates.lte(current, last, 'day')) {
       days.push(current)
       current = dates.add(current, 1, 'day')
@@ -46,16 +45,16 @@ let dates = Object.assign(dateMath, {
   },
 
   ceil(date, unit){
-    let floor = dates.startOf(date, unit)
+    const floor = dates.startOf(date, unit)
 
     return dates.eq(floor, date) ? floor : dates.add(floor, 1, unit)
   },
 
   move(date, min, max, unit, direction){
-    let isUpOrDown = direction === directions.UP || direction === directions.DOWN
+    const isUpOrDown = direction === directions.UP || direction === directions.DOWN
       , addUnit = isUpOrDown ? 'week' : 'day'
-      , amount = isUpOrDown ? 4 : 1
-      , newDate;
+    let amount = isUpOrDown ? 4 : 1
+    let newDate
 
     if (direction === directions.UP || direction === directions.LEFT)
       amount *= -1
@@ -69,7 +68,7 @@ let dates = Object.assign(dateMath, {
 
   range(start, end, unit = 'day'){
     let current = start
-      , days = [];
+    const days = []
 
     while (dates.lte(current, end, unit)) {
       days.push(current)
@@ -80,16 +79,16 @@ let dates = Object.assign(dateMath, {
   },
 
   merge(date, time){
-    if( time == null && date == null)
+    if (time == null && date == null)
       return null
 
     if (time == null) time = new Date()
     if (date == null) date = new Date()
 
     date = dates.startOf(date, 'day')
-    date = dates.hours(date,        dates.hours(time))
-    date = dates.minutes(date,      dates.minutes(time))
-    date = dates.seconds(date,      dates.seconds(time))
+    date = dates.hours(date, dates.hours(time))
+    date = dates.minutes(date, dates.minutes(time))
+    date = dates.seconds(date, dates.seconds(time))
     return dates.milliseconds(date, dates.milliseconds(time))
   },
 
@@ -105,7 +104,7 @@ let dates = Object.assign(dateMath, {
 
   isJustDate(date){
     return (
-         dates.hours(date) === 0
+      dates.hours(date) === 0
       && dates.minutes(date) === 0
       && dates.seconds(date) === 0
       && dates.milliseconds(date) === 0
@@ -113,7 +112,7 @@ let dates = Object.assign(dateMath, {
   },
 
   duration(start, end, unit, firstOfWeek){
-    if (unit === 'day') unit = 'date';
+    if (unit === 'day') unit = 'date'
     return Math.abs(dates[unit](start, undefined, firstOfWeek) - dates[unit](end, undefined, firstOfWeek))
   },
 
@@ -130,8 +129,8 @@ let dates = Object.assign(dateMath, {
   },
 
   total(date, unit) {
-    let ms = date.getTime()
-      , div = 1;
+    const ms = date.getTime()
+    let div = 1
 
     switch (unit) {
       case 'week':
@@ -143,17 +142,17 @@ let dates = Object.assign(dateMath, {
       case 'minutes':
         div *= 60
       case 'seconds':
-        div *= 1000;
+        div *= 1000
     }
 
-    return ms / div;
+    return ms / div
   },
 
   week(date){
-    var d = new Date(date);
-    d.setHours(0, 0, 0);
-    d.setDate(d.getDate() + 4 - (d.getDay() || 7));
-    return Math.ceil((((d - new Date(d.getFullYear(), 0, 1)) / 8.64e7 ) + 1) / 7);
+    var d = new Date(date)
+    d.setHours(0, 0, 0)
+    d.setDate(d.getDate() + 4 - (d.getDay() || 7))
+    return Math.ceil((((d - new Date(d.getFullYear(), 0, 1)) / 8.64e7 ) + 1) / 7)
   },
 
   today() {
@@ -169,4 +168,4 @@ let dates = Object.assign(dateMath, {
   }
 })
 
-export default dates;
+export default dates

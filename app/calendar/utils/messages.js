@@ -1,6 +1,6 @@
-import invariant from 'invariant';
+import invariant from "invariant"
 
- let messages = {
+let messages = {
   date: 'Date',
   time: 'Time',
   event: 'Event',
@@ -18,20 +18,20 @@ import invariant from 'invariant';
   showMore: total => `+${total} more`
 }
 
-export function set(key, msg){
+export function set(key, msg) {
   invariant(messages.hasOwnProperty(key),
     `The message key: "${key}" is not a valid message name. ` +
     `valid keys are: ${Object.keys(messages).join(', ')}`
   )
 
-  messages[key] = msg;
+  messages[key] = msg
 }
 
-export function result(msg, ...args){
+export function result(msg, ...args) {
   return typeof msg === 'function' ? msg(args) : msg
 }
 
-export default function messages(msgs){
+export default function messages(msgs) {
   return {
     ...messages,
     ...msgs

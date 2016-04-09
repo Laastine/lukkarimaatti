@@ -1,10 +1,10 @@
-import { PropTypes } from 'react';
-import invariant from 'invariant';
+import {PropTypes} from "react"
+import invariant from "invariant"
 
 const localePropType = PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.func
-      ]);
+  PropTypes.string,
+  PropTypes.func
+])
 
 function _format(localizer, formatter, value, format, culture) {
   let result = typeof format === 'function'
@@ -54,15 +54,15 @@ let localizer = {
 
 export function set(newLocalizer) {
   if (!newLocalizer.__isLocalizer__) {
-    newLocalizer = new DateLocalizer(newLocalizer);
+    newLocalizer = new DateLocalizer(newLocalizer)
     newLocalizer.__isLocalizer__ = true
   }
 
-  localizer = newLocalizer;
-  return localizer;
+  localizer = newLocalizer
+  return localizer
 }
 
-let exp = {
+const exp = {
   parse(...args){
     return localizer.parse(...args)
   },
@@ -78,7 +78,7 @@ let exp = {
 
 export default exp
 
-function error(){
+function error() {
   throw new Error(
     'You have not selected a localization strategy for Big Calendar. ' +
     'Please use either of the two included.')

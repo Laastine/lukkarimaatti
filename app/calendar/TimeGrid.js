@@ -1,34 +1,27 @@
-import React from 'react';
-import cn from 'classnames';
-import { findDOMNode } from 'react-dom';
-import dates from './utils/dates';
-import localizer from './localizer'
-import {formats} from './formats'
+import React from "react"
+import cn from "classnames"
+import {findDOMNode} from "react-dom"
+import dates from "./utils/dates"
+import localizer from "./localizer"
+import {formats} from "./formats"
+import DaySlot from "./DaySlot"
+import EventRow from "./EventRow"
+import TimeGutter from "./TimeGutter"
+import BackgroundCells from "./BackgroundCells"
+import classes from "dom-helpers/class"
+import getWidth from "dom-helpers/query/width"
+import scrollbarSize from "dom-helpers/util/scrollbarSize"
+import message from "./utils/messages"
+import {dateFormat} from "./utils/propTypes"
+import {notify} from "./utils/helpers"
+import {navigate} from "./utils/constants"
+import {accessor as get} from "./utils/accessors"
+import {inRange, eventSegments, endOfRange, eventLevels, sortEvents, segStyle} from "./utils/eventLevels"
 
-import DaySlot from './DaySlot';
-import EventRow from './EventRow';
-import TimeGutter from './TimeGutter';
-import BackgroundCells from './BackgroundCells';
-
-import classes from 'dom-helpers/class';
-import getWidth from 'dom-helpers/query/width';
-import scrollbarSize from 'dom-helpers/util/scrollbarSize';
-import message from './utils/messages';
-
-import { dateFormat} from './utils/propTypes';
-
-import { notify } from './utils/helpers';
-import { navigate } from './utils/constants';
-import { accessor as get } from './utils/accessors';
-
-import {
-    inRange, eventSegments, endOfRange
-  , eventLevels, sortEvents, segStyle } from './utils/eventLevels';
-
-const MIN_ROWS = 2;
+const MIN_ROWS = 2
 
 
-let TimeGrid = React.createClass({
+const TimeGrid = React.createClass({
 
   propTypes: {
     ...DaySlot.propTypes,
@@ -50,7 +43,7 @@ let TimeGrid = React.createClass({
   },
 
   componentWillMount() {
-    this._gutters = [];
+    this._gutters = []
   },
 
   componentDidMount() {
@@ -62,29 +55,29 @@ let TimeGrid = React.createClass({
   },
 
   render() {
-    let {
-        events, start, end, messages
-      , startAccessor, endAccessor, allDayAccessor } = this.props;
+    const {
+      events, start, end, messages
+      , startAccessor, endAccessor, allDayAccessor
+    } = this.props
 
-    let addGutterRef = i => ref => this._gutters[i] = ref;
+    const addGutterRef = i => ref => this._gutters[i] = ref
 
-    let range = dates.range(start, end, 'day')
+    const range = dates.range(start, end, 'day')
 
-    this._slots = range.length;
+    this._slots = range.length
 
-    let allDayEvents = []
-      , rangeEvents = [];
+    const allDayEvents = []
+      , rangeEvents = []
 
     events.forEach(event => {
       if (inRange(event, start, end, this.props)) {
-        let eStart = get(event, startAccessor)
-          , eEnd = get(event, endAccessor);
+        const eStart = get(event, startAccessor)
+          , eEnd = get(event, endAccessor)
 
         if (
-             get(event, allDayAccessor)
+          get(event, allDayAccessor)
           || !dates.eq(eStart, eEnd, 'day')
-          || (dates.isJustDate(eStart) && dates.isJustDate(eEnd)))
-        {
+          || (dates.isJustDate(eStart) && dates.isJustDate(eEnd))) {
           allDayEvents.push(event)
         }
         else
@@ -94,8 +87,8 @@ let TimeGrid = React.createClass({
 
     allDayEvents.sort((a, b) => sortEvents(a, b, this.props))
 
-    let segments = allDayEvents.map(evt => eventSegments(evt, start, end, this.props))
-    let { levels } = eventLevels(segments)
+    const segments = allDayEvents.map(evt => eventSegments(evt, start, end, this.props))
+    const {levels} = eventLevels(segments)
 
     return (
       <div className='rbc-time-view'>
@@ -127,15 +120,15 @@ let TimeGrid = React.createClass({
           }
         </div>
       </div>
-    );
+    )
   },
 
   renderEvents(range, events){
-    let { min, max, endAccessor, startAccessor, components } = this.props;
-    let today = new Date();
+    const {min, max, endAccessor, startAccessor, components} = this.props
+    const today = new Date()
 
     return range.map((date, idx) => {
-      let daysEvents = events.filter(
+      const daysEvents = events.filter(
         event => dates.inRange(date,
           get(event, startAccessor),
           get(event, endAccessor), 'day')
@@ -158,9 +151,9 @@ let TimeGrid = React.createClass({
   },
 
   renderAllDayEvents(range, levels){
-    let { first, last } = endOfRange(range);
+    const {first, last} = endOfRange(range)
 
-    while (levels.length < MIN_ROWS )
+    while (levels.length < MIN_ROWS)
       levels.push([])
 
     return levels.map((segs, idx) =>
@@ -182,12 +175,12 @@ let TimeGrid = React.createClass({
   },
 
   renderHeader(range){
-    let { dayFormat, culture } = this.props;
+    const {dayFormat, culture} = this.props
 
     return range.map((date, i) =>
       <div key={i}
-        className='rbc-header'
-        style={segStyle(1, this._slots)}
+           className='rbc-header'
+           style={segStyle(1, this._slots)}
       >
         <a href='#' onClick={this._headerClick.bind(null, date)}>
           { localizer.format(date, formats.dayFormat, culture) }
@@ -206,32 +199,32 @@ let TimeGrid = React.createClass({
   },
 
   _adjustGutter() {
-    let isRtl = this.props.rtl;
-    let header = this.refs.headerCell;
+    const isRtl = this.props.rtl
+    const header = this.refs.headerCell
+    const gutterCells = [findDOMNode(this.refs.gutter), ...this._gutters]
+    const isOverflowing = this.refs.content.scrollHeight > this.refs.content.clientHeight
     let width = this._gutterWidth
-    let gutterCells = [findDOMNode(this.refs.gutter), ...this._gutters]
-    let isOverflowing = this.refs.content.scrollHeight > this.refs.content.clientHeight;
 
     if (!width) {
-      this._gutterWidth = Math.max(...gutterCells.map(getWidth));
+      this._gutterWidth = Math.max(...gutterCells.map(getWidth))
 
       if (this._gutterWidth) {
-        width = this._gutterWidth + 'px';
+        width = this._gutterWidth + 'px'
         gutterCells.forEach(node => node.style.width = width)
       }
     }
 
     if (isOverflowing) {
       classes.addClass(header, 'rbc-header-overflowing')
-      this.refs.headerCell.style[!isRtl ? 'marginLeft' : 'marginRight'] = '';
-      this.refs.headerCell.style[isRtl ? 'marginLeft' : 'marginRight'] = scrollbarSize() + 'px';
+      this.refs.headerCell.style[!isRtl ? 'marginLeft' : 'marginRight'] = ''
+      this.refs.headerCell.style[isRtl ? 'marginLeft' : 'marginRight'] = scrollbarSize() + 'px'
     }
     else {
       classes.removeClass(header, 'rbc-header-overflowing')
     }
   }
 
-});
+})
 
 
 export default TimeGrid

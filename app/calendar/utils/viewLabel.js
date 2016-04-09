@@ -1,8 +1,7 @@
-import { views } from './constants';
-import defaultFormats from '../formats';
-import localizer from '../localizer';
-
-import VIEWS from '../Views';
+import {views} from "./constants"
+import defaultFormats from "../formats"
+import localizer from "../localizer"
+import VIEWS from "../Views"
 
 const Formats = {
   [views.MONTH]: 'monthHeaderFormat',
@@ -11,15 +10,15 @@ const Formats = {
   [views.AGENDA]: 'agendaHeaderFormat'
 }
 
-export default function viewLabel(date, view, formats, culture){
-  let View = VIEWS[view];
-  let headerSingle = view === views.MONTH || view === views.DAY
+export default function viewLabel(date, view, formats, culture) {
+  const View = VIEWS[view]
+  const headerSingle = view === views.MONTH || view === views.DAY
 
   formats = defaultFormats(formats || {})
 
-  let headerFormat = formats[Formats[view]];
+  const headerFormat = formats[Formats[view]]
 
   return headerSingle
     ? localizer.format(date, headerFormat, culture)
-    : localizer.format(View.range(date, { culture }), headerFormat, culture)
+    : localizer.format(View.range(date, {culture}), headerFormat, culture)
 }

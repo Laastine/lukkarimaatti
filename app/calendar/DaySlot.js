@@ -1,30 +1,29 @@
-import React from 'react';
-import { findDOMNode } from 'react-dom';
-import Selection, { getBoundsForNode } from './Selection';
-import cn from 'classnames';
-import dates from './utils/dates';
-import { isSelected } from './utils/selection';
-import localizer from './localizer'
-import {formats} from './formats'
+import React from "react"
+import {findDOMNode} from "react-dom"
+import Selection, {getBoundsForNode} from "./Selection"
+import cn from "classnames"
+import dates from "./utils/dates"
+import {isSelected} from "./utils/selection"
+import localizer from "./localizer"
+import {formats} from "./formats"
+import {notify} from "./utils/helpers"
+import {accessor} from "./utils/propTypes"
+import {accessor as get} from "./utils/accessors"
 
-import { notify } from './utils/helpers';
-import { accessor } from './utils/propTypes';
-import { accessor as get } from './utils/accessors';
-
-function snapToSlot(date, step){
-  var roundTo = 1000 * 60 * step;
+function snapToSlot(date, step) {
+  var roundTo = 1000 * 60 * step
   return new Date(Math.floor(date.getTime() / roundTo) * roundTo)
 }
 
-function positionFromDate(date, min, step){
+function positionFromDate(date, min, step) {
   return dates.diff(min, dates.merge(min, date), 'minutes')
 }
 
-function overlaps(event, events, { startAccessor, endAccessor }, last) {
-  let eStart = get(event, startAccessor);
-  let offset = last;
+function overlaps(event, events, {startAccessor, endAccessor}, last) {
+  const eStart = get(event, startAccessor)
+  let offset = last
 
-  function overlap(eventB){
+  function overlap(eventB) {
     return dates.lt(eStart, get(eventB, endAccessor))
   }
 
@@ -37,7 +36,7 @@ function overlaps(event, events, { startAccessor, endAccessor }, last) {
   return offset
 }
 
-let DaySlot = React.createClass({
+const DaySlot = React.createClass({
 
   propTypes: {
     events: React.PropTypes.array.isRequired,
@@ -58,34 +57,35 @@ let DaySlot = React.createClass({
   },
 
   getInitialState() {
-    return { selecting: false };
+    return {selecting: false}
   },
 
 
   componentDidMount() {
     this.props.selectable
-      && this._selectable()
+    && this._selectable()
   },
 
   componentWillUnmount() {
-    this._teardownSelectable();
+    this._teardownSelectable()
   },
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.selectable && !this.props.selectable)
-      this._selectable();
+      this._selectable()
     if (!nextProps.selectable && this.props.selectable)
-      this._teardownSelectable();
+      this._teardownSelectable()
   },
 
   render() {
-    let {
-        min, max, step, start, end
-      , selectRangeFormat, culture, ...props } = this.props;
+    const {
+      min, max, step, start, end
+      , selectRangeFormat, culture, ...props
+    } = this.props
 
-    let totalMin = dates.diff(min, max, 'minutes')
-    let numSlots = Math.ceil(totalMin / step)
-    let children = [];
+    const totalMin = dates.diff(min, max, 'minutes')
+    const numSlots = Math.ceil(totalMin / step)
+    const children = []
 
     for (var i = 0; i < numSlots; i++) {
       children.push(
@@ -93,15 +93,15 @@ let DaySlot = React.createClass({
       )
     }
 
-    this._totalMin = totalMin;
+    this._totalMin = totalMin
 
-    let { selecting, startSlot, endSlot } = this.state
-       , style = this._slotStyle(startSlot, endSlot, 0)
+    const {selecting, startSlot, endSlot} = this.state
+      , style = this._slotStyle(startSlot, endSlot, 0)
 
-    let selectDates = {
+    const selectDates = {
       start: this.state.startDate,
       end: this.state.endDate
-    };
+    }
 
     return (
       <div {...props} className={cn('rbc-day-slot', props.className)}>
@@ -109,44 +109,45 @@ let DaySlot = React.createClass({
         { this.renderEvents(numSlots, totalMin) }
         {
           selecting &&
-            <div className='rbc-slot-selection' style={style}>
+          <div className='rbc-slot-selection' style={style}>
               <span>
               { localizer.format(selectDates, formats.selectRangeFormat, culture) }
               </span>
-            </div>
+          </div>
         }
       </div>
-    );
+    )
   },
 
   renderEvents(numSlots, totalMin) {
-    let {
-        events, step, min, culture, eventPropGetter
+    const {
+      events, step, min, culture, eventPropGetter
       , selected, eventTimeRangeFormat, eventComponent
-      , startAccessor, endAccessor, titleAccessor } = this.props;
+      , startAccessor, endAccessor, titleAccessor
+    } = this.props
 
-    let EventComponent = eventComponent
-      , lastLeftOffset = 0;
+    const EventComponent = eventComponent
+    let lastLeftOffset = 0
 
     events.sort((a, b) => +get(a, startAccessor) - +get(b, startAccessor))
 
     return events.map((event, idx) => {
-      let start = get(event, startAccessor)
-      let end = get(event, endAccessor)
-      let startSlot = positionFromDate(start, min, step);
-      let endSlot = positionFromDate(end, min, step);
+      const start = get(event, startAccessor)
+      const end = get(event, endAccessor)
+      const startSlot = positionFromDate(start, min, step)
+      const endSlot = positionFromDate(end, min, step)
 
       lastLeftOffset = Math.max(0,
         overlaps(event, events.slice(0, idx), this.props, lastLeftOffset + 1))
 
-      let style = this._slotStyle(startSlot, endSlot, lastLeftOffset)
+      const style = this._slotStyle(startSlot, endSlot, lastLeftOffset)
 
-      let title = get(event, titleAccessor)
-      let label = localizer.format({ start, end }, formats.eventTimeRangeFormat, culture);
-      let _isSelected = isSelected(event, selected);
+      const title = get(event, titleAccessor)
+      const label = localizer.format({start, end}, formats.eventTimeRangeFormat, culture)
+      const _isSelected = isSelected(event, selected)
 
       if (eventPropGetter)
-        var { style: xStyle, className } = eventPropGetter(event, start, end, _isSelected);
+        var {style: xStyle, className} = eventPropGetter(event, start, end, _isSelected)
 
       return (
         <div
@@ -175,13 +176,13 @@ let DaySlot = React.createClass({
 
     endSlot = Math.max(endSlot, startSlot + this.props.step) //must be at least one `step` high
 
-    let eventOffset = this.props.eventOffset || 10
-      , isRtl = this.props.rtl;
+    const eventOffset = this.props.eventOffset || 10
+      , isRtl = this.props.rtl
 
-    let top = ((startSlot / this._totalMin) * 100);
-    let bottom = ((endSlot / this._totalMin) * 100);
-    let per = leftOffset === 0 ? 0 : leftOffset * eventOffset;
-    let rightDiff = (eventOffset / (leftOffset + 1));
+    const top = ((startSlot / this._totalMin) * 100)
+    const bottom = ((endSlot / this._totalMin) * 100)
+    const per = leftOffset === 0 ? 0 : leftOffset * eventOffset
+    const rightDiff = (eventOffset / (leftOffset + 1))
 
     return {
       top: top + '%',
@@ -192,49 +193,49 @@ let DaySlot = React.createClass({
   },
 
   _selectable(){
-    let node = findDOMNode(this);
-    let selector = this._selector = new Selection(()=> findDOMNode(this))
+    const node = findDOMNode(this)
+    const selector = this._selector = new Selection(()=> findDOMNode(this))
 
-    let maybeSelect = (box) => {
-      let onSelecting = this.props.onSelecting
-      let current = this.state || {};
-      let state = selectionState(box);
-      let { startDate: start, endDate: end } = state;
+    const maybeSelect = (box) => {
+      const onSelecting = this.props.onSelecting
+      const current = this.state || {}
+      const state = selectionState(box)
+      const {startDate: start, endDate: end} = state
 
       if (onSelecting) {
         if (
           (dates.eq(current.startDate, start, 'minutes') &&
           dates.eq(current.endDate, end, 'minutes')) ||
-          onSelecting({ start, end }) === false
+          onSelecting({start, end}) === false
         )
-         return
+          return
       }
 
       this.setState(state)
     }
 
-    let selectionState = ({ x, y }) => {
-      let { step, min, max } = this.props;
-      let { top, bottom } = getBoundsForNode(node)
+    const selectionState = ({x, y}) => {
+      const {step, min, max} = this.props
+      const {top, bottom} = getBoundsForNode(node)
 
-      let mins = this._totalMin;
+      const mins = this._totalMin
 
-      let range = Math.abs(top - bottom)
+      const range = Math.abs(top - bottom)
 
-      let current = (y - top) / range;
+      let current = (y - top) / range
 
       current = snapToSlot(minToDate(mins * current, min), step)
 
       if (!this.state.selecting)
         this._initialDateSlot = current
 
-      let initial = this._initialDateSlot;
+      const initial = this._initialDateSlot
 
       if (dates.eq(initial, current, 'minutes'))
         current = dates.add(current, step, 'minutes')
 
-      let start = dates.max(min, dates.min(initial, current))
-      let end = dates.min(max, dates.max(initial, current))
+      const start = dates.max(min, dates.min(initial, current))
+      const end = dates.min(max, dates.max(initial, current))
 
       return {
         selecting: true,
@@ -249,32 +250,32 @@ let DaySlot = React.createClass({
     selector.on('selectStart', maybeSelect)
 
     selector
-      .on('click', ({ x, y }) => {
+      .on('click', ({x, y}) => {
         this._clickTimer = setTimeout(()=> {
-          this._selectSlot(selectionState({ x, y }))
+          this._selectSlot(selectionState({x, y}))
         })
 
-        this.setState({ selecting: false })
+        this.setState({selecting: false})
       })
 
     selector
       .on('select', () => {
         if (this.state.selecting) {
           this._selectSlot(this.state)
-          this.setState({ selecting: false })
+          this.setState({selecting: false})
         }
       })
   },
 
   _teardownSelectable() {
     if (!this._selector) return
-    this._selector.teardown();
-    this._selector = null;
+    this._selector.teardown()
+    this._selector = null
   },
 
-  _selectSlot({ startDate, endDate, endSlot, startSlot }) {
+  _selectSlot({startDate, endDate, endSlot, startSlot}) {
     let current = startDate
-      , slots = [];
+    const slots = []
 
     while (dates.lte(current, endDate)) {
       slots.push(current)
@@ -289,20 +290,20 @@ let DaySlot = React.createClass({
   },
 
   _select(event){
-    clearTimeout(this._clickTimer);
+    clearTimeout(this._clickTimer)
     notify(this.props.onSelectEvent, event)
   }
-});
+})
 
 
-function minToDate(min, date){
+function minToDate(min, date) {
   var dt = new Date(date)
-    , totalMins = dates.diff(dates.startOf(date, 'day'), date, 'minutes');
+    , totalMins = dates.diff(dates.startOf(date, 'day'), date, 'minutes')
 
-  dt = dates.hours(dt, 0);
-  dt = dates.minutes(dt, totalMins + min);
+  dt = dates.hours(dt, 0)
+  dt = dates.minutes(dt, totalMins + min)
   dt = dates.seconds(dt, 0)
   return dates.milliseconds(dt, 0)
 }
 
-export default DaySlot;
+export default DaySlot

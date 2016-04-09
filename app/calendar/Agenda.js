@@ -1,18 +1,17 @@
-import React, { PropTypes } from 'react';
-import message from './utils/messages';
-import localizer from './localizer'
-import {formats} from './formats'
-import dates from './utils/dates';
-import { navigate } from './utils/constants';
-import { accessor as get } from './utils/accessors';
+import React, {PropTypes} from "react"
+import message from "./utils/messages"
+import localizer from "./localizer"
+import {formats} from "./formats"
+import dates from "./utils/dates"
+import {navigate} from "./utils/constants"
+import {accessor as get} from "./utils/accessors"
+import classes from "dom-helpers/class"
+import getWidth from "dom-helpers/query/width"
+import scrollbarSize from "dom-helpers/util/scrollbarSize"
+import {inRange} from "./utils/eventLevels"
 
-import classes from 'dom-helpers/class';
-import getWidth from 'dom-helpers/query/width';
-import scrollbarSize from 'dom-helpers/util/scrollbarSize';
-import { inRange } from './utils/eventLevels';
 
-
-let Agenda = React.createClass({
+const Agenda = React.createClass({
 
   propTypes: {
     messages: PropTypes.shape({
@@ -25,7 +24,7 @@ let Agenda = React.createClass({
   getDefaultProps() {
     return {
       length: 30
-    };
+    }
   },
 
   componentDidMount() {
@@ -37,11 +36,12 @@ let Agenda = React.createClass({
   },
 
   render() {
-    let { length, date, events, startAccessor } = this.props;
-    let messages = message(this.props.messages);
-    let end = dates.add(date, length, 'day')
+    const {length, date, startAccessor} = this.props
+    let {events} = this.props
+    const messages = message(this.props.messages)
+    const end = dates.add(date, length, 'day')
 
-    let range = dates.range(date, end, 'day');
+    const range = dates.range(date, end, 'day')
 
     events = events.filter(event =>
       inRange(event, date, end, this.props)
@@ -53,53 +53,54 @@ let Agenda = React.createClass({
       <div className='rbc-agenda-view'>
         <table ref='header'>
           <thead>
-            <tr>
-              <th className='rbc-header' ref='dateCol'>
-                {messages.date}
-              </th>
-              <th className='rbc-header' ref='timeCol'>
-                {messages.time}
-              </th>
-              <th className='rbc-header'>
-                {messages.event}
-              </th>
-            </tr>
+          <tr>
+            <th className='rbc-header' ref='dateCol'>
+              {messages.date}
+            </th>
+            <th className='rbc-header' ref='timeCol'>
+              {messages.time}
+            </th>
+            <th className='rbc-header'>
+              {messages.event}
+            </th>
+          </tr>
           </thead>
         </table>
         <div className='rbc-agenda-content' ref='content'>
           <table>
             <tbody ref='tbody'>
-              { range.map((day, idx) => this.renderDay(day, events, idx)) }
+            { range.map((day, idx) => this.renderDay(day, events, idx)) }
             </tbody>
           </table>
         </div>
       </div>
-    );
+    )
   },
 
   renderDay(day, events, dayKey){
-    let {
-        culture, components
-      , titleAccessor, agendaDateFormat } = this.props;
+    const {
+      culture, components
+      , titleAccessor, agendaDateFormat
+    } = this.props
 
-    let EventComponent = components.event;
-    let DateComponent = components.date;
+    const EventComponent = components.event
+    const DateComponent = components.date
 
     events = events.filter(e => inRange(e, day, day, this.props))
 
     return events.map((event, idx) => {
-      let dateLabel = idx === 0 && localizer.format(day, formats.agendaDateFormat, culture)
-      let first = idx === 0
-          ? (
-            <td rowSpan={events.length} className='rbc-agenda-date-cell'>
-              { DateComponent
-                ? <DateComponent day={day} label={dateLabel}/>
-                : dateLabel
-              }
-            </td>
-          ) : false
+      const dateLabel = idx === 0 && localizer.format(day, formats.agendaDateFormat, culture)
+      const first = idx === 0
+        ? (
+        <td rowSpan={events.length} className='rbc-agenda-date-cell'>
+          { DateComponent
+            ? <DateComponent day={day} label={dateLabel}/>
+            : dateLabel
+          }
+        </td>
+      ) : false
 
-      let title = get(event, titleAccessor)
+      const title = get(event, titleAccessor)
 
       return (
         <tr key={dayKey + '_' + idx}>
@@ -109,8 +110,8 @@ let Agenda = React.createClass({
           </td>
           <td className='rbc-agenda-event-cell'>
             { EventComponent
-                ? <EventComponent event={event} title={title}/>
-                : title
+              ? <EventComponent event={event} title={title}/>
+              : title
             }
           </td>
         </tr>
@@ -119,25 +120,26 @@ let Agenda = React.createClass({
   },
 
   timeRangeLabel(day, event){
-    let {
-        endAccessor, startAccessor, allDayAccessor
-      , culture, messages, components } = this.props;
+    const {
+      endAccessor, startAccessor, allDayAccessor
+      , culture, messages, components
+    } = this.props
 
     let labelClass = ''
       , TimeComponent = components.time
       , label = message(messages).allDay
 
-    let start = get(event, startAccessor)
-    let end = get(event, endAccessor)
+    const start = get(event, startAccessor)
+    const end = get(event, endAccessor)
 
     if (!get(event, allDayAccessor)) {
-      if (dates.eq(start, end, 'day')){
-        label = localizer.format({ start, end }, formats.agendaTimeRangeFormat, culture)
+      if (dates.eq(start, end, 'day')) {
+        label = localizer.format({start, end}, formats.agendaTimeRangeFormat, culture)
       }
-      else if (dates.eq(day, start, 'day')){
+      else if (dates.eq(day, start, 'day')) {
         label = localizer.format(start, formats.agendaTimeFormat, culture)
       }
-      else if (dates.eq(day, end, 'day')){
+      else if (dates.eq(day, end, 'day')) {
         label = localizer.format(start, formats.agendaTimeFormat, culture)
       }
     }
@@ -156,14 +158,14 @@ let Agenda = React.createClass({
   },
 
   _adjustHeader() {
-    let header = this.refs.header;
-    let firstRow = this.refs.tbody.firstChild
+    const header = this.refs.header
+    const firstRow = this.refs.tbody.firstChild
 
     if (!firstRow)
       return
 
-    let isOverflowing = this.refs.content.scrollHeight > this.refs.content.clientHeight;
-    let widths = this._widths || []
+    const isOverflowing = this.refs.content.scrollHeight > this.refs.content.clientHeight
+    const widths = this._widths || []
 
     this._widths = [
       getWidth(firstRow.children[0]),
@@ -172,7 +174,7 @@ let Agenda = React.createClass({
 
     if (widths[0] !== this._widths[0] || widths[1] !== this._widths[1]) {
       this.refs.dateCol.style.width = this._widths[0] + 'px'
-      this.refs.timeCol.style.width = this._widths[1] + 'px';
+      this.refs.timeCol.style.width = this._widths[1] + 'px'
     }
 
     if (isOverflowing) {
@@ -183,24 +185,24 @@ let Agenda = React.createClass({
       classes.removeClass(header, 'rbc-header-overflowing')
     }
   }
-});
+})
 
-Agenda.navigate = (date, action)=>{
-  switch (action){
+Agenda.navigate = (date, action)=> {
+  switch (action) {
     case navigate.PREVIOUS:
-      return dates.add(date, -1, 'day');
+      return dates.add(date, -1, 'day')
 
     case navigate.NEXT:
       return dates.add(date, 1, 'day')
 
     default:
-      return date;
+      return date
   }
 }
 
-Agenda.range = (start, { length = Agenda.defaultProps.length }) => {
-  let end = dates.add(start, length, 'day')
-  return { start, end }
+Agenda.range = (start, {length = Agenda.defaultProps.length}) => {
+  const end = dates.add(start, length, 'day')
+  return {start, end}
 }
 
 export default Agenda

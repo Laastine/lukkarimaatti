@@ -1,10 +1,10 @@
-import React from 'react';
-import { findDOMNode } from 'react-dom';
-import cn from 'classnames';
-import { segStyle } from './utils/eventLevels';
-import { notify } from './utils/helpers';
-import { dateCellSelection, slotWidth, getCellAtX, pointInBox } from './utils/selection';
-import Selection, { getBoundsForNode } from './Selection';
+import React from "react"
+import {findDOMNode} from "react-dom"
+import cn from "classnames"
+import {segStyle} from "./utils/eventLevels"
+import {notify} from "./utils/helpers"
+import {dateCellSelection, slotWidth, getCellAtX, pointInBox} from "./utils/selection"
+import Selection, {getBoundsForNode} from "./Selection"
 
 class DisplayCells extends React.Component {
 
@@ -14,29 +14,29 @@ class DisplayCells extends React.Component {
     slots: React.PropTypes.number
   }
 
-  state = { selecting: false }
+  state = {selecting: false}
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.selectable
-      && this._selectable()
+    && this._selectable()
   }
 
   componentWillUnmount() {
-    this._teardownSelectable();
+    this._teardownSelectable()
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.selectable && !this.props.selectable)
-      this._selectable();
+      this._selectable()
     if (!nextProps.selectable && this.props.selectable)
-      this._teardownSelectable();
+      this._teardownSelectable()
   }
 
-  render(){
-    let { slots } = this.props;
-    let { selecting, startIdx, endIdx } = this.state
+  render() {
+    const {slots} = this.props
+    const {selecting, startIdx, endIdx} = this.state
 
-    let children = [];
+    const children = []
 
     for (var i = 0; i < slots; i++) {
       children.push(
@@ -57,28 +57,28 @@ class DisplayCells extends React.Component {
     )
   }
 
-  _selectable(){
-    let node = findDOMNode(this);
-    let selector = this._selector = new Selection(this.props.container)
+  _selectable() {
+    const node = findDOMNode(this)
+    const selector = this._selector = new Selection(this.props.container)
 
     selector.on('selecting', box => {
-      let { slots } = this.props;
+      const {slots} = this.props
 
-      let startIdx = -1;
-      let endIdx = -1;
+      let startIdx = -1
+      let endIdx = -1
 
       if (!this.state.selecting) {
-        notify(this.props.onSelectStart, [box]);
-        this._initial = { x: box.x, y: box.y };
+        notify(this.props.onSelectStart, [box])
+        this._initial = {x: box.x, y: box.y}
       }
       if (selector.isSelected(node)) {
-        let nodeBox = getBoundsForNode(node);
+        const nodeBox = getBoundsForNode(node)
 
-        ({ startIdx, endIdx } = dateCellSelection(
-            this._initial
+        ({startIdx, endIdx} = dateCellSelection(
+          this._initial
           , nodeBox
           , box
-          , slots));
+          , slots))
       }
 
       this.setState({
@@ -89,11 +89,11 @@ class DisplayCells extends React.Component {
 
     selector
       .on('click', point => {
-        let rowBox = getBoundsForNode(node)
+        const rowBox = getBoundsForNode(node)
 
         if (pointInBox(rowBox, point)) {
-          let width = slotWidth(getBoundsForNode(node),  this.props.slots);
-          let currentCell = getCellAtX(rowBox, point.x, width);
+          const width = slotWidth(getBoundsForNode(node), this.props.slots)
+          const currentCell = getCellAtX(rowBox, point.x, width)
 
           this._selectSlot({
             startIdx: currentCell,
@@ -102,30 +102,30 @@ class DisplayCells extends React.Component {
         }
 
         this._initial = {}
-        this.setState({ selecting: false })
+        this.setState({selecting: false})
       })
 
     selector
       .on('select', () => {
         this._selectSlot(this.state)
         this._initial = {}
-        this.setState({ selecting: false })
-        notify(this.props.onSelectEnd, [this.state]);
+        this.setState({selecting: false})
+        notify(this.props.onSelectEnd, [this.state])
       })
   }
 
   _teardownSelectable() {
     if (!this._selector) return
-    this._selector.teardown();
-    this._selector = null;
+    this._selector.teardown()
+    this._selector = null
   }
 
-  _selectSlot({ endIdx, startIdx }) {
+  _selectSlot({endIdx, startIdx}) {
     this.props.onSelectSlot &&
-      this.props.onSelectSlot({
-        start: startIdx, end: endIdx
-      })
+    this.props.onSelectSlot({
+      start: startIdx, end: endIdx
+    })
   }
 }
 
-export default DisplayCells;
+export default DisplayCells

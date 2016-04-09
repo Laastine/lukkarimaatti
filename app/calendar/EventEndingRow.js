@@ -1,13 +1,13 @@
-import React from 'react';
-import EventRowMixin from './EventRowMixin';
-import { eventLevels } from './utils/eventLevels';
-import message from './utils/messages';
-import {range} from 'ramda'
+import React from "react"
+import EventRowMixin from "./EventRowMixin"
+import {eventLevels} from "./utils/eventLevels"
+import message from "./utils/messages"
+import {range} from "ramda"
 
-let isSegmentInSlot = (seg, slot) => seg.left <= slot && seg.right >= slot;
-let eventsInSlot = (segments, slot) => segments.filter(seg => isSegmentInSlot(seg, slot)).length
+const isSegmentInSlot = (seg, slot) => seg.left <= slot && seg.right >= slot
+const eventsInSlot = (segments, slot) => segments.filter(seg => isSegmentInSlot(seg, slot)).length
 
-let EventRow = React.createClass({
+const EventRow = React.createClass({
 
   displayName: 'EventRow',
 
@@ -16,31 +16,31 @@ let EventRow = React.createClass({
     slots: React.PropTypes.number
   },
 
-  mixins: [ EventRowMixin ],
+  mixins: [EventRowMixin],
 
   render(){
-    let { segments, slots: slotCount } = this.props;
-    let rowSegments = eventLevels(segments).levels[0];
+    const {segments, slots: slotCount} = this.props
+    const rowSegments = eventLevels(segments).levels[0]
 
     let current = 1
-      , lastEnd = 1
-      , row = [];
+    let lastEnd = 1
+    const row = []
 
-    while (current <= slotCount){
-      let key = '_lvl_' + current;
+    while (current <= slotCount) {
+      const key = '_lvl_' + current
 
-      let { event, left, right, span } = rowSegments
+      const {event, left, right, span} = rowSegments
         .filter(seg => isSegmentInSlot(seg, current))[0] || {} //eslint-disable-line
 
       if (!event) {
         current++
-        continue;
+        continue
       }
 
-      let gap = Math.max(0, left - lastEnd);
+      const gap = Math.max(0, left - lastEnd)
 
       if (this.canRenderSlotEvent(left, span)) {
-        let content = this.renderEvent(event)
+        const content = this.renderEvent(event)
 
         if (gap)
           row.push(this.renderSpan(gap, key + '_gap'))
@@ -49,7 +49,7 @@ let EventRow = React.createClass({
           this.renderSpan(span, key, content)
         )
 
-        lastEnd = current = (right + 1);
+        lastEnd = current = (right + 1)
       }
       else {
         if (gap)
@@ -68,36 +68,36 @@ let EventRow = React.createClass({
   },
 
   canRenderSlotEvent(slot, span){
-    let { segments } = this.props;
+    const {segments} = this.props
 
     return range(slot, slot + span).every(s => {
-      let count = eventsInSlot(segments, s)
+      const count = eventsInSlot(segments, s)
 
       return count === 1
     })
   },
 
   renderShowMore(segments, slot) {
-    let messages = message(this.props.messages)
-    let count = eventsInSlot(segments, slot)
+    const messages = message(this.props.messages)
+    const count = eventsInSlot(segments, slot)
 
     return count
       ? (
-        <a
-          key={'sm_' + slot}
-          href='#'
-          className={'rbc-show-more'}
-          onClick={this._showMore.bind(null, slot)}
-        >
-          {messages.showMore(count)}
-        </a>
-      ) : false
+      <a
+        key={'sm_' + slot}
+        href='#'
+        className={'rbc-show-more'}
+        onClick={this._showMore.bind(null, slot)}
+      >
+        {messages.showMore(count)}
+      </a>
+    ) : false
   },
 
   _showMore(slot, e){
     e.preventDefault()
     this.props.onShowMore(slot)
   }
-});
+})
 
 export default EventRow

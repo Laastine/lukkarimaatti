@@ -1,35 +1,30 @@
-import React from 'react';
-import { findDOMNode } from 'react-dom';
-import cn from 'classnames';
-import dates from './utils/dates';
-import localizer from './localizer'
-import {chunk} from 'lodash';
-import {omit, aperture} from 'ramda'
-import {formats} from './formats'
+import React from "react"
+import {findDOMNode} from "react-dom"
+import cn from "classnames"
+import dates from "./utils/dates"
+import localizer from "./localizer"
+import {chunk} from "lodash"
+import {omit, aperture} from "ramda"
+import {formats} from "./formats"
+import {navigate} from "./utils/constants"
+import {notify} from "./utils/helpers"
+import getHeight from "dom-helpers/query/height"
+import getPosition from "dom-helpers/query/position"
+import raf from "dom-helpers/util/requestAnimationFrame"
+import EventRow from "./EventRow"
+import EventEndingRow from "./EventEndingRow"
+import Popup from "./Popup"
+import Overlay from "react-overlays/lib/Overlay"
+import BackgroundCells from "./BackgroundCells"
+import {dateFormat} from "./utils/propTypes"
+import {segStyle, inRange, eventSegments, endOfRange, eventLevels, sortEvents} from "./utils/eventLevels"
 
-import { navigate } from './utils/constants';
-import { notify } from './utils/helpers';
-import getHeight from 'dom-helpers/query/height';
-import getPosition from 'dom-helpers/query/position';
-import raf from 'dom-helpers/util/requestAnimationFrame';
+const eventsForWeek = (evts, start, end, props) =>
+  evts.filter(e => inRange(e, start, end, props))
 
-import EventRow from './EventRow';
-import EventEndingRow from './EventEndingRow';
-import Popup from './Popup';
-import Overlay from 'react-overlays/lib/Overlay';
-import BackgroundCells from './BackgroundCells';
+const isSegmentInSlot = (seg, slot) => seg.left <= slot && seg.right >= slot
 
-import { dateFormat } from './utils/propTypes';
-import {
-    segStyle, inRange, eventSegments
-  , endOfRange, eventLevels, sortEvents } from './utils/eventLevels';
-
-let eventsForWeek = (evts, start, end, props) =>
-  evts.filter(e => inRange(e, start, end, props));
-
-let isSegmentInSlot = (seg, slot) => seg.left <= slot && seg.right >= slot;
-
-let propTypes = {
+const propTypes = {
   ...EventRow.PropTypes,
 
   culture: React.PropTypes.string,
@@ -55,10 +50,10 @@ let propTypes = {
 
   onSelectEvent: React.PropTypes.func,
   onSelectSlot: React.PropTypes.func
-};
+}
 
 
-let MonthView = React.createClass({
+const MonthView = React.createClass({
 
   displayName: 'MonthView',
 
@@ -76,14 +71,14 @@ let MonthView = React.createClass({
     this._pendingSelection = []
   },
 
-  componentWillReceiveProps({ date }) {
+  componentWillReceiveProps({date}) {
     this.setState({
       needLimitMeasure: !dates.eq(date, this.props.date)
     })
   },
 
   componentDidMount() {
-    let running;
+    let running
 
     if (this.state.needLimitMeasure)
       this._measureRowLimit(this.props)
@@ -92,7 +87,7 @@ let MonthView = React.createClass({
       if (!running) {
         raf(()=> {
           running = false
-          this.setState({ needLimitMeasure: true }) //eslint-disable-line
+          this.setState({needLimitMeasure: true}) //eslint-disable-line
         })
       }
     }, false)
@@ -108,15 +103,15 @@ let MonthView = React.createClass({
   },
 
   render() {
-    var { date, culture } = this.props
+    var {date, culture} = this.props
       , month = dates.visibleDays(date, culture)
-      , weeks  = chunk(month, 7);
+      , weeks = chunk(month, 7)
 
-    let measure = this.state.needLimitMeasure
+    const measure = this.state.needLimitMeasure
 
-    this._weekCount = weeks.length;
+    this._weekCount = weeks.length
 
-    var elementProps = omit(Object.keys(propTypes), this.props);
+    var elementProps = omit(Object.keys(propTypes), this.props)
 
     return (
       <div
@@ -127,29 +122,29 @@ let MonthView = React.createClass({
           {this._headers(weeks[0], formats.weekdayFormat, culture)}
         </div>
         { weeks.map((week, idx) =>
-            this.renderWeek(week, idx, measure && this._renderMeasureRows))
+          this.renderWeek(week, idx, measure && this._renderMeasureRows))
         }
       </div>
     )
   },
 
   renderWeek(week, weekIdx, content) {
-    let { first, last } = endOfRange(week);
+    const {first, last} = endOfRange(week)
     let evts = eventsForWeek(this.props.events, week[0], week[week.length - 1], this.props)
 
     evts.sort((a, b) => sortEvents(a, b, this.props))
 
-    let segments = evts = evts.map(evt => eventSegments(evt, first, last, this.props))
-    let limit = (this.state.rowLimit - 1) || 1;
+    const segments = evts = evts.map(evt => eventSegments(evt, first, last, this.props))
+    const limit = (this.state.rowLimit - 1) || 1
 
-    let { levels, extra } = eventLevels(segments, limit)
+    const {levels, extra} = eventLevels(segments, limit)
 
     content = content || ((lvls, wk) => lvls.map((lvl, idx) => this.renderRowLevel(lvl, wk, idx)))
 
     return (
       <div key={'week_' + weekIdx}
-        className='rbc-month-row'
-        ref={!weekIdx && (r => this._firstRow = r)}
+           className='rbc-month-row'
+           ref={!weekIdx && (r => this._firstRow = r)}
       >
         {
           this.renderBackground(week, weekIdx)
@@ -168,20 +163,20 @@ let MonthView = React.createClass({
           }
           {
             !!extra.length &&
-              this.renderShowMore(segments, extra, week, weekIdx, levels.length)
+            this.renderShowMore(segments, extra, week, weekIdx, levels.length)
           }
         </div>
         { this.props.popup
-            && this._renderOverlay()
+        && this._renderOverlay()
         }
       </div>
     )
   },
 
   renderBackground(row, idx){
-    let self = this;
+    const self = this
 
-    function onSelectSlot({ start, end }) {
+    function onSelectSlot({start, end}) {
       self._pendingSelection = self._pendingSelection
         .concat(row.slice(start, end + 1))
 
@@ -190,18 +185,18 @@ let MonthView = React.createClass({
     }
 
     return (
-    <BackgroundCells
-      container={() => findDOMNode(this)}
-      selectable={this.props.selectable}
-      slots={7}
-      ref={r => this._bgRows[idx] = r}
-      onSelectSlot={onSelectSlot}
-    />
+      <BackgroundCells
+        container={() => findDOMNode(this)}
+        selectable={this.props.selectable}
+        slots={7}
+        ref={r => this._bgRows[idx] = r}
+        onSelectSlot={onSelectSlot}
+      />
     )
   },
 
   renderRowLevel(segments, week, idx){
-    let { first, last } = endOfRange(week);
+    const {first, last} = endOfRange(week)
 
     return (
       <EventRow
@@ -217,9 +212,9 @@ let MonthView = React.createClass({
   },
 
   renderShowMore(segments, extraSegments, week, weekIdx) {
-    let { first, last } = endOfRange(week);
+    const {first, last} = endOfRange(week)
 
-    let onClick = slot => this._showMore(segments, week[slot - 1], weekIdx, slot)
+    const onClick = slot => this._showMore(segments, week[slot - 1], weekIdx, slot)
 
     return (
       <EventEndingRow
@@ -237,7 +232,7 @@ let MonthView = React.createClass({
 
   _dates(row){
     return row.map((day, colIdx) => {
-      var offRange = dates.month(day) !== dates.month(this.props.date);
+      var offRange = dates.month(day) !== dates.month(this.props.date)
 
       return (
         <div
@@ -258,8 +253,8 @@ let MonthView = React.createClass({
   },
 
   _headers(row, format, culture){
-    let first = row[0]
-    let last = row[row.length - 1]
+    const first = row[0]
+    const last = row[row.length - 1]
 
     return dates.range(first, last, 'day').map((day, idx) =>
       <div
@@ -273,13 +268,13 @@ let MonthView = React.createClass({
   },
 
   _renderMeasureRows(levels, row, idx) {
-    let first = idx === 0;
+    const first = idx === 0
 
     return first ? (
       <div className='rbc-row'>
         <div className='rbc-row-segment' style={segStyle(1, 7)}>
           <div ref={r => this._measureEvent = r} className={cn('rbc-event')}>
-            <div className='rbc-event-content'>&nbsp;</div>
+            <div className='rbc-event-content'>&nbsp</div>
           </div>
         </div>
       </div>
@@ -287,7 +282,7 @@ let MonthView = React.createClass({
   },
 
   _renderOverlay(){
-    let overlay = (this.state && this.state.overlay) || {};
+    const overlay = (this.state && this.state.overlay) || {}
 
     return (
       <Overlay
@@ -310,11 +305,11 @@ let MonthView = React.createClass({
   },
 
   _measureRowLimit(props) {
-    let eventHeight = getHeight(this._measureEvent);
-    let labelHeight = getHeight(this._firstDateRow);
-    let eventSpace = getHeight(this._firstRow) - labelHeight;
+    const eventHeight = getHeight(this._measureEvent)
+    const labelHeight = getHeight(this._firstDateRow)
+    const eventSpace = getHeight(this._firstRow) - labelHeight
 
-    this._needLimitMeasure = false;
+    this._needLimitMeasure = false
 
     this.setState({
       needLimitMeasure: false,
@@ -324,7 +319,7 @@ let MonthView = React.createClass({
   },
 
   _dateClick(date, e){
-    e.preventDefault();
+    e.preventDefault()
     this.clearSelection()
     notify(this.props.onNavigate, [navigate.DATE, date])
   },
@@ -337,7 +332,7 @@ let MonthView = React.createClass({
   },
 
   _selectDates(){
-    let slots = this._pendingSelection.slice()
+    const slots = this._pendingSelection.slice()
 
     this._pendingSelection = []
 
@@ -351,9 +346,9 @@ let MonthView = React.createClass({
   },
 
   _showMore(segments, date, weekIdx, slot){
-    let cell = findDOMNode(this._bgRows[weekIdx]).children[slot - 1];
+    const cell = findDOMNode(this._bgRows[weekIdx]).children[slot - 1]
 
-    let events = segments
+    const events = segments
       .filter(seg => isSegmentInSlot(seg, slot))
       .map(seg => seg.event)
 
@@ -361,10 +356,10 @@ let MonthView = React.createClass({
     this.clearSelection()
 
     if (this.props.popup) {
-      let position = getPosition(cell, findDOMNode(this));
+      const position = getPosition(cell, findDOMNode(this))
 
       this.setState({
-        overlay: { date, events, position }
+        overlay: {date, events, position}
       })
     }
     else {
@@ -376,28 +371,28 @@ let MonthView = React.createClass({
 
   clearSelection(){
     clearTimeout(this._selectTimer)
-    this._pendingSelection = [];
+    this._pendingSelection = []
   }
 
-});
+})
 
-MonthView.navigate = (date, action)=>{
-  switch (action){
+MonthView.navigate = (date, action)=> {
+  switch (action) {
     case navigate.PREVIOUS:
-      return dates.add(date, -1, 'month');
+      return dates.add(date, -1, 'month')
 
     case navigate.NEXT:
       return dates.add(date, 1, 'month')
 
     default:
-      return date;
+      return date
   }
 }
 
-MonthView.range = (date, { culture }) => {
-  let start = dates.firstVisibleDay(date, culture)
-  let end = dates.lastVisibleDay(date, culture)
-  return { start, end }
+MonthView.range = (date, {culture}) => {
+  const start = dates.firstVisibleDay(date, culture)
+  const end = dates.lastVisibleDay(date, culture)
+  return {start, end}
 }
 
 export default MonthView

@@ -6,6 +6,9 @@ Version numbering:
 `<major>.<minor>.<patch>`
 
 ---
+### 1.2.8 April 9, 2016
+* React calendar component added to sources to fix server-side rendering problem
+
 ### 1.2.7 March 29, 2016
 * Exercise removal added
 

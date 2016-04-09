@@ -1,4 +1,4 @@
-import R from "ramda"
+import {flatten} from "ramda"
 import moment from "moment"
 require('moment/locale/fi')
 
@@ -17,7 +17,7 @@ export default {
   addDataToCalendar: (applicationState) => {
     const getTimestamp = (course, weekNumber, hour) =>
       moment(getYearNumber(course.week) + '-' + weekNumber + '-' + course.week_day + '-' + hour, 'YYYY-ww-dd-hh')
-    return R.flatten(applicationState.selectedCourses.map((course) => {
+    return flatten(applicationState.selectedCourses.map((course) => {
       return JSON.parse('[' + course.week + ']').map((weekNumber) => {
         return {
           title: course.course_name,

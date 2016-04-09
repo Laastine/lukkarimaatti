@@ -3,12 +3,13 @@ import Bacon from "baconjs"
 import BigCalendar from "../calendar/index"
 import moment from "moment"
 import Promise from "bluebird"
-import R from "ramda"
+import {head, flatten, reduce, filter, isEmpty, append} from "ramda"
 import Header from "../partials/header"
 import searchResults from "../partials/searchResults"
 import searchList from "../partials/searchList"
 import CourseParser from "../util/courseParser"
 const request = Promise.promisify(require('superagent'))
+
 require('moment/locale/fi')
 BigCalendar.momentLocalizer(moment)
 
@@ -42,7 +43,7 @@ const searchResultsS = inputBus.flatMap((courseName) => {
 })
 
 const urlParamS = selectedCoursesBus.flatMapLatest((event) => {
-  const course = R.head(event.courses)
+  const course = head(event.courses)
   if (event.type === 'add') {
     CourseParser.addUrlParameter(course.course_code, course.group_name)
   }
@@ -51,12 +52,12 @@ const urlParamS = selectedCoursesBus.flatMapLatest((event) => {
 
 const selectedCourseS = selectedCoursesBus.flatMapLatest((event) => {
   if (event.type === 'add') {
-    return R.flatten(R.reduce((a, b) => [a].concat([b]), event.applicationState.selectedCourses, event.courses))
+    return flatten(reduce((a, b) => [a].concat([b]), event.applicationState.selectedCourses, event.courses))
   } else if (event.type === 'remove') {
-    return R.filter((c) => c.course_code !== event.courses[0].course_code, event.applicationState.selectedCourses)
+    return filter((c) => c.course_code !== event.courses[0].course_code, event.applicationState.selectedCourses)
   } else if (event.type === 'removeById') {
-    const coursesLeft = R.filter((c) => c.course_id !== event.courses[0].course_id, event.applicationState.selectedCourses)
-    if (R.isEmpty(R.filter(R.whereEq({course_code: event.courses[0].course_code}), coursesLeft))) {
+    const coursesLeft = filter((c) => c.course_id !== event.courses[0].course_id, event.applicationState.selectedCourses)
+    if (isEmpty(filter(whereEq({course_code: event.courses[0].course_code}), coursesLeft))) {
       CourseParser.removeUrlParameter(event.courses[0].course_code)
     }
     return coursesLeft
@@ -107,7 +108,7 @@ export const applicationStateProperty = (state) => Bacon.update(
   }),
   urlParamS, (applicationState, param) => ({
     ...applicationState,
-    urlParams: R.append(param, applicationState.urlParams)
+    urlParams: append(param, applicationState.urlParams)
   }),
   modalS, (applicationState, isModalOpen) => ({
     ...applicationState,
@@ -140,7 +141,7 @@ const Calendar = (applicationState) =>
     popup={false}
     components={{event: Event}}
     onSelectEvent={(c) => {
-            const courses = R.filter((cc) => cc.course_code + "#" + cc.type === c.id, applicationState.selectedCourses)
+            const courses = filter((cc) => cc.course_code + "#" + cc.type === c.id, applicationState.selectedCourses)
             selectedCoursesBus.push({type: 'removeById', courses, applicationState})
           }}
     min={new Date(moment(applicationState.currentDate).hours(8).minutes(0).format())}

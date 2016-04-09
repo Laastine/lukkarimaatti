@@ -2,7 +2,7 @@
 
 const cheerio = require('cheerio')
 const Promise = require('bluebird')
-const R = require('ramda')
+const {contains, range, map, concat} = require('ramda')
 const config = require('./config')
 const DB = require('./db')
 const Logger = require('./logger')
@@ -61,24 +61,24 @@ const parseBasicData = (course) => {
 
 const parseWeeks = (weeks) => {
   var weekSequence = []
-  if (R.contains('-', weeks)) {
+  if (contains('-', weeks)) {
     weeks.match(/[0-9]{1,2}-[0-9]{1,2}/g).map((m) =>
-      R.range(
-        parseInt(m.substring(0, m.indexOf('-')), 10),
-        parseInt(m.substring(m.indexOf('-') + 1), 10) + 1
-      ))
-      .map((r) => weekSequence = R.concat(weekSequence, r))
+        range(
+          parseInt(m.substring(0, m.indexOf('-')), 10),
+          parseInt(m.substring(m.indexOf('-') + 1), 10) + 1
+        ))
+      .map((r) => weekSequence = concat(weekSequence, r))
   }
-  if (R.contains(',', weeks)) {
+  if (contains(',', weeks)) {
     weeks.match(/[0-9]+/g).forEach((w) => {
       let num = parseInt(w, 10)
-      if (!R.contains(num, weekSequence)) {
-        weekSequence = R.concat(weekSequence, [num])
+      if (!contains(num, weekSequence)) {
+        weekSequence = concat(weekSequence, [num])
       }
     })
   }
   if (/^[0-9]{1,2}$/.test(weeks)) {
-    weekSequence = R.concat(weekSequence, weeks.match(/^[0-9]{1,2}$/))
+    weekSequence = concat(weekSequence, weeks.match(/^[0-9]{1,2}$/))
   }
   return weekSequence.join()
 }

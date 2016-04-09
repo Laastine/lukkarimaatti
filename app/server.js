@@ -5,7 +5,7 @@ import ReactDOMServer from "react-dom/server"
 import basePage from "./pages/basePage"
 import * as pages from "./pages/pages"
 import path from "path"
-import R from "ramda"
+import {split, map, uniq} from "ramda"
 import compression from "compression"
 import crypto from "crypto"
 import Promise from "bluebird"
@@ -43,7 +43,7 @@ const preFetchCourses = (params) => {
   if (!params || params.match('/checksum=.*/')) {
     return []
   } else {
-    return R.map((courseCode) => {
+    return map((courseCode) => {
       if (courseCode.indexOf('&') > -1) {
         return {
           courseCode: courseCode.substring(0, courseCode.indexOf('&')),
@@ -55,12 +55,12 @@ const preFetchCourses = (params) => {
           groupName: ""
         }
       }
-    }, R.uniq(params.substring(0, params.length).split(/[+]/)))
+    }, uniq(params.substring(0, params.length).split(/[+]/)))
   }
 }
 
 server.get('*', (req, res, next) => {
-  const urlAndParams = R.split('?', req.url)
+  const urlAndParams = split('?', req.url)
   const page = pages.findPage(urlAndParams[0])
   if (page) {
     Promise

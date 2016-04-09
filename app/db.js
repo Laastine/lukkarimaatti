@@ -2,7 +2,7 @@
 
 const pgDb = require('pg-db')
 const Promise = require('bluebird')
-const R = require('ramda')
+const {reduce, prop, tail} = require('ramda')
 const appConfig = require('./config')
 const Logger = require('./logger')
 
@@ -10,7 +10,7 @@ const address = "postgres://" + appConfig.postgresUsername + ":" + appConfig.pos
 const client = Promise.promisifyAll(pgDb(address))
 
 const buildInsertQueryString = (courseBatch) =>
-  R.reduce((a, course) => a + "INSERT INTO course (" +
+  reduce((a, course) => a + "INSERT INTO course (" +
     "course_code, course_name, week, week_day, time_of_day, classroom, type, department, teacher, misc, group_name) " +
     "VALUES (\'" +
     course.course_code + "\',\'" +
@@ -29,7 +29,7 @@ const buildInsertQueryString = (courseBatch) =>
 module.exports = {
 
   isTableInitialized: (table) => client.queryOneAsync(`SELECT to_regclass(:table) IS NOT NULL AS exists`, {table})
-    .then(R.prop('exists'))
+    .then(prop('exists'))
     .catch((err) => Logger.error("isTableInitialized error", err.stack)),
 
   initializeDb: (table) => client.updateAsync(`CREATE TABLE course(course_id SERIAL,
@@ -63,7 +63,7 @@ module.exports = {
     if (params.length > 0) {
       let query = "SELECT * FROM course WHERE course_code = \'" + params[0].courseCode + "\'" + insertGroupCondition(params[0].groupName)
       if (params.length > 1) {
-        query += R.reduce((a, b) => a + insertCodeCondition(b.courseCode) + insertGroupCondition(b.groupName), '', R.tail(params))
+        query += reduce((a, b) => a + insertCodeCondition(b.courseCode) + insertGroupCondition(b.groupName), '', tail(params))
       }
       return client.queryAsync(query)
         .then((result) => result)

@@ -1,11 +1,11 @@
 import React from "react"
-import R from "ramda"
+import {filter, pipe, uniqBy, addIndex, slice, map} from "ramda"
 
 const addCourse = (courseName, applicationState, selectedCoursesBus) => {
   applicationState.isSearchListVisible = false
   selectedCoursesBus.push({
     type: 'add',
-    courses: R.filter(function (c) {
+    courses: filter(function (c) {
       return c.course_name === courseName//foo[selectedIndex].course_name
     }, applicationState.courses),
     applicationState
@@ -15,7 +15,7 @@ const addCourse = (courseName, applicationState, selectedCoursesBus) => {
 export default (applicationState, inputBus, selectedCoursesBus, indexBus) => {
 
   const handleKeyInput = (event) => {
-    const foo = R.pipe(R.uniqBy((c) => c.course_name), R.slice(0, 10))(applicationState.courses)
+    const foo = pipe(uniqBy((c) => c.course_name), slice(0, 10))(applicationState.courses)
     if (event.keyCode === 40) {  //Down
       if (applicationState.selectedIndex < foo.length - 1 && applicationState.selectedIndex < 10) {
         indexBus.push(++applicationState.selectedIndex)
@@ -38,11 +38,11 @@ export default (applicationState, inputBus, selectedCoursesBus, indexBus) => {
   }
 
   const searchList = () => {
-    const mapIndexed = R.addIndex(R.map)
+    const mapIndexed = addIndex(map)
     return applicationState.isSearchListVisible ?
-      R.pipe(
-        R.uniqBy((c) => c.course_name),
-        R.slice(0, 10),
+      pipe(
+        uniqBy((c) => c.course_name),
+        slice(0, 10),
         mapIndexed((c, index) =>
           <div key={c.course_name}
                onMouseEnter={() => indexBus.push(index)}

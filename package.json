@@ -73,14 +73,14 @@
   },
   "scripts": {
     "build-css": "mkdir -p .generated && cat app/styles/*.css > .generated/style.css",
-    "build-js": "node_modules/browserify/bin/cmd.js --entry app/client.js | node_modules/uglify-js/bin/uglifyjs --compress --screw-ie8 > .generated/bundle.js",
+    "build-js": "browserify --entry app/client.js | uglifyjs --compress --screw-ie8 > .generated/bundle.js",
     "build": "npm run build-css && npm run build-js",
-    "watch-css": "node_modules/.bin/watch \"npm run build-css\" app/styles/",
-    "watch-js": "node_modules/watchify/bin/cmd.js app/client.js --debug -o .generated/bundle.js -v",
-    "watch": "npm run watch-js & npm run watch-css & node_modules/supervisor/lib/cli-wrapper.js --quiet --ignore node_modules --watch app app/bootstrap.js",
+    "watch-css": "watch \"npm run build-css\" app/styles/",
+    "watch-js": "watchify app/client.js --debug -o .generated/bundle.js -v",
+    "watch": "npm run watch-js & npm run watch-css & supervisor --quiet --ignore node_modules --watch app app/bootstrap.js",
     "start": "node app/bootstrap.js",
     "lint": "eslint app",
     "clean": "rm .generated/*.js .generated/*.css",
-    "test": "./node_modules/.bin/mocha --delay --compilers js:babelify/node_modules/babel-core/register test/test.js"
+    "test": "mocha --delay --compilers js:babelify/node_modules/babel-core/register test/test.js"
   }
 }

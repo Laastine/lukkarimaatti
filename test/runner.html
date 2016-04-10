@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Mocha tests</title>
+    <link rel="stylesheet" href="/node_modules/mocha/mocha.css" media="all"/>
+</head>
+<body>
+<div id="mocha"></div>
+<script src="/node_modules/mocha/mocha.js"></script>
+<script src="/node_modules/chai/chai.js"></script>
+<script src="/node_modules/jquery/dist/jquery.min.js"></script>
+<script src="/node_modules/bluebird/js/browser/bluebird.min.js"></script>
+<script>
+    var testTimeoutPageLoad = 100000
+    var testTimeoutDefault = 20000
+    mocha.ui('bdd')
+    mocha.reporter('html')
+    mocha.timeout(testTimeoutDefault)
+</script>
+<script src="util/testHelpers.js"></script>
+<script src="page/lukkarimaattiPage.js"></script>
+<script src="specs/lukkarimaattiSpec.js"></script>
+<script>
+    mocha.run();
+</script>
+<iframe id="testframe"></iframe>
+</body>
+</html>

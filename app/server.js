@@ -32,6 +32,11 @@ server.use('/spinner.gif', express.static(`${__dirname}/img/spinner.gif`))
 const cssFilePath = path.resolve(`${__dirname}/../.generated/style.css`)
 const bundleJsFilePath = path.resolve(`${__dirname}/../.generated/bundle.js`)
 
+if (process.env.NODE_ENV !== 'production') {
+  server.use('/test/', express.static(path.resolve(`${__dirname}'/../test`)))
+  server.use('/node_modules/', express.static(path.resolve(`${__dirname}'/../node_modules`)))
+}
+
 const checksumPromise = filePath =>
   fs
     .readFileAsync(filePath)

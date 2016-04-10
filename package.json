@@ -47,14 +47,17 @@
   },
   "devDependencies": {
     "babel-cli": "6.7.7",
+    "chai": "3.5.0",
     "eslint": "^2.8.0",
     "eslint-plugin-react": "5.0.1",
+    "jquery": "2.2.3",
     "mocha": "2.4.5",
+    "mocha-phantomjs": "4.0.2",
     "nodemon": "1.9.1",
+    "phantomjs-prebuilt": "2.1.7",
     "supervisor": "0.10.0",
     "watch": "0.17.1",
-    "watchify": "3.7.0",
-    "zombie": "4.2.1"
+    "watchify": "3.7.0"
   },
   "babel": {
     "presets": [
@@ -81,6 +84,7 @@
     "start": "node app/bootstrap.js",
     "lint": "eslint app",
     "clean": "rm .generated/*.js .generated/*.css",
-    "test": "mocha --delay --compilers js:babelify/node_modules/babel-core/register test/test.js"
+    "test": "node test/integrationTest.js",
+    "integration-test": "mocha-phantomjs -p node_modules/.bin/phantomjs http://localhost:8080/test/runner.html"
   }
 }

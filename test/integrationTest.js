@@ -45,7 +45,7 @@ exec('npm i', {cwd: '.'})
   })
   .then(() => {
     console.log('Starting UI')
-    uiChildProcess = spawn('node', ['src/bootstrap.js'], {cwd: '.'})
+    uiChildProcess = spawn('node', ['app/bootstrap.js'], {cwd: '.'})
     uiChildProcess.stdout.on('data', (data) => process.stdout.write(data))
     uiChildProcess.stderr.on('data', (data) => process.stderr.write(data))
   })

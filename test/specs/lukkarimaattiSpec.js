@@ -1,14 +1,19 @@
-describe('Turboshop UI navigation', function () {
+describe('Lukkarimaatti UI navigation', function () {
+  var page
   before(function () {
-    const page = LukkarimaattiPage();
+    page = LukkarimaattiPage();
     return page.openPage(function () {
       const el = testFrame().document.getElementsByClassName('container')
       return el && el.length > 0;
     })
   })
 
-  it('Test page loads correctly', function (done) {
-    expect(true).to.equal(true)
-    done()
+  it('Test save modal', function (done) {
+    waitUntil(monkeyPatchBrowserAPI("button#button-month").isVisible)()
+      .then(monkeyPatchBrowserAPI("button#button-month").click())
+      .then(function () {
+        expect(monkeyPatchBrowserAPI('.rbc-active').text()).to.equal('month')
+        done()
+      })
   })
 })

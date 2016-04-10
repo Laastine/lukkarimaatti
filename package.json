@@ -48,11 +48,10 @@
   "devDependencies": {
     "babel-cli": "6.7.7",
     "chai": "3.5.0",
-    "eslint": "^2.8.0",
-    "eslint-plugin-react": "5.0.1",
     "jquery": "2.2.3",
     "mocha": "2.4.5",
-    "mocha-phantomjs": "4.0.2",
+    "mocha-phantomjs-core": "2.0.1",
+    "node-fetch": "1.5.0",
     "nodemon": "1.9.1",
     "phantomjs-prebuilt": "2.1.7",
     "supervisor": "0.10.0",
@@ -80,11 +79,11 @@
     "build": "npm run build-css && npm run build-js",
     "watch-css": "watch \"npm run build-css\" app/styles/",
     "watch-js": "watchify app/client.js --debug -o .generated/bundle.js -v",
-    "watch": "npm run watch-js & npm run watch-css & supervisor --quiet --ignore node_modules --watch app app/bootstrap.js",
+    "watch": "NODE_ENV=development npm run watch-js & npm run watch-css & supervisor --quiet --ignore node_modules --watch app app/bootstrap.js",
     "start": "node app/bootstrap.js",
     "lint": "eslint app",
     "clean": "rm .generated/*.js .generated/*.css",
     "test": "node test/integrationTest.js",
-    "integration-test": "mocha-phantomjs -p node_modules/.bin/phantomjs http://localhost:8080/test/runner.html"
+    "integration-test": "./node_modules/phantomjs-prebuilt/bin/phantomjs node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js http://localhost:8080/test/runner.html"
   }
 }

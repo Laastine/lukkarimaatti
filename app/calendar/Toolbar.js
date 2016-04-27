@@ -6,10 +6,7 @@ import {navigate} from "./utils/constants"
 const Toolbar = React.createClass({
 
   render() {
-    const {
-      label
-      , views: viewNames, view
-    } = this.props
+    const {label} = this.props
     let {messages} = this.props
 
     messages = message(messages)
@@ -59,7 +56,6 @@ const Toolbar = React.createClass({
   },
 
   viewNamesGroup(messages) {
-    const component = null
     const viewNames = this.props.views
     const view = this.props.view
 

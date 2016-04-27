@@ -62,8 +62,9 @@ const DaySlot = React.createClass({
 
 
   componentDidMount() {
-    this.props.selectable
-    && this._selectable()
+    if (this.props.selectable) {
+      this._selectable()
+    }
   },
 
   componentWillUnmount() {
@@ -78,10 +79,7 @@ const DaySlot = React.createClass({
   },
 
   render() {
-    const {
-      min, max, step, start, end
-      , selectRangeFormat, culture, ...props
-    } = this.props
+    const {min, max, step, culture, startSlot, endSlot, ...props} = this.props
 
     const totalMin = dates.diff(min, max, 'minutes')
     const numSlots = Math.ceil(totalMin / step)
@@ -95,7 +93,7 @@ const DaySlot = React.createClass({
 
     this._totalMin = totalMin
 
-    const {selecting, startSlot, endSlot} = this.state
+    const {selecting} = this.state
       , style = this._slotStyle(startSlot, endSlot, 0)
 
     const selectDates = {
@@ -119,11 +117,10 @@ const DaySlot = React.createClass({
     )
   },
 
-  renderEvents(numSlots, totalMin) {
+  renderEvents() {
     const {
-      events, step, min, culture, eventPropGetter
-      , selected, eventTimeRangeFormat, eventComponent
-      , startAccessor, endAccessor, titleAccessor
+      events, step, min, culture, eventPropGetter, selected,
+      eventComponent, startAccessor, endAccessor, titleAccessor
     } = this.props
 
     const EventComponent = eventComponent
@@ -193,27 +190,9 @@ const DaySlot = React.createClass({
     }
   },
 
-  _selectable(){
+  _selectable() {
     const node = findDOMNode(this)
     const selector = this._selector = new Selection(()=> findDOMNode(this))
-
-    const maybeSelect = (box) => {
-      const onSelecting = this.props.onSelecting
-      const current = this.state || {}
-      const state = selectionState(box)
-      const {startDate: start, endDate: end} = state
-
-      if (onSelecting) {
-        if (
-          (dates.eq(current.startDate, start, 'minutes') &&
-          dates.eq(current.endDate, end, 'minutes')) ||
-          onSelecting({start, end}) === false
-        )
-          return
-      }
-
-      this.setState(state)
-    }
 
     const selectionState = ({x, y}) => {
       const {step, min, max} = this.props
@@ -245,6 +224,24 @@ const DaySlot = React.createClass({
         startSlot: positionFromDate(start, min, step),
         endSlot: positionFromDate(end, min, step)
       }
+    }
+
+    const maybeSelect = (box) => {
+      const onSelecting = this.props.onSelecting
+      const current = this.state || {}
+      const state = selectionState(box)
+      const {startDate: start, endDate: end} = state
+
+      if (onSelecting) {
+        if (
+          (dates.eq(current.startDate, start, 'minutes') &&
+          dates.eq(current.endDate, end, 'minutes')) ||
+          onSelecting({start, end}) === false
+        )
+          return
+      }
+
+      this.setState(state)
     }
 
     selector.on('selecting', maybeSelect)

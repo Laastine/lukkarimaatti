@@ -6,10 +6,10 @@ const localePropType = PropTypes.oneOfType([
   PropTypes.func
 ])
 
-function _format(localizer, formatter, value, format, culture) {
+function _format(localiser, formatter, value, format, culture) {
   let result = typeof format === 'function'
-    ? format(value, culture, localizer)
-    : formatter.call(localizer, value, format, culture)
+    ? format(value, culture, localiser)
+    : formatter.call(localiser, value, format, culture)
 
   invariant(result == null || typeof result === 'string'
     , '`localizer format(..)` must return a string, null, or undefined')
@@ -48,7 +48,7 @@ class DateLocalizer {
 
 let localizer = {
   parse: error,
-  format:error,
+  format: error,
   startOfWeek: error
 }
 

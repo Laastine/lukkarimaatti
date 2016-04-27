@@ -175,7 +175,7 @@ const TimeGrid = React.createClass({
   },
 
   renderHeader(range){
-    const {dayFormat, culture} = this.props
+    const {culture} = this.props
 
     return range.map((date, i) =>
       <div key={i}

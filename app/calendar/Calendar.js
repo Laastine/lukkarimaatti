@@ -338,11 +338,8 @@ const Calendar = React.createClass({
 
     return (
       <div {...elementProps}
-        className={cn('rbc-calendar', className, {
-          'rbc-rtl': props.rtl
-        })}
-        style={style}
-      >
+        className={cn('rbc-calendar', className, {'rbc-rtl': props.rtl})}
+        style={style}>
         { toolbar &&
         <Toolbar
           date={current}

@@ -2,7 +2,7 @@
 
 const cheerio = require('cheerio')
 const Promise = require('bluebird')
-const {contains, range, map, concat} = require('ramda')
+const {contains, range, concat} = require('ramda')
 const config = require('./config')
 const DB = require('./db')
 const Logger = require('./logger')

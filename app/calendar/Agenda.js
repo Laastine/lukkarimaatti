@@ -78,10 +78,7 @@ const Agenda = React.createClass({
   },
 
   renderDay(day, events, dayKey){
-    const {
-      culture, components
-      , titleAccessor, agendaDateFormat
-    } = this.props
+    const {culture, components, titleAccessor} = this.props
 
     const EventComponent = components.event
     const DateComponent = components.date

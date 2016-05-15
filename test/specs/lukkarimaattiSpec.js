@@ -8,11 +8,12 @@ describe('Lukkarimaatti UI navigation', function () {
     })
   })
 
-  it('Test save modal', function (done) {
-    waitUntil(monkeyPatchBrowserAPI("button#button-month").isVisible)()
-      .then(monkeyPatchBrowserAPI("button#button-month").click())
+  it('Test navigation', function (done) {
+    waitUntil(monkeyPatchBrowserAPI('button#button-month').isVisible)()
+      .then(click('button#button-month'))
       .then(function () {
-        expect(monkeyPatchBrowserAPI('.rbc-active').text()).to.equal('month')
+        expect(S('.rbc-active').text()).to.equal('month')
+        expect(monkeyPatchBrowserAPI('.rbc-month-header').isVisible()).to.equal(true)
         done()
       })
   })

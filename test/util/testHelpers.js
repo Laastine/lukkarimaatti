@@ -59,9 +59,20 @@ function waitUntil(predicate, timeout) {
 }
 
 function triggerEvent(element, eventName) {
-  const evt = testFrame().document.createEvent('HTMLEvents')
-  evt.initEvent(eventName, true, true)
-  element[0].dispatchEvent(evt)
+  var event = testFrame().document.createEvent('Event')
+  event.initEvent(eventName, true, false)
+  element.dispatchEvent(event)
+}
+
+function click(el, index) {
+  return function () {
+    return waitUntil(function () {
+      return S(el).length > 0
+    }, eventTimeout)()
+      .then(function () {
+        triggerEvent(S(el)[index ? index : 0], 'click')
+      })
+  }
 }
 
 function monkeyPatchBrowserAPI(el) {

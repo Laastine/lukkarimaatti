@@ -63,6 +63,7 @@ const Toolbar = React.createClass({
       return (
         viewNames.map(name =>
           <button type='button' key={name}
+                  id={`button-${name}`}
                   className={cn({'rbc-active': view === name})}
                   onClick={this.view.bind(null, name)}
           >

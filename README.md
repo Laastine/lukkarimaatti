@@ -25,7 +25,7 @@ Today it's implemented with universal JavaScript (Node/React/Bacon) using "megab
 * [cheerio](https://github.com/cheeriojs/cheerio)
 * [Moment.js](http://momentjs.com/)
 * [Mocha](http://mochajs.org/)
-* [Zombie.js](http://zombie.js.org/)
+* [PhantomJS](http://phantomjs.org/)
 * [Babel](https://babeljs.io/)
 * [Browserify](http://browserify.org/)<br>
 

@@ -14,7 +14,13 @@ describe('Lukkarimaatti UI navigation', function () {
       .then(function () {
         expect(S('.rbc-active').text()).to.equal('month')
         expect(monkeyPatchBrowserAPI('.rbc-month-header').isVisible()).to.equal(true)
+      })
+      .then(click('button#button-day'))
+      .then(function() {
+        expect(S('.rbc-active').text()).to.equal('day')
         done()
       })
   })
+
+  
 })

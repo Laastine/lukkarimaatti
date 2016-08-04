@@ -13,49 +13,18 @@ const getYearNumber = (courseWeekNumber) => {
   }
 }
 
-export default {
-  addDataToCalendar: (applicationState) => {
-    const getTimestamp = (course, weekNumber, hour) =>
-      moment(getYearNumber(course.week) + '-' + weekNumber + '-' + course.week_day + '-' + hour, 'YYYY-ww-dd-hh')
-    return flatten(applicationState.selectedCourses.map((course) => {
-      return JSON.parse('[' + course.week + ']').map((weekNumber) => {
-        return {
-          title: course.course_name,
-          description: '/' + course.type + '\n' + course.classroom,
-          start: new Date(getTimestamp(course, weekNumber, course.time_of_day.split('-')[0] || 6)),
-          end: new Date(getTimestamp(course, weekNumber, course.time_of_day.split('-')[1] || 6)),
-          id: course.course_code + '#' + course.type
-        }
-      })
-    }))
-  },
-
-  addUrlParameter: (course_code, group_name) => {
-    const params = window.location.search
-    const urlParam = course_code.substring(0, 2) === 'FV' ? course_code + '&' + group_name : course_code
-    if (params.length > 0) {
-      if (params.indexOf(course_code) < 0) {
-        history.pushState({}, "", "?" + params.substring(1, params.length) + '+' + urlParam)
-      }
-    } else {
-      history.pushState({}, "", "?" + params + urlParam)
-    }
-  },
-
-  removeUrlParameter: (id) => {
-    const params = window.location.search
-    const updatedParams = params.substring(1, params.length).split('+').filter((p) => {
-      if (p.indexOf('&') > -1) {
-        var groupLetterStripped = p.substring(0, p.indexOf('&'))
-        return groupLetterStripped !== id
-      } else {
-        return p !== id
+export const addDataToCalendar = (state) => {
+  const getTimestamp = (course, weekNumber, hour) =>
+    moment(getYearNumber(course.week) + '-' + weekNumber + '-' + course.week_day + '-' + hour, 'YYYY-ww-dd-hh')
+  return state.selectedCourses ? flatten(state.selectedCourses.map((course) => {
+    return JSON.parse('[' + course.week + ']').map((weekNumber) => {
+      return {
+        title: course.course_name,
+        description: '/' + course.type + '\n' + course.classroom,
+        start: new Date(getTimestamp(course, weekNumber, course.time_of_day.split('-')[0] || 6)),
+        end: new Date(getTimestamp(course, weekNumber, course.time_of_day.split('-')[1] || 6)),
+        id: course.course_code + '#' + course.type
       }
     })
-    if (updatedParams.length > 0) {
-      history.pushState({}, "", "?" + updatedParams.join('+'))
-    } else {
-      history.pushState({}, "", "?")
-    }
-  }
+  })) : []
 }

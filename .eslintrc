@@ -28,7 +28,6 @@
       2,
       {"SwitchCase": 1}
     ],
-    "no-use-before-define": [2, "nofunc"],
     "no-console": [2],
     "no-unused-vars": [2, {"args": "none", "varsIgnorePattern": "App"}],
     "no-unused-expressions": [2],
@@ -44,7 +43,6 @@
     "react/jsx-no-duplicate-props": [2],
     "react/jsx-key": [2],
     "react/jsx-uses-vars": [2],
-    "react/no-set-state": [2],
     "react/no-deprecated": [2]
   }
 }

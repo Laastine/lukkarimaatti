@@ -23,6 +23,6 @@ export default (applicationState, emailBus) => {
   return <div className="header-container">
     {modal}
     <a className="header-element header-link" href="/">Lukkarimaatti++</a>
-    <a id="saveModalButton" className="header-element header-save" onClick={() => emailBus.push({isModalOpen: true})}>Save</a>
+    <a id="saveModalButton" className="header-element header-save" onClick={() => console.log('NOT IMPLEMENTED')/*emailBus.push({isModalOpen: true})*/}>Save</a>
   </div>
 }

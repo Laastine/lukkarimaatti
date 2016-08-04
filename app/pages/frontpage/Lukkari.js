@@ -1,11 +1,11 @@
-import React from 'react'
-import BigCalendar from '../calendar/index'
-import moment from 'moment'
-import {filter} from 'ramda'
-import Header from '../partials/header'
-import searchResults from '../partials/searchResults'
-import searchList from '../partials/searchList'
-import CourseParser from '../util/courseParser'
+import React from "react"
+import BigCalendar from "../../calendar/index"
+import moment from "moment"
+import {filter} from "ramda"
+import Header from "../../partials/header"
+import searchResults from "../../partials/searchResults"
+import searchList from "../../partials/searchList"
+import {addDataToCalendar} from "../../util/courseParser"
 
 require('moment/locale/fi')
 BigCalendar.momentLocalizer(moment)
@@ -30,7 +30,7 @@ const Event = ({event}) => (
 
 const Calendar = (applicationState) =>
   <BigCalendar
-    events={CourseParser.addDataToCalendar(applicationState)}
+    events={addDataToCalendar(applicationState)}
     views={['month', 'week', 'day', 'agenda']}
     popup={false}
     components={{event: Event}}
@@ -43,33 +43,33 @@ const Calendar = (applicationState) =>
     defaultDate={new Date(moment(applicationState.currentDate).format())}
   />
 
-class FrontPage extends React.Component {
+class Lukkari extends React.Component {
   render() {
     const {state} = this.props
-    return <body>
-    {Header(state)}
-    <div className="container">
-      <a className="github-ribbon" href="https://github.com/Laastine/lukkarimaatti">
-        <img style={{position: 'absolute', top: '0px', right: '0px', border: '0px'}}
-             src="github.png"
-             alt="Fork me on GitHub">
-        </img>
-      </a>
-      {searchList(state)}
-      <div className="selected-courses-list">
-        <div className="selected-courses-list-topic">Selected courses:</div>
-        {searchResults(state)}
-      </div>
-      <div>
-        {Calendar(state)}
-      </div>
-      <div className="footer">
-        <div id="disclaimer">Use with your own risk!</div>
-        <div id="versionInfo">v1.2.8</div>
+    return <div>
+      {Header(state)}
+      <div className="container">
+        <a className="github-ribbon" href="https://github.com/Laastine/lukkarimaatti">
+          <img style={{position: 'absolute', top: '0px', right: '0px', border: '0px'}}
+               src="github.png"
+               alt="Fork me on GitHub">
+          </img>
+        </a>
+        {searchList(state)}
+        <div className="selected-courses-list">
+          <div className="selected-courses-list-topic">Selected courses:</div>
+          {searchResults(state)}
+        </div>
+        <div>
+          {Calendar(state)}
+        </div>
+        <div className="footer">
+          <div id="disclaimer">Use with your own risk!</div>
+          <div id="versionInfo">v1.2.8</div>
+        </div>
       </div>
     </div>
-    </body>
   }
 }
 
-export default FrontPage
+export default Lukkari

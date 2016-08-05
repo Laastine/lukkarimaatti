@@ -18,15 +18,13 @@ export const Routes = (
     <Route path="/"
            component={FrontPage}
            onEnter={(nextState) => {
-             console.log('ROOT ROUTE')
              if (!isServer) {
-               //fetchComponentData(FrontPage.needs, null)
+               fetchComponentData(FrontPage.needs, {selectedCourses: nextState.location.query.selectedCourses})
                window.scrollTo(0, 0)
              }
            }}/>
 
     <Route path="*"
-           onEnter={() => {console.log('NOT FOUND')}}
            component={NotFoundPage}
            status={404}/>
   </Route>

@@ -11,7 +11,6 @@ const FrontPage = React.createClass({
   },
 
   render() {
-    console.log('Front render', this.context.appState)
     return <div>
       <Lukkari state={this.context.appState}/>
     </div>

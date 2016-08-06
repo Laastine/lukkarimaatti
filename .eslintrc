@@ -39,7 +39,7 @@
     "no-sequences": [2],
     "no-shadow": [2, {"builtinGlobals": false, "hoist": "all", "allow": []}],
     "react/jsx-uses-react": 2,
-    "react/jsx-indent": [2, 2],
+    "react/jsx-indent": [0, 2],
     "react/jsx-no-duplicate-props": [2],
     "react/jsx-key": [2],
     "react/jsx-uses-vars": [2],

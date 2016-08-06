@@ -26,8 +26,8 @@ const TimeGutter = React.createClass({
       children.push(
         <div key={i}
              className={cn('rbc-time-slot', {
-            'rbc-now': dates.inRange(today, date, next, 'minutes')
-          })}
+               'rbc-now': dates.inRange(today, date, next, 'minutes')
+             })}
         >
           { isEven && (
             <span>{localizer.format(date, formats.timeGutterFormat, culture)}</span>

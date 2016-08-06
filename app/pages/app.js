@@ -15,7 +15,8 @@ const App = React.createClass({
   },
 
   componentDidMount() {
-    listener = appState.changes().onValue((state) => this.setState(state))
+    listener = appState.changes().onValue((state) => {
+      this.setState(state)})
   },
 
   componentWilUnmount() {

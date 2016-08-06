@@ -35,9 +35,10 @@ function rootReducer(previousState, action) {
     case 'REMOVE_COURSE_BY_ID':
       break
     case 'REMOVE_COURSE':
+      state.selectedCourses = state.selectedCourses.filter((e) => e.course_code === action.course_code)
       break
     case 'ADD_COURSE':
-      state.selectedCourses = concat(state.selectedCourses, action.selectedCourse)
+      state.selectedCourses = concat(state.selectedCourses, action.selectedCourses)
       break
     case 'UPDATE_URL_PARAMS':
       break

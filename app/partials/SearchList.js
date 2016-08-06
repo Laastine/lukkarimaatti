@@ -38,7 +38,7 @@ const selectCourse = (event, state) => {
   event.target.parentElement.parentElement.firstElementChild.firstElementChild.value = ""
 }
 
-const searchList = (state) => {
+const searchList = (state, callback) => {
   const mapIndexed = addIndex(map)
   return state && state.searchResults && state.searchResults.length > 0 ?
     pipe(
@@ -47,9 +47,7 @@ const searchList = (state) => {
       slice(0, 10),
       mapIndexed((c, index) =>
         <div key={c.course_name}
-             onMouseEnter={() => {
-               console.log('mouse enter')
-             }}
+             onMouseEnter={partial(callback, [index])}
              className={index === state.selectedIndex ? "search-list-coursename search-list-selected" : "search-list-coursename"}
              onClick={partial(selectCourse, [state])}>{c.course_name}</div>))(state.searchResults) : undefined
 }
@@ -95,7 +93,7 @@ class SearchList extends React.Component {
            onMouseLeave={() => {
              this.setState({selectedIndex: -1})
            }}>
-        {searchList(state)}
+        {searchList(state, (index) => {this.setState({selectedIndex: index})})}
       </div>
     </div>
   }

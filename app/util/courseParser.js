@@ -16,7 +16,8 @@ const getYearNumber = (courseWeekNumber) => {
 export const addDataToCalendar = (state) => {
   const getTimestamp = (course, weekNumber, hour) =>
     moment(getYearNumber(course.week) + '-' + weekNumber + '-' + course.week_day + '-' + hour, 'YYYY-ww-dd-hh')
-  return state.selectedCourses ? flatten(state.selectedCourses.map((course) => {
+  return state.selectedCourses && state.selectedCourses.length > 0 ? flatten(state.selectedCourses.map((course) => {
+    console.log('ASD', course)
     return JSON.parse('[' + course.week + ']').map((weekNumber) => {
       return {
         title: course.course_name,

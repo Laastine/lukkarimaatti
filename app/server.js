@@ -68,7 +68,6 @@ const buildInitialState = (displayName, pathParams, queryParams) => {
         selectedCourses: queryParams.courses ? queryParams.courses : [],
         currentDate: new Date(),
         courses: [],
-        isSearchListVisible: false,
         urlParams: [],
         isModalOpen: false,
         selectedIndex: -1,

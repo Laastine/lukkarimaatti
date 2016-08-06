@@ -28,19 +28,19 @@ const Event = ({event}) => (
   </div>
 )
 
-const Calendar = (applicationState) =>
+const Calendar = (state) =>
   <BigCalendar
-    events={addDataToCalendar(applicationState)}
+    events={addDataToCalendar(state)}
     views={['month', 'week', 'day', 'agenda']}
     popup={false}
     components={{event: Event}}
     onSelectEvent={(c) => {
-      const courses = filter((cc) => cc.course_code + "#" + cc.type === c.id, applicationState.selectedCourses)
+      const courses = filter((cc) => cc.course_code + "#" + cc.type === c.id, state.selectedCourses)
       console.log('NOT IMPLEMENTED', courses)
     }}
-    min={new Date(moment(applicationState.currentDate).hours(8).minutes(0).format())}
-    max={new Date(moment(applicationState.currentDate).hours(20).minutes(0).format())}
-    defaultDate={new Date(moment(applicationState.currentDate).format())}
+    min={new Date(moment(state.currentDate).hours(8).minutes(0).format())}
+    max={new Date(moment(state.currentDate).hours(20).minutes(0).format())}
+    defaultDate={new Date(moment(state.currentDate).format())}
   />
 
 class Lukkari extends React.Component {

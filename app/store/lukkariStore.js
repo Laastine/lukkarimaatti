@@ -1,5 +1,6 @@
 import Bacon from 'baconjs'
 import {isServer} from '../utils'
+import {concat} from 'ramda'
 
 const createAppState = (reducer, initialState) => {
   const bus = Bacon.Bus()
@@ -36,11 +37,12 @@ function rootReducer(previousState, action) {
     case 'REMOVE_COURSE':
       break
     case 'ADD_COURSE':
+      state.selectedCourses = concat(state.selectedCourses, action.selectedCourse)
       break
     case 'UPDATE_URL_PARAMS':
       break
   }
-  if (true) {
+  if (!isServer) {
     console.log(action.type, state)     // eslint-disable-line
   }
   return state

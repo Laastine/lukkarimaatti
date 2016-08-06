@@ -53,17 +53,17 @@ const Agenda = React.createClass({
       <div className='rbc-agenda-view'>
         <table ref='header'>
           <thead>
-          <tr>
-            <th className='rbc-header' ref='dateCol'>
-              {messages.date}
-            </th>
-            <th className='rbc-header' ref='timeCol'>
-              {messages.time}
-            </th>
-            <th className='rbc-header'>
-              {messages.event}
-            </th>
-          </tr>
+            <tr>
+              <th className='rbc-header' ref='dateCol'>
+                {messages.date}
+              </th>
+              <th className='rbc-header' ref='timeCol'>
+                {messages.time}
+              </th>
+              <th className='rbc-header'>
+                {messages.event}
+              </th>
+            </tr>
           </thead>
         </table>
         <div className='rbc-agenda-content' ref='content'>

@@ -1,67 +1,104 @@
 import React from "react"
-import {filter, pipe, uniqBy, addIndex, slice, map} from "ramda"
+import {filter, pipe, uniqBy, addIndex, map, slice, partial} from "ramda"
+import axios from "axios"
+import Bacon from "baconjs"
 
-const addCourse = (courseName, applicationState, selectedCoursesBus) => {
-  applicationState.isSearchListVisible = false
+const addCourse = (courseName, state) => {
+  state.isSearchListVisible = false
   selectedCoursesBus.push({
     type: 'add',
     courses: filter(function (c) {
       return c.course_name === courseName//foo[selectedIndex].course_name
-    }, applicationState.courses),
-    applicationState
+    }, state.courses),
+    state
   })
 }
 
-export default (applicationState, inputBus, selectedCoursesBus, indexBus) => {
 
-  const handleKeyInput = (event) => {
-    const foo = pipe(uniqBy((c) => c.course_name), slice(0, 10))(applicationState.courses)
-    if (event.keyCode === 40) {  //Down
-      if (applicationState.selectedIndex < foo.length - 1 && applicationState.selectedIndex < 10) {
-        indexBus.push(++applicationState.selectedIndex)
-      }
-    } else if (event.keyCode === 38) {  //Up
-      if (applicationState.selectedIndex > 1) {
-        indexBus.push(--applicationState.selectedIndex)
-      }
-    } else if (event.keyCode === 13) {  //Enter
-      addCourse(foo[applicationState.selectedIndex].course_name, applicationState, selectedCoursesBus)
-      document.getElementById('course-searchbox').value = ""
-    } else {
-      indexBus.push(-1)
+const handleKeyInput = (event, state) => {
+  const foo = pipe(uniqBy((c) => c.course_name), slice(0, 10))(state.courses)
+  if (event.keyCode === 40) {  //Down
+    if (state.selectedIndex < foo.length - 1 && state.selectedIndex < 10) {
+      this.setState({selectedIndex: this.state.selectedIndex + 1})
+    }
+  } else if (event.keyCode === 38) {  //Up
+    if (state.selectedIndex > 1) {
+      this.setState({selectedIndex: this.state.selectedIndex - 1})
+    }
+  } else if (event.keyCode === 13) {  //Enter
+    addCourse(foo[state.selectedIndex].course_name, state)
+    document.getElementById('course-searchbox').value = ""
+  } else {
+    this.setState({selectedIndex: -1})
+  }
+}
+
+const selectCourse = (event, state) => {
+  addCourse(event.target.textContent, state)
+  event.target.parentElement.parentElement.firstElementChild.firstElementChild.value = ""
+}
+
+const searchList = (state) => {
+  const mapIndexed = addIndex(map)
+  return state && state.searchResults && state.searchResults.length > 0 ?
+    pipe(
+      uniqBy((c) => {
+        return c.course_name}),
+      slice(0, 10),
+      mapIndexed((c, index) =>
+        <div key={c.course_name}
+             onMouseEnter={() => {
+               console.log('mouse enter')
+             }}
+             className={index === state.selectedIndex ? "search-list-coursename search-list-selected" : "search-list-coursename"}
+             onClick={partial(selectCourse, [state])}>{c.course_name}</div>))(state.searchResults) : undefined
+}
+
+class SearchList extends React.Component {
+  initialState() {
+    return {
+      selectedIndex: -1,
+      searchString: '',
+      searchResults: []
     }
   }
 
-  const selectCourse = (event) => {
-    addCourse(event.target.textContent, applicationState, selectedCoursesBus)
-    event.target.parentElement.parentElement.firstElementChild.firstElementChild.value = ""
+  componentDidMount() {
+    document.getElementsByClassName('search-container')[0].focus()
+    Bacon.fromEventTarget(this.refs.searchinput, 'keyup')
+      .debounce(200)
+      .onValue((e) => {
+        if (e.target.value.length > 0) {
+          axios.get('/course/course', {
+            params: {
+              name: e.target.value
+            }
+          })
+            .then((res) => {
+              this.setState({searchResults: res.data})
+            })
+        }
+      })
   }
 
-  const searchList = () => {
-    const mapIndexed = addIndex(map)
-    return applicationState.isSearchListVisible ?
-      pipe(
-        uniqBy((c) => c.course_name),
-        slice(0, 10),
-        mapIndexed((c, index) =>
-          <div key={c.course_name}
-               onMouseEnter={() => indexBus.push(index)}
-               className={index === applicationState.selectedIndex ? "search-list-coursename search-list-selected" : "search-list-coursename"}
-               onClick={selectCourse}>{c.course_name}</div>))(applicationState.courses) : undefined
-  }
-
-  return (
-    <div>
+  render() {
+    const state = this.state
+    return <div>
       <div className="search-container">
         <input id="course-searchbox" autoFocus placeholder="Course name"
-               onKeyUp={(event) => {inputBus.push(event.target.value)}}
-               onKeyDown={handleKeyInput}></input>
+               ref='searchinput'
+               onKeyDown={(event) => {
+                 partial(handleKeyInput, [event, state])
+               }}></input>
       </div>
       <div className="search-list-container"
-           onMouseLeave={() => indexBus.push(-1)}>
-        {searchList()}
+           onMouseLeave={() => {
+             this.setState({selectedIndex: -1})
+           }}>
+        {searchList(state)}
       </div>
     </div>
-  )
+  }
 }
 
+export default SearchList

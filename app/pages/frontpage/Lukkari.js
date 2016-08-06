@@ -4,7 +4,7 @@ import moment from "moment"
 import {filter} from "ramda"
 import Header from "../../partials/header"
 import searchResults from "../../partials/searchResults"
-import searchList from "../../partials/searchList"
+import SearchList from "../../partials/searchList"
 import {addDataToCalendar} from "../../util/courseParser"
 
 require('moment/locale/fi')
@@ -55,7 +55,7 @@ class Lukkari extends React.Component {
                alt="Fork me on GitHub">
           </img>
         </a>
-        {searchList(state)}
+        <SearchList state={state}/>
         <div className="selected-courses-list">
           <div className="selected-courses-list-topic">Selected courses:</div>
           {searchResults(state)}

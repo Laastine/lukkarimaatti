@@ -341,15 +341,15 @@ const Calendar = React.createClass({
         className={cn('rbc-calendar', className, {'rbc-rtl': props.rtl})}
         style={style}>
         { toolbar &&
-        <Toolbar
-          date={current}
-          view={view}
-          views={names}
-          label={viewLabel(current, view, formats, culture)}
-          onViewChange={this._view}
-          onNavigate={this._navigate}
-          messages={this.props.messages}
-        />
+          <Toolbar
+            date={current}
+            view={view}
+            views={names}
+            label={viewLabel(current, view, formats, culture)}
+            onViewChange={this._view}
+            onNavigate={this._navigate}
+            messages={this.props.messages}
+          />
         }
         <View
           ref='view'

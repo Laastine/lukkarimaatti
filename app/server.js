@@ -12,7 +12,6 @@ import ApiRoutes from "./routes/api"
 import {appState} from "./store/lukkariStore"
 import {Routes} from "./pages/routes"
 import {renderFullPage} from "./pages/initPage"
-import moment from "moment"
 import Logger from "./logger"
 
 const fs = Promise.promisifyAll(require('fs'))
@@ -108,7 +107,7 @@ const fetchComponentData = (components, pathParams, queryParams) => {
   return Promise.all(promises)
 }
 
-server.get('*', (req, res, next) => {
+server.get('*', (req, res) => {
   const urlPath = req.url
   match({routes: Routes, location: urlPath}, (error, redirectLocation, renderProps) => {
     if (error) {

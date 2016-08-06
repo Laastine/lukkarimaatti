@@ -107,11 +107,9 @@ const DaySlot = React.createClass({
         { this.renderEvents(numSlots, totalMin) }
         {
           selecting &&
-          <div className='rbc-slot-selection' style={style}>
-              <span>
-              { localizer.format(selectDates, formats.selectRangeFormat, culture) }
-              </span>
-          </div>
+            <div className='rbc-slot-selection' style={style}>
+              <span>{ localizer.format(selectDates, formats.selectRangeFormat, culture) }</span>
+            </div>
         }
       </div>
     )

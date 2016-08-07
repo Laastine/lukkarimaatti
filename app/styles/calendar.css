@@ -504,6 +504,8 @@ button.rbc-input::-moz-focus-inner {
 
 .rbc-time-view {
   display: flex;
+  border: 1px #999 solid;
+  border-radius: 8px;
   flex-direction: column;
   flex: 1;
   width: 100%;

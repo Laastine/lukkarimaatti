@@ -72,6 +72,15 @@ const buildInitialState = (displayName) => {
         selectedIndex: -1,
         waitingAjax: false
       }
+    case 'Catalogage':
+      return {
+        selectedCourses: [],
+        searchResults: [],
+        currentDate: new Date(),
+        isModalOpen: false,
+        selectedIndex: -1,
+        waitingAjax: false
+      }
     case 'NotFoundPage':
       return {}
     default:
@@ -86,7 +95,7 @@ const getNeedFunctionParams = (displayName, params, queryParams) => {
         courses: queryParams.courses
       }
     default:
-      return {}
+      return null
   }
 }
 

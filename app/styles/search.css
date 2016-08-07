@@ -142,6 +142,8 @@ body {
   float: left;
   padding-left: 20px;
   color: #CCC;
+  text-decoration: none;
+  font-weight: 500;
 }
 
 .header-element + .header-element {
@@ -235,7 +237,7 @@ body {
   background: #444;
 }
 
-.header-save {
+.header-element-link {
   padding-top: 16px;
   cursor: pointer;
 }

@@ -1,11 +1,10 @@
 import React from 'react'
-import Lukkari from './Lukkari'
+import Catalog from './Catalog'
 import Header from '../../partials/header'
-import {loadCourses} from '../frontApi/lukkariApi' // eslint-disable-line
 
-const LukkariPage = React.createClass({
+const CatalogPage = React.createClass({
   statics: {
-    needs: [loadCourses]
+    needs: []
   },
 
   contextTypes: {
@@ -15,9 +14,9 @@ const LukkariPage = React.createClass({
   render() {
     return <div>
       <Header state={this.context.appState}/>
-      <Lukkari state={this.context.appState}/>
+      <Catalog state={this.context.appState}/>
     </div>
   }
 })
 
-export default LukkariPage
+export default CatalogPage

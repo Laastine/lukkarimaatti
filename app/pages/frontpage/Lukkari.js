@@ -2,7 +2,6 @@ import React from 'react'
 import BigCalendar from '../../calendar/index'
 import moment from 'moment'
 import {filter} from 'ramda'
-import Header from '../../partials/header'
 import searchResults from '../../partials/searchResults'
 import SearchList from '../../partials/searchList'
 import {addDataToCalendar} from '../../util/courseParser'
@@ -50,7 +49,6 @@ class Lukkari extends React.Component {
   render() {
     const {state} = this.props
     return <div>
-      {Header(state)}
       <div className='container'>
         <a className='github-ribbon' href='https://github.com/Laastine/lukkarimaatti'>
           <img style={{position: 'absolute', top: '0px', right: '0px', border: '0px'}}

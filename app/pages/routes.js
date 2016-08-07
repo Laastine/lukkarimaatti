@@ -5,7 +5,7 @@ import {isServer} from '../utils'
 import AppPage from './appPage'
 import LukkariPage from './frontpage/LukkariPage'
 import NotFoundPage from './notFoundPage'           // eslint-disable-line
-// eslint-disable-line
+import CatalogPage from './catalogpage/CatalogPage'
 
 const fetchComponentData = (needs, params) => {
   needs.forEach((need) => {
@@ -24,6 +24,10 @@ export const Routes = (
                window.scrollTo(0, 0)
              }
            }}/>
+
+    <Route path='/catalog'
+           component={CatalogPage}
+           />
 
     <Route path='*'
            component={NotFoundPage}

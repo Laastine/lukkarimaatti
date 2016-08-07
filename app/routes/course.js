@@ -1,7 +1,7 @@
 import express from 'express'
 import Promise from 'bluebird'
 import Logger from '../logger'
-import {map, uniq} from 'ramda'
+import {map, uniq, uniqBy} from 'ramda'
 import DB from '../db'
 
 const courseRoutes = express.Router()
@@ -60,11 +60,8 @@ courseRoutes.get('/courses', (req, res) => {
 
 courseRoutes.get('/byDepartment/:department', (req, res) => {
   const department = req.params.department === 'ENTE-YMTE' ? 'ente/ymte' : req.params.department.toLowerCase()
-  console.log('COURSE', department)
   Promise.resolve(DB.getCourseByDepartment(department))
-    .then((result) => {
-      console.log('GOT DEPS', result.length)
-      res.json(result)})
+    .then((result) => res.json(uniqBy((c) => c.course_name, result)))
     .catch((err) => {
       buildErrorMessage('/byDepartment', req.params.department, req.client.remoteAddress, err)
       res.status(500).json([])

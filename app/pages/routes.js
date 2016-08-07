@@ -26,7 +26,7 @@ export const Routes = (
 
     <Route path='/catalog'
            component={CatalogPage}
-           onEnter={(nextState) => {
+           onEnter={() => {
              if (!isServer) {
                fetchComponentData(CatalogPage.needs, {department: 'tite'})
                window.scrollTo(0, 0)

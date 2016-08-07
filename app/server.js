@@ -71,7 +71,8 @@ const buildInitialState = (displayName) => {
         isModalOpen: false,
         selectedIndex: -1,
         waitingAjax: false,
-        departmentCourses: []
+        departmentCourses: [],
+        department: 'TITE'
       }
     case 'CatalogPage':
       return {
@@ -81,7 +82,8 @@ const buildInitialState = (displayName) => {
         isModalOpen: false,
         selectedIndex: -1,
         waitingAjax: false,
-        departmentCourses: []
+        departmentCourses: [],
+        department: 'TITE'
       }
     case 'NotFoundPage':
       return {}

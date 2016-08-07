@@ -32,7 +32,9 @@ function rootReducer(previousState, action) {
   promiseMiddleware(action)
   switch (action.type) {
     case 'LOAD_COURSES_BY_DEPARTMENT_SUCCESS':
-      state.departmentCourses = action.data ? action.data : []
+      const {data, department} = action.data
+      state.departmentCourses = data ? data : []
+      state.department = department ? department : 'TITE'
       break
     case 'LOAD_COURSES_SUCCESS':
       state.selectedCourses = action.data ? action.data : []

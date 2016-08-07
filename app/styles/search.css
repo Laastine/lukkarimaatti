@@ -287,9 +287,23 @@ body {
   white-space: pre-wrap;
 }
 
+.deparment-link-container {
+  background-color: #555;
+  padding: 20px;
+}
+
 .department-link {
   text-decoration: none;
   font-weight: 500;
+  margin: 5px;
+  color: #999;
+}
+
+.department-link-selected {
+  text-decoration: none;
+  font-weight: 700;
+  margin: 5px;
+  color: #588;
 }
 
 .department-course {

@@ -36,6 +36,9 @@ export const loadCoursesByDepartment = (param) => {
     type: 'LOAD_COURSES_BY_DEPARTMENT',
     promise: lukkariApi.get(`${serverAddr}/course/byDepartment/${param.department}`)
       .then(checkStatus)
-
+      .then((data) => ({
+        data,
+        department: param.department
+      }))
   }
 }

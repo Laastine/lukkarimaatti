@@ -1,9 +1,8 @@
 import React from 'react'
 import {Link} from 'react-router'
-import {pipe, uniqBy, map} from 'ramda'
 
-const DepartmentSelectorElement = () =>
-  ['ENTE-YMTE',
+const DepartmentSelectorElement = (selectedDepartment) => {
+  const departmentNames = ['ENTE-YMTE',
     'KETE',
     'KIKE',
     'KOTE',
@@ -12,16 +11,20 @@ const DepartmentSelectorElement = () =>
     'TITE',
     'TUTA']
     .map((e, index) => {
-      return <div key={`${index}-${e}`} className='department-link'>
-        <Link to={`/catalog/${e}`}>{e}</Link>
-      </div>
+      return <span key={`${index}-${e}`}>
+        <Link className={`department-link${selectedDepartment === e ? '-selected' : ''}`}
+              to={`/catalog/${e}`}>{e}</Link>
+      </span>
     })
 
+  return <div className="deparment-link-container">{departmentNames}</div>
+}
+
 const DepartmentCoursesElement = (state) => {
-  const courses = pipe(
-    uniqBy((c) => c.course_name),
-    map((c) => <div key={c.course_code+c.course_name}
-                    className="department-course">{c.course_code} - {c.course_name}</div>))(state.departmentCourses)
+  const courses = state.departmentCourses.map((c) =>
+      <div key={c.course_code + c.course_name}
+           className="department-course">{c.course_code} - {c.course_name}: {c.week}
+      </div>)
   return <div>{courses}</div>
 }
 
@@ -29,7 +32,7 @@ class Catalog extends React.Component {
   render() {
     const {state} = this.props
     return <div>
-      {DepartmentSelectorElement()}
+      {DepartmentSelectorElement(state.department)}
       {DepartmentCoursesElement(state)}
     </div>
   }

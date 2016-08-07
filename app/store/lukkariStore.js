@@ -31,8 +31,6 @@ function rootReducer(previousState, action) {
   let state = previousState
   promiseMiddleware(action)
   switch (action.type) {
-    case 'COURSE_INITIATE_LOAD':
-      break
     case 'REMOVE_COURSE_BY_ID':
       const coursesLeft = filter((c) => c.course_id !== action.courses[0].course_id, state.selectedCourses)
       if (isEmpty(filter(whereEq({course_code: action.courses[0].course_code}), coursesLeft))) {
@@ -48,7 +46,8 @@ function rootReducer(previousState, action) {
       state.selectedCourses = concat(state.selectedCourses, action.selectedCourses)
       addUrlParameter(action.selectedCourses[0].course_code, action.selectedCourses[0].group_name)
       break
-    case 'UPDATE_URL_PARAMS':
+    case 'SAVE_MODAL':
+      state.isModalOpen = action.isModalOpen
       break
   }
   if (!isServer) {

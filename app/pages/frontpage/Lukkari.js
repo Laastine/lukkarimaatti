@@ -6,6 +6,7 @@ import Header from "../../partials/header"
 import searchResults from "../../partials/searchResults"
 import SearchList from "../../partials/searchList"
 import {addDataToCalendar} from "../../util/courseParser"
+import {appState} from '../../store/lukkariStore'
 
 require('moment/locale/fi')
 BigCalendar.momentLocalizer(moment)
@@ -36,7 +37,7 @@ const Calendar = (state) =>
     components={{event: Event}}
     onSelectEvent={(c) => {
       const courses = filter((cc) => cc.course_code + "#" + cc.type === c.id, state.selectedCourses)
-      console.log('NOT IMPLEMENTED', courses)
+      appState.dispatch({type: 'REMOVE_COURSE_BY_ID', courses})
     }}
     min={new Date(moment(state.currentDate).hours(8).minutes(0).format())}
     max={new Date(moment(state.currentDate).hours(20).minutes(0).format())}

@@ -1,6 +1,7 @@
 import Bacon from 'baconjs'
 import {isServer} from '../utils'
-import {concat} from 'ramda'
+import {concat, filter, isEmpty, whereEq} from 'ramda'
+import {addUrlParameter, removeUrlParameter} from '../pages/browserUtils'
 
 const createAppState = (reducer, initialState) => {
   const bus = Bacon.Bus()
@@ -33,12 +34,19 @@ function rootReducer(previousState, action) {
     case 'COURSE_INITIATE_LOAD':
       break
     case 'REMOVE_COURSE_BY_ID':
+      const coursesLeft = filter((c) => c.course_id !== action.courses[0].course_id, state.selectedCourses)
+      if (isEmpty(filter(whereEq({course_code: action.courses[0].course_code}), coursesLeft))) {
+        removeUrlParameter(action.courses[0].course_code)
+      }
+      state.selectedCourses = coursesLeft
       break
     case 'REMOVE_COURSE':
-      state.selectedCourses = state.selectedCourses.filter((e) => e.course_code === action.course_code)
+      removeUrlParameter(action.course_code)
+      state.selectedCourses = state.selectedCourses.filter((e) => e.course_code !== action.course_code)
       break
     case 'ADD_COURSE':
       state.selectedCourses = concat(state.selectedCourses, action.selectedCourses)
+      addUrlParameter(action.selectedCourses[0].course_code, action.selectedCourses[0].group_name)
       break
     case 'UPDATE_URL_PARAMS':
       break

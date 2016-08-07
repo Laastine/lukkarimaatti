@@ -1,5 +1,5 @@
-import dates from "./dates"
-import {accessor as get} from "./accessors"
+import dates from './dates'
+import {accessor as get} from './accessors'
 
 export function endOfRange(dateRange, unit = 'day') {
   return {

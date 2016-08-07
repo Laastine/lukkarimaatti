@@ -1,8 +1,8 @@
-import React from "react"
-import dates from "./utils/dates"
-import localizer from "./localizer"
-import {navigate} from "./utils/constants"
-import TimeGrid from "./TimeGrid"
+import React from 'react'
+import dates from './utils/dates'
+import localizer from './localizer'
+import {navigate} from './utils/constants'
+import TimeGrid from './TimeGrid'
 
 const Week = React.createClass({
 

@@ -1,5 +1,5 @@
-import {PropTypes} from "react"
-import invariant from "invariant"
+import {PropTypes} from 'react'
+import invariant from 'invariant'
 
 const localePropType = PropTypes.oneOfType([
   PropTypes.string,

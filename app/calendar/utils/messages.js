@@ -1,4 +1,4 @@
-import invariant from "invariant"
+import invariant from 'invariant'
 
 let messages = {
   date: 'Date',
@@ -20,7 +20,7 @@ let messages = {
 
 export function set(key, msg) {
   invariant(messages.hasOwnProperty(key),
-    `The message key: "${key}" is not a valid message name. ` +
+    `The message key: '${key}' is not a valid message name. ` +
     `valid keys are: ${Object.keys(messages).join(', ')}`
   )
 

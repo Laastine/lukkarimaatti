@@ -15,7 +15,7 @@ const fetchComponentData = (needs, params) => {
 
 export const Routes = (
   <Route component={AppPage}>
-    <Route path="/"
+    <Route path='/'
            component={LukkariPage}
            onEnter={(nextState) => {
              if (!isServer) {
@@ -24,7 +24,7 @@ export const Routes = (
              }
            }}/>
 
-    <Route path="*"
+    <Route path='*'
            component={NotFoundPage}
            status={404}/>
   </Route>

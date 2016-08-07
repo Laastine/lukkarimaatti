@@ -1,5 +1,5 @@
-import {flatten} from "ramda"
-import moment from "moment"
+import {flatten} from 'ramda'
+import moment from 'moment'
 require('moment/locale/fi')
 
 const getYearNumber = (courseWeekNumber) => {

@@ -1,18 +1,18 @@
-import express from "express"
-import path from "path"
-import {mergeAll} from "ramda"
-import {match} from "react-router"
-import compression from "compression"
-import crypto from "crypto"
-import Promise from "bluebird"
-import bodyParser from "body-parser"
-import DB from "./db"
-import CourseRoutes from "./routes/course"
-import ApiRoutes from "./routes/api"
-import {appState} from "./store/lukkariStore"
-import {Routes} from "./pages/routes"
-import {renderFullPage} from "./pages/initPage"
-import Logger from "./logger"
+import express from 'express'
+import path from 'path'
+import {mergeAll} from 'ramda'
+import {match} from 'react-router'
+import compression from 'compression'
+import crypto from 'crypto'
+import Promise from 'bluebird'
+import bodyParser from 'body-parser'
+import DB from './db'
+import CourseRoutes from './routes/course'
+import ApiRoutes from './routes/api'
+import {appState} from './store/lukkariStore'
+import {Routes} from './pages/routes'
+import {renderFullPage} from './pages/initPage'
+import Logger from './logger'
 
 const fs = Promise.promisifyAll(require('fs'))
 
@@ -66,6 +66,7 @@ const buildInitialState = (displayName) => {
     case 'LukkariPage':
       return {
         selectedCourses: [],
+        searchResults: [],
         currentDate: new Date(),
         isModalOpen: false,
         selectedIndex: -1,
@@ -120,7 +121,6 @@ server.get('*', (req, res) => {
         .all([checksumPromise(cssFilePath), checksumPromise(bundleJsFilePath), fetchComponentData(renderProps.components, renderProps.params, renderProps.location.query)])
         .then(([cssChecksum, bundleJsChecksum]) => {
           const initialState = mergeAll([appState.currentState, buildInitialState(renderProps.components[1].displayName)])
-          console.log('** INITIALSTATE', initialState)
           return Promise.resolve(renderFullPage(
             initialState,
             {cssChecksum, bundleJsChecksum},
@@ -141,7 +141,7 @@ export const start = port => {
   const reportPages = () => {
     Logger.info(`Page available at http://localhost:${port} in ${env}`)
   }
-  return DB.isTableInitialized("course")
+  return DB.isTableInitialized('course')
     .then((exists) => exists ? null : DB.initializeDb())
     .then(() => new Promise((resolve) => {
       server.listen(port, resolve)

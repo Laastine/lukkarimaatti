@@ -1,7 +1,7 @@
-import React from "react"
-import cn from "classnames"
-import dates from "./utils/dates"
-import {accessor as get} from "./utils/accessors"
+import React from 'react'
+import cn from 'classnames'
+import dates from './utils/dates'
+import {accessor as get} from './utils/accessors'
 
 const EventCell = React.createClass({
   render() {

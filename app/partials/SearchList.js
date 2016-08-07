@@ -1,6 +1,5 @@
 import React from 'react'
-import {pipe, uniqBy, contains, addIndex, map, slice, partial} from 'ramda'
-import axios from 'axios'
+import {pipe, uniq, uniqBy, contains, addIndex, map, slice, partial} from 'ramda'
 import Bacon from 'baconjs'
 import {searchCourses} from '../pages/frontApi/lukkariApi'
 import {appState} from '../store/lukkariStore'
@@ -8,12 +7,12 @@ import {appState} from '../store/lukkariStore'
 const LIST_MAX_LEN = 10
 
 const visibleCourses = (state) => pipe(
-  uniqBy((c) => c.course_name),
-  slice(0, LIST_MAX_LEN))(state && state.searchResults ? state.searchResults : [])
+  uniq,
+  slice(0, LIST_MAX_LEN))(state.searchResults.map((c) => c.course_name))
 
 const addCourse = (event, state) => {
   document.getElementById('course-searchbox').value = ''
-  const courseName = visibleCourses(state)[state.selectedIndex].course_name
+  const courseName = visibleCourses(state)[state.selectedIndex]
   appState.dispatch({
     type: 'ADD_COURSE',
     selectedCourses: state.searchResults.filter((e) => e.course_name === courseName)
@@ -22,7 +21,7 @@ const addCourse = (event, state) => {
 
 const handleKeyInput = (event, state, indexCallback, closeCallback) => {
   if (event.keyCode === 40) {  //Down
-    if (state.selectedIndex < visibleCourses.length - 1 && state.selectedIndex < LIST_MAX_LEN) {
+    if (state.selectedIndex < visibleCourses(state).length - 1 && state.selectedIndex < LIST_MAX_LEN) {
       indexCallback(state.selectedIndex + 1)
     }
   } else if (event.keyCode === 38) {  //Up
@@ -46,7 +45,7 @@ const searchList = (state, mouseEnterCallback, closeCallback) => {
       mapIndexed((c, index) =>
         <div key={c.course_name}
              onMouseEnter={partial(mouseEnterCallback, [index])}
-             className={index === state.selectedIndex ? "search-list-coursename search-list-selected" : "search-list-coursename"}
+             className={index === state.selectedIndex ? 'search-list-coursename search-list-selected' : 'search-list-coursename'}
              onClick={(event) => {
                closeCallback()
                addCourse(event, state)
@@ -65,6 +64,7 @@ class SearchList extends React.Component {
 
   componentDidMount() {
     document.getElementsByClassName('search-container')[0].focus()
+    this.setState({searchResults: this.props.state.searchResults})
     Bacon.fromEventTarget(this.refs.searchinput, 'keyup')
       .debounce(200)
       .filter((e) => !contains(e.keyCode, [37, 38, 39, 40]))
@@ -87,9 +87,10 @@ class SearchList extends React.Component {
     const closeCallback = () => {
       this.setState({isSearchListVisible: false})
     }
+    console.log('RENDER',state)
     return <div>
-      <div className="search-container">
-        <input id="course-searchbox" autoFocus placeholder="Course name"
+      <div className='search-container'>
+        <input id='course-searchbox' autoFocus placeholder='Course name'
                ref='searchinput'
                onKeyDown={(event) => {
                  this.setState({searchString: event.target.value,
@@ -97,7 +98,7 @@ class SearchList extends React.Component {
                  handleKeyInput(event, state, indexCallback, closeCallback)
                }}></input>
       </div>
-      <div className="search-list-container"
+      <div className='search-list-container'
            onMouseLeave={() => {
              this.setState({selectedIndex: -1})
            }}>

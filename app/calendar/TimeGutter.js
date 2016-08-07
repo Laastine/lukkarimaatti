@@ -1,8 +1,8 @@
-import React from "react"
-import cn from "classnames"
-import dates from "./utils/dates"
-import localizer from "./localizer"
-import {formats} from "./formats"
+import React from 'react'
+import cn from 'classnames'
+import dates from './utils/dates'
+import localizer from './localizer'
+import {formats} from './formats'
 
 const TimeGutter = React.createClass({
 

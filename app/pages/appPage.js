@@ -6,7 +6,7 @@ const AppPage = React.createClass({
   },
 
   render() {
-    return <div id="app-root">
+    return <div id='app-root'>
       {this.props.children}
     </div>
   }

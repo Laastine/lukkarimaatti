@@ -1,7 +1,7 @@
 /* eslint no-fallthrough: 0 */
-import dateMath from "date-arithmetic"
-import localizer from "../localizer"
-import {directions} from "./constants"
+import dateMath from 'date-arithmetic'
+import localizer from '../localizer'
+import {directions} from './constants'
 
 const MILLI = {
   seconds: 1000,

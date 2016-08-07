@@ -1,7 +1,7 @@
-import React from "react"
-import {Router, RouterContext} from "react-router"
-import {appState} from "../store/lukkariStore"
-import {isServer} from "../utils"
+import React from 'react'
+import {Router, RouterContext} from 'react-router'
+import {appState} from '../store/lukkariStore'
+import {isServer} from '../utils'
 
 let listener
 

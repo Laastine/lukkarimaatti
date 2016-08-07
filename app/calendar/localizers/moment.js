@@ -1,6 +1,6 @@
-import dates from "../utils/dates"
-import {set} from "../formats"
-import {set as setLocalizer} from "../localizer"
+import dates from '../utils/dates'
+import {set} from '../formats'
+import {set as setLocalizer} from '../localizer'
 
 function inSame12Hr(start, end) {
   let s = 12 - dates.hours(start)

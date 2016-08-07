@@ -1,4 +1,4 @@
-"use strict"
+'use strict'
 
 const cheerio = require('cheerio')
 const Promise = require('bluebird')
@@ -15,7 +15,7 @@ const updateCourseData = function () {
   requestAsync({url: config.uniUrl, methog: 'GET', json: true})
     .then(function (res) {
       const $ = cheerio.load(res[1])
-      $($(".portlet-body .journal-content-article").children()[2])
+      $($('.portlet-body .journal-content-article').children()[2])
         .find('a')
         .each(function () {
           const link = $(this).attr('href')
@@ -206,7 +206,7 @@ module.exports = {
     Logger.info('Update course data by worker')
     Promise.all([DB.cleanCourseTable()])
       .then((res) => updateCourseData())
-      .catch((err) => Logger.error("Error while updating DB data", err.stack))
+      .catch((err) => Logger.error('Error while updating DB data', err.stack))
   }
 }
 

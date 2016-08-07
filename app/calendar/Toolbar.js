@@ -1,7 +1,7 @@
-import React from "react"
-import cn from "classnames"
-import message from "./utils/messages"
-import {navigate} from "./utils/constants"
+import React from 'react'
+import cn from 'classnames'
+import message from './utils/messages'
+import {navigate} from './utils/constants'
 
 const Toolbar = React.createClass({
 

@@ -1,8 +1,8 @@
-import {views} from "./utils/constants"
-import Month from "./Month"
-import Day from "./Day"
-import Week from "./Week"
-import Agenda from "./Agenda"
+import {views} from './utils/constants'
+import Month from './Month'
+import Day from './Day'
+import Week from './Week'
+import Agenda from './Agenda'
 
 const VIEWS = {
   [views.MONTH]: Month,

@@ -1,7 +1,8 @@
-import express from "express"
-import Promise from "bluebird"
-import Logger from "../logger"
-import DB from "../db"
+import express from 'express'
+import Promise from 'bluebird'
+import Logger from '../logger'
+import {map, uniq} from 'ramda'
+import DB from '../db'
 
 const courseRoutes = express.Router()
 
@@ -11,12 +12,32 @@ const buildErrorMessage = (functionName, query, ip, err) => {
   Logger.error(functionName + ', request' + queryParam + ipParam + ' error', err.stack)
 }
 
+const extractCourseParams = (params) => {
+  if (!params || params.match('/checksum=.*/')) {
+    return []
+  } else {
+    return map((courseCode) => {
+      if (courseCode.indexOf('&') > -1) {
+        return {
+          courseCode: courseCode.substring(0, courseCode.indexOf('&')),
+          groupName: courseCode.substring(courseCode.indexOf('&') + 1, courseCode.length)
+        }
+      } else {
+        return {
+          courseCode,
+          groupName: ""
+        }
+      }
+    }, uniq(params.substring(0, params.length).split(/[+]/)))
+  }
+}
+
 courseRoutes.get('/course', (req, res) =>
   Promise.resolve(DB.getCourseByName(req.query['name'].toLocaleLowerCase()))
     .then((result) => res.json(result))
     .catch((err) => {
       buildErrorMessage('/course', req.query['name'], req.client.remoteAddress, err)
-      res.json([])
+      res.status(500).json([])
     }))
 
 courseRoutes.get('/codeAndGroup', (req, res) => {
@@ -24,7 +45,7 @@ courseRoutes.get('/codeAndGroup', (req, res) => {
     .then((result) => res.json(result.rows))
     .error((err) => {
       buildErrorMessage('getCourseByCodeAndGroup', req.query['code'] + ' ' + req.query['groupName'], req.client.remoteAddress, err)
-      res.json([])
+      res.status(500).json([])
     })
 })
 
@@ -33,7 +54,16 @@ courseRoutes.get('/code/:code', (req, res) => {
     .then((result) => res.json(result.rows))
     .catch((err) => {
       buildErrorMessage('/code', req.query['code'], req.client.remoteAddress, err)
-      res.json([])
+      res.status(500).json([])
+    })
+})
+
+courseRoutes.get('/courses', (req, res) => {
+  Promise.resolve(DB.prefetchCoursesByCode(extractCourseParams(req.query['courses'])))
+    .then((result) => res.json(result))
+    .catch((err) => {
+      buildErrorMessage('/courses', req.query['courses'], req.client.remoteAddress, err)
+      res.status(500).json([])
     })
 })
 

@@ -1,3 +1,7 @@
+import axios from 'axios'
+import {isServer} from '../utils'
+import {appState} from '../store/lukkariStore'
+
 const urlParamLength = 9
 
 export const addUrlParameter = (course_code, group_name) => {
@@ -31,4 +35,14 @@ export const removeUrlParameter = (courseCode) => {
   } else {
     history.pushState({}, "", "?courses=")
   }
+}
+
+export const sendEmail = (email) => {
+  axios.post('api/save', {email, link: window.location.href.toString()})
+    .then(() => {
+      appState.dispatch({type: 'EMAIL_SEND_DONE', waitingAjax: false})
+    })
+    .catch(() => {
+      appState.dispatch({type: 'EMAIL_SEND_FAILED', waitingAjax: false})
+    })
 }

@@ -9,7 +9,7 @@ export default (state) => {
     <button type="button" id="saveId" className="modal-button" data-dismiss="modal"
             onClick={(e) => {
               console.log('EMAIL not implemented')
-              //emailBus.push({address: e.target.previousElementSibling.value, url, isModalOpen: true})
+              appState.dispatch({type: 'SEND_EMAIL', waitingAjax: true, email: e.target.previousElementSibling.value, url})
             }}>
       Send
     </button>

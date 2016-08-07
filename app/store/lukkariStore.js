@@ -1,7 +1,7 @@
 import Bacon from 'baconjs'
 import {isServer} from '../utils'
 import {concat, filter, isEmpty, whereEq} from 'ramda'
-import {addUrlParameter, removeUrlParameter} from '../pages/browserUtils'
+import {addUrlParameter, removeUrlParameter, sendEmail} from '../pages/browserUtils'
 
 const createAppState = (reducer, initialState) => {
   const bus = Bacon.Bus()
@@ -31,6 +31,9 @@ function rootReducer(previousState, action) {
   let state = previousState
   promiseMiddleware(action)
   switch (action.type) {
+    case 'LOAD_COURSES_SUCCESS':
+      state.selectedCourses = action.data ? action.data : []
+      break
     case 'REMOVE_COURSE_BY_ID':
       const coursesLeft = filter((c) => c.course_id !== action.courses[0].course_id, state.selectedCourses)
       if (isEmpty(filter(whereEq({course_code: action.courses[0].course_code}), coursesLeft))) {
@@ -48,6 +51,17 @@ function rootReducer(previousState, action) {
       break
     case 'SAVE_MODAL':
       state.isModalOpen = action.isModalOpen
+      break
+    case 'SEND_EMAIL':
+      state.waitingAjax = action.waitingAjax
+      sendEmail(action.email)
+    case 'EMAIL_SEND_DONE':
+      state.waitingAjax = action.waitingAjax
+      state.isModalOpen = false
+      break
+    case 'EMAIL_SEND_FAILED':
+      state.waitingAjax = action.waitingAjax
+      state.isModalOpen = false
       break
   }
   if (!isServer) {

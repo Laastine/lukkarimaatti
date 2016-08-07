@@ -3,7 +3,7 @@ import {Route} from 'react-router'
 import {appState} from '../store/lukkariStore'
 import {isServer} from '../utils'
 import AppPage from './appPage'
-import FrontPage from './frontpage/FrontPage'
+import LukkariPage from './frontpage/LukkariPage'
 import NotFoundPage from './notFoundPage'
 
 const fetchComponentData = (needs, params) => {
@@ -16,10 +16,10 @@ const fetchComponentData = (needs, params) => {
 export const Routes = (
   <Route component={AppPage}>
     <Route path="/"
-           component={FrontPage}
+           component={LukkariPage}
            onEnter={(nextState) => {
              if (!isServer) {
-               fetchComponentData(FrontPage.needs, {selectedCourses: nextState.location.query.selectedCourses})
+               fetchComponentData(LukkariPage.needs, {courses: nextState.location.query.courses})
                window.scrollTo(0, 0)
              }
            }}/>

@@ -61,14 +61,12 @@ const serveStaticResource = filePath => (req, res, next) =>
 server.get('/static/:checksum/style.css', serveStaticResource(cssFilePath))
 server.get('/static/:checksum/bundle.js', serveStaticResource(bundleJsFilePath))
 
-const buildInitialState = (displayName, pathParams, queryParams) => {
+const buildInitialState = (displayName) => {
   switch (displayName) {
-    case 'FrontPage':
+    case 'LukkariPage':
       return {
-        selectedCourses: queryParams.courses ? queryParams.courses : [],
+        selectedCourses: [],
         currentDate: new Date(),
-        courses: [],
-        urlParams: [],
         isModalOpen: false,
         selectedIndex: -1,
         waitingAjax: false
@@ -82,10 +80,12 @@ const buildInitialState = (displayName, pathParams, queryParams) => {
 
 const getNeedFunctionParams = (displayName, params, queryParams) => {
   switch (displayName) {
-    case 'FrontPage':
-      return {}
+    case 'LukkariPage':
+      return {
+        courses: queryParams.courses
+      }
     default:
-      return null
+      return {}
   }
 }
 
@@ -119,7 +119,8 @@ server.get('*', (req, res) => {
       return Promise
         .all([checksumPromise(cssFilePath), checksumPromise(bundleJsFilePath), fetchComponentData(renderProps.components, renderProps.params, renderProps.location.query)])
         .then(([cssChecksum, bundleJsChecksum]) => {
-          const initialState = mergeAll([appState.currentState, buildInitialState(renderProps.components[1].displayName, renderProps.params, renderProps.location.query)])
+          const initialState = mergeAll([appState.currentState, buildInitialState(renderProps.components[1].displayName)])
+          console.log('** INITIALSTATE', initialState)
           return Promise.resolve(renderFullPage(
             initialState,
             {cssChecksum, bundleJsChecksum},

@@ -1,9 +1,10 @@
 import React from 'react'
 import Lukkari from './Lukkari'
+import {loadCourses} from '../frontApi/lukkariApi'
 
-const FrontPage = React.createClass({
+const LukkariPage = React.createClass({
   statics: {
-    needs : []
+    needs : [loadCourses]
   },
 
   contextTypes: {
@@ -17,4 +18,4 @@ const FrontPage = React.createClass({
   }
 })
 
-export default FrontPage
+export default LukkariPage

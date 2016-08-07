@@ -1,8 +1,9 @@
-import React from "react"
-import {pipe, uniqBy, contains, addIndex, map, slice, partial} from "ramda"
-import axios from "axios"
-import Bacon from "baconjs"
-import {appState} from "../store/lukkariStore"
+import React from 'react'
+import {pipe, uniqBy, contains, addIndex, map, slice, partial} from 'ramda'
+import axios from 'axios'
+import Bacon from 'baconjs'
+import {searchCourses} from '../pages/frontApi/lukkariApi'
+import {appState} from '../store/lukkariStore'
 
 const LIST_MAX_LEN = 10
 
@@ -69,13 +70,9 @@ class SearchList extends React.Component {
       .filter((e) => !contains(e.keyCode, [37, 38, 39, 40]))
       .onValue((e) => {
         if (e.target.value.length > 0) {
-          axios.get('/course/course', {
-            params: {
-              name: e.target.value
-            }
-          })
-            .then((res) => {
-              this.setState({searchResults: res.data,
+          searchCourses(e.target.value)
+            .then((searchResults) => {
+              this.setState({searchResults,
                 isSearchListVisible: true})
             })
         }

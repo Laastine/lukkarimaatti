@@ -286,3 +286,12 @@ body {
   word-wrap: break-word;
   white-space: pre-wrap;
 }
+
+.department-link {
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.department-course {
+  margin: 5px;
+}

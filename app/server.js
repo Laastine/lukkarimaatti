@@ -70,16 +70,18 @@ const buildInitialState = (displayName) => {
         currentDate: new Date(),
         isModalOpen: false,
         selectedIndex: -1,
-        waitingAjax: false
+        waitingAjax: false,
+        departmentCourses: []
       }
-    case 'Catalogage':
+    case 'CatalogPage':
       return {
         selectedCourses: [],
         searchResults: [],
         currentDate: new Date(),
         isModalOpen: false,
         selectedIndex: -1,
-        waitingAjax: false
+        waitingAjax: false,
+        departmentCourses: []
       }
     case 'NotFoundPage':
       return {}
@@ -93,6 +95,10 @@ const getNeedFunctionParams = (displayName, params, queryParams) => {
     case 'LukkariPage':
       return {
         courses: queryParams.courses
+      }
+    case 'CatalogPage':
+      return {
+        department: queryParams.department ? queryParams.department.toLowerCase() : 'tite'
       }
     default:
       return null

@@ -21,14 +21,21 @@ export const searchCourses = (input) =>
   })
     .then(checkStatus)
 
-export const loadCourses = (param) => {
+export const loadCourses = (param) => ({
+  type: 'LOAD_COURSES',
+  promise: lukkariApi.get(`${serverAddr}/course/courses`, {
+    params: {
+      courses: param.courses
+    }
+  })
+    .then(checkStatus)
+})
+
+export const loadCoursesByDepartment = (param) => {
   return {
-    type: 'LOAD_COURSES',
-    promise: lukkariApi.get(`${serverAddr}/course/courses`, {
-      params: {
-        courses: param.courses
-      }
-    })
+    type: 'LOAD_COURSES_BY_DEPARTMENT',
+    promise: lukkariApi.get(`${serverAddr}/course/byDepartment/${param.department}`)
       .then(checkStatus)
+
   }
 }

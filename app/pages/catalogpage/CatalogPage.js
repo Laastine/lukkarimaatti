@@ -1,10 +1,11 @@
 import React from 'react'
 import Catalog from './Catalog'
+import {loadCoursesByDepartment} from '../frontApi/lukkariApi'
 import Header from '../../partials/header'
 
 const CatalogPage = React.createClass({
   statics: {
-    needs: []
+    needs: [loadCoursesByDepartment]
   },
 
   contextTypes: {

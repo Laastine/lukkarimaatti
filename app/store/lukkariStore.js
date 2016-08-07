@@ -31,6 +31,9 @@ function rootReducer(previousState, action) {
   let state = previousState   // eslint-disable-line
   promiseMiddleware(action)
   switch (action.type) {
+    case 'LOAD_COURSES_BY_DEPARTMENT_SUCCESS':
+      state.departmentCourses = action.data ? action.data : []
+      break
     case 'LOAD_COURSES_SUCCESS':
       state.selectedCourses = action.data ? action.data : []
       break

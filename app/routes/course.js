@@ -58,4 +58,17 @@ courseRoutes.get('/courses', (req, res) => {
     })
 })
 
+courseRoutes.get('/byDepartment/:department', (req, res) => {
+  const department = req.params.department === 'ENTE-YMTE' ? 'ente/ymte' : req.params.department.toLowerCase()
+  console.log('COURSE', department)
+  Promise.resolve(DB.getCourseByDepartment(department))
+    .then((result) => {
+      console.log('GOT DEPS', result.length)
+      res.json(result)})
+    .catch((err) => {
+      buildErrorMessage('/byDepartment', req.params.department, req.client.remoteAddress, err)
+      res.status(500).json([])
+    })
+})
+
 export default courseRoutes

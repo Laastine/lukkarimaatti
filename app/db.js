@@ -51,10 +51,9 @@ module.exports = {
 
   getCourseByCode: (code) => client.queryAsync(`SELECT * FROM course WHERE course_code = (:code)`, {code}), // eslint-disable-line
 
-  getCourseByCodeAndGroup: (code, groupName) =>
-    client.queryAsync(`SELECT * FROM course WHERE course_code = (:code) and group_name = (:groupName)`, { // eslint-disable-line
-      code,
-      groupName
+  getCourseByDepartment: (department) =>
+    client.queryAsync(`SELECT * FROM course WHERE department = (:department)`, { // eslint-disable-line
+      department
     }),
 
   prefetchCoursesByCode: (params) => {

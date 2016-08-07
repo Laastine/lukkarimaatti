@@ -274,6 +274,7 @@ body {
 }
 
 .no-match-ascii {
+  font-weight: 700;
   width: 520px;
   margin: auto;
   padding-top: 20px;

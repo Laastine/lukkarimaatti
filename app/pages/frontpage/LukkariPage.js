@@ -1,10 +1,10 @@
 import React from 'react'
 import Lukkari from './Lukkari'
-import {loadCourses} from '../frontApi/lukkariApi'
+import {loadCourses} from '../frontApi/lukkariApi' // eslint-disable-line
 
 const LukkariPage = React.createClass({
   statics: {
-    needs : [loadCourses]
+    needs: [loadCourses]
   },
 
   contextTypes: {

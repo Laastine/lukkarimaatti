@@ -25,7 +25,7 @@ const extractCourseParams = (params) => {
       } else {
         return {
           courseCode,
-          groupName: ""
+          groupName: ''
         }
       }
     }, uniq(params.substring(0, params.length).split(/[+]/)))
@@ -33,36 +33,27 @@ const extractCourseParams = (params) => {
 }
 
 courseRoutes.get('/course', (req, res) =>
-  Promise.resolve(DB.getCourseByName(req.query['name'].toLocaleLowerCase()))
+  Promise.resolve(DB.getCourseByName(req.query.name.toLocaleLowerCase()))
     .then((result) => res.json(result))
     .catch((err) => {
-      buildErrorMessage('/course', req.query['name'], req.client.remoteAddress, err)
+      buildErrorMessage('/course', req.query.name, req.client.remoteAddress, err)
       res.status(500).json([])
     }))
 
-courseRoutes.get('/codeAndGroup', (req, res) => {
-  DB.getCourseByCodeAndGroup(code, groupName)
-    .then((result) => res.json(result.rows))
-    .error((err) => {
-      buildErrorMessage('getCourseByCodeAndGroup', req.query['code'] + ' ' + req.query['groupName'], req.client.remoteAddress, err)
-      res.status(500).json([])
-    })
-})
-
 courseRoutes.get('/code/:code', (req, res) => {
-  Promise.resolve(DB.getCourseByCode(req.params['code']))
+  Promise.resolve(DB.getCourseByCode(req.params.code))
     .then((result) => res.json(result.rows))
     .catch((err) => {
-      buildErrorMessage('/code', req.query['code'], req.client.remoteAddress, err)
+      buildErrorMessage('/code', req.query.code, req.client.remoteAddress, err)
       res.status(500).json([])
     })
 })
 
 courseRoutes.get('/courses', (req, res) => {
-  Promise.resolve(DB.prefetchCoursesByCode(extractCourseParams(req.query['courses'])))
+  Promise.resolve(DB.prefetchCoursesByCode(extractCourseParams(req.query.courses)))
     .then((result) => res.json(result))
     .catch((err) => {
-      buildErrorMessage('/courses', req.query['courses'], req.client.remoteAddress, err)
+      buildErrorMessage('/courses', req.query.courses, req.client.remoteAddress, err)
       res.status(500).json([])
     })
 })

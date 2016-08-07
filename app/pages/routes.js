@@ -4,7 +4,8 @@ import {appState} from '../store/lukkariStore'
 import {isServer} from '../utils'
 import AppPage from './appPage'
 import LukkariPage from './frontpage/LukkariPage'
-import NotFoundPage from './notFoundPage'
+import NotFoundPage from './notFoundPage'           // eslint-disable-line
+// eslint-disable-line
 
 const fetchComponentData = (needs, params) => {
   needs.forEach((need) => {

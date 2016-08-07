@@ -1,6 +1,7 @@
 import React from 'react'
 import {renderToString} from 'react-dom/server'
-import App from './app'
+import App from './app' // eslint-disable-line
+// eslint-disable-line
 
 export const renderFullPage = (initialState, options, renderProps) => {
   return `<!doctype html>

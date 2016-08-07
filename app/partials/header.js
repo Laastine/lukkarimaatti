@@ -1,14 +1,18 @@
 import React from 'react'
-import {appState} from '../store/lukkariStore'
+import {appState} from '../store/lukkariStore' // eslint-disable-line
 
 export default (state) => {
   const url = state.urlParams
   const sendButton = state.waitingAjax ?
-    <img className='modal-ajax-spinner' src='/spinner.gif'/>
-    :
+    <img className='modal-ajax-spinner' src='/spinner.gif'/> :
     <button type='button' id='saveId' className='modal-button' data-dismiss='modal'
             onClick={(e) => {
-              appState.dispatch({type: 'SEND_EMAIL', waitingAjax: true, email: e.target.previousElementSibling.value, url})
+              appState.dispatch({
+                type: 'SEND_EMAIL',
+                waitingAjax: true,
+                email: e.target.previousElementSibling.value,
+                url
+              })
             }}>
       Send
     </button>
@@ -24,7 +28,7 @@ export default (state) => {
         {sendButton}
       </form>
     </div>
-  </div> : undefined
+  </div> : null
   return <div className='header-container'>
     {modal}
     <a className='header-element header-link' href='/'>Lukkarimaatti++</a>

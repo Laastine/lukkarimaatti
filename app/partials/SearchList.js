@@ -49,7 +49,7 @@ const searchList = (state, mouseEnterCallback, closeCallback) => {
              onClick={(event) => {
                closeCallback()
                addCourse(event, state)
-             }}>{c.course_name}</div>))(state.searchResults) : undefined
+             }}>{c.course_name}</div>))(state.searchResults) : null
 }
 
 class SearchList extends React.Component {
@@ -72,8 +72,10 @@ class SearchList extends React.Component {
         if (e.target.value.length > 0) {
           searchCourses(e.target.value)
             .then((searchResults) => {
-              this.setState({searchResults,
-                isSearchListVisible: true})
+              this.setState({
+                searchResults,
+                isSearchListVisible: true
+              })
             })
         }
       })
@@ -87,14 +89,12 @@ class SearchList extends React.Component {
     const closeCallback = () => {
       this.setState({isSearchListVisible: false})
     }
-    console.log('RENDER',state)
     return <div>
       <div className='search-container'>
         <input id='course-searchbox' autoFocus placeholder='Course name'
                ref='searchinput'
                onKeyDown={(event) => {
-                 this.setState({searchString: event.target.value,
-                  })
+                 this.setState({searchString: event.target.value})
                  handleKeyInput(event, state, indexCallback, closeCallback)
                }}></input>
       </div>

@@ -28,11 +28,11 @@ const buildInsertQueryString = (courseBatch) =>
 
 module.exports = {
 
-  isTableInitialized: (table) => client.queryOneAsync(`SELECT to_regclass(:table) IS NOT NULL AS exists`, {table})
+  isTableInitialized: (table) => client.queryOneAsync(`SELECT to_regclass(:table) IS NOT NULL AS exists`, {table})  // eslint-disable-line
     .then(prop('exists'))
     .catch((err) => Logger.error('isTableInitialized error', err.stack)),
 
-  initializeDb: (table) => client.updateAsync(`CREATE TABLE course(course_id SERIAL,
+  initializeDb: () => client.updateAsync(`CREATE TABLE course(course_id SERIAL,
   course_code VARCHAR(256) NOT NULL,
   course_name VARCHAR(256) NOT NULL,
   week VARCHAR(256),
@@ -44,15 +44,15 @@ module.exports = {
   teacher VARCHAR(256),
   misc VARCHAR(512),
   group_name VARCHAR(256) DEFAULT '' NOT NULL)`)
-    .then(() => client.updateAsync(`CREATE INDEX course_name_search ON course (course_name)`))
+    .then(() => client.updateAsync(`CREATE INDEX course_name_search ON course (course_name)`))  // eslint-disable-line
     .catch((err) => Logger.error('initializeDb error', err.stack)),
 
-  getCourseByName: (courseName) => client.queryAsync(`SELECT * FROM course WHERE LOWER(course_name) LIKE $1`, ['%' + courseName + '%']),
+  getCourseByName: (courseName) => client.queryAsync(`SELECT * FROM course WHERE LOWER(course_name) LIKE $1`, ['%' + courseName + '%']),  // eslint-disable-line
 
-  getCourseByCode: (code) => client.queryAsync(`SELECT * FROM course WHERE course_code = (:code)`, {code}),
+  getCourseByCode: (code) => client.queryAsync(`SELECT * FROM course WHERE course_code = (:code)`, {code}), // eslint-disable-line
 
   getCourseByCodeAndGroup: (code, groupName) =>
-    client.queryAsync(`SELECT * FROM course WHERE course_code = (:code) and group_name = (:groupName)`, {
+    client.queryAsync(`SELECT * FROM course WHERE course_code = (:code) and group_name = (:groupName)`, { // eslint-disable-line
       code,
       groupName
     }),
@@ -69,6 +69,7 @@ module.exports = {
         .then((result) => result)
         .catch((error) => Logger.info('prefetchCoursesByCode error', error))
     }
+    return []
   },
 
   insertCourse: (courseBatch) => client.queryAsync(buildInsertQueryString(courseBatch))

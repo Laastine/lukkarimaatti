@@ -3,19 +3,17 @@ import {appState} from '../store/lukkariStore'
 
 const urlParamLength = 9
 
-export const addUrlParameter = (course_code, group_name) => {
+export const addUrlParameter = (courseCode, groupName) => {
   const params = window.location.search
-  const urlParam = course_code.substring(0, 2) === 'FV' ? course_code + '&' + group_name : course_code
+  const urlParam = courseCode.substring(0, 2) === 'FV' ? courseCode + '&' + groupName : courseCode
   if (params.length > urlParamLength) {
-    if (params.indexOf(course_code) < 0) {
-      history.pushState({}, "", '?courses=' + params.substring(urlParamLength, params.length) + '+' + urlParam)
+    if (params.indexOf(courseCode) < 0) {
+      history.pushState({}, '', '?courses=' + params.substring(urlParamLength, params.length) + '+' + urlParam)
     }
+  } else if (params.indexOf('?courses=') < 0) {
+    history.pushState({}, '', '?courses=' + params + urlParam)
   } else {
-    if (params.indexOf('?courses=') < 0) {
-      history.pushState({}, "", '?courses=' + params + urlParam)
-    } else {
-      history.pushState({}, "", "" + params + urlParam)
-    }
+    history.pushState({}, '', '' + params + urlParam)
   }
 }
 
@@ -30,9 +28,9 @@ export const removeUrlParameter = (courseCode) => {
     }
   })
   if (updatedParams.length > 0) {
-    history.pushState({}, "", '?courses=' + updatedParams.join('+'))
+    history.pushState({}, '', '?courses=' + updatedParams.join('+'))
   } else {
-    history.pushState({}, "", '?courses=')
+    history.pushState({}, '', '?courses=')
   }
 }
 

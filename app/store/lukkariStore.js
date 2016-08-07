@@ -28,7 +28,7 @@ const promiseMiddleware = (event) => {
 }
 
 function rootReducer(previousState, action) {
-  let state = previousState
+  let state = previousState   // eslint-disable-line
   promiseMiddleware(action)
   switch (action.type) {
     case 'LOAD_COURSES_SUCCESS':

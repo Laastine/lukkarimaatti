@@ -6,14 +6,16 @@ import Header from '../../partials/header'
 import searchResults from '../../partials/searchResults'
 import SearchList from '../../partials/searchList'
 import {addDataToCalendar} from '../../util/courseParser'
-import {appState} from '../../store/lukkariStore'
+import {appState} from '../../store/lukkariStore'  // eslint-disable-line
 
 require('moment/locale/fi')
 BigCalendar.momentLocalizer(moment)
 
 const stringToColor = (colorSeed) => {
-  let hash = 0, colour = '#', value
-  colorSeed.split('').forEach(function (e) {
+  let hash = 0
+  let colour = '#'
+  let value = null
+  colorSeed.split('').forEach((e) => {
     hash = colorSeed.charCodeAt(e) + ((hash << 5) - hash)
   })
   for (let j = 0; j < 3; j++) {

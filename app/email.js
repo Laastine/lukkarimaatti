@@ -10,7 +10,7 @@ module.exports = {
       service: 'Gmail',
       auth: {
         user: config.emailAddress,
-        pass: config.emailPassword,
+        pass: config.emailPassword
       }
     })
     Logger.info('name=' + config.emailAddress)

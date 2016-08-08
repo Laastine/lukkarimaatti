@@ -1,3 +1,3 @@
 export const isServer = typeof window === 'undefined'
 
-export const serverAddr = isServer ? 'http://localhost:8080' : ''
+export const serverAddr = isServer ? `http://localhost:${process.env.PORT}` : ''

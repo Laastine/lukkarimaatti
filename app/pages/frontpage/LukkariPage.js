@@ -14,7 +14,7 @@ const LukkariPage = React.createClass({
   },
 
   render() {
-    return <div>
+    return <div className='content-container'>
       <Header state={this.context.appState}/>
       <Lukkari state={this.context.appState}/>
       <Footer/>

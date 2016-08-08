@@ -21,7 +21,7 @@ const DepartmentSelectorElement = (selectedDepartment) => {
       </span>
     })
 
-  return <div className="deparment-link-container">{departmentNames}</div>
+  return <div className="department-link-container">{departmentNames}</div>
 }
 
 const getSemester = (week) => {

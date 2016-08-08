@@ -22,12 +22,23 @@ body {
 }
 
 #app-root {
-  height: 100%;
+  min-height: 100%;
+  position: relative;
 }
 
 .container {
   margin: 20px;
   border: 0;
+  min-height: 100%;
+}
+
+.content-container {
+  min-height: 100%;
+}
+
+.content-container:after {
+  content: "";
+  display: block;
 }
 
 @media screen and (max-width: 700px) {
@@ -242,23 +253,39 @@ body {
   cursor: pointer;
 }
 
+.footer-container {
+  height: 120px;
+}
+
 .footer {
-  display: block;
-  float: left;
-  padding-left: 25px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  height: 100px;
+  width: 100%;
+  background-color: #333;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }
 
 #disclaimer {
   font-weight: 500;
+  color: #EEE;
+  text-align: left;
+  padding: 5px 5px 5px 25px;
 }
 
 #versionInfo {
   font-size: 14px;
   font-weight: 700;
   display: block;
+  text-align: left;
+  padding: 5px 5px 5px 25px;
+  color: #EEE;
+}
+
+#release-notes {
+  color: #EEE;
   float: left;
+  padding: 5px 5px 5px 25px;
 }
 
 .no-match-container {
@@ -289,7 +316,7 @@ body {
   white-space: pre-wrap;
 }
 
-.deparment-link-container {
+.department-link-container {
   background-color: #555;
   padding: 20px;
 }
@@ -327,8 +354,4 @@ body {
   margin: 5px;
   display: block;
   font-weight: 700;
-}
-
-#release-notes {
-  color: #333;
 }

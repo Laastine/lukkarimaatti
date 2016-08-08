@@ -15,9 +15,11 @@ const CatalogPage = React.createClass({
 
   render() {
     return <div>
-      <Header state={this.context.appState}/>
-      <Catalog state={this.context.appState}/>
-      <Footer/>
+      <div className='content-container'>
+        <Header state={this.context.appState}/>
+        <Catalog state={this.context.appState}/>
+        <Footer/>
+      </div>
     </div>
   }
 })

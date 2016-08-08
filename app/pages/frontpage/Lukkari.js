@@ -2,8 +2,8 @@ import React from 'react'
 import BigCalendar from '../../calendar/index'
 import moment from 'moment'
 import {filter} from 'ramda'
+import SearchList from '../../partials/SearchList'
 import searchResults from '../../partials/searchResults'
-import SearchList from '../../partials/searchList'
 import {addDataToCalendar} from '../../util/courseParser'
 import {appState} from '../../store/lukkariStore'  // eslint-disable-line
 

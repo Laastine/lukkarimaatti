@@ -61,7 +61,7 @@ courseRoutes.get('/courses', (req, res) => {
 courseRoutes.get('/byDepartment/:department', (req, res) => {
   const department = req.params.department === 'ENTE-YMTE' ? 'ente/ymte' : req.params.department.toLowerCase()
   Promise.resolve(DB.getCourseByDepartment(department))
-    .then((result) => res.json(uniqBy((c) => c.course_name, result)))
+    .then((result) => res.json(uniqBy((c) => c.course_name.toUpperCase(), result)))
     .catch((err) => {
       buildErrorMessage('/byDepartment', req.params.department, req.client.remoteAddress, err)
       res.status(500).json([])

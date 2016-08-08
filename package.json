@@ -28,9 +28,9 @@
     "pg": "4.5.5",
     "pg-db": "1.0.2",
     "ramda": "0.22.1",
-    "react": "15.3.0",
+    "react": "15.1.0",
     "react-big-calendar": "0.10.3",
-    "react-dom": "15.3.0",
+    "react-dom": "15.1.0",
     "react-router": "2.6.1",
     "uglify-js": "2.7.0",
     "winston": "2.2.0"

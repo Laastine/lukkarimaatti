@@ -4,8 +4,8 @@ import {filter} from 'ramda'
 import SearchList from '../../partials/SearchList'
 import searchResults from '../../partials/searchResults'
 import {addDataToCalendar} from '../../util/courseParser'
-import {appState} from '../../store/lukkariStore'  // eslint-disable-line
-import BigCalendar from 'react-big-calendar';
+import {appState} from '../../store/lukkariStore'
+import BigCalendar from 'react-big-calendar'  // eslint-disable-line
 require('moment/locale/fi')
 BigCalendar.momentLocalizer(moment)
 
@@ -29,22 +29,6 @@ const Event = ({event}) => (
   </div>
 )
 
-const Calendar = (state) =>
-  <BigCalendar
-    defaultView="week"
-    events={addDataToCalendar(state)}
-    views={['month', 'week', 'day', 'agenda']}
-    popup={false}
-    components={{event: Event}}
-    onSelectEvent={(c) => {
-      const courses = filter((cc) => cc.course_code + '#' + cc.type === c.id, state.selectedCourses)
-      appState.dispatch({type: 'REMOVE_COURSE_BY_ID', courses})
-    }}
-    min={new Date(moment(state.currentDate).hours(8).minutes(0).format())}
-    max={new Date(moment(state.currentDate).hours(20).minutes(0).format())}
-    defaultDate={new Date(moment(state.currentDate).format())}
-  />
-
 class Lukkari extends React.Component {
   render() {
     const {state} = this.props
@@ -61,9 +45,20 @@ class Lukkari extends React.Component {
           <div className='selected-courses-list-topic'>Selected courses:</div>
           {searchResults(state)}
         </div>
-        <div>
-          {Calendar(state)}
-        </div>
+        <BigCalendar
+          defaultView="week"
+          events={addDataToCalendar(state)}
+          views={['month', 'week', 'day', 'agenda']}
+          popup={false}
+          components={{event: Event}}
+          onSelectEvent={(c) => {
+            const courses = filter((cc) => cc.course_code + '#' + cc.type === c.id, state.selectedCourses)
+            appState.dispatch({type: 'REMOVE_COURSE_BY_ID', courses})
+          }}
+          min={new Date(moment(state.currentDate).hours(8).minutes(0).format())}
+          max={new Date(moment(state.currentDate).hours(20).minutes(0).format())}
+          defaultDate={new Date(moment(state.currentDate).format())}
+        />
       </div>
     </div>
   }

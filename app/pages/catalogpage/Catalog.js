@@ -49,7 +49,7 @@ const DepartmentCoursesElement = (state) => {
       {c.course_code} - {c.course_name}: {getSemester(c.week)} {selected ? 'SELECTED' : null}
     </li>
   }) : null
-  return <ul>{courses}</ul>
+  return <ul className='department-course-list'>{courses}</ul>
 }
 
 class Catalog extends React.Component {

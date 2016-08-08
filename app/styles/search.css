@@ -297,15 +297,25 @@ body {
 .department-link {
   text-decoration: none;
   font-weight: 500;
-  margin: 5px;
+  margin: 7px;
   color: #999;
 }
 
 .department-link-selected {
   text-decoration: none;
   font-weight: 700;
-  margin: 5px;
-  color: #588;
+  margin: 7px;
+  color: #FFF;
+}
+
+.department-course-list {
+  text-align: left;
+  margin: auto;
+  display: inline-block;
+}
+
+.department-course-code {
+  font-weight: 600;
 }
 
 .department-course {

@@ -29,7 +29,7 @@ export const Routes = (
            onEnter={(nextState) => {
              if (!isServer) {
                fetchComponentData(CatalogPage.needs, {
-                 department: 'tite',
+                 department: 'TITE',
                  courses: nextState.location.query.courses
                })
                window.scrollTo(0, 0)

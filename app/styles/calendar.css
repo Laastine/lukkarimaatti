@@ -552,6 +552,10 @@ button.rbc-input::-moz-focus-inner {
   border-bottom: 1px solid #DDD;
 }
 
+.rbc-time-header > .rbc-row:last-child {
+  display: none;
+}
+
 .rbc-time-header .rbc-gutter-cell {
   flex: none;
 }

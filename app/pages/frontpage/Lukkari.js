@@ -1,12 +1,11 @@
 import React from 'react'
-import BigCalendar from '../../calendar/index'
 import moment from 'moment'
 import {filter} from 'ramda'
 import SearchList from '../../partials/SearchList'
 import searchResults from '../../partials/searchResults'
 import {addDataToCalendar} from '../../util/courseParser'
 import {appState} from '../../store/lukkariStore'  // eslint-disable-line
-
+import BigCalendar from 'react-big-calendar';
 require('moment/locale/fi')
 BigCalendar.momentLocalizer(moment)
 

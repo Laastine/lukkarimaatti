@@ -1,26 +1,24 @@
-'use strict'
-
 const cheerio = require('cheerio')
 const Promise = require('bluebird')
+const axios = require('axios')
 const {contains, range, concat} = require('ramda')
 const config = require('./config')
 const DB = require('./db')
 const Logger = require('./logger')
 
-const requestAsync = Promise.promisify(require('request'), {multiArgs: true})
-
 const links = []
 
-const updateCourseData = function () {
-  requestAsync({url: config.uniUrl, methog: 'GET', json: true})
+const updateCourseData = () => {
+  axios.get(config.uniUrl)
     .then((res) => {
-      const $ = cheerio.load(res[1])
+      const $ = cheerio.load(res.data)
       $($('.portlet-body .journal-content-article').children()[2])
         .find('a')
-        .each(function () {
+        .each(function (index, elem) {
           const link = $(this).attr('href')
-          Logger.info('link', link)
-          if (link.substring(0, 34) === '/c/document_library/get_file?uuid=') {
+          const data = elem.children[0].data
+          if (link.substring(0, 34) === '/c/document_library/get_file?uuid=' && data !== 'täältä') {
+            Logger.info(`Department link ${index} https://uni.lut.fi${link} ${data}`)
             links.push(link)
           }
         })
@@ -62,12 +60,14 @@ const parseBasicData = (course) => {
 const parseWeeks = (weeks) => {
   let weekSequence = []
   if (contains('-', weeks)) {
-    weekSequence = weeks.match(/[0-9]{1,2}-[0-9]{1,2}/g).map((m) =>
+    weeks.match(/[0-9]{1,2}-[0-9]{1,2}/g).map((m) =>
       range(
         parseInt(m.substring(0, m.indexOf('-')), 10),
         parseInt(m.substring(m.indexOf('-') + 1), 10) + 1
       ))
-      .map((r) => concat(weekSequence, r))
+      .forEach((r) => {
+        weekSequence = concat(weekSequence, r)
+      })
   }
   if (contains(',', weeks)) {
     weeks.match(/[0-9]+/g).forEach((w) => {
@@ -115,11 +115,11 @@ const sanitizeInput = (input) => input ? input.trim()
   .replace(/(\r\n|\n|\r)/g, '') : ''
 
 function parseCourseData(url) {
-  requestAsync({url: 'https://uni.lut.fi' + url, methog: 'GET'})
+  axios.get('https://uni.lut.fi' + url)
     .then((html) => {
       const dataBatch = []
       let data = {}
-      const $ = cheerio.load(html[1])
+      const $ = cheerio.load(html.data)
       $('table.spreadsheet')
         .each(function () {
           $(this).find('tr:not(.columnTitles)').map(function () {
@@ -183,7 +183,11 @@ module.exports = {
   updateCourseData: (req, res) => {
     Logger.info('Update course data from IP', req.client.remoteAddress)
     if (req.query.secret === config.appSecret) {
-      Promise.all([DB.cleanCourseTable()]).then(() => updateCourseData())
+      Promise.resolve(DB.cleanCourseTable())
+        .then((dbRes) => {
+          Logger.info('DB cleaned', dbRes)
+          return updateCourseData()
+        })
       res.status(200).json({status: 'ok'})
     } else {
       Logger.warn('Unauthorized update attempt from IP', req.client.remoteAddress)
@@ -193,7 +197,7 @@ module.exports = {
 
   workerUpdateData: () => {
     Logger.info('Update course data by worker')
-    Promise.all([DB.cleanCourseTable()])
+    Promise.resolve(DB.cleanCourseTable())
       .then(() => updateCourseData())
       .catch((err) => Logger.error('Error while updating DB data', err.stack))
   }

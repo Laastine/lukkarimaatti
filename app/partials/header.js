@@ -1,6 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router'
-import {appState} from '../store/lukkariStore' // eslint-disable-line
+import {appState} from '../store/lukkariStore'
 
 class Header extends React.Component {
   render() {
@@ -12,8 +12,7 @@ class Header extends React.Component {
                 appState.dispatch({
                   type: 'SEND_EMAIL',
                   waitingAjax: true,
-                  email: e.target.previousElementSibling.value,
-                  url: ''
+                  email: e.target.previousElementSibling.value
                 })
               }}>
         Send

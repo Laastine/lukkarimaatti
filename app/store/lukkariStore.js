@@ -1,6 +1,6 @@
 import Bacon from 'baconjs'
 import {isServer} from '../utils'
-import {concat, filter, isEmpty, whereEq} from 'ramda'
+import {concat, filter, isEmpty, whereEq, uniqBy, pipe, forEach} from 'ramda'
 import {addUrlParameter, removeUrlParameter, sendEmail} from '../pages/browserUtils'
 
 const createAppState = (reducer, initialState) => {
@@ -37,7 +37,14 @@ function rootReducer(previousState, action) {
       state.department = department ? department : 'TITE'
       break
     case 'LOAD_COURSES_SUCCESS':
-      state.selectedCourses = action.data ? action.data : []
+      if (action.data.length > 0) {
+        state.selectedCourses = action.data
+      } else if (state.selectedCourses.length > 0) {
+        pipe(
+          uniqBy((c) => c.course_code),
+          forEach((c) => addUrlParameter(c.course_code, c.group_name))
+        )(state.selectedCourses)
+      }
       break
     case 'REMOVE_COURSE_BY_ID':
       const coursesLeft = filter((c) => c.course_id !== action.courses[0].course_id, state.selectedCourses)

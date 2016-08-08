@@ -1,5 +1,3 @@
-'use strict'
-
 const pgDb = require('pg-db')
 const Promise = require('bluebird')
 const {reduce, prop, tail} = require('ramda')
@@ -75,7 +73,5 @@ module.exports = {
     .catch((error) => Logger.error('buildInsertQueryString error', error.stack)),
 
   cleanCourseTable: () => client.queryAsync('TRUNCATE TABLE course')
-    .then((res) => res)
-    .catch((error) => Logger.info('DB error', error.stack))
 }
 

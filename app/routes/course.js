@@ -37,7 +37,7 @@ courseRoutes.get('/course', (req, res) =>
     .then((result) => res.json(result))
     .catch((err) => {
       buildErrorMessage('/course', req.query.name, req.client.remoteAddress, err)
-      res.status(500).json([])
+      res.json([])
     }))
 
 courseRoutes.get('/code/:code', (req, res) => {

@@ -30,7 +30,7 @@ Today it's implemented with universal JavaScript (Node/React/Bacon) using "megab
 * [Browserify](http://browserify.org/)<br>
 
 ## Requirements & Build
-Node.js 4 LTS or newer<br>
+Node.js 6 or newer<br>
 
 Build application:
 ```

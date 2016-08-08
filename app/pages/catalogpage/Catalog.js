@@ -1,6 +1,8 @@
 import React from 'react'
 import {Link} from 'react-router'
-import {any} from 'ramda'
+import {appState} from '../../store/lukkariStore'
+import {loadCourseByCode} from '../frontApi/lukkariApi'
+import {any, partial} from 'ramda'
 
 const DepartmentSelectorElement = (selectedDepartment) => {
   const departmentNames = ['ENTE-YMTE',
@@ -31,23 +33,30 @@ const isSelected = (state, courseCode) => {
   return any((c) => c.course_code === courseCode, state.selectedCourses)
 }
 
+const selectCourse = (courseCode) => {
+  loadCourseByCode(courseCode)
+    .then((course) => {
+      appState.dispatch({type: 'LOAD_COURSE_BY_CODE', course})
+    })
+}
+
 const DepartmentCoursesElement = (state) => {
-  const courses = state.departmentCourses.map((c) => {
+  const courses = state.departmentCourses ? state.departmentCourses.map((c) => {
     const selected = isSelected(state, c.course_code)
-    return <div key={c.course_code + c.course_name}
-                className={`department-course${selected ? '-selected' : ''}`}>{c.course_code}
-      - {c.course_name}: {getSemester(c.week)} {selected ? 'SELECTED': null}
-    </div>
-  })
-  return <div>{courses}</div>
+    return <li key={c.course_code + c.course_name}
+               className={`department-course${selected ? '-selected' : ''}`}
+               onClick={partial(selectCourse, [c.course_code])}>
+      {c.course_code} - {c.course_name}: {getSemester(c.week)} {selected ? 'SELECTED' : null}
+    </li>
+  }) : null
+  return <ul>{courses}</ul>
 }
 
 class Catalog extends React.Component {
   render() {
-    const {state} = this.props
     return <div>
-      {DepartmentSelectorElement(state.department)}
-      {DepartmentCoursesElement(state)}
+      {DepartmentSelectorElement(this.props.state.department)}
+      {DepartmentCoursesElement(this.props.state)}
     </div>
   }
 }

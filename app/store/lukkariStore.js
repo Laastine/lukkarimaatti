@@ -27,6 +27,13 @@ const promiseMiddleware = (event) => {
   }
 }
 
+const updateUrlParams = (selectedCourses) => {
+  pipe(
+    uniqBy((c) => c.course_code),
+    forEach((c) => addUrlParameter(c.course_code, c.group_name))
+  )(selectedCourses)
+}
+
 function rootReducer(previousState, action) {
   let state = previousState   // eslint-disable-line
   promiseMiddleware(action)
@@ -40,11 +47,12 @@ function rootReducer(previousState, action) {
       if (action.data.length > 0) {
         state.selectedCourses = action.data
       } else if (state.selectedCourses.length > 0) {
-        pipe(
-          uniqBy((c) => c.course_code),
-          forEach((c) => addUrlParameter(c.course_code, c.group_name))
-        )(state.selectedCourses)
+        updateUrlParams(state.selectedCourses)
       }
+      break
+    case 'LOAD_COURSE_BY_CODE':
+      state.selectedCourses = concat(state.selectedCourses, action.course)
+      updateUrlParams(action.course)
       break
     case 'REMOVE_COURSE_BY_ID':
       const coursesLeft = filter((c) => c.course_id !== action.courses[0].course_id, state.selectedCourses)

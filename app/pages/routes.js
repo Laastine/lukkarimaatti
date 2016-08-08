@@ -26,9 +26,12 @@ export const Routes = (
 
     <Route path='/catalog'
            component={CatalogPage}
-           onEnter={() => {
+           onEnter={(nextState) => {
              if (!isServer) {
-               fetchComponentData(CatalogPage.needs, {department: 'tite'})
+               fetchComponentData(CatalogPage.needs, {
+                 department: 'tite',
+                 courses: nextState.location.query.courses
+               })
                window.scrollTo(0, 0)
              }
            }}/>
@@ -37,7 +40,10 @@ export const Routes = (
            component={CatalogPage}
            onEnter={(nextState) => {
              if (!isServer) {
-               fetchComponentData(CatalogPage.needs, {department: nextState.params.department})
+               fetchComponentData(CatalogPage.needs, {
+                 department: nextState.params.department,
+                 courses: nextState.location.query.courses
+               })
                window.scrollTo(0, 0)
              }
            }}/>

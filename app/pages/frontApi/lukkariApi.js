@@ -13,10 +13,10 @@ const checkStatus = (response) => {
   }
 }
 
-export const searchCourses = (input) =>
+export const searchCourses = (courseName) =>
   lukkariApi.get(`${serverAddr}/course/course`, {
     params: {
-      name: input
+      name: courseName
     }
   })
     .then(checkStatus)
@@ -30,6 +30,10 @@ export const loadCourses = (param) => ({
   })
     .then(checkStatus)
 })
+
+export const loadCourseByCode = (courseCode) =>
+  lukkariApi.get(`${serverAddr}/course/code/${courseCode}`)
+    .then(checkStatus)
 
 export const loadCoursesByDepartment = (param) => {
   return {

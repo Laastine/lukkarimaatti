@@ -310,9 +310,11 @@ body {
 
 .department-course {
   margin: 5px;
+  display: block;
 }
 
 .department-course-selected {
   margin: 5px;
+  display: block;
   font-weight: 700;
 }

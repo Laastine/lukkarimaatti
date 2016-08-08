@@ -42,7 +42,7 @@ courseRoutes.get('/course', (req, res) =>
 
 courseRoutes.get('/code/:code', (req, res) => {
   Promise.resolve(DB.getCourseByCode(req.params.code))
-    .then((result) => res.json(result.rows))
+    .then((result) => res.json(result))
     .catch((err) => {
       buildErrorMessage('/code', req.query.code, req.client.remoteAddress, err)
       res.status(500).json([])

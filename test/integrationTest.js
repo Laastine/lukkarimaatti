@@ -6,7 +6,7 @@ let uiChildProcess
 const Promise = require('bluebird')
 const spawn = require('child_process').spawn
 const exec = Promise.promisify(require('child_process').exec)
-const fetch = require('node-fetch')
+const axios = require('axios')
 
 function waitUntil(predicate, loop_timeout) {
   return new Promise((resolve, reject) => {
@@ -23,13 +23,13 @@ function waitUntil(predicate, loop_timeout) {
 
 function serverPoll(url, timeout) {
   return new Promise((resolve, reject) => {
-    fetch(url)
+    axios.get(url)
       .then((response) => response ? resolve() : reject())
       .catch((e) => reject())
   })
 }
 
-function poll_localhost(timeout) {
+function pollLocalhost(timeout) {
   return serverPoll('http://localhost:8080/', timeout)
 }
 
@@ -41,6 +41,18 @@ process.on('unhandledRejection', (reason, p) => {
 exec('npm i', {cwd: '.'})
   .then(() => {
     console.log('Building UI')
+    return new Promise((resolve, reject) => {
+      const buildProcess = spawn('npm', ['run', 'build'], {cwd: '.'});
+      buildProcess.stderr.on('data', (data) => process.stderr.write(data))
+      buildProcess.on('close', (code) => {
+        if (code !== 0) {
+          var err = new Error('Build error')
+          err.code = code
+          return reject(err)
+        }
+        return resolve();
+      });
+    });
     return exec('npm run build', {cwd: '.'})
   })
   .then(() => {
@@ -49,7 +61,7 @@ exec('npm i', {cwd: '.'})
     uiChildProcess.stdout.on('data', (data) => process.stdout.write(data))
     uiChildProcess.stderr.on('data', (data) => process.stderr.write(data))
   })
-  .then(() => waitUntil(poll_localhost, 1000))
+  .then(() => waitUntil(pollLocalhost, 1000))
   .then(() => {
     console.log('Running tests...')
     return new Promise((resolve, reject) => {

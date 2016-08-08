@@ -2,26 +2,15 @@ var expect = chai.expect
 chai.should()
 chai.config.truncateThreshold = 0
 
-var eventTimeout = 5000
+var eventTimeout = 15000
 
 function loadPage(path, predicate) {
   if (!predicate) {
     throw new Error('No predicate defined');
   }
-  var newTestFrame = $('<iframe/>').attr({src: path, width: 1024, height: 768, id: 'testframe'}).load(function () {
-    var jquery = document.createElement("script")
-    jquery.type = "text/javascript"
-    jquery.src = "//code.jquery.com/jquery-1.11.1.min.js"
-    $(this).contents().find("head")[0].appendChild(jquery)
-  })
-  $('#testframe').replaceWith(newTestFrame)
-  return waitUntil(predicate, eventTimeout)()
-    .then(function () {
-      window.uiError = null
-      testFrame().onerror = function (err) {
-        window.uiError = err;
-      } // Hack: force mocha to fail on unhandled exceptions
-    })
+  var newTestFrame = $('<iframe/>').attr({src: path, width: 1200, height: 800, id: 'testframe'});
+  $('#testframe').replaceWith(newTestFrame);
+  return waitUntil(predicate, eventTimeout)();
 }
 
 function testFrame() {
@@ -29,16 +18,7 @@ function testFrame() {
 }
 
 function S(selector) {
-  try {
-    if (!testFrame() || !testFrame().jQuery) {
-      return $([])
-    }
-    return testFrame().jQuery(selector)
-  } catch (e) {
-    console.log("Premature access to testFrame.jQuery, printing stack trace.")
-    console.log(new Error().stack);
-    throw e;
-  }
+  return Array.prototype.slice.call(testFrame().document.querySelectorAll(selector))
 }
 
 function waitUntil(predicate, timeout) {
@@ -64,6 +44,23 @@ function triggerEvent(element, eventName) {
   element.dispatchEvent(event)
 }
 
+function setInputValue(el, index, elementValue) {
+  var idx = index ? index : 0
+  return function () {
+    return waitUntil(function () {
+      return S(el).length > 0
+    }, eventTimeout)()
+      .then(function () {
+        $(S(el)[idx]).val(elementValue)
+        triggerEvent(S(el)[idx], 'input')
+      })
+      .catch(function(err) {
+        console.log(err)
+        console.log(el + ' ' + index + ' ' + elementValue)
+      })
+  }
+}
+
 function click(el, index) {
   return function () {
     return waitUntil(function () {
@@ -72,43 +69,21 @@ function click(el, index) {
       .then(function () {
         triggerEvent(S(el)[index ? index : 0], 'click')
       })
+      .delay(500)
+      .catch(function(err) {
+        console.log(err)
+        console.log(el + ' ' + index)
+      })
   }
 }
 
-function monkeyPatchBrowserAPI(el) {
-  return Clickable(function () {
-    return S(el)
-  })
-}
-
-function Clickable(el) {
-  return {
-    element: function () {
-      return el()
-    },
-    isEnabled: function () {
-      return el().is(":enabled")
-    },
-    isVisible: function () {
-      return el().is(":visible")
-    },
-    text: function () {
-      return el().text()
-    },
-    click: function () {
-      triggerEvent(el().first(), "click")
-    }
+function change(el, index) {
+  return function () {
+    return waitUntil(function () {
+      return S(el).length > 0
+    }, eventTimeout)()
+      .then(function () {
+        triggerEvent(S(el)[index ? index : 0], 'change')
+      })
   }
 }
-
-(function improveMocha() {
-  var origBefore = before
-  before = function () {
-    Array.prototype.slice.call(arguments).forEach(function (arg) {
-      if (typeof arg !== "function") {
-        throw ("not a function: " + arg)
-      }
-      origBefore(arg)
-    })
-  }
-})()

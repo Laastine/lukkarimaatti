@@ -9,7 +9,7 @@
 <div id="mocha"></div>
 <script src="/node_modules/mocha/mocha.js"></script>
 <script src="/node_modules/chai/chai.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="/node_modules/jquery/dist/jquery.min.js"></script>
 <script src="/node_modules/bluebird/js/browser/bluebird.min.js"></script>
 <script>
     var testTimeoutPageLoad = 100000
@@ -18,8 +18,8 @@
     mocha.reporter('html')
     mocha.timeout(testTimeoutDefault)
 </script>
-<script src="util/testHelpers.js"></script>
 <script src="page/lukkarimaattiPage.js"></script>
+<script src="util/testHelpers.js"></script>
 <script src="specs/lukkarimaattiSpec.js"></script>
 <iframe id="testframe"></iframe>
 <script>

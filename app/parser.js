@@ -17,7 +17,7 @@ const updateCourseData = () => {
         .each(function (index, elem) {
           const link = $(this).attr('href')
           const data = elem.children[0].data
-          if (link.substring(0, 34) === '/c/document_library/get_file?uuid=' && data !== 'täältä') {
+          if (link.indexOf('/document_library/get_file?uuid=') > 0) {
             Logger.info(`Department link ${index} https://uni.lut.fi${link} ${data}`)
             links.push(link)
           }
@@ -104,7 +104,16 @@ const getDepartment = (input) => {
         return 'tite'
       case 'CS':
         return 'tuta'
+      case 'LM':
+        if (input.indexOf('tuta') > 0) {
+          return 'tuta'
+        } else if (input.indexOf('tite') > 0) {
+          return 'tite'
+        } else if (input.indexOf('kati') > 0) {
+          return 'kati'
+        }
       default:
+        Logger.warn('Unknow course code', input ? input : 'EMPTY')
         return 'UNKNOWN'
     }
   }

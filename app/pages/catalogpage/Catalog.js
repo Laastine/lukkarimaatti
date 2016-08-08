@@ -5,6 +5,7 @@ import {any} from 'ramda'
 const DepartmentSelectorElement = (selectedDepartment) => {
   const departmentNames = ['ENTE-YMTE',
     'KETE',
+    'KATI',
     'KIKE',
     'KOTE',
     'MAFY',

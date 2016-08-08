@@ -1,6 +1,7 @@
 import React from 'react'
 import Lukkari from './Lukkari'
 import Header from '../../partials/header'
+import Footer from '../../partials/footer'
 import {loadCourses} from '../frontApi/lukkariApi' // eslint-disable-line
 
 const LukkariPage = React.createClass({
@@ -16,6 +17,7 @@ const LukkariPage = React.createClass({
     return <div>
       <Header state={this.context.appState}/>
       <Lukkari state={this.context.appState}/>
+      <Footer/>
     </div>
   }
 })

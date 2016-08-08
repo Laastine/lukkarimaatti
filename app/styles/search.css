@@ -245,7 +245,9 @@ body {
 .footer {
   display: block;
   float: left;
-  padding: 5px;
+  padding-left: 25px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 #disclaimer {

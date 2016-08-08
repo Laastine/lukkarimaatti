@@ -84,9 +84,6 @@ function rootReducer(previousState, action) {
       state.isModalOpen = false
       break
   }
-  if (!isServer) {
-    console.log(action.type, state)     // eslint-disable-line
-  }
   return state
 }
 

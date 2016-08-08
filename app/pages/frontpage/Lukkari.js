@@ -31,6 +31,7 @@ const Event = ({event}) => (
 
 const Calendar = (state) =>
   <BigCalendar
+    defaultView="week"
     events={addDataToCalendar(state)}
     views={['month', 'week', 'day', 'agenda']}
     popup={false}

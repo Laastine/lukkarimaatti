@@ -318,3 +318,7 @@ body {
   display: block;
   font-weight: 700;
 }
+
+#release-notes {
+  color: #333;
+}

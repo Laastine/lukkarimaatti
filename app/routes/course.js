@@ -13,14 +13,12 @@ const buildErrorMessage = (functionName, query, ip, err) => {
 }
 
 const extractCourseParams = (params) => {
-  if (!params || params.match('/checksum=.*/')) {
-    return []
-  } else {
+  if (params) {
     return map((courseCode) => {
-      if (courseCode.indexOf('&') > -1) {
+      if (courseCode.indexOf('-') > -1) {
         return {
-          courseCode: courseCode.substring(0, courseCode.indexOf('&')),
-          groupName: courseCode.substring(courseCode.indexOf('&') + 1, courseCode.length)
+          courseCode: courseCode.substring(0, courseCode.indexOf('-')),
+          groupName: courseCode.substring(courseCode.indexOf('-') + 1, courseCode.length)
         }
       } else {
         return {
@@ -28,7 +26,9 @@ const extractCourseParams = (params) => {
           groupName: ''
         }
       }
-    }, uniq(params.substring(0, params.length).split(/[+]/)))
+    }, uniq(params.substring(0, params.length).split(' ')))
+  } else {
+    return []
   }
 }
 

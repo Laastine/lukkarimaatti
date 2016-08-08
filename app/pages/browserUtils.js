@@ -5,7 +5,7 @@ const urlParamLength = 9
 
 export const addUrlParameter = (courseCode, groupName) => {
   const params = window.location.search
-  const urlParam = courseCode.substring(0, 2) === 'FV' ? courseCode + '&' + groupName : courseCode
+  const urlParam = courseCode.substring(0, 2) === 'FV' ? courseCode + '-' + groupName : courseCode
   if (params.length > urlParamLength) {
     if (params.indexOf(courseCode) < 0) {
       history.pushState({}, '', '?courses=' + params.substring(urlParamLength, params.length) + '+' + urlParam)
@@ -20,8 +20,8 @@ export const addUrlParameter = (courseCode, groupName) => {
 export const removeUrlParameter = (courseCode) => {
   const params = window.location.search
   const updatedParams = params.substring(urlParamLength, params.length).split('+').filter((p) => {
-    if (p.indexOf('&') > -1) {
-      const groupLetterStripped = p.substring(0, p.indexOf('&'))
+    if (p.indexOf('-') > -1) {
+      const groupLetterStripped = p.substring(0, p.indexOf('-'))
       return groupLetterStripped !== courseCode
     } else {
       return p !== courseCode

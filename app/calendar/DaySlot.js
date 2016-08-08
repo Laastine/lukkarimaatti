@@ -1,14 +1,14 @@
-import React from "react"
-import {findDOMNode} from "react-dom"
-import Selection, {getBoundsForNode} from "./Selection"
-import cn from "classnames"
-import dates from "./utils/dates"
-import {isSelected} from "./utils/selection"
-import localizer from "./localizer"
-import {formats} from "./formats"
-import {notify} from "./utils/helpers"
-import {accessor} from "./utils/propTypes"
-import {accessor as get} from "./utils/accessors"
+import React from 'react'
+import {findDOMNode} from 'react-dom'
+import Selection, {getBoundsForNode} from './Selection'
+import cn from 'classnames'
+import dates from './utils/dates'
+import {isSelected} from './utils/selection'
+import localizer from './localizer'
+import {formats} from './formats'
+import {notify} from './utils/helpers'
+import {accessor} from './utils/propTypes'
+import {accessor as get} from './utils/accessors'
 
 function snapToSlot(date, step) {
   const roundTo = 1000 * 60 * step
@@ -107,11 +107,9 @@ const DaySlot = React.createClass({
         { this.renderEvents(numSlots, totalMin) }
         {
           selecting &&
-          <div className='rbc-slot-selection' style={style}>
-              <span>
-              { localizer.format(selectDates, formats.selectRangeFormat, culture) }
-              </span>
-          </div>
+            <div className='rbc-slot-selection' style={style}>
+              <span>{ localizer.format(selectDates, formats.selectRangeFormat, culture) }</span>
+            </div>
         }
       </div>
     )

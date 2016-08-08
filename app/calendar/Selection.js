@@ -1,5 +1,5 @@
-import contains from "dom-helpers/query/contains"
-import events from "dom-helpers/events"
+import contains from 'dom-helpers/query/contains'
+import events from 'dom-helpers/events'
 
 function addEventListener(type, handler) {
   events.on(document, type, handler)
@@ -94,13 +94,17 @@ class Selection {
 
       offsetData = getBoundsForNode(node)
 
-      collides = objectsCollide({
+      collides = objectsCollide(
+        {
           top: offsetData.top - top,
           left: offsetData.left - left,
           bottom: offsetData.bottom + bottom,
           right: offsetData.right + right
         },
-        {top: e.pageY, left: e.pageX})
+        {
+          top: e.pageY,
+          left: e.pageX
+        })
 
       if (!collides) {
         return
@@ -198,7 +202,7 @@ function normalizeDistance(distance = 0) {
 }
 
 /**
- * Given two objects containing "top", "left", "offsetWidth" and "offsetHeight"
+ * Given two objects containing 'top', 'left', 'offsetWidth' and 'offsetHeight'
  * properties, determine if they collide.
  * @param  {Object|HTMLElement} a
  * @param  {Object|HTMLElement} b

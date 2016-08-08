@@ -1,11 +1,11 @@
-import React from "react"
-import EventCell from "./EventCell"
-import {isSelected} from "./utils/selection"
-import localizer from "./localizer"
-import {formats} from "./formats"
-import getOffset from "dom-helpers/query/offset"
-import getScrollTop from "dom-helpers/query/scrollTop"
-import getScrollLeft from "dom-helpers/query/scrollLeft"
+import React from 'react'
+import EventCell from './EventCell'
+import {isSelected} from './utils/selection'
+import localizer from './localizer'
+import {formats} from './formats'
+import getOffset from 'dom-helpers/query/offset'
+import getScrollTop from 'dom-helpers/query/scrollTop'
+import getScrollLeft from 'dom-helpers/query/scrollLeft'
 
 class Popup extends React.Component {
 

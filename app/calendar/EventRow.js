@@ -1,5 +1,5 @@
-import React from "react"
-import EventRowMixin from "./EventRowMixin"
+import React from 'react'
+import EventRowMixin from './EventRowMixin'
 
 
 const EventRow = React.createClass({

@@ -1,4 +1,4 @@
-import dates from "./utils/dates"
+import dates from './utils/dates'
 
 function inSame12Hr(start, end) {
   const s = 12 - dates.hours(start)

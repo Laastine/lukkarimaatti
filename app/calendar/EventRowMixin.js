@@ -1,10 +1,10 @@
-import React, {PropTypes} from "react"
-import {findDOMNode} from "react-dom"
-import EventCell from "./EventCell"
-import getHeight from "dom-helpers/query/height"
-import {accessor, elementType} from "./utils/propTypes"
-import {segStyle} from "./utils/eventLevels"
-import {isSelected} from "./utils/selection"
+import React, {PropTypes} from 'react'
+import {findDOMNode} from 'react-dom'
+import EventCell from './EventCell'
+import getHeight from 'dom-helpers/query/height'
+import {accessor, elementType} from './utils/propTypes'
+import {segStyle} from './utils/eventLevels'
+import {isSelected} from './utils/selection'
 
 
 export default {

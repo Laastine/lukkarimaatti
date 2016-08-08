@@ -1,23 +1,23 @@
-import React from "react"
-import {findDOMNode} from "react-dom"
-import cn from "classnames"
-import dates from "./utils/dates"
-import localizer from "./localizer"
-import {chunk} from "lodash"
-import {omit} from "ramda"
-import {formats} from "./formats"
-import {navigate} from "./utils/constants"
-import {notify} from "./utils/helpers"
-import getHeight from "dom-helpers/query/height"
-import getPosition from "dom-helpers/query/position"
-import raf from "dom-helpers/util/requestAnimationFrame"
-import EventRow from "./EventRow"
-import EventEndingRow from "./EventEndingRow"
-import Popup from "./Popup"
-import Overlay from "react-overlays/lib/Overlay"
-import BackgroundCells from "./BackgroundCells"
-import {dateFormat} from "./utils/propTypes"
-import {segStyle, inRange, eventSegments, endOfRange, eventLevels, sortEvents} from "./utils/eventLevels"
+import React from 'react'
+import {findDOMNode} from 'react-dom'
+import cn from 'classnames'
+import dates from './utils/dates'
+import localizer from './localizer'
+import {chunk} from 'lodash'
+import {omit} from 'ramda'
+import {formats} from './formats'
+import {navigate} from './utils/constants'
+import {notify} from './utils/helpers'
+import getHeight from 'dom-helpers/query/height'
+import getPosition from 'dom-helpers/query/position'
+import raf from 'dom-helpers/util/requestAnimationFrame'
+import EventRow from './EventRow'
+import EventEndingRow from './EventEndingRow'
+import Popup from './Popup'
+import Overlay from 'react-overlays/lib/Overlay'
+import BackgroundCells from './BackgroundCells'
+import {dateFormat} from './utils/propTypes'
+import {segStyle, inRange, eventSegments, endOfRange, eventLevels, sortEvents} from './utils/eventLevels'
 
 const eventsForWeek = (evts, start, end, props) =>
   evts.filter(e => inRange(e, start, end, props))

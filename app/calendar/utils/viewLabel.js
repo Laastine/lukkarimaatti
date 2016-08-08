@@ -1,7 +1,7 @@
-import {views} from "./constants"
-import defaultFormats from "../formats"
-import localizer from "../localizer"
-import VIEWS from "../Views"
+import {views} from './constants'
+import defaultFormats from '../formats'
+import localizer from '../localizer'
+import VIEWS from '../Views'
 
 const Formats = {
   [views.MONTH]: 'monthHeaderFormat',

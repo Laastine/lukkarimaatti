@@ -1,7 +1,7 @@
-import React from "react"
-import dates from "./utils/dates"
-import TimeGrid from "./TimeGrid"
-import {navigate} from "./utils/constants"
+import React from 'react'
+import dates from './utils/dates'
+import TimeGrid from './TimeGrid'
+import {navigate} from './utils/constants'
 
 const Day = React.createClass({
 

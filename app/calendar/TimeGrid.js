@@ -1,22 +1,22 @@
-import React from "react"
-import cn from "classnames"
-import {findDOMNode} from "react-dom"
-import dates from "./utils/dates"
-import localizer from "./localizer"
-import {formats} from "./formats"
-import DaySlot from "./DaySlot"
-import EventRow from "./EventRow"
-import TimeGutter from "./TimeGutter"
-import BackgroundCells from "./BackgroundCells"
-import classes from "dom-helpers/class"
-import getWidth from "dom-helpers/query/width"
-import scrollbarSize from "dom-helpers/util/scrollbarSize"
-import message from "./utils/messages"
-import {dateFormat} from "./utils/propTypes"
-import {notify} from "./utils/helpers"
-import {navigate} from "./utils/constants"
-import {accessor as get} from "./utils/accessors"
-import {inRange, eventSegments, endOfRange, eventLevels, sortEvents, segStyle} from "./utils/eventLevels"
+import React from 'react'
+import cn from 'classnames'
+import {findDOMNode} from 'react-dom'
+import dates from './utils/dates'
+import localizer from './localizer'
+import {formats} from './formats'
+import DaySlot from './DaySlot'
+import EventRow from './EventRow'
+import TimeGutter from './TimeGutter'
+import BackgroundCells from './BackgroundCells'
+import classes from 'dom-helpers/class'
+import getWidth from 'dom-helpers/query/width'
+import scrollbarSize from 'dom-helpers/util/scrollbarSize'
+import message from './utils/messages'
+import {dateFormat} from './utils/propTypes'
+import {notify} from './utils/helpers'
+import {navigate} from './utils/constants'
+import {accessor as get} from './utils/accessors'
+import {inRange, eventSegments, endOfRange, eventLevels, sortEvents, segStyle} from './utils/eventLevels'
 
 const MIN_ROWS = 2
 

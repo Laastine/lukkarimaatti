@@ -1,8 +1,8 @@
-import React from "react"
-import cn from "classnames"
-import dates from "./utils/dates"
-import localizer from "./localizer"
-import {formats} from "./formats"
+import React from 'react'
+import cn from 'classnames'
+import dates from './utils/dates'
+import localizer from './localizer'
+import {formats} from './formats'
 
 const TimeGutter = React.createClass({
 
@@ -26,8 +26,8 @@ const TimeGutter = React.createClass({
       children.push(
         <div key={i}
              className={cn('rbc-time-slot', {
-            'rbc-now': dates.inRange(today, date, next, 'minutes')
-          })}
+               'rbc-now': dates.inRange(today, date, next, 'minutes')
+             })}
         >
           { isEven && (
             <span>{localizer.format(date, formats.timeGutterFormat, culture)}</span>

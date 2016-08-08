@@ -1,16 +1,16 @@
-import React, {PropTypes} from "react"
-import uncontrollable from "uncontrollable"
-import cn from "classnames"
-import {accessor, elementType, dateFormat, views as componentViews} from "./utils/propTypes"
-import localizer from "./localizer"
-import {notify} from "./utils/helpers"
-import {navigate, views} from "./utils/constants"
-import dates from "./utils/dates"
-import viewLabel from "./utils/viewLabel"
-import moveDate from "./utils/move"
-import VIEWS from "./Views"
-import Toolbar from "./Toolbar"
-import {omit, defaultTo} from "ramda"
+import React, {PropTypes} from 'react'
+import uncontrollable from 'uncontrollable'
+import cn from 'classnames'
+import {accessor, elementType, dateFormat, views as componentViews} from './utils/propTypes'
+import localizer from './localizer'
+import {notify} from './utils/helpers'
+import {navigate, views} from './utils/constants'
+import dates from './utils/dates'
+import viewLabel from './utils/viewLabel'
+import moveDate from './utils/move'
+import VIEWS from './Views'
+import Toolbar from './Toolbar'
+import {omit, defaultTo} from 'ramda'
 
 function viewNames(_views) {
   return !Array.isArray(_views) ? Object.keys(_views) : _views
@@ -126,12 +126,12 @@ const Calendar = React.createClass({
     toolbar: PropTypes.bool,
 
     /**
-     * Show truncated events in an overlay when you click the "+_x_ more" link.
+     * Show truncated events in an overlay when you click the '+_x_ more' link.
      */
     popup: PropTypes.bool,
 
     /**
-     * Distance in pixels, from the edges of the viewport, the "show more" overlay should be positioned.
+     * Distance in pixels, from the edges of the viewport, the 'show more' overlay should be positioned.
      *
      * ```js
      * <BigCalendar popupOffset={30}/>
@@ -176,7 +176,7 @@ const Calendar = React.createClass({
     titleAccessor: accessor,
 
     /**
-     * Determines whether the event should be considered an "all day" event and ignore time.
+     * Determines whether the event should be considered an 'all day' event and ignore time.
      * Must resolve to a `boolean` value.
      *
      * @type {(func|string)}
@@ -341,15 +341,15 @@ const Calendar = React.createClass({
         className={cn('rbc-calendar', className, {'rbc-rtl': props.rtl})}
         style={style}>
         { toolbar &&
-        <Toolbar
-          date={current}
-          view={view}
-          views={names}
-          label={viewLabel(current, view, formats, culture)}
-          onViewChange={this._view}
-          onNavigate={this._navigate}
-          messages={this.props.messages}
-        />
+          <Toolbar
+            date={current}
+            view={view}
+            views={names}
+            label={viewLabel(current, view, formats, culture)}
+            onViewChange={this._view}
+            onNavigate={this._navigate}
+            messages={this.props.messages}
+          />
         }
         <View
           ref='view'

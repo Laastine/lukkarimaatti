@@ -1,30 +1,28 @@
-"use strict"
-
 const cheerio = require('cheerio')
 const Promise = require('bluebird')
+const axios = require('axios')
 const {contains, range, concat} = require('ramda')
 const config = require('./config')
 const DB = require('./db')
 const Logger = require('./logger')
 
-const requestAsync = Promise.promisify(require('request'), {multiArgs: true})
+const links = []
 
-let links = []
-
-const updateCourseData = function () {
-  requestAsync({url: config.uniUrl, methog: 'GET', json: true})
-    .then(function (res) {
-      const $ = cheerio.load(res[1])
-      $($(".portlet-body .journal-content-article").children()[2])
+const updateCourseData = () => {
+  axios.get(config.uniUrl)
+    .then((res) => {
+      const $ = cheerio.load(res.data)
+      $($('.portlet-body .journal-content-article').children()[2])
         .find('a')
-        .each(function () {
+        .each(function (index, elem) {
           const link = $(this).attr('href')
-          Logger.info('link', link)
-          if (link.substring(0, 34) === '/c/document_library/get_file?uuid=') {
+          const data = elem.children[0].data
+          if (link.indexOf('/document_library/get_file?uuid=') > 0) {
+            Logger.info(`Department link ${index} https://uni.lut.fi${link} ${data}`)
             links.push(link)
           }
         })
-      links.forEach(function (link) {
+      links.forEach((link) => {
         parseCourseData(link)
       })
     })
@@ -33,7 +31,7 @@ const updateCourseData = function () {
 }
 
 const parseBasicData = (course) => {
-  let data = {
+  const data = {
     code: '',
     name: '',
     group: '',
@@ -60,18 +58,20 @@ const parseBasicData = (course) => {
 }
 
 const parseWeeks = (weeks) => {
-  var weekSequence = []
+  let weekSequence = []
   if (contains('-', weeks)) {
     weeks.match(/[0-9]{1,2}-[0-9]{1,2}/g).map((m) =>
-        range(
-          parseInt(m.substring(0, m.indexOf('-')), 10),
-          parseInt(m.substring(m.indexOf('-') + 1), 10) + 1
-        ))
-      .map((r) => weekSequence = concat(weekSequence, r))
+      range(
+        parseInt(m.substring(0, m.indexOf('-')), 10),
+        parseInt(m.substring(m.indexOf('-') + 1), 10) + 1
+      ))
+      .forEach((r) => {
+        weekSequence = concat(weekSequence, r)
+      })
   }
   if (contains(',', weeks)) {
     weeks.match(/[0-9]+/g).forEach((w) => {
-      let num = parseInt(w, 10)
+      const num = parseInt(w, 10)
       if (!contains(num, weekSequence)) {
         weekSequence = concat(weekSequence, [num])
       }
@@ -90,52 +90,50 @@ const getDepartment = (input) => {
     switch (input.substring(0, 2)) {
       case 'BH':
         return 'ente/ymte'
-        break
       case 'BJ':
         return 'kete'
-        break
       case 'FV':
         return 'kike'
-        break
-      case 'BH':
-        return 'ente/ymte'
-        break
       case 'BK':
         return 'kote'
-        break
       case 'BM':
         return 'mafy'
-        break
       case 'BL':
         return 'sate'
-        break
       case 'CT':
         return 'tite'
-        break
       case 'CS':
         return 'tuta'
-        break
+      case 'LM':
+        if (input.indexOf('tuta') > 0) {
+          return 'tuta'
+        } else if (input.indexOf('tite') > 0) {
+          return 'tite'
+        } else if (input.indexOf('kati') > 0) {
+          return 'kati'
+        }
       default:
+        Logger.warn('Unknow course code', input ? input : 'EMPTY')
         return 'UNKNOWN'
     }
   }
 }
 
 const sanitizeInput = (input) => input ? input.trim()
-  .replace(/'/g, "")
+  .replace(/'/g, '')
   .replace(/(\r\n|\n|\r)/g, '') : ''
 
 function parseCourseData(url) {
-  requestAsync({url: 'https://uni.lut.fi' + url, methog: 'GET'})
-    .then(function (html) {
+  axios.get('https://uni.lut.fi' + url)
+    .then((html) => {
       const dataBatch = []
       let data = {}
-      const $ = cheerio.load(html[1])
+      const $ = cheerio.load(html.data)
       $('table.spreadsheet')
         .each(function () {
           $(this).find('tr:not(.columnTitles)').map(function () {
-            var courseData = []
-            var tds = $(this).find('td')
+            const courseData = []
+            const tds = $(this).find('td')
             if (tds.length === 9) {
               tds.each(function () {
                 courseData.push($(this).text())
@@ -173,11 +171,11 @@ function parseCourseData(url) {
                 group_name: sanitizeInput(args.group)
               }
             }
-            if (data.course_code
-              && data.course_name
-              && data.time_of_day
-              && data.week
-              && data.classroom) {
+            if (data.course_code &&
+              data.course_name &&
+              data.time_of_day &&
+              data.week &&
+              data.classroom) {
               dataBatch.push(data)
             }
           })
@@ -193,8 +191,12 @@ function parseCourseData(url) {
 module.exports = {
   updateCourseData: (req, res) => {
     Logger.info('Update course data from IP', req.client.remoteAddress)
-    if (req.query['secret'] === config.appSecret) {
-      Promise.all([DB.cleanCourseTable()]).then(() => updateCourseData())
+    if (req.query.secret === config.appSecret) {
+      Promise.resolve(DB.cleanCourseTable())
+        .then((dbRes) => {
+          Logger.info('DB cleaned', dbRes)
+          return updateCourseData()
+        })
       res.status(200).json({status: 'ok'})
     } else {
       Logger.warn('Unauthorized update attempt from IP', req.client.remoteAddress)
@@ -204,9 +206,9 @@ module.exports = {
 
   workerUpdateData: () => {
     Logger.info('Update course data by worker')
-    Promise.all([DB.cleanCourseTable()])
-      .then((res) => updateCourseData())
-      .catch((err) => Logger.error("Error while updating DB data", err.stack))
+    Promise.resolve(DB.cleanCourseTable())
+      .then(() => updateCourseData())
+      .catch((err) => Logger.error('Error while updating DB data', err.stack))
   }
 }
 

@@ -1,8 +1,8 @@
-import React from "react"
-import EventRowMixin from "./EventRowMixin"
-import {eventLevels} from "./utils/eventLevels"
-import message from "./utils/messages"
-import {range} from "ramda"
+import React from 'react'
+import EventRowMixin from './EventRowMixin'
+import {eventLevels} from './utils/eventLevels'
+import message from './utils/messages'
+import {range} from 'ramda'
 
 const isSegmentInSlot = (seg, slot) => seg.left <= slot && seg.right >= slot
 const eventsInSlot = (segments, slot) => segments.filter(seg => isSegmentInSlot(seg, slot)).length

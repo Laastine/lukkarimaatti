@@ -1,5 +1,5 @@
-import {navigate} from "./constants"
-import VIEWS from "../Views"
+import {navigate} from './constants'
+import VIEWS from '../Views'
 
 export default function moveDate(action, date, view) {
   switch (action) {

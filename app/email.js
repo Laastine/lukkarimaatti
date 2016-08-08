@@ -1,8 +1,6 @@
-"use strict"
-
-import nodemailer from "nodemailer"
-import config from "./config"
-import Logger from "./logger"
+import nodemailer from 'nodemailer'
+import config from './config'
+import Logger from './logger'
 
 module.exports = {
   sendMail: (req, res) => {
@@ -10,7 +8,7 @@ module.exports = {
       service: 'Gmail',
       auth: {
         user: config.emailAddress,
-        pass: config.emailPassword,
+        pass: config.emailPassword
       }
     })
     Logger.info('name=' + config.emailAddress)

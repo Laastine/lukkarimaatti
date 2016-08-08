@@ -1,20 +1,20 @@
-import React from "react"
-import {findDOMNode} from "react-dom"
-import cn from "classnames"
-import {segStyle} from "./utils/eventLevels"
-import {notify} from "./utils/helpers"
-import {dateCellSelection, slotWidth, getCellAtX, pointInBox} from "./utils/selection"
-import Selection, {getBoundsForNode} from "./Selection"
+import React from 'react'
+import {findDOMNode} from 'react-dom'
+import cn from 'classnames'
+import {segStyle} from './utils/eventLevels'
+import {notify} from './utils/helpers'
+import {dateCellSelection, slotWidth, getCellAtX, pointInBox} from './utils/selection'
+import Selection, {getBoundsForNode} from './Selection'
 
 class DisplayCells extends React.Component {
 
-  static propTypes = {
+  static propTypes = {  // eslint-disable-line
     selectable: React.PropTypes.bool,
     onSelect: React.PropTypes.func,
     slots: React.PropTypes.number
   }
 
-  state = {selecting: false}
+  state = {selecting: false}  // eslint-disable-line
 
   componentDidMount() {
     this.props.selectable

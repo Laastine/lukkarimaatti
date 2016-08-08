@@ -1,14 +1,14 @@
-import React, {PropTypes} from "react"
-import message from "./utils/messages"
-import localizer from "./localizer"
-import {formats} from "./formats"
-import dates from "./utils/dates"
-import {navigate} from "./utils/constants"
-import {accessor as get} from "./utils/accessors"
-import classes from "dom-helpers/class"
-import getWidth from "dom-helpers/query/width"
-import scrollbarSize from "dom-helpers/util/scrollbarSize"
-import {inRange} from "./utils/eventLevels"
+import React, {PropTypes} from 'react'
+import message from './utils/messages'
+import localizer from './localizer'
+import {formats} from './formats'
+import dates from './utils/dates'
+import {navigate} from './utils/constants'
+import {accessor as get} from './utils/accessors'
+import classes from 'dom-helpers/class'
+import getWidth from 'dom-helpers/query/width'
+import scrollbarSize from 'dom-helpers/util/scrollbarSize'
+import {inRange} from './utils/eventLevels'
 
 
 const Agenda = React.createClass({
@@ -53,17 +53,17 @@ const Agenda = React.createClass({
       <div className='rbc-agenda-view'>
         <table ref='header'>
           <thead>
-          <tr>
-            <th className='rbc-header' ref='dateCol'>
-              {messages.date}
-            </th>
-            <th className='rbc-header' ref='timeCol'>
-              {messages.time}
-            </th>
-            <th className='rbc-header'>
-              {messages.event}
-            </th>
-          </tr>
+            <tr>
+              <th className='rbc-header' ref='dateCol'>
+                {messages.date}
+              </th>
+              <th className='rbc-header' ref='timeCol'>
+                {messages.time}
+              </th>
+              <th className='rbc-header'>
+                {messages.event}
+              </th>
+            </tr>
           </thead>
         </table>
         <div className='rbc-agenda-content' ref='content'>

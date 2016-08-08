@@ -1,19 +1,18 @@
-"use strict"
-
-import express from "express"
-import ReactDOMServer from "react-dom/server"
-import basePage from "./pages/basePage"
-import * as pages from "./pages/pages"
-import path from "path"
-import {split, map, uniq} from "ramda"
-import compression from "compression"
-import crypto from "crypto"
-import Promise from "bluebird"
-import bodyParser from "body-parser"
-import DB from "./db"
-import CourseRoutes from "./routes/course"
-import ApiRoutes from "./routes/api"
-import Logger from "./logger"
+import express from 'express'
+import path from 'path'
+import {mergeAll} from 'ramda'
+import {match} from 'react-router'
+import compression from 'compression'
+import crypto from 'crypto'
+import Promise from 'bluebird'
+import bodyParser from 'body-parser'
+import DB from './db'
+import CourseRoutes from './routes/course'
+import ApiRoutes from './routes/api'
+import {appState} from './store/lukkariStore'
+import {Routes} from './pages/routes'
+import {renderFullPage} from './pages/initPage'
+import Logger from './logger'
 
 const fs = Promise.promisifyAll(require('fs'))
 
@@ -21,6 +20,7 @@ const server = express()
 
 server.use(compression({threshold: 512}))
 server.use(bodyParser.json())
+server.use(bodyParser.urlencoded({extended: true}))
 server.disable('x-powered-by')
 server.use('/course', CourseRoutes)
 server.use('/api', ApiRoutes)
@@ -44,71 +44,123 @@ const checksumPromise = filePath =>
       .update(fileContent)
       .digest('hex'))
 
-const preFetchCourses = (params) => {
-  if (!params || params.match('/checksum=.*/')) {
-    return []
-  } else {
-    return map((courseCode) => {
-      if (courseCode.indexOf('&') > -1) {
-        return {
-          courseCode: courseCode.substring(0, courseCode.indexOf('&')),
-          groupName: courseCode.substring(courseCode.indexOf('&') + 1, courseCode.length)
-        }
-      } else {
-        return {
-          courseCode,
-          groupName: ""
-        }
-      }
-    }, uniq(params.substring(0, params.length).split(/[+]/)))
-  }
-}
-
-server.get('*', (req, res, next) => {
-  const urlAndParams = split('?', req.url)
-  const page = pages.findPage(urlAndParams[0])
-  if (page) {
-    Promise
-      .all([checksumPromise(cssFilePath), checksumPromise(bundleJsFilePath), DB.prefetchCoursesByCode(preFetchCourses(urlAndParams[1]))])
-      .then(([cssChecksum, bundleJsChecksum, courses]) => {
-        res.send(ReactDOMServer.renderToString(basePage(
-          page,
-          page.initialState(courses),
-          {cssChecksum, bundleJsChecksum}
-        )))
-      })
-      .catch(next)
-  } else {
-    next()
-  }
-})
-
-const serveStaticResource = filePath => (req, res, next) => {
+const serveStaticResource = filePath => (req, res, next) =>
   checksumPromise(filePath)
     .then(checksum => {
-      if (req.query.checksum == checksum) {
-        const oneDayInSeconds = 60 * 60 * 24
-        res.setHeader('Cache-Control', `public, max-age=${oneDayInSeconds}`)
+      if (req.params.checksum === checksum) {
+        const twoHoursInSeconds = 60 * 60 * 2
+        res.setHeader('Cache-Control', `public, max-age=${twoHoursInSeconds}`)
+        res.setHeader('ETag', checksum)
         res.sendFile(filePath)
       } else {
         res.status(404).send()
       }
     })
     .catch(next)
+
+server.get('/static/:checksum/style.css', serveStaticResource(cssFilePath))
+server.get('/static/:checksum/bundle.js', serveStaticResource(bundleJsFilePath))
+
+const buildInitialState = (displayName) => {
+  switch (displayName) {
+    case 'LukkariPage':
+      return {
+        selectedCourses: [],
+        searchResults: [],
+        currentDate: new Date(),
+        isModalOpen: false,
+        selectedIndex: -1,
+        waitingAjax: false,
+        departmentCourses: [],
+        department: 'TITE'
+      }
+    case 'CatalogPage':
+      return {
+        selectedCourses: [],
+        searchResults: [],
+        currentDate: new Date(),
+        isModalOpen: false,
+        selectedIndex: -1,
+        waitingAjax: false,
+        departmentCourses: [],
+        department: 'TITE'
+      }
+    case 'NotFoundPage':
+      return {}
+    default:
+      return null
+  }
 }
 
-server.get('/style.css', serveStaticResource(cssFilePath))
-server.get('/bundle.js', serveStaticResource(bundleJsFilePath))
+const getNeedFunctionParams = (displayName, params, queryParams) => {
+  switch (displayName) {
+    case 'LukkariPage':
+      return {
+        courses: queryParams.courses
+      }
+    case 'CatalogPage':
+      return {
+        department: queryParams.department ? queryParams.department.toLowerCase() : 'tite'
+      }
+    default:
+      return null
+  }
+}
+
+const fetchComponentData = (components, pathParams, queryParams) => {
+  const needs = components.reduce((prev, current) => {
+    return current ? (current.needs || []).concat(prev) : prev
+  }, [])
+  const promises = needs.reduce((prev, currNeed) => {
+    const param = getNeedFunctionParams(components[1].displayName, pathParams, queryParams)
+    if (param) {
+      const action = currNeed(param)
+      appState.dispatch(action)
+      return prev.concat(action.promise)
+    } else {
+      return prev
+    }
+  }, [])
+  return Promise.all(promises)
+}
+
+server.get('*', (req, res) => {
+  const urlPath = req.url
+  match({routes: Routes, location: urlPath}, (error, redirectLocation, renderProps) => {
+    if (error) {
+      return res.status(500).send('Server error')
+    } else if (redirectLocation) {
+      return res.redirect(302, redirectLocation.pathname + redirectLocation.search)
+    } else if (renderProps === null) {
+      return res.status(404).send('Not found')
+    } else {
+      return Promise
+        .all([checksumPromise(cssFilePath), checksumPromise(bundleJsFilePath), fetchComponentData(renderProps.components, renderProps.params, renderProps.location.query)])
+        .then(([cssChecksum, bundleJsChecksum]) => {
+          const initialState = mergeAll([appState.currentState, buildInitialState(renderProps.components[1].displayName)])
+          return Promise.resolve(renderFullPage(
+            initialState,
+            {cssChecksum, bundleJsChecksum},
+            renderProps
+          ))
+            .then((page) => res.send(page))
+        })
+        .catch((err) => {
+          res.status(500).send('Server error')
+          Logger.error('Server error', err.stack)
+        })
+    }
+  })
+})
 
 export const start = port => {
+  const env = process.env.NODE_ENV ? process.env.NODE_ENV : 'development'
   const reportPages = () => {
-    pages.allPages.forEach(({pagePath}) => {
-      Logger.info(`Page available at http://localhost:${port}${pagePath}`.green)
-    })
+    Logger.info(`Page available at http://localhost:${port} in ${env}`)
   }
-  return DB.isTableInitialized("course")
+  return DB.isTableInitialized('course')
     .then((exists) => exists ? null : DB.initializeDb())
-    .then(() => new Promise((resolve, reject) => {
+    .then(() => new Promise((resolve) => {
       server.listen(port, resolve)
     })).then(reportPages)
 }

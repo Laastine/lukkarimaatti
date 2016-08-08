@@ -6,6 +6,10 @@ Version numbering:
 `<major>.<minor>.<patch>`
 
 ---
+### 1.3.0 August 8, 2016
+* Update architecture
+* Add course catalog page
+
 ### 1.2.8 April 9, 2016
 * React calendar component added to sources to fix server-side rendering problem
 

@@ -6,6 +6,9 @@ Version numbering:
 `<major>.<minor>.<patch>`
 
 ---
+### 1.3.1 August 8, 2016
+* Fix KIKE course mouse selection
+
 ### 1.3.0 August 8, 2016
 * Update architecture
 * Add course catalog page

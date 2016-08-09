@@ -319,6 +319,7 @@ body {
 .department-link-container {
   background-color: #555;
   padding: 20px;
+  word-break: break-all;
 }
 
 .department-link {

@@ -13,7 +13,7 @@ describe('Lukkarimaatti UI navigation', function () {
     })()
       .then(click('.header-element', 2))
       .then(function () {
-        expect($(S('.deparment-link-container')[0]).is(':visible')).to.equal(true)
+        expect($(S('.department-link-container')[0]).is(':visible')).to.equal(true)
       })
       .then(click('.header-element', 0))
       .then(function () {

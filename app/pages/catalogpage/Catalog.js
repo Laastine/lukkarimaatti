@@ -2,7 +2,7 @@ import React from 'react'
 import {Link} from 'react-router'
 import {appState} from '../../store/lukkariStore'
 import {loadCourseByCodeAndGroup, loadCourseByCode} from '../frontApi/lukkariApi'
-import {any, partial} from 'ramda'
+import {any, partial, isEmpty} from 'ramda'
 
 const DepartmentSelectorElement = (selectedDepartment) => {
   const departmentNames = ['ENTE-YMTE',
@@ -29,9 +29,10 @@ const getSemester = (week) => {
   return any((w) => Number(w) > endingWeekOfJune, week.split(',')) ? 'Autumn' : 'Spring'
 }
 
-const isSelected = (state, courseCode) => {
-  const groupName = state.selectedCourses.filter((c) => c.course_code === courseCode).map((c) => c.group_name)[0]
-  return any((c) => c.course_code === courseCode && c.group_name === groupName, state.selectedCourses)
+const isSelected = (state, courseCode, groupName) => {
+  const groupNameExists = !isEmpty(state.selectedCourses
+    .filter((c) => c.course_code === courseCode && c.group_name === groupName))
+  return groupNameExists && any((c) => c.course_code === courseCode, state.selectedCourses)
 }
 
 const selectCourse = (courseCode, groupName) => {
@@ -50,7 +51,7 @@ const selectCourse = (courseCode, groupName) => {
 
 const DepartmentCoursesElement = (state) => {
   const courses = state.departmentCourses ? state.departmentCourses.map((c) => {
-    const selected = isSelected(state, c.course_code)
+    const selected = isSelected(state, c.course_code, c.group_name)
     return <li key={c.course_code + c.course_name}
                className={`department-course${selected ? '-selected' : ''}`}
                onClick={partial(selectCourse, [c.course_code, c.group_name])}>

@@ -40,9 +40,22 @@ courseRoutes.get('/course', (req, res) =>
       res.json([])
     }))
 
-courseRoutes.get('/code/:code', (req, res) => {
-  Promise.resolve(DB.getCourseByCode(req.params.code))
-    .then((result) => res.json(result))
+courseRoutes.get('/codeAndGroup', (req, res) => {
+  Promise.resolve(DB.getCourseByCodeAndGroup(req.query.courseCode, req.query.groupName))
+    .then((result) => {
+      res.json(result)
+    })
+    .catch((err) => {
+      buildErrorMessage('/codeAndGroup', req.query.code, req.client.remoteAddress, err)
+      res.status(500).json([])
+    })
+})
+
+courseRoutes.get('/code', (req, res) => {
+  Promise.resolve(DB.getCourseByCode(req.query.courseCode))
+    .then((result) => {
+      res.json(result)
+    })
     .catch((err) => {
       buildErrorMessage('/code', req.query.code, req.client.remoteAddress, err)
       res.status(500).json([])

@@ -47,6 +47,8 @@ module.exports = {
 
   getCourseByName: (courseName) => client.queryAsync(`SELECT * FROM course WHERE LOWER(course_name) LIKE $1`, ['%' + courseName + '%']),  // eslint-disable-line
 
+  getCourseByCodeAndGroup: (code, group) => client.queryAsync(`SELECT * FROM course WHERE course_code = (:code) AND group_name = (:group)`, {code, group}), // eslint-disable-line
+
   getCourseByCode: (code) => client.queryAsync(`SELECT * FROM course WHERE course_code = (:code)`, {code}), // eslint-disable-line
 
   getCourseByDepartment: (department) =>

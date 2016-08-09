@@ -32,7 +32,20 @@ export const loadCourses = (param) => ({
 })
 
 export const loadCourseByCode = (courseCode) =>
-  lukkariApi.get(`${serverAddr}/course/code/${courseCode}`)
+  lukkariApi.get(`${serverAddr}/course/code`, {
+    params: {
+      courseCode
+    }
+  })
+    .then(checkStatus)
+
+export const loadCourseByCodeAndGroup = (courseCode, groupName) =>
+  lukkariApi.get(`${serverAddr}/course/codeAndGroup`, {
+    params: {
+      courseCode,
+      groupName
+    }
+  })
     .then(checkStatus)
 
 export const loadCoursesByDepartment = (param) => {

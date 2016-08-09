@@ -42,7 +42,7 @@
     "eslint": "3.2.2",
     "eslint-plugin-react": "6.0.0",
     "jquery": "3.1.0",
-    "lodash": "4.14.1",
+    "lodash": "4.14.2",
     "mocha": "3.0.2",
     "mocha-phantomjs": "4.1.0",
     "phantomjs-prebuilt": "2.1.11",

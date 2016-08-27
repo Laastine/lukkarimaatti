@@ -58,7 +58,7 @@ echo -e export UNI_URL=https://uni.lut.fi/fi/web/guest/lukujarjestykset1
 source .env
 ```
 
-Build application:
+#### Build application:
 ```
 npm install
 npm run build

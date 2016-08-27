@@ -32,7 +32,7 @@ Today it's implemented with universal JavaScript (Node/React/Bacon) using "megab
 ## Requirements & Build
 Node.js 6.4 or newer<br>
 
-#### Setup DB on OSX/Linux
+#### Setup DB on OSX
 - OSX users use virtualbox or any other virtual machine provider for Docker
 - Linux users can skip docker-machine commands
 

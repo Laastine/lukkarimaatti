@@ -4,8 +4,7 @@ const {reduce, prop, tail} = require('ramda')
 const appConfig = require('./config')
 const Logger = require('./logger')
 
-const address = 'postgres://' + appConfig.postgresUsername + ':' + appConfig.postgresPassword + '@' + appConfig.postgresUrl
-const client = Promise.promisifyAll(pgDb(address))
+const client = Promise.promisifyAll(pgDb(appConfig.postgresUrl))
 
 const buildInsertQueryString = (courseBatch) =>
   reduce((a, course) => a + 'INSERT INTO course (' +

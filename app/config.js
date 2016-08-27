@@ -1,5 +1,5 @@
 module.exports = {
-  postgresUrl: process.env.POSTGRES_URL,
+  postgresUrl: process.env.DATABASE_URL,
   postgresUsername: process.env.POSTGRES_USERNAME,
   postgresPassword: process.env.POSTGRES_PASSWORD,
   uniUrl: process.env.UNI_URL,

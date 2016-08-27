@@ -7,7 +7,7 @@ Information is retrieved from [the official LUT teaching schedule info site] (ht
 
 **[http://lukkarimaatti.ltky.fi](http://lukkarimaatti.ltky.fi)**
 
-Compatible with IE11+ and newest Firefox and Chrome
+Compatible with newest Firefox and Chrome
 
 #### History
 
@@ -32,17 +32,41 @@ Today it's implemented with universal JavaScript (Node/React/Bacon) using "megab
 ## Requirements & Build
 Node.js 6 or newer<br>
 
+#### Setup DB on OSX/Linux
+- OSX users use virtualbox or any other virtual machine provider for Docker
+- Linux users can skip docker-machine commands
+
+Install docker-machine and docker:
+`brew install docker docker-machine`
+
+Create lukkarimaatti virtualbox image:
+`docker-machine create --driver virtualbox lukkarimaatti`
+
+Add env variable to your shell where you run docker cmds:
+`eval "$(docker-machine env lukkarimaatti)"`
+
+Install postgres DB to docker:
+ `docker pull postgres:9.6`
+
+Start postgres in docker: `docker run --name lukkarimaatti-db -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -d postgres:9.6`
+
+Set up config variables:
+```
+echo -e export DATABASE_URL=postgresql://postgres:postgres@`docker-machine ip lukkarimaatti`:5432/postgres >> .env
+echo -e export APP_SECRET=my-very-hard-app-secret
+echo -e export UNI_URL=https://uni.lut.fi/fi/web/guest/lukujarjestykset1
+source .env
+```
+
 Build application:
 ```
 npm install
 npm run build
 ```
-For quick browser testing `npm run watch`
-and open http://localhost:8080 in your web browser.
+- For quick browser testing `npm run watch` and `open http://localhost:8080` in your web browser.
+- Download course data with http://localhost:8080/api/update?secret=my-very-hard-app-secret
 
 ## Tests
-
-WIP
 
 `npm test`
 

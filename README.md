@@ -1,7 +1,7 @@
 # Lukkarimaatti++
 
 Hobby project which offers course data in easy to use scheduling tool.<br>
-Information is retrieved from [the official LUT teaching schedule info site] (https://uni.lut.fi/fi/web/guest/lukujarjestykset1).<br>
+Information is retrieved from [the official LUT teaching schedule info site] (https://uni.lut.fi/fi/web/guest/lukujarjestykset1).
 
 **Lukkarimaatti is currently hosted by LTKY, please contact LTKY's admin in case of problems.**
 
@@ -27,12 +27,12 @@ Today it's implemented with universal JavaScript (Node/React/Bacon) using "megab
 * [Mocha](http://mochajs.org/)
 * [PhantomJS](http://phantomjs.org/)
 * [Babel](https://babeljs.io/)
-* [Browserify](http://browserify.org/)<br>
+* [Browserify](http://browserify.org/)
 
-## Requirements & Build
-Node.js 6.4 or newer<br>
+## Requirements
+Node.js 6.4 or newer
 
-#### Setup DB on OSX
+#### Local setup DB on OSX
 - OSX users use virtualbox or any other virtual machine provider for Docker
 - Linux users can skip docker-machine commands
 
@@ -65,11 +65,8 @@ npm run build
 ```
 - For quick browser testing `npm run watch` and `open http://localhost:8080` in your web browser.
 - Download course data with http://localhost:8080/api/update?secret=my-very-hard-app-secret
- 
-
-Shutdown docker with `docker-machine stop lukkarimaatti`
-
-Restart `docker-machine start lukkarimaatti ; eval "$(docker-machine env lukkarimaatti)" ; docker start lukkarimaatti-db`
+- Shutdown docker with `docker-machine stop lukkarimaatti`
+- Start docker postgres `docker-machine start lukkarimaatti ; eval "$(docker-machine env lukkarimaatti)" ; docker start lukkarimaatti-db` after initial setup is done
 
 ## Tests
 

@@ -340,6 +340,7 @@ body {
   text-align: left;
   margin: auto;
   display: inline-block;
+  width: 500px;
 }
 
 .department-course-code {
@@ -347,12 +348,12 @@ body {
 }
 
 .department-course {
-  margin: 5px;
+  margin: 6px 0px 6px 0px;
   display: block;
 }
 
 .department-course-selected {
-  margin: 5px;
+  margin: 6px 0px 6px 0px;
   display: block;
   font-weight: 700;
 }

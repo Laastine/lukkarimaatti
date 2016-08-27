@@ -65,6 +65,11 @@ npm run build
 ```
 - For quick browser testing `npm run watch` and `open http://localhost:8080` in your web browser.
 - Download course data with http://localhost:8080/api/update?secret=my-very-hard-app-secret
+ 
+
+Shutdown docker with `docker-machine stop lukkarimaatti`
+
+Restart `docker-machine start lukkarimaatti ; eval "$(docker-machine env lukkarimaatti)" ; docker start lukkarimaatti-db`
 
 ## Tests
 

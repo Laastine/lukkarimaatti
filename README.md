@@ -53,8 +53,8 @@ Start postgres in docker: `docker run --name lukkarimaatti-db -p 5432:5432 -e PO
 Set up config variables:
 ```
 echo -e export DATABASE_URL=postgresql://postgres:postgres@`docker-machine ip lukkarimaatti`:5432/postgres >> .env
-echo -e export APP_SECRET=my-very-hard-app-secret
-echo -e export UNI_URL=https://uni.lut.fi/fi/web/guest/lukujarjestykset1
+echo -e export APP_SECRET=my-very-hard-app-secret >> .env
+echo -e export UNI_URL=https://uni.lut.fi/fi/web/guest/lukujarjestykset1 >> .env
 source .env
 ```
 

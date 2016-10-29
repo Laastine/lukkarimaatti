@@ -34,6 +34,11 @@ export const Routes = (
                })
                window.scrollTo(0, 0)
              }
+           }}
+           onLeave={(_) => {
+             if (!isServer) {
+               appState.dispatch({type: 'SYNC_URL_PARAMS'})
+             }
            }}/>
 
     <Route path='/catalog/:department'

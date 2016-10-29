@@ -6,7 +6,7 @@ import {loadCoursesByDepartment, loadCourses} from '../frontApi/lukkariApi'
 
 const CatalogPage = React.createClass({
   statics: {
-    needs: [loadCoursesByDepartment, loadCourses]
+    needs: [loadCoursesByDepartment]
   },
 
   contextTypes: {

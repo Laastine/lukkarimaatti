@@ -66,6 +66,9 @@ function rootReducer(previousState, action) {
       state.selectedCourses = concat(state.selectedCourses, action.selectedCourses)
       addUrlParameter(action.selectedCourses[0].course_code, action.selectedCourses[0].group_name)
       break
+    case 'SYNC_URL_PARAMS':
+      updateUrlParams(state.selectedCourses)
+      break
     case 'SAVE_MODAL':
       state.isModalOpen = action.isModalOpen
       break

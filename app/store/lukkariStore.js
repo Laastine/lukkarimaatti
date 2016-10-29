@@ -1,7 +1,7 @@
 import Bacon from 'baconjs'
 import {isServer} from '../utils'
-import {concat, filter, isEmpty, whereEq, uniqBy, pipe, forEach} from 'ramda'
-import {addUrlParameter, removeUrlParameter, sendEmail} from '../pages/browserUtils'
+import {concat, filter, isEmpty, whereEq} from 'ramda'
+import {addUrlParameter, removeUrlParameter, sendEmail, updateUrlParams} from '../pages/browserUtils'
 
 const createAppState = (reducer, initialState) => {
   const bus = Bacon.Bus()
@@ -29,13 +29,6 @@ const promiseMiddleware = (event) => {
         appState.dispatch({type: FAILURE, data: event.data})
       })
   }
-}
-
-const updateUrlParams = (selectedCourses) => {
-  pipe(
-    uniqBy((c) => c.course_code),
-    forEach((c) => addUrlParameter(c.course_code, c.group_name))
-  )(selectedCourses)
 }
 
 function rootReducer(previousState, action) {

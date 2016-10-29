@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {uniqBy, pipe, forEach} from 'ramda'
 import {appState} from '../store/lukkariStore'
 
 const urlParamLength = 9
@@ -15,6 +16,13 @@ export const addUrlParameter = (courseCode, groupName) => {
   } else {
     history.pushState({}, '', '' + params + urlParam)
   }
+}
+
+export const updateUrlParams = (selectedCourses) => {
+  pipe(
+    uniqBy((c) => c.course_code),
+    forEach((c) => addUrlParameter(c.course_code, c.group_name))
+  )(selectedCourses)
 }
 
 export const removeUrlParameter = (courseCode) => {

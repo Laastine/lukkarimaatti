@@ -5,7 +5,8 @@
   "main": "app/bootstrap.js",
   "private": true,
   "engines": {
-    "node": "6.9.0"
+    "node": "6.9.0",
+    "npm": "3.10.7"
   },
   "dependencies": {
     "axios": "0.15.2",

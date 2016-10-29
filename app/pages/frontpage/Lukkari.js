@@ -50,6 +50,7 @@ class Lukkari extends React.Component {
           events={addDataToCalendar(state)}
           views={['month', 'week', 'day', 'agenda']}
           popup={false}
+          timeslots={2}
           components={{event: Event}}
           onSelectEvent={(c) => {
             const courses = filter((cc) => cc.course_code + '#' + cc.type === c.id, state.selectedCourses)

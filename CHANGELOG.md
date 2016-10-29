@@ -6,7 +6,7 @@ Version numbering:
 `<major>.<minor>.<patch>`
 
 ---
-### 1.3.2 August 8, 2016
+### 1.3.2 October 29, 2016
 * Update Node and dependencies
 * Remove server request with no courses selected
 

@@ -19,7 +19,7 @@ export const Routes = (
     <Route path='/'
            component={LukkariPage}
            onEnter={(nextState) => {
-             if (!isServer) {
+             if (!isServer && nextState.location.query.courses) {
                fetchComponentData(LukkariPage.needs, {courses: nextState.location.query.courses})
              }
            }}/>

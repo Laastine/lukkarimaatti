@@ -2,7 +2,7 @@ import React from 'react'
 import Catalog from './Catalog'
 import Header from '../../partials/header'
 import Footer from '../../partials/footer'
-import {loadCoursesByDepartment, loadCourses} from '../frontApi/lukkariApi'
+import {loadCoursesByDepartment} from '../frontApi/lukkariApi'
 
 const CatalogPage = React.createClass({
   statics: {

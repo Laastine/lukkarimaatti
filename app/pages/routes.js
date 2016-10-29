@@ -35,7 +35,7 @@ export const Routes = (
                window.scrollTo(0, 0)
              }
            }}
-           onLeave={(_) => {
+           onLeave={() => {
              if (!isServer) {
                appState.dispatch({type: 'SYNC_URL_PARAMS'})
              }

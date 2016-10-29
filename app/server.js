@@ -16,6 +16,10 @@ import Logger from './logger'
 
 const fs = Promise.promisifyAll(require('fs'))
 
+process.on('unhandledRejection', (reason, p) => {
+  Logger.error('Unhandled Rejection at: Promise', p, 'reason:', reason)
+})
+
 const server = express()
 
 server.use(compression({threshold: 512}))

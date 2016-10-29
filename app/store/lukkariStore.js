@@ -24,6 +24,10 @@ const promiseMiddleware = (event) => {
     const SUCCESS = `${type}_SUCCESS`
     promise
       .then((data) => appState.dispatch({type: SUCCESS, data}))
+      .catch(() => {
+        const FAILURE = `${type}_FAILURE`
+        appState.dispatch({type: FAILURE, data: event.data})
+      })
   }
 }
 

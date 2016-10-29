@@ -30,7 +30,7 @@ Today it's implemented with universal JavaScript (Node/React/Bacon) using "megab
 * [Browserify](http://browserify.org/)
 
 ## Requirements
-Node.js 6.4 or newer
+Node.js 6 LTS
 
 #### Local setup DB on OSX
 - OSX users use virtualbox or any other virtual machine provider for Docker

@@ -6,6 +6,10 @@ Version numbering:
 `<major>.<minor>.<patch>`
 
 ---
+### 1.3.2 August 8, 2016
+* Update Node and dependencies
+* Remove server request with no courses selected
+
 ### 1.3.1 August 8, 2016
 * Fix KIKE course mouse selection
 

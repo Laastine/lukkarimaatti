@@ -1,3 +1,4 @@
+// @flow
 import express from 'express'
 import path from 'path'
 import {mergeAll} from 'ramda'
@@ -48,7 +49,7 @@ const checksumPromise = filePath =>
       .update(fileContent)
       .digest('hex'))
 
-const serveStaticResource = filePath => (req, res, next) =>
+const serveStaticResource = (filePath: string) => (req, res, next) =>
   checksumPromise(filePath)
     .then(checksum => {
       if (req.params.checksum === checksum) {
@@ -65,7 +66,7 @@ const serveStaticResource = filePath => (req, res, next) =>
 server.get('/static/:checksum/style.css', serveStaticResource(cssFilePath))
 server.get('/static/:checksum/bundle.js', serveStaticResource(bundleJsFilePath))
 
-const buildInitialState = (displayName) => {
+const buildInitialState = (displayName: string) => {
   switch (displayName) {
     case 'LukkariPage':
       return {
@@ -96,7 +97,7 @@ const buildInitialState = (displayName) => {
   }
 }
 
-const getNeedFunctionParams = (displayName, params, queryParams) => {
+const getNeedFunctionParams = (displayName: string, params, queryParams) => {
   switch (displayName) {
     case 'LukkariPage':
       return {
@@ -157,7 +158,7 @@ server.get('*', (req, res) => {
   })
 })
 
-export const start = port => {
+export const start = (port: number) => {
   const env = process.env.NODE_ENV ? process.env.NODE_ENV : 'development'
   const reportPages = () => {
     Logger.info(`Page available at http://localhost:${port} in ${env}`)

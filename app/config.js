@@ -1,3 +1,4 @@
+// @flow
 module.exports = {
   postgresUrl: process.env.DATABASE_URL,
   postgresUsername: process.env.POSTGRES_USERNAME,

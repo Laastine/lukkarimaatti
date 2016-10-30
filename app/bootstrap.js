@@ -1,2 +1,2 @@
 require('babel-core/register')
-require('./server').start(process.env.PORT || 8080)
+require('./server').start(Number(process.env.PORT || 8080))

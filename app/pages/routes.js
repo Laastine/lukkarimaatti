@@ -22,6 +22,11 @@ export const Routes = (
              if (!isServer && nextState.location.query.courses) {
                fetchComponentData(LukkariPage.needs, {courses: nextState.location.query.courses})
              }
+           }}
+           onLeave={() => {
+             if (!isServer) {
+               appState.dispatch({type: 'SYNC_URL_PARAMS'})
+             }
            }}/>
 
     <Route path='/catalog'

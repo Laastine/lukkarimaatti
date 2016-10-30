@@ -66,7 +66,7 @@ class SearchList extends React.Component {
     document.getElementsByClassName('search-container')[0].focus()
     this.setState({searchResults: this.props.state.searchResults})
     Bacon.fromEventTarget(this.refs.searchinput, 'keyup')
-      .debounce(200)
+      .debounce(250)
       .filter((e) => !contains(e.keyCode, [37, 38, 39, 40]))
       .onValue((e) => {
         if (e.target.value.length > 0) {

@@ -7,7 +7,7 @@ export const renderFullPage = (initialState, options, renderProps) => {
     <html>
       <head>
         <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
-        <link rel='stylesheet' href='/static/${options.cssChecksum}/style.css'/>
+        <link rel='stylesheet' href='/static/${options.cssChecksum}/styles.css'/>
         <link rel='shortcut icon' type='image/png' href='/img/favicon.png'/>
       </head>
       <body>

@@ -34,7 +34,7 @@ server.use('/favicon.png', express.static(`${__dirname}/img/favicon.png`))
 server.use('/github.png', express.static(`${__dirname}/img/github.png`))
 server.use('/spinner.gif', express.static(`${__dirname}/img/spinner.gif`))
 
-const cssFilePath = path.resolve(`${__dirname}/../.generated/style.css`)
+const cssFilePath = path.resolve(`${__dirname}/../.generated/styles.css`)
 const bundleJsFilePath = path.resolve(`${__dirname}/../.generated/bundle.js`)
 
 if (process.env.NODE_ENV !== 'production') {
@@ -63,7 +63,7 @@ const serveStaticResource = (filePath: string) => (req, res, next) =>
     })
     .catch(next)
 
-server.get('/static/:checksum/style.css', serveStaticResource(cssFilePath))
+server.get('/static/:checksum/styles.css', serveStaticResource(cssFilePath))
 server.get('/static/:checksum/bundle.js', serveStaticResource(bundleJsFilePath))
 
 const buildInitialState = (displayName: string) => {

@@ -6,6 +6,10 @@ Version numbering:
 `<major>.<minor>.<patch>`
 
 ---
+### 1.3.3 November 19, 2016
+* Make course catalog page more mobile friendly
+* Add CSS prefixes
+
 ### 1.3.2 October 29, 2016
 * Update Node and dependencies
 * Remove server request with no courses selected

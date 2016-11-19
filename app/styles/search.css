@@ -310,37 +310,73 @@ body {
   margin: auto;
   padding-top: 20px;
   padding-bottom: 20px;
-  font-size: 8pt;
+  font-size: 8px;
   font-family: Monospace;
   word-wrap: break-word;
   white-space: pre-wrap;
 }
 
-.department-link-container {
-  background-color: #555;
-  padding: 20px;
-  word-break: break-all;
+@media screen and (max-width: 699px) {
+  .department-link-container {
+    background-color: #555;
+    padding: 10px 5px;
+    height: 20px;
+    font-size: 12px;
+    word-break: break-all;
+  }
+
+  .department-link {
+    text-decoration: none;
+    font-weight: 400;
+    margin: 4px;
+    color: #999;
+  }
+
+  .department-link-selected {
+    text-decoration: none;
+    font-weight: 600;
+    margin: 7px;
+    color: #FFF;
+  }
+
+  .department-course-list {
+    text-align: left;
+    margin: auto;
+    display: inline-block;
+    width: 300px;
+    font-size: 12px;
+  }
 }
 
-.department-link {
-  text-decoration: none;
-  font-weight: 500;
-  margin: 7px;
-  color: #999;
-}
+@media screen and (min-width: 700px) {
+  .department-link-container {
+    background-color: #555;
+    padding: 5px;
+    height: 30px;
+    word-break: break-all;
+  }
 
-.department-link-selected {
-  text-decoration: none;
-  font-weight: 700;
-  margin: 7px;
-  color: #FFF;
-}
+  .department-link {
+    text-decoration: none;
+    font-weight: 500;
+    margin: 7px;
+    color: #999;
+  }
 
-.department-course-list {
-  text-align: left;
-  margin: auto;
-  display: inline-block;
-  width: 500px;
+  .department-link-selected {
+    text-decoration: none;
+    font-weight: 700;
+    margin: 7px;
+    color: #FFF;
+  }
+
+  .department-course-list {
+    text-align: left;
+    margin: auto;
+    display: inline-block;
+    width: 500px;
+    font-size: 16px;
+  }
 }
 
 .department-course-code {

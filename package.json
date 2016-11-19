@@ -37,10 +37,13 @@
     "winston": "2.3.0"
   },
   "devDependencies": {
+    "autoprefixer": "6.5.3",
     "babel-cli": "6.18.0",
     "babel-eslint": "7.1.1",
     "babel-plugin-transform-flow-strip-types": "6.18.0",
     "chai": "3.5.0",
+    "cssnano": "3.8.0",
+    "cssnano-cli": "1.0.5",
     "eslint": "3.10.2",
     "eslint-plugin-react": "6.7.1",
     "flow-bin": "0.35.0",
@@ -48,6 +51,7 @@
     "mocha": "3.1.2",
     "mocha-phantomjs": "4.1.0",
     "phantomjs-prebuilt": "2.1.13",
+    "postcss-cli": "2.6.0",
     "supervisor": "0.12.0",
     "watch": "1.0.1",
     "watchify": "3.7.0"
@@ -68,9 +72,11 @@
     ]
   },
   "scripts": {
-    "build-css": "mkdir -p .generated && cat app/styles/*.css > .generated/style.css",
+    "autoprefixer": "postcss --use autoprefixer --autoprefixer.browsers '> 1%,last 4 versions, Firefox ESR, iOS 7, iOS 8, not ie <= 11' .generated/styles.css -d .generated",
+    "minify-css": "cssnano --safe < .generated/styles.css > .generated/styles.min.css && mv .generated/styles.min.css .generated/styles.css",
+    "build-css": "mkdir -p .generated && cat app/styles/*.css > .generated/styles.css",
     "build-js": "browserify --entry app/client.js | uglifyjs --compress --screw-ie8 > .generated/bundle.js",
-    "build": "npm run build-css && npm run build-js",
+    "build": "npm run build-css && npm run autoprefixer && npm run minify-css && npm run build-js",
     "watch-css": "watch \"npm run build-css\" app/styles/",
     "watch-js": "watchify app/client.js --debug -o .generated/bundle.js -v",
     "watch": "npm run watch-js & npm run watch-css & supervisor --quiet --ignore node_modules --watch app app/bootstrap.js",

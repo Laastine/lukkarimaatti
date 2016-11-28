@@ -28,6 +28,7 @@ Today it's implemented with universal JavaScript (Node/React/Bacon) using "megab
 * [PhantomJS](http://phantomjs.org/)
 * [Babel](https://babeljs.io/)
 * [Browserify](http://browserify.org/)
+* [Flow](https://flowtype.org/)
 
 ## Requirements
 Node.js 6 LTS
@@ -71,6 +72,3 @@ npm run build
 ## Tests
 
 `npm test`
-
-### Copyright and license
-Copyright &copy; 2013 Mikko Kaistinen, mikko.kaistinen@kapsi.fi

@@ -6,6 +6,9 @@ Version numbering:
 `<major>.<minor>.<patch>`
 
 ---
+### 1.3.4 January 8, 2017
+* Update calendar styles
+
 ### 1.3.3 November 19, 2016
 * Make course catalog page more mobile friendly
 * Add CSS prefixes

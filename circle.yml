@@ -13,10 +13,6 @@ compile:
   override:
     - npm run build
 
-test:
-  post:
-    - npm install --production
-
 deployment:
   production:
     branch: master

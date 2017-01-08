@@ -3,6 +3,9 @@
   font: inherit;
   margin: 0;
 }
+button {
+  outline: 0;
+}
 button.rbc-btn {
   overflow: visible;
   text-transform: none;

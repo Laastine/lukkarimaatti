@@ -6,7 +6,7 @@ machine:
 
 dependencies:
   override:
-    - npm install --dev
+    - npm install
 
 compile:
   override:
@@ -14,7 +14,7 @@ compile:
 
 database:
   override:
-    - postgres -u ubuntu circle_test
+    - psql -U ubuntu circle_test
 
 test:
   post:

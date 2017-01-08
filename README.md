@@ -1,6 +1,6 @@
 # Lukkarimaatti++
 
-[ ![Codeship Status for laastine-ci/lukkarimaatti](https://app.codeship.com/projects/fbd1ab00-b7c4-0134-3378-4eaef5f19e3e/status?branch=master)](https://app.codeship.com/projects/194553)
+[![CircleCI](https://circleci.com/bb/laastine-ci/lukkarimaatti.svg?style=svg)](https://circleci.com/bb/laastine-ci/lukkarimaatti)
 
 Hobby project which offers course data in easy to use scheduling tool.<br>
 Information is retrieved from [the official LUT teaching schedule info site] (https://uni.lut.fi/fi/web/guest/lukujarjestykset1).

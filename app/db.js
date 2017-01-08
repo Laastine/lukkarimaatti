@@ -26,7 +26,7 @@ const buildInsertQueryString = (courseBatch) =>
 
 module.exports = {
 
-  isTableInitialized: (table: string) => client.queryOneAsync(`SELECT to_regclass(:table) IS NOT NULL AS exists`, {table})  // eslint-disable-line
+  isTableInitialized: (table) => client.queryOneAsync(`SELECT to_regclass(:table) IS NOT NULL AS exists`, {table})  // eslint-disable-line
     .then(prop('exists'))
     .catch((err) => Logger.error('isTableInitialized error', err.stack)),
 
@@ -45,18 +45,18 @@ module.exports = {
     .then(() => client.updateAsync(`CREATE INDEX course_name_search ON course (course_name)`))  // eslint-disable-line
     .catch((err) => Logger.error('initializeDb error', err.stack)),
 
-  getCourseByName: (courseName: string) => client.queryAsync(`SELECT * FROM course WHERE LOWER(course_name) LIKE $1`, ['%' + courseName + '%']),  // eslint-disable-line
+  getCourseByName: (courseName) => client.queryAsync(`SELECT * FROM course WHERE LOWER(course_name) LIKE $1`, ['%' + courseName + '%']),  // eslint-disable-line
 
-  getCourseByCodeAndGroup: (code: string, group: string) => client.queryAsync(`SELECT * FROM course WHERE course_code = (:code) AND group_name = (:group)`, {code, group}), // eslint-disable-line
+  getCourseByCodeAndGroup: (code, group) => client.queryAsync(`SELECT * FROM course WHERE course_code = (:code) AND group_name = (:group)`, {code, group}), // eslint-disable-line
 
-  getCourseByCode: (code: string) => client.queryAsync(`SELECT * FROM course WHERE course_code = (:code)`, {code}), // eslint-disable-line
+  getCourseByCode: (code) => client.queryAsync(`SELECT * FROM course WHERE course_code = (:code)`, {code}), // eslint-disable-line
 
-  getCourseByDepartment: (department: string) =>
+  getCourseByDepartment: (department) =>
     client.queryAsync(`SELECT * FROM course WHERE department = (:department)`, { // eslint-disable-line
       department
     }),
 
-  prefetchCoursesByCode: (params: Array<{courseCode: string, groupName: string}>) => {
+  prefetchCoursesByCode: (params) => {
     const insertGroupCondition = (groupName) => groupName ? ' AND group_name = \'' + groupName + '\'' : ''
     const insertCodeCondition = (courseCode) => courseCode ? ' OR course_code = \'' + courseCode + '\'' : ''
     if (params.length > 0) {
@@ -71,7 +71,7 @@ module.exports = {
     return []
   },
 
-  insertCourse: (courseBatch: string[]) => client.queryAsync(buildInsertQueryString(courseBatch))
+  insertCourse: (courseBatch) => client.queryAsync(buildInsertQueryString(courseBatch))
     .catch((error) => Logger.error('buildInsertQueryString error', error.stack)),
 
   cleanCourseTable: () => client.queryAsync('TRUNCATE TABLE course')

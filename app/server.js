@@ -49,7 +49,7 @@ const checksumPromise = filePath =>
       .update(fileContent)
       .digest('hex'))
 
-const serveStaticResource = (filePath: string) => (req, res, next) =>
+const serveStaticResource = (filePath) => (req, res, next) =>
   checksumPromise(filePath)
     .then(checksum => {
       if (req.params.checksum === checksum) {
@@ -66,7 +66,7 @@ const serveStaticResource = (filePath: string) => (req, res, next) =>
 server.get('/static/:checksum/styles.css', serveStaticResource(cssFilePath))
 server.get('/static/:checksum/bundle.js', serveStaticResource(bundleJsFilePath))
 
-const buildInitialState = (displayName: string) => {
+const buildInitialState = (displayName) => {
   switch (displayName) {
     case 'LukkariPage':
       return {
@@ -97,7 +97,7 @@ const buildInitialState = (displayName: string) => {
   }
 }
 
-const getNeedFunctionParams = (displayName: string, params, queryParams) => {
+const getNeedFunctionParams = (displayName, params, queryParams) => {
   switch (displayName) {
     case 'LukkariPage':
       return {
@@ -158,7 +158,7 @@ server.get('*', (req, res) => {
   })
 })
 
-export const start = (port: number) => {
+export const start = (port) => {
   const env = process.env.NODE_ENV ? process.env.NODE_ENV : 'development'
   const reportPages = () => {
     Logger.info(`Page available at http://localhost:${port} in ${env}`)

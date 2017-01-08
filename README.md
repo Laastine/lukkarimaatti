@@ -30,7 +30,6 @@ Today it's implemented with universal JavaScript (Node/React/Bacon) using "megab
 * [PhantomJS](http://phantomjs.org/)
 * [Babel](https://babeljs.io/)
 * [Browserify](http://browserify.org/)
-* [Flow](https://flowtype.org/)
 
 ## Requirements
 Node.js 6 LTS

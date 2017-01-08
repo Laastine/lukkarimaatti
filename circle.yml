@@ -12,10 +12,6 @@ compile:
   override:
     - npm run build
 
-database:
-  override:
-    - psql -U ubuntu circle_test
-
 test:
   post:
     - npm install --production

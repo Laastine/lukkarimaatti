@@ -20,6 +20,5 @@ test:
 deployment:
   production:
     branch: master
-    commands:
-      - git push git@heroku.com:lukkarimaatti.git $CIRCLE_SHA1:master
-      - npm start
+    heroku:
+      appname: lukkarimaatti

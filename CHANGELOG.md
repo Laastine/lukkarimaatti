@@ -6,6 +6,11 @@ Version numbering:
 `<major>.<minor>.<patch>`
 
 ---
+### 1.3.5 January 11, 2017
+* Add HTTPS support
+* Add browser error logging
+* Add google anal
+
 ### 1.3.4 January 8, 2017
 * Update calendar styles
 

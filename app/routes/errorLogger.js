@@ -1,7 +1,6 @@
 import express from 'express'
-import appConfig from '../config'
 
-const Logger = appConfig.Logger
+const Logger = require('../logger')
 
 const errorLoggerRoutes = express.Router()
 

@@ -5,5 +5,6 @@ module.exports = {
   uniUrl: process.env.UNI_URL,
   emailAddress: process.env.EMAIL_USERNAME,
   emailPassword: process.env.EMAIL_PASSWORD,
-  appSecret: process.env.APP_SECRET
+  appSecret: process.env.APP_SECRET,
+  letsEncryptReponse: process.env.CERTBOT_RESPONSE
 }

@@ -1,9 +1,9 @@
-// @flow
 import express from 'express'
 import path from 'path'
 import {mergeAll} from 'ramda'
 import {match} from 'react-router'
 import compression from 'compression'
+import appConfig from './config'
 import crypto from 'crypto'
 import Promise from 'bluebird'
 import bodyParser from 'body-parser'
@@ -128,6 +128,8 @@ const fetchComponentData = (components, pathParams, queryParams) => {
   }, [])
   return Promise.all(promises)
 }
+
+server.get('/.well-known/acme-challenge/:content', (req, res) => res.send(appConfig.letsEncryptReponse))
 
 server.get('*', (req, res) => {
   const urlPath = req.url

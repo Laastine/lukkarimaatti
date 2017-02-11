@@ -10,6 +10,7 @@ import bodyParser from 'body-parser'
 import DB from './db'
 import CourseRoutes from './routes/course'
 import ApiRoutes from './routes/api'
+import errorLoggerRoutes from './routes/errorLogger'
 import {appState} from './store/lukkariStore'
 import {Routes} from './pages/routes'
 import {renderFullPage} from './pages/initPage'
@@ -130,6 +131,7 @@ const fetchComponentData = (components, pathParams, queryParams) => {
 }
 
 server.get('/.well-known/acme-challenge/:content', (req, res) => res.send(appConfig.letsEncryptReponse))
+server.use('/errors', errorLoggerRoutes)
 
 server.get('*', (req, res) => {
   const urlPath = req.url

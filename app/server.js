@@ -68,33 +68,30 @@ server.get('/static/:checksum/styles.css', serveStaticResource(cssFilePath))
 server.get('/static/:checksum/bundle.js', serveStaticResource(bundleJsFilePath))
 
 const buildInitialState = (displayName) => {
-  switch (displayName) {
-    case 'LukkariPage':
-      return {
-        selectedCourses: [],
-        searchResults: [],
-        currentDate: new Date(),
-        isModalOpen: false,
-        selectedIndex: -1,
-        waitingAjax: false,
-        departmentCourses: [],
-        department: 'TITE'
-      }
-    case 'CatalogPage':
-      return {
-        selectedCourses: [],
-        searchResults: [],
-        currentDate: new Date(),
-        isModalOpen: false,
-        selectedIndex: -1,
-        waitingAjax: false,
-        departmentCourses: [],
-        department: 'TITE'
-      }
-    case 'NotFoundPage':
-      return {}
-    default:
-      return null
+  const pageState = () => {
+    switch (displayName) {
+      case 'LukkariPage':
+        return {}
+      case 'CatalogPage':
+        return {}
+      case 'NotFoundPage':
+        return {}
+      default:
+        return null
+    }
+  }
+
+  return {
+    ...pageState, ...{
+      selectedCourses: [],
+      searchResults: [],
+      currentDate: new Date(),
+      isModalOpen: false,
+      selectedIndex: -1,
+      waitingAjax: false,
+      departmentCourses: [],
+      department: 'TITE'
+    }
   }
 }
 

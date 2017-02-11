@@ -9,7 +9,7 @@ Version numbering:
 ### 1.3.5 January 11, 2017
 * Add HTTPS support
 * Add browser error logging
-* Add google anal
+* Add google analytics
 
 ### 1.3.4 January 8, 2017
 * Update calendar styles

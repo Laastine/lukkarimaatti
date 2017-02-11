@@ -1,4 +1,3 @@
-// @flow
 const pgDb = require('pg-db')
 const Promise = require('bluebird')
 const {reduce, prop, tail} = require('ramda')

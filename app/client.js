@@ -1,4 +1,3 @@
-// @flow
 import React from 'react'
 import {render} from 'react-dom'
 import {match, browserHistory} from 'react-router'

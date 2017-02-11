@@ -6,5 +6,6 @@ module.exports = {
   emailAddress: process.env.EMAIL_USERNAME,
   emailPassword: process.env.EMAIL_PASSWORD,
   appSecret: process.env.APP_SECRET,
-  letsEncryptReponse: process.env.CERTBOT_RESPONSE
+  letsEncryptReponse: process.env.CERTBOT_RESPONSE,
+  logLevel: process.env.LOG_LEVEL
 }

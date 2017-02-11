@@ -13,6 +13,7 @@ import ApiRoutes from './routes/api'
 import errorLoggerRoutes from './routes/errorLogger'
 import {appState} from './store/lukkariStore'
 import {Routes} from './pages/routes'
+import forceSSL from 'express-force-ssl'
 import {renderFullPage} from './pages/initPage'
 import Logger from './logger'
 
@@ -41,6 +42,14 @@ const bundleJsFilePath = path.resolve(`${__dirname}/../.generated/bundle.js`)
 if (process.env.NODE_ENV !== 'production') {
   server.use('/test/', express.static(path.resolve(`${__dirname}'/../test`)))
   server.use('/node_modules/', express.static(path.resolve(`${__dirname}'/../node_modules`)))
+} else {
+  server.use(forceSSL)
+  server.set('forceSSLOptions', {
+    enable301Redirects: true,
+    trustXFPHeader: true,
+    httpsPort: 443,
+    sslRequiredMessage: 'SSL Required.'
+  })
 }
 
 const checksumPromise = filePath =>

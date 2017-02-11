@@ -25,6 +25,7 @@
     "cssnano": "3.10.0",
     "cssnano-cli": "1.0.5",
     "express": "4.14.0",
+    "express-force-ssl": "0.3.2",
     "forever": "0.15.3",
     "moment": "2.17.1",
     "nodemailer": "2.7.0",

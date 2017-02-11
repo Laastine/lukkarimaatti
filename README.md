@@ -7,7 +7,7 @@ Information is retrieved from [the official LUT teaching schedule info site] (ht
 
 **Lukkarimaatti is currently hosted by LTKY, please contact LTKY's admin in case of problems.**
 
-**[http://lukkarimaatti.ltky.fi](http://lukkarimaatti.ltky.fi)**
+**[https://lukkarimaatti.ltky.fi](https://lukkarimaatti.ltky.fi)**
 
 Compatible with newest Firefox and Chrome
 

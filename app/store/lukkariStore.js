@@ -64,7 +64,9 @@ function rootReducer(previousState, action) {
       break
     case 'ADD_COURSE':
       state.selectedCourses = concat(state.selectedCourses, action.selectedCourses)
-      addUrlParameter(action.selectedCourses[0].course_code, action.selectedCourses[0].group_name)
+      if (!isEmpty(action.selectedCourses) && action.selectedCourses[0].course_code && action.selectedCourses[0].course_code) {
+        addUrlParameter(action.selectedCourses[0].course_code, action.selectedCourses[0].group_name)
+      }
       break
     case 'SYNC_URL_PARAMS':
       updateUrlParams(state.selectedCourses)

@@ -20,7 +20,10 @@ class Modal extends React.Component {
 
     return isModalOpen ? <div className='modal-dialog'>
         <div>
-          <div id='saveClose' onClick={() => {appState.dispatch({type: 'SAVE_MODAL', isModalOpen: false})}}
+          <div id='saveClose'
+               onClick={() => {
+                 appState.dispatch({type: 'SAVE_MODAL', isModalOpen: false})
+               }}
                className='close'>X
           </div>
           <div>Send course selection URL to your email.</div>

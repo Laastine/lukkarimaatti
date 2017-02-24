@@ -1,39 +1,12 @@
 import React from 'react'
 import {Link} from 'react-router'
+import Modal from './Modal'
 import {appState} from '../store/lukkariStore'
-
-const sendButton = (waitingAjax) => waitingAjax ?
-  <img className='modal-ajax-spinner' src='/spinner.gif'/> :
-  <button type='button' id='saveId' className='modal-button' data-dismiss='modal'
-          onClick={(e) => {
-            appState.dispatch({
-              type: 'SEND_EMAIL',
-              waitingAjax: true,
-              email: e.target.previousElementSibling.value
-            })
-          }}>
-    Send
-  </button>
-
-const modal = (isModalOpen, waitingAjax) => isModalOpen ? <div className='modal-dialog'>
-    <div>
-      <div id='saveClose' onClick={() => {
-        appState.dispatch({type: 'SAVE_MODAL', isModalOpen: false})
-      }} className='close'>X</div>
-      <div>Send course selection URL to your email.</div>
-      <form className='modal-input-container'>
-        <input type='email' className='modal-input' id='saveEmail' placeholder='Email'/>
-        {sendButton(waitingAjax)}
-      </form>
-    </div>
-  </div> : null
 
 class Header extends React.Component {
   render() {
-    const {isModalOpen, waitingAjax} = this.props.state
-
     return <div className='header-container'>
-      {modal(isModalOpen, waitingAjax)}
+      <Modal state={this.props.state}/>
       <Link className='header-element header-link' to={'/'}>Lukkarimaatti++</Link>
       <a id='saveModalButton' className='header-element header-element-link' onClick={() => {
         appState.dispatch({type: 'SAVE_MODAL', isModalOpen: true})

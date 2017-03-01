@@ -43,18 +43,18 @@ module.exports = {
   teacher VARCHAR(256),
   misc VARCHAR(512),
   group_name VARCHAR(256) DEFAULT '' NOT NULL)`)
-    .then(() => client.any(`CREATE INDEX course_name_search ON course (course_name)`))
+    .then(() => client.any('CREATE INDEX course_name_search ON course (course_name)'))
     .catch((err) => Logger.error('initializeDb error', err.stack)),
 
-  getCourseByName: (courseName) => client.query(`SELECT * FROM course WHERE LOWER(course_name) LIKE $1`, ['%' + courseName + '%']),  // eslint-disable-line
+  getCourseByName: (courseName) => client.query('SELECT * FROM course WHERE LOWER(course_name) LIKE $1', ['%' + courseName + '%']),
 
-  getCourseByCodeAndGroup: (code, group) => client.query(`SELECT * FROM course WHERE course_code = ${code} AND group_name = ${group}`, {code, group}), // eslint-disable-line
+  getCourseByCodeAndGroup: (code, group) => client.query('SELECT * FROM course WHERE course_code = ${code} AND group_name = ${group}', {code: `${code}`, group: `${group}`}),
 
-  getCourseByCode: (code) => client.query(`SELECT * FROM course WHERE course_code = {code}`, {code}), // eslint-disable-line
+  getCourseByCode: (code) => client.query('SELECT * FROM course WHERE course_code = ${code}', {code: `${code}`}),
 
   getCourseByDepartment: (department) =>
-    client.query(`SELECT * FROM course WHERE department = {department}`, { // eslint-disable-line
-      department
+    client.query('SELECT * FROM course WHERE department = ${department}', {
+      department: `${department}`
     }),
 
   prefetchCoursesByCode: (params) => {

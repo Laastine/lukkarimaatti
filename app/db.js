@@ -1,10 +1,12 @@
-const pgDb = require('pg-db')
 const Promise = require('bluebird')
+const pgp = require('pg-promise')({
+  promiseLib: Promise
+})
 const {reduce, prop, tail} = require('ramda')
 const appConfig = require('./config')
 const Logger = require('./logger')
 
-const client = Promise.promisifyAll(pgDb(appConfig.postgresUrl))
+const client = pgp(appConfig.postgresUrl)
 
 const buildInsertQueryString = (courseBatch) =>
   reduce((a, course) => a + 'INSERT INTO course (' +
@@ -25,11 +27,11 @@ const buildInsertQueryString = (courseBatch) =>
 
 module.exports = {
 
-  isTableInitialized: (table) => client.queryOneAsync(`SELECT to_regclass(:table) IS NOT NULL AS exists`, {table})  // eslint-disable-line
-    .then(prop('exists'))
+  isTableInitialized: (table) => client.query('SELECT ${columns^} IS NOT NULL AS exists', {columns: `to_regclass('${table}')`})
+    .then((e) => prop('exists')(e[0]))
     .catch((err) => Logger.error('isTableInitialized error', err.stack)),
 
-  initializeDb: () => client.updateAsync(`CREATE TABLE course(course_id SERIAL,
+  initializeDb: () => client.none(`CREATE TABLE course(course_id SERIAL,
   course_code VARCHAR(256) NOT NULL,
   course_name VARCHAR(256) NOT NULL,
   week VARCHAR(256),
@@ -41,17 +43,17 @@ module.exports = {
   teacher VARCHAR(256),
   misc VARCHAR(512),
   group_name VARCHAR(256) DEFAULT '' NOT NULL)`)
-    .then(() => client.updateAsync(`CREATE INDEX course_name_search ON course (course_name)`))  // eslint-disable-line
+    .then(() => client.any(`CREATE INDEX course_name_search ON course (course_name)`))
     .catch((err) => Logger.error('initializeDb error', err.stack)),
 
-  getCourseByName: (courseName) => client.queryAsync(`SELECT * FROM course WHERE LOWER(course_name) LIKE $1`, ['%' + courseName + '%']),  // eslint-disable-line
+  getCourseByName: (courseName) => client.query(`SELECT * FROM course WHERE LOWER(course_name) LIKE $1`, ['%' + courseName + '%']),  // eslint-disable-line
 
-  getCourseByCodeAndGroup: (code, group) => client.queryAsync(`SELECT * FROM course WHERE course_code = (:code) AND group_name = (:group)`, {code, group}), // eslint-disable-line
+  getCourseByCodeAndGroup: (code, group) => client.query(`SELECT * FROM course WHERE course_code = ${code} AND group_name = ${group}`, {code, group}), // eslint-disable-line
 
-  getCourseByCode: (code) => client.queryAsync(`SELECT * FROM course WHERE course_code = (:code)`, {code}), // eslint-disable-line
+  getCourseByCode: (code) => client.query(`SELECT * FROM course WHERE course_code = {code}`, {code}), // eslint-disable-line
 
   getCourseByDepartment: (department) =>
-    client.queryAsync(`SELECT * FROM course WHERE department = (:department)`, { // eslint-disable-line
+    client.query(`SELECT * FROM course WHERE department = {department}`, { // eslint-disable-line
       department
     }),
 
@@ -63,16 +65,16 @@ module.exports = {
       if (params.length > 1) {
         query += reduce((a, b) => a + insertCodeCondition(b.courseCode) + insertGroupCondition(b.groupName), '', tail(params))
       }
-      return client.queryAsync(query)
+      return client.query(query)
         .then((result) => result)
         .catch((error) => Logger.info('prefetchCoursesByCode error', error))
     }
     return []
   },
 
-  insertCourse: (courseBatch) => client.queryAsync(buildInsertQueryString(courseBatch))
+  insertCourse: (courseBatch) => client.query(buildInsertQueryString(courseBatch))
     .catch((error) => Logger.error('buildInsertQueryString error', error.stack)),
 
-  cleanCourseTable: () => client.queryAsync('TRUNCATE TABLE course')
+  cleanCourseTable: () => client.query('TRUNCATE TABLE course')
 }
 

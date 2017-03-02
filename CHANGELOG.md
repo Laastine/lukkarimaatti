@@ -6,7 +6,10 @@ Version numbering:
 `<major>.<minor>.<patch>`
 
 ---
-### 1.3.5 January 11, 2017
+### 1.3.6 March 2, 2017
+* Change database library
+
+### 1.3.5 February 11, 2017
 * Add HTTPS support
 * Add browser error logging
 * Add google analytics

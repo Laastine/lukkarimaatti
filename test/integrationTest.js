@@ -7,6 +7,11 @@ const Promise = require('bluebird')
 const spawn = require('child_process').spawn
 const exec = Promise.promisify(require('child_process').exec)
 const axios = require('axios')
+const DB = require('./../app/db')
+const Parser = require('./../app/parser')
+const Data = require('./unit/courseData')
+
+const titeData = Parser.parseDepartmentHtml(Data.courseData)
 
 function waitUntil(predicate, loop_timeout) {
   return new Promise((resolve, reject) => {
@@ -62,6 +67,10 @@ exec('npm i', {cwd: '.'})
     uiChildProcess.stderr.on('data', (data) => process.stderr.write(data))
   })
   .then(() => waitUntil(pollLocalhost, 1000))
+  .then(() => {
+    console.log('Populate DB')
+    return DB.insertCourse(titeData)
+  })
   .then(() => {
     console.log('Running tests...')
     return new Promise((resolve, reject) => {

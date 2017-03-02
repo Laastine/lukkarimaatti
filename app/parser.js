@@ -120,67 +120,73 @@ const getDepartment = (input) => {
 }
 
 const sanitizeInput = (input) => input ? input.trim()
-  .replace(/'/g, '')
-  .replace(/(\r\n|\n|\r)/g, '') : ''
+    .replace(/'/g, '')
+    .replace(/(\r\n|\n|\r)/g, '') : ''
+
+const parseDepartmentHtml = (html) => {
+  const dataBatch = []
+  let data = {}
+  const $ = cheerio.load(html)
+  $('table.spreadsheet')
+    .each(function () {
+      $(this)
+        .find('tr:not(.columnTitles)')
+        .map(function () {
+          const courseData = []
+          const tds = $(this).find('td')
+          if (tds.length === 9) {
+            tds.each(function () {
+              courseData.push($(this).text())
+            })
+            const args = parseBasicData(courseData[0])
+            data = {
+              course_code: sanitizeInput(args.code),
+              course_name: sanitizeInput(args.name),
+              week: parseWeeks(courseData[3]),
+              week_day: sanitizeInput(courseData[4]),
+              time_of_day: sanitizeInput(courseData[5]) + '-' + sanitizeInput(courseData[6]),
+              classroom: sanitizeInput(courseData[7]),
+              type: sanitizeInput(args.type),
+              department: getDepartment(args.code),
+              teacher: '',
+              misc: sanitizeInput(courseData[8]),
+              group_name: sanitizeInput(args.group)
+            }
+          } else if (tds.length === 8) {
+            tds.each(function () {
+              courseData.push($(this).text())
+            })
+            const args = parseBasicData(courseData[0])
+            data = {
+              course_code: sanitizeInput(args.code),
+              course_name: sanitizeInput(args.name),
+              week: parseWeeks(courseData[2] || ''),
+              week_day: sanitizeInput(courseData[3]),
+              time_of_day: sanitizeInput(courseData[4]) + '-' + sanitizeInput(courseData[5]),
+              classroom: sanitizeInput(courseData[6]),
+              type: sanitizeInput(args.type),
+              department: getDepartment(args.code),
+              teacher: '',
+              misc: sanitizeInput(courseData[7]),
+              group_name: sanitizeInput(args.group)
+            }
+          }
+          if (data.course_code &&
+            data.course_name &&
+            data.time_of_day &&
+            data.week &&
+            data.classroom) {
+            dataBatch.push(data)
+          }
+        })
+    })
+  return dataBatch
+}
 
 function parseCourseData(url) {
   axios.get('https://uni.lut.fi' + url)
     .then((html) => {
-      const dataBatch = []
-      let data = {}
-      const $ = cheerio.load(html.data)
-      $('table.spreadsheet')
-        .each(function () {
-          $(this).find('tr:not(.columnTitles)').map(function () {
-            const courseData = []
-            const tds = $(this).find('td')
-            if (tds.length === 9) {
-              tds.each(function () {
-                courseData.push($(this).text())
-              })
-              const args = parseBasicData(courseData[0])
-              data = {
-                course_code: sanitizeInput(args.code),
-                course_name: sanitizeInput(args.name),
-                week: parseWeeks(courseData[3]),
-                week_day: sanitizeInput(courseData[4]),
-                time_of_day: sanitizeInput(courseData[5]) + '-' + sanitizeInput(courseData[6]),
-                classroom: sanitizeInput(courseData[7]),
-                type: sanitizeInput(args.type),
-                department: getDepartment(args.code),
-                teacher: '',
-                misc: sanitizeInput(courseData[8]),
-                group_name: sanitizeInput(args.group)
-              }
-            } else if (tds.length === 8) {
-              tds.each(function () {
-                courseData.push($(this).text())
-              })
-              const args = parseBasicData(courseData[0])
-              data = {
-                course_code: sanitizeInput(args.code),
-                course_name: sanitizeInput(args.name),
-                week: parseWeeks(courseData[2] || ''),
-                week_day: sanitizeInput(courseData[3]),
-                time_of_day: sanitizeInput(courseData[4]) + '-' + sanitizeInput(courseData[5]),
-                classroom: sanitizeInput(courseData[6]),
-                type: sanitizeInput(args.type),
-                department: getDepartment(args.code),
-                teacher: '',
-                misc: sanitizeInput(courseData[7]),
-                group_name: sanitizeInput(args.group)
-              }
-            }
-            if (data.course_code &&
-              data.course_name &&
-              data.time_of_day &&
-              data.week &&
-              data.classroom) {
-              dataBatch.push(data)
-            }
-          })
-        })
-
+      const dataBatch = parseDepartmentHtml(html.data)
       if (dataBatch.length > 0) {
         DB.insertCourse(dataBatch)
       }
@@ -209,6 +215,8 @@ module.exports = {
     Promise.resolve(DB.cleanCourseTable())
       .then(() => updateCourseData())
       .catch((err) => Logger.error('Error while updating DB data', err.stack))
-  }
+  },
+
+  parseDepartmentHtml: parseDepartmentHtml
 }
 

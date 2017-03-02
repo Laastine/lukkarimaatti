@@ -25,4 +25,18 @@ describe('Lukkarimaatti parser', () => {
         contains('group_name')(Object.keys(e))
     })(titeData), true)
   })
+
+  it('Check that correct object values are present', () => {
+    assert.deepEqual(titeData[0], { course_code: 'CT10A0015',
+      course_name: 'Introduction to M.Sc. Studies in Computer Science',
+      week: '44',
+      week_day: 'to',
+      time_of_day: '10-12',
+      classroom: '4504',
+      type: 'L',
+      department: 'tite',
+      teacher: '',
+      misc: '',
+      group_name: '' })
+  })
 })

@@ -82,7 +82,8 @@
     "flow": "flow",
     "lint": "eslint app",
     "clean": "rm .generated/*.js .generated/*.css",
-    "test": "node test/integrationTest.js",
-    "integration-test": "mocha-phantomjs -p node_modules/.bin/phantomjs http://localhost:8080/test/runner.html"
+    "integration-test": "mocha-phantomjs -p node_modules/.bin/phantomjs http://localhost:8080/test/runner.html",
+    "test-unit": "mocha --compilers js:babel-register test/unit/*Spec.js",
+    "test": "node test/integrationTest.js && npm run test-unit"
   }
 }

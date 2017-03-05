@@ -6,6 +6,9 @@ Version numbering:
 `<major>.<minor>.<patch>`
 
 ---
+### 1.3.7 March 5, 2017
+* Add email content and address validation
+
 ### 1.3.6 March 2, 2017
 * Change database library
 

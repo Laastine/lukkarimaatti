@@ -1,5 +1,5 @@
 import assert from 'assert'
-import {isCourseLink} from '../../app/utils'
+import {isCourseLink, isEmail} from '../../app/utils'
 
 describe('Lukkarimaatti predicates tests', () => {
   it('Check course link validity', () => {
@@ -10,9 +10,21 @@ describe('Lukkarimaatti predicates tests', () => {
 
     assert.equal(isCourseLink('https://lukkarimaatti.ltky.fi/?courses=0+A130A0350+A250A0250+A250A0750+A250A0800+CT60A0201+LM10A4000%20(kati)+CS10A0010+CS31A0102+BM20A5001+LM10A4000%20(kati)+LM10A4000%20(kati)'), true)
   })
+
   it('Check invalid course links', () => {
     assert.equal(isCourseLink('https://lukkarimaatti.ltky.fi/?courses={}'), false)
     assert.equal(isCourseLink('https://lukkarimaatti.ltky.fi/?courses=[]'), false)
     assert.equal(isCourseLink('http://localhost:8080/?courses=CT60A43[]02'), false)
+  })
+
+  it('Check valid email address', () => {
+    assert.equal(isEmail('lukkarimaatti@gmail.com'), true)
+    assert.equal(isEmail('jaska.jokunen@lut.fi'), true)
+    assert.equal(isEmail('maija.mallikas@student.lut.fi'), true)
+  })
+
+  it('Check invalid email address', () => {
+    assert.equal(isEmail('@student.lut.fi'), false)
+    assert.equal(isEmail('asd@.fi'), false)
   })
 })

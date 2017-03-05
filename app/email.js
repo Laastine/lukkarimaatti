@@ -6,12 +6,7 @@ import {isEmail, isCourseLink} from './utils'
 module.exports = {
   sendMail: (req, res) => {
     const {email, link} = req.body
-    if (!isEmail(email) || !isCourseLink(link)) {
-      Logger.error('Invalid email link', email, link)
-      res.status(400).send({
-        error: 'Invalid email address or link'
-      })
-    } else {
+    if (isEmail(email) || isCourseLink(link)) {
       const transporter = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
@@ -36,6 +31,11 @@ module.exports = {
           Logger.info('Message sent: ' + info.response)
           res.status(200).json({status: 'ok'})
         }
+      })
+    } else {
+      Logger.error('Invalid email link', email, link)
+      res.status(400).send({
+        error: 'Invalid email address or link'
       })
     }
   }

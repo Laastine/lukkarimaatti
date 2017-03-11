@@ -64,6 +64,7 @@ body {
     width: 85% !important;
     text-align: left;
     border-top: 0;
+    font-size: 12px;
   }
 
   .result-list-coursename {
@@ -115,6 +116,7 @@ body {
   width: 400px;
   text-align: left;
   border-top: 1px solid #333;
+  font-size: 14px;
 }
 
 .search-list-selected {

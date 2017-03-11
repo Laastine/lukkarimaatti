@@ -5,7 +5,7 @@ import SearchList from '../../partials/SearchList'
 import searchResults from '../../partials/searchResults'
 import {addDataToCalendar} from '../../util/courseParser'
 import {appState} from '../../store/lukkariStore'
-import BigCalendar from 'react-big-calendar'  // eslint-disable-line
+import BigCalendar from 'react-big-calendar' // eslint-disable-line
 require('moment/locale/fi')
 BigCalendar.momentLocalizer(moment)
 
@@ -29,9 +29,35 @@ const Event = ({event}) => (
   </div>
 )
 
-class Lukkari extends React.Component {
+const Lukkari = React.createClass({
+  getInitialState() {
+    return {
+      dayFormat: 'DD.MM.YY',
+      timeGutterFormat: 'HH.mm',
+      views: ['month', 'week', 'day', 'agenda']
+    }
+  },
+
+  _handleResize() {
+    const isMobile = window.innerWidth < 800
+    this.setState({
+      dayFormat: isMobile ? 'D.M' : 'DD.MM.YY',
+      timeGutterFormat: isMobile ? 'HH' : 'HH.mm',
+      views: isMobile ? ['week', 'day'] : ['month', 'week', 'day', 'agenda']
+    })
+  },
+
+  componentDidMount() {
+    window.addEventListener('resize', this._handleResize)
+  },
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleScroll)
+  },
+
   render() {
     const {state} = this.props
+    const {dayFormat, timeGutterFormat} = this.state
     return <div>
       <div className='container'>
         <a className='github-ribbon' href='https://github.com/Laastine/lukkarimaatti'>
@@ -46,9 +72,10 @@ class Lukkari extends React.Component {
           {searchResults(state)}
         </div>
         <BigCalendar
+          formats={{dayFormat, timeGutterFormat}}
           defaultView="week"
           events={addDataToCalendar(state)}
-          views={['month', 'week', 'day', 'agenda']}
+          views={this.state.views}
           popup={false}
           timeslots={2}
           components={{event: Event}}
@@ -63,6 +90,6 @@ class Lukkari extends React.Component {
       </div>
     </div>
   }
-}
+})
 
 export default Lukkari

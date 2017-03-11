@@ -52,7 +52,7 @@ const Lukkari = React.createClass({
   },
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleScroll)
+    window.removeEventListener('resize', this._handleResize)
   },
 
   render() {

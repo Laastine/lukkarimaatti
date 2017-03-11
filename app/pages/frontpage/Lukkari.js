@@ -72,7 +72,7 @@ const Lukkari = React.createClass({
           {searchResults(state)}
         </div>
         <BigCalendar
-          formats={{dayFormat, timeGutterFormat}}
+          formats={{dayFormat, timeGutterFormat, eventTimeRangeFormat: ({ start, end }) => `${moment(start).format('HH.mm')}-${moment(end).format('HH.mm')}`}}
           defaultView="week"
           events={addDataToCalendar(state)}
           views={this.state.views}

@@ -549,9 +549,9 @@
       "resolved": "https://registry.npmjs.org/babylon/-/babylon-6.16.1.tgz"
     },
     "baconjs": {
-      "version": "0.7.89",
-      "from": "baconjs@0.7.89",
-      "resolved": "https://registry.npmjs.org/baconjs/-/baconjs-0.7.89.tgz"
+      "version": "0.7.91",
+      "from": "baconjs@0.7.91",
+      "resolved": "https://registry.npmjs.org/baconjs/-/baconjs-0.7.91.tgz"
     },
     "balanced-match": {
       "version": "0.4.2",
@@ -1439,9 +1439,9 @@
       "dev": true
     },
     "eslint": {
-      "version": "3.17.0",
-      "from": "eslint@3.17.0",
-      "resolved": "https://registry.npmjs.org/eslint/-/eslint-3.17.0.tgz",
+      "version": "3.17.1",
+      "from": "eslint@3.17.1",
+      "resolved": "https://registry.npmjs.org/eslint/-/eslint-3.17.1.tgz",
       "dev": true,
       "dependencies": {
         "json-stable-stringify": {
@@ -3552,9 +3552,9 @@
       "dev": true
     },
     "nodemailer": {
-      "version": "3.1.4",
-      "from": "nodemailer@3.1.4",
-      "resolved": "https://registry.npmjs.org/nodemailer/-/nodemailer-3.1.4.tgz"
+      "version": "3.1.5",
+      "from": "nodemailer@3.1.5",
+      "resolved": "https://registry.npmjs.org/nodemailer/-/nodemailer-3.1.5.tgz"
     },
     "nopt": {
       "version": "2.2.1",
@@ -4667,9 +4667,9 @@
       "resolved": "https://registry.npmjs.org/shell-quote/-/shell-quote-1.6.1.tgz"
     },
     "shelljs": {
-      "version": "0.7.6",
+      "version": "0.7.7",
       "from": "shelljs@>=0.7.5 <0.8.0",
-      "resolved": "https://registry.npmjs.org/shelljs/-/shelljs-0.7.6.tgz",
+      "resolved": "https://registry.npmjs.org/shelljs/-/shelljs-0.7.7.tgz",
       "dev": true
     },
     "shush": {
@@ -5008,9 +5008,9 @@
       "resolved": "https://registry.npmjs.org/ua-parser-js/-/ua-parser-js-0.7.12.tgz"
     },
     "uglify-js": {
-      "version": "2.8.7",
-      "from": "uglify-js@2.8.7",
-      "resolved": "https://registry.npmjs.org/uglify-js/-/uglify-js-2.8.7.tgz",
+      "version": "2.8.12",
+      "from": "uglify-js@2.8.12",
+      "resolved": "https://registry.npmjs.org/uglify-js/-/uglify-js-2.8.12.tgz",
       "dependencies": {
         "camelcase": {
           "version": "1.2.1",

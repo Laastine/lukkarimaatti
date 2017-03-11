@@ -6,6 +6,9 @@ Version numbering:
 `<major>.<minor>.<patch>`
 
 ---
+### 1.3.8 March 11, 2017
+* Improve mobile layout on timetable view
+
 ### 1.3.7 March 5, 2017
 * Add email content and address validation
 

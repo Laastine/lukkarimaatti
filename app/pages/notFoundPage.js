@@ -1,13 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-const NotFoundPage = React.createClass({
-  statics: {
-    needs: []
-  },
-
-  contextTypes: {
-    appState: React.PropTypes.object
-  },
+class NotFoundPage extends React.Component {
+  constructor(props) {
+    super(props)
+    this.needs = []
+  }
 
   render() {
     return <div className='no-match-container'>
@@ -21,6 +19,10 @@ const NotFoundPage = React.createClass({
       <a className='no-match-link' href='/'>Go to lukkarimaatti</a>
     </div>
   }
-})
+}
+
+NotFoundPage.propTypes = {
+  appState: PropTypes.object
+}
 
 export default NotFoundPage

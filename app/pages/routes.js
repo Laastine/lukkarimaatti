@@ -14,7 +14,7 @@ const fetchComponentData = (needs, params) => {
   })
 }
 
-export const Routes = (
+export default
   <Route component={AppPage}>
     <Route path='/'
            component={LukkariPage}
@@ -62,6 +62,3 @@ export const Routes = (
            component={NotFoundPage}
            status={404}/>
   </Route>
-)
-
-export default Routes

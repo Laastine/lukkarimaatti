@@ -1,17 +1,14 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Catalog from './Catalog'
 import Header from '../../partials/header'
 import Footer from '../../partials/footer'
-import {loadCoursesByDepartment, loadCourses} from '../frontApi/lukkariApi'
+import {loadCourses, loadCoursesByDepartment} from '../frontApi/lukkariApi'
 
-const CatalogPage = React.createClass({
-  statics: {
-    needs: [loadCoursesByDepartment, loadCourses]
-  },
-
-  contextTypes: {
-    appState: React.PropTypes.object
-  },
+class CatalogPage extends React.Component {
+  constructor(props, context) {
+    super(props, context)
+  }
 
   render() {
     return <div>
@@ -22,6 +19,16 @@ const CatalogPage = React.createClass({
       </div>
     </div>
   }
-})
+}
+
+CatalogPage.needs = [loadCoursesByDepartment, loadCourses]
+
+CatalogPage.contextTypes = {
+  appState: PropTypes.object
+}
+
+CatalogPage.propTypes = {
+  appState: PropTypes.object
+}
 
 export default CatalogPage

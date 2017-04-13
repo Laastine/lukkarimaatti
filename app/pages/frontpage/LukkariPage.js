@@ -1,17 +1,14 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Lukkari from './Lukkari'
 import Header from '../../partials/header'
 import Footer from '../../partials/footer'
-import {loadCourses} from '../frontApi/lukkariApi' // eslint-disable-line
+import {loadCourses} from '../frontApi/lukkariApi'
 
-const LukkariPage = React.createClass({
-  statics: {
-    needs: [loadCourses]
-  },
-
-  contextTypes: {
-    appState: React.PropTypes.object
-  },
+class LukkariPage extends React.Component {
+  constructor(props, context) {
+    super(props, context)
+  }
 
   render() {
     return <div className='content-container'>
@@ -20,6 +17,16 @@ const LukkariPage = React.createClass({
       <Footer/>
     </div>
   }
-})
+}
+
+LukkariPage.needs = [loadCourses]
+
+LukkariPage.contextTypes = {
+  appState: PropTypes.object
+}
+
+LukkariPage.PropTypes = {
+  appState: PropTypes.object
+}
 
 export default LukkariPage

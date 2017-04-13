@@ -4,6 +4,11 @@ import Modal from './Modal'
 import {appState} from '../store/lukkariStore'
 
 class Header extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = props.state
+  }
+
   render() {
     return <div className='header-container'>
       <Modal state={this.props.state}/>

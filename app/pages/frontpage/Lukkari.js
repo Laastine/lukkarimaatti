@@ -29,14 +29,16 @@ const Event = ({event}) => (
   </div>
 )
 
-const Lukkari = React.createClass({
-  getInitialState() {
-    return {
+class Lukkari extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
       dayFormat: 'DD.MM.YY',
       timeGutterFormat: 'HH.mm',
       views: ['month', 'week', 'day', 'agenda']
     }
-  },
+  }
 
   _handleResize() {
     const isMobile = window.innerWidth < 800
@@ -45,16 +47,16 @@ const Lukkari = React.createClass({
       timeGutterFormat: isMobile ? 'HH' : 'HH.mm',
       views: isMobile ? ['week', 'day'] : ['month', 'week', 'day', 'agenda']
     })
-  },
+  }
 
   componentDidMount() {
     this._handleResize()
     window.addEventListener('resize', this._handleResize)
-  },
+  }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this._handleResize)
-  },
+  }
 
   render() {
     const {state} = this.props
@@ -91,6 +93,6 @@ const Lukkari = React.createClass({
       </div>
     </div>
   }
-})
+}
 
 export default Lukkari

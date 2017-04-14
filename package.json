@@ -38,7 +38,7 @@
     "react": "15.5.4",
     "react-big-calendar": "0.13.0",
     "react-dom": "15.5.4",
-    "react-router": "3.0.2",
+    "react-router": "3.0.5",
     "uglify-js": "2.8.22",
     "winston": "2.3.1"
   },

@@ -38,6 +38,7 @@ class Lukkari extends React.Component {
       timeGutterFormat: 'HH.mm',
       views: ['month', 'week', 'day', 'agenda']
     }
+    this._handleResize = this._handleResize.bind(this)
   }
 
   _handleResize() {

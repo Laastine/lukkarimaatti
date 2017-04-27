@@ -19,6 +19,8 @@ class LukkariPage extends React.Component {
   }
 }
 
+LukkariPage.displayName = 'LukkariPage'
+
 LukkariPage.needs = [loadCourses]
 
 LukkariPage.contextTypes = {

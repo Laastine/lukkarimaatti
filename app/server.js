@@ -152,7 +152,7 @@ server.get('*', (req, res) => {
       return Promise
         .all([checksumPromise(cssFilePath), checksumPromise(bundleJsFilePath), fetchComponentData(renderProps.components, renderProps.params, renderProps.location.query)])
         .then(([cssChecksum, bundleJsChecksum]) => {
-          const initialState = mergeAll([appState.currentState, buildInitialState(renderProps.components[1].displayName)])
+          const initialState = {...(buildInitialState(renderProps.components[1].displayName)), ...(appState.currentState)}
           return Promise.resolve(renderFullPage(
             initialState,
             {cssChecksum, bundleJsChecksum},

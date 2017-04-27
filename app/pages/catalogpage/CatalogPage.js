@@ -21,6 +21,8 @@ class CatalogPage extends React.Component {
   }
 }
 
+CatalogPage.displayName = 'CatalogPage'
+
 CatalogPage.needs = [loadCoursesByDepartment, loadCourses]
 
 CatalogPage.contextTypes = {

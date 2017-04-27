@@ -1,6 +1,5 @@
 import express from 'express'
 import path from 'path'
-import {mergeAll} from 'ramda'
 import {match} from 'react-router'
 import compression from 'compression'
 import appConfig from './config'

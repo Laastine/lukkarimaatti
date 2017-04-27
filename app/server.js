@@ -112,7 +112,7 @@ const getNeedFunctionParams = (displayName, params, queryParams) => {
       }
     case 'CatalogPage':
       return {
-        department: queryParams.department ? queryParams.department.toLowerCase() : 'tite'
+        department: params.department ? params.department.toUpperCase() : 'TITE'
       }
     default:
       return null

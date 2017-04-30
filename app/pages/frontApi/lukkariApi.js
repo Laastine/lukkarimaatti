@@ -2,7 +2,7 @@ import axios from 'axios'
 import {serverAddr} from '../../utils'
 
 const lukkariApi = axios.create({
-  timeout: 10000 //10sec
+  timeout: 5000 //5sec
 })
 
 const checkStatus = (response) => {

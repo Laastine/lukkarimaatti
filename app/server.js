@@ -1,6 +1,6 @@
 import express from 'express'
 import path from 'path'
-import {mergeAll} from 'ramda'
+import {merge} from 'ramda'
 import {match} from 'react-router'
 import compression from 'compression'
 import appConfig from './config'
@@ -152,7 +152,7 @@ server.get('*', (req, res) => {
       return Promise
         .all([checksumPromise(cssFilePath), checksumPromise(bundleJsFilePath), fetchComponentData(renderProps.components, renderProps.params, renderProps.location.query)])
         .then(([cssChecksum, bundleJsChecksum]) => {
-          const initialState = mergeAll([appState.currentState, buildInitialState(renderProps.components[1].displayName)])
+          const initialState = merge(appState.currentState, buildInitialState(renderProps.components[1].displayName))
           return Promise.resolve(renderFullPage(
             initialState,
             {cssChecksum, bundleJsChecksum},

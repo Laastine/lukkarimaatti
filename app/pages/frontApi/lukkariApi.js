@@ -48,14 +48,13 @@ export const loadCourseByCodeAndGroup = (courseCode, groupName) =>
   })
     .then(checkStatus)
 
-export const loadCoursesByDepartment = (param) => {
-  return {
-    type: 'LOAD_COURSES_BY_DEPARTMENT',
-    promise: lukkariApi.get(`${serverAddr}/course/byDepartment/${param.department}`)
-      .then(checkStatus)
-      .then((data) => ({
-        data,
-        department: param.department
-      }))
-  }
-}
+export const loadCoursesByDepartment = (param) => ({
+  type: 'LOAD_COURSES_BY_DEPARTMENT',
+  promise: lukkariApi.get(`${serverAddr}/course/byDepartment/${param.department}`)
+    .then(checkStatus)
+    .then((data) => ({
+      data,
+      department: param.department
+    }))
+})
+

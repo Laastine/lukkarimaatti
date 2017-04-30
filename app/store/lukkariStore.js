@@ -34,6 +34,7 @@ const promiseMiddleware = (event) => {
 function rootReducer(previousState, action) {
   let state = previousState   // eslint-disable-line
   promiseMiddleware(action)
+
   switch (action.type) {
     case 'LOAD_COURSES_BY_DEPARTMENT_SUCCESS':
       const {data, department} = action.data

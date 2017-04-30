@@ -173,6 +173,7 @@ export const start = (port) => {
   const reportPages = () => {
     Logger.info(`Page available at http://localhost:${port} in ${env}`)
   }
+
   return DB.isTableInitialized('course')
     .then((exists) => exists ? null : DB.initializeDb())
     .then(() => new Promise((resolve) => {

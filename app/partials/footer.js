@@ -8,4 +8,5 @@ const Footer = () =>
       <a id='release-notes' href='https://github.com/Laastine/lukkarimaatti/blob/master/CHANGELOG.md'>RELEASE NOTES</a>
     </div>
   </div>
+
 export default Footer

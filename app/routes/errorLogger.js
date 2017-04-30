@@ -1,7 +1,6 @@
 import express from 'express'
 
 const Logger = require('../logger')
-
 const errorLoggerRoutes = express.Router()
 
 errorLoggerRoutes.post('', (req, res) => {

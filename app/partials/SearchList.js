@@ -89,6 +89,7 @@ class SearchList extends React.Component {
     const closeCallback = () => {
       this.setState({isSearchListVisible: false})
     }
+
     return <div>
       <div className='search-container'>
         <input id='course-searchbox' autoFocus placeholder='Course name'

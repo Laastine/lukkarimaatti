@@ -32,16 +32,14 @@ const Event = ({event}) => (
 class Lukkari extends React.Component {
   constructor(props) {
     super(props)
-
     this.state = {
       dayFormat: 'DD.MM.YY',
       timeGutterFormat: 'HH.mm',
       views: ['month', 'week', 'day', 'agenda']
     }
-    this._handleResize = this._handleResize.bind(this)
   }
 
-  _handleResize() {
+  _handleResize = () => {
     const isMobile = window.innerWidth < 800
     this.setState({
       dayFormat: isMobile ? 'D.M' : 'DD.MM.YY',

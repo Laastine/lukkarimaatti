@@ -17,7 +17,7 @@ const DepartmentSelectorElement = (selectedDepartment) => {
     .map((e, index) => {
       return <span key={`${index}-${e}`}>
         <Link className={`department-link${selectedDepartment === e ? '-selected' : ''}`}
-              to={`/catalog/${e}`}>{e}</Link>
+          to={`/catalog/${e}`}>{e}</Link>
       </span>
     })
 
@@ -53,8 +53,8 @@ const DepartmentCoursesElement = (state) => {
   const courses = state.departmentCourses ? state.departmentCourses.map((c) => {
     const selected = isSelected(state, c.course_code, c.group_name)
     return <li key={c.course_code + c.course_name}
-               className={`department-course${selected ? '-selected' : ''}`}
-               onClick={partial(selectCourse, [c.course_code, c.group_name])}>
+      className={`department-course${selected ? '-selected' : ''}`}
+      onClick={partial(selectCourse, [c.course_code, c.group_name])}>
       {c.course_code} - {c.course_name}: {getSemester(c.week)} {selected ? 'SELECTED' : null}
     </li>
   }) : null

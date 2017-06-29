@@ -1,5 +1,5 @@
 import React from 'react'
-import {pipe, uniq, uniqBy, contains, addIndex, map, slice, partial} from 'ramda'
+import {addIndex, contains, map, partial, pipe, slice, uniq, uniqBy} from 'ramda'
 import Bacon from 'baconjs'
 import {searchCourses} from '../pages/frontApi/lukkariApi'
 import {appState} from '../store/lukkariStore'
@@ -20,15 +20,15 @@ const addCourse = (event, state) => {
 }
 
 const handleKeyInput = (event, state, indexCallback, closeCallback) => {
-  if (event.keyCode === 40) {  //Down
+  if (event.keyCode === 40) { //Down
     if (state.selectedIndex < visibleCourses(state).length - 1 && state.selectedIndex < LIST_MAX_LEN) {
       indexCallback(state.selectedIndex + 1)
     }
-  } else if (event.keyCode === 38) {  //Up
+  } else if (event.keyCode === 38) { //Up
     if (state.selectedIndex > 0) {
       indexCallback(state.selectedIndex - 1)
     }
-  } else if (event.keyCode === 13) {  //Enter
+  } else if (event.keyCode === 13) { //Enter
     closeCallback()
     addCourse(event, state)
   } else {
@@ -44,17 +44,18 @@ const searchList = (state, mouseEnterCallback, closeCallback) => {
       slice(0, LIST_MAX_LEN),
       mapIndexed((c, index) =>
         <div key={c.course_name}
-             onMouseEnter={partial(mouseEnterCallback, [index])}
-             className={index === state.selectedIndex ? 'search-list-coursename search-list-selected' : 'search-list-coursename'}
-             onClick={(event) => {
-               closeCallback()
-               addCourse(event, state)
-             }}>{c.course_name}</div>))(state.searchResults) : null
+          onMouseEnter={partial(mouseEnterCallback, [index])}
+          className={index === state.selectedIndex ? 'search-list-coursename search-list-selected' : 'search-list-coursename'}
+          onClick={(event) => {
+            closeCallback()
+            addCourse(event, state)
+          }}>{c.course_name}</div>))(state.searchResults) : null
 }
 
 class SearchList extends React.Component {
-  initialState() {
-    return {
+  constructor(props) {
+    super(props)
+    this.state = {
       selectedIndex: -1,
       searchString: '',
       searchResults: [],
@@ -65,7 +66,7 @@ class SearchList extends React.Component {
   componentDidMount() {
     document.getElementsByClassName('search-container')[0].focus()
     this.setState({searchResults: this.props.state.searchResults})
-    Bacon.fromEventTarget(this.refs.searchinput, 'keyup')
+    Bacon.fromEventTarget(this.searchinput, 'keyup')
       .debounce(250)
       .filter((e) => !contains(e.keyCode, [37, 38, 39, 40]))
       .onValue((e) => {
@@ -93,16 +94,18 @@ class SearchList extends React.Component {
     return <div>
       <div className='search-container'>
         <input id='course-searchbox' autoFocus placeholder='Course name'
-               ref='searchinput'
-               onKeyDown={(event) => {
-                 this.setState({searchString: event.target.value})
-                 handleKeyInput(event, state, indexCallback, closeCallback)
-               }}></input>
+          ref={(e) => {
+            this.searchinput = e
+          }}
+          onKeyDown={(event) => {
+            this.setState({searchString: event.target.value})
+            handleKeyInput(event, state, indexCallback, closeCallback)
+          }}></input>
       </div>
       <div className='search-list-container'
-           onMouseLeave={() => {
-             this.setState({selectedIndex: -1})
-           }}>
+        onMouseLeave={() => {
+          this.setState({selectedIndex: -1})
+        }}>
         {searchList(state, indexCallback, closeCallback)}
       </div>
     </div>

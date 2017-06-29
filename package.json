@@ -87,7 +87,7 @@
     "watch-js": "watchify app/client.js --debug -o .generated/bundle.js -v",
     "watch": "npm run watch-js & npm run watch-css & supervisor --quiet --ignore node_modules --watch app app/bootstrap.js",
     "start": "node app/bootstrap.js",
-    "lint": "eslint app",
+    "lint": "eslint app --fix",
     "clean": "rm .generated/*.js .generated/*.css",
     "integration-test": "mocha-phantomjs -p node_modules/.bin/phantomjs http://localhost:8080/test/runner.html",
     "test-unit": "mocha --compilers js:babel-register test/unit/*Spec.js",

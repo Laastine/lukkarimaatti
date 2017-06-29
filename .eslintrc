@@ -19,7 +19,8 @@
   "settings": {
     "react": {
       "pragma": "React"
-    }
+    },
+    "propWrapperFunctions": [ "forbidExtraProps" ]
   },
   "rules": {
     "comma-dangle": 1,
@@ -162,7 +163,9 @@
     "react/react-in-jsx-scope": 0,
     "react/no-danger": 0,
     "react/prop-types": 0,
-    "react/display-name": 0
+    "react/display-name": 0,
+    "react/jsx-no-duplicate-props": 2,
+    "react/jsx-indent-props": 0
   },
   "parser": "babel-eslint"
 }

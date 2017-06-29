@@ -15,50 +15,50 @@ const fetchComponentData = (needs, params) => {
 }
 
 export default
-  <Route component={AppPage}>
-    <Route path='/'
-           component={LukkariPage}
-           onEnter={(nextState) => {
-             if (!isServer && nextState.location.query.courses) {
-               fetchComponentData(LukkariPage.needs, {courses: nextState.location.query.courses})
-             }
-           }}
-           onLeave={() => {
-             if (!isServer) {
-               appState.dispatch({type: 'SYNC_URL_PARAMS'})
-             }
-           }}/>
+<Route component={AppPage}>
+  <Route path='/'
+    component={LukkariPage}
+    onEnter={(nextState) => {
+      if (!isServer && nextState.location.query.courses) {
+        fetchComponentData(LukkariPage.needs, {courses: nextState.location.query.courses})
+      }
+    }}
+    onLeave={() => {
+      if (!isServer) {
+        appState.dispatch({type: 'SYNC_URL_PARAMS'})
+      }
+    }}/>
 
-    <Route path='/catalog'
-           component={CatalogPage}
-           onEnter={(nextState) => {
-             if (!isServer) {
-               fetchComponentData(CatalogPage.needs, {
-                 department: 'TITE',
-                 courses: nextState.location.query.courses
-               })
-               window.scrollTo(0, 0)
-             }
-           }}
-           onLeave={() => {
-             if (!isServer) {
-               appState.dispatch({type: 'SYNC_URL_PARAMS'})
-             }
-           }}/>
+  <Route path='/catalog'
+    component={CatalogPage}
+    onEnter={(nextState) => {
+      if (!isServer) {
+        fetchComponentData(CatalogPage.needs, {
+          department: 'TITE',
+          courses: nextState.location.query.courses
+        })
+        window.scrollTo(0, 0)
+      }
+    }}
+    onLeave={() => {
+      if (!isServer) {
+        appState.dispatch({type: 'SYNC_URL_PARAMS'})
+      }
+    }}/>
 
-    <Route path='/catalog/:department'
-           component={CatalogPage}
-           onEnter={(nextState) => {
-             if (!isServer) {
-               fetchComponentData(CatalogPage.needs, {
-                 department: nextState.params.department,
-                 courses: nextState.location.query.courses
-               })
-               window.scrollTo(0, 0)
-             }
-           }}/>
+  <Route path='/catalog/:department'
+    component={CatalogPage}
+    onEnter={(nextState) => {
+      if (!isServer) {
+        fetchComponentData(CatalogPage.needs, {
+          department: nextState.params.department,
+          courses: nextState.location.query.courses
+        })
+        window.scrollTo(0, 0)
+      }
+    }}/>
 
-    <Route path='*'
-           component={NotFoundPage}
-           status={404}/>
-  </Route>
+  <Route path='*'
+    component={NotFoundPage}
+    status={404}/>
+</Route>

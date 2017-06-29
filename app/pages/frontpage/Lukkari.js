@@ -64,8 +64,8 @@ class Lukkari extends React.Component {
       <div className='container'>
         <a className='github-ribbon' href='https://github.com/Laastine/lukkarimaatti'>
           <img style={{position: 'absolute', top: '0px', right: '0px', border: '0px'}}
-               src='github.png'
-               alt='Fork me on GitHub'>
+            src='github.png'
+            alt='Fork me on GitHub'>
           </img>
         </a>
         <SearchList state={state}/>

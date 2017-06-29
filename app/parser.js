@@ -120,8 +120,8 @@ const getDepartment = (input) => {
 }
 
 const sanitizeInput = (input) => input ? input.trim()
-    .replace(/'/g, '')
-    .replace(/(\r\n|\n|\r)/g, '') : ''
+  .replace(/'/g, '')
+  .replace(/(\r\n|\n|\r)/g, '') : ''
 
 const parseDepartmentHtml = (html) => {
   const dataBatch = []
@@ -191,7 +191,7 @@ function parseCourseData(url) {
         DB.insertCourse(dataBatch)
       }
     }).catch((err) => Logger.error('Failed to parse HTML', err.stack)
-  )
+    )
 }
 
 module.exports = {

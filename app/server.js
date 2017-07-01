@@ -1,5 +1,6 @@
 import express from 'express'
 import path from 'path'
+import cors from 'cors'
 import {merge} from 'ramda'
 import {match} from 'react-router'
 import compression from 'compression'
@@ -25,6 +26,11 @@ process.on('unhandledRejection', (reason, p) => {
 
 const server = express()
 
+server.use(cors({
+  origin:['http://localhost:8080'],
+  methods:['GET','POST'],
+  credentials: true
+}))
 server.use(compression({threshold: 512}))
 server.use(bodyParser.json())
 server.use(bodyParser.urlencoded({extended: true}))

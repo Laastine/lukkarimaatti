@@ -1,34 +1,110 @@
 const cheerio = require('cheerio')
 const Promise = require('bluebird')
-const axios = require('axios')
-const {contains, range, concat} = require('ramda')
+const rp = require('request-promise')
+const {contains, range, mergeAll, concat} = require('ramda')
 const config = require('./config')
 const DB = require('./db')
 const Logger = require('./logger')
+const FormData = require('form-data')
+const {formData} = require('./formData')
+const querystring = require('querystring')
 
-const axiosCookieJarSupport = require('@3846masa/axios-cookiejar-support')
-const tough = require('tough-cookie')
-
-axiosCookieJarSupport(axios)
-
-const cookieJar = new tough.CookieJar()
+require('tough-cookie')
+const cookieJar = rp.jar()
 
 const links = []
 
 const updateCourseData = () => {
   const url = 'https://forms.lut.fi'
-  const path = '/scientia/sws/sylla1718/default.aspx'
-  axios.get(url + path, {
-    jar: cookieJar, // tough.CookieJar or boolean
-    withCredentials: true // If true, send cookie stored in jar
+  const pathDefault = '/scientia/sws/sylla1718/default.aspx'
+  const pathShowTimetable = '/scientia/sws/sylla1718/showtimetable.aspx'
+  rp({
+    method: 'GET',
+    uri: url + pathDefault,
+    jar: cookieJar,
+    resolveWithFullResponse: true
+    // withCredentials: true,
+    // data: {}
   })
     .then(res => {
-      console.dir(res, {colors:true, depth:null})
+      console.dir(res.headers, {colors: true})
+      const $ = cheerio.load(res.body)
+
+      const foo = mergeAll([formData, {__VIEWSTATE: $('#__VIEWSTATE').attr('value')},
+        {__VIEWSTATEGENERATOR: $('#__VIEWSTATEGENERATOR').attr('value')},
+        {__EVENTVALIDATION: $('#__EVENTVALIDATION').attr('value')}])
+      console.log(Object.keys(foo))
+      return rp({
+        method: 'POST',
+        uri: url + pathDefault,
+        headers: [
+          {name: 'Content-Type', value: 'application/x-www-form-urlencoded'},
+          {name: 'Host', value: 'forms.lut.fi'},
+          {name: 'Origin', value: 'https://forms.lut.fi'},
+          {name: 'Referer', value: 'https://forms.lut.fi/scientia/sws/sylla1718/default.aspx'},
+          {name: 'User-Agent', value: 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1'}
+        ],
+        timeout: 5000,
+        jar: cookieJar,
+        preambleCRLF: true,
+        postambleCRLF: true,
+        form: foo,
+        followAllRedirects: true,
+        followOriginalHttpMethod: true,
+        resolveWithFullResponse: true,
+        removeRefererHeader: true
+      })
+    })
+    .then(result => {
+      console.log('GOT DATA', result.statusCode)
+      console.dir(result.headers, {colors: true, depth: null})
+      return rp({
+        headers: [
+          {name: 'Referer', value: 'https://forms.lut.fi/scientia/sws/sylla1718/default.aspx'},
+          {name: 'User-Agent', value: 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1'}
+        ],
+        method: 'GET',
+        uri: url + pathShowTimetable,
+        timeout: 30000,
+        jar: cookieJar,
+        maxRedirects: 20,
+        followAllRedirects: true,
+        followOriginalHttpMethod: true,
+        resolveWithFullResponse: true,
+        removeRefererHeader: true
+      })
+    })
+    .then(asd => {
+      console.log('ASD', asd.statusCode)
+      console.dir(asd.body, {colors: true, depth: null})
     })
     .catch(err => {
       Logger.error('Failed to parse links', err.message)
     })
 }
+
+// const $ = cheerio.load(res.data)
+// const link = $('body h2 a').attr('href')
+// rp.post(, {maxRedirects: 10,})
+//   .then((res) => {
+//     const $ = cheerio.load(res.data)
+//     console.log('GOT', $, res.data)
+// $($('.portlet-body .journal-content-article').children()[2])
+//   .find('a')
+//   .each(function (index, elem) {
+//     const link = $(this).attr('href')
+//     const data = elem.children[0].data
+//     if (link.indexOf('/document_library/get_file?uuid=') > 0) {
+//       Logger.info(`Department link ${index} https://uni.lut.fi${link} ${data}`)
+//       links.push(link)
+//     }
+//   })
+// links.forEach((link) => {
+//   parseCourseData(link)
+// })
+// })
+// .then(() => Logger.info('Update course worker finished'))
+// .catch((err) => Logger.error('Failed to parse links', err))
 
 const parseBasicData = (course) => {
   const data = {
@@ -184,14 +260,14 @@ const parseDepartmentHtml = (html) => {
 }
 
 function parseCourseData(url) {
-  axios.get('https://uni.lut.fi' + url)
+  rp.get('https://uni.lut.fi' + url)
     .then((html) => {
       const dataBatch = parseDepartmentHtml(html.data)
       if (dataBatch.length > 0) {
         DB.insertCourse(dataBatch)
       }
     }).catch((err) => Logger.error('Failed to parse HTML', err.stack)
-    )
+  )
 }
 
 module.exports = {

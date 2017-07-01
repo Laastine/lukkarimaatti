@@ -6,7 +6,7 @@ const config = require('./config')
 const DB = require('./db')
 const Logger = require('./logger')
 const FormData = require('form-data')
-const {formData} = require('./formData')
+const {formData, dlObject} = require('./formData')
 const querystring = require('querystring')
 
 require('tough-cookie')
@@ -30,11 +30,13 @@ const updateCourseData = () => {
       console.dir(res.headers, {colors: true})
       const $ = cheerio.load(res.body)
 
-      const foo = mergeAll([formData, {__VIEWSTATE: $('#__VIEWSTATE').attr('value')},
-        {__VIEWSTATEGENERATOR: $('#__VIEWSTATEGENERATOR').attr('value')},
-        {__EVENTVALIDATION: $('#__EVENTVALIDATION').attr('value')}])
-      console.log(Object.keys(foo))
-      return rp({
+      // const foo = mergeAll(concat([formData, {__VIEWSTATE: $('#__VIEWSTATE').attr('value')},
+      //   {__VIEWSTATEGENERATOR: $('#__VIEWSTATEGENERATOR').attr('value')},
+      //   {__EVENTVALIDATION: $('#__EVENTVALIDATION').attr('value')}], dlObject.map(e => ({'dlObject': e}))))
+
+
+
+      const r = rp({
         method: 'POST',
         uri: url + pathDefault,
         headers: [
@@ -48,12 +50,27 @@ const updateCourseData = () => {
         jar: cookieJar,
         preambleCRLF: true,
         postambleCRLF: true,
-        form: foo,
+        formData: form,
         followAllRedirects: true,
         followOriginalHttpMethod: true,
         resolveWithFullResponse: true,
         removeRefererHeader: true
       })
+
+      const form = r.form()
+
+      dlObject.map(e => {
+        form.append('dlObject', e)
+      })
+      Object.keys(formData).forEach(key => {
+        form.append(key, formData[key])
+      })
+      form.append('__VIEWSTATE', $('#__VIEWSTATE').attr('value'))
+      form.append('__VIEWSTATEGENERATOR', $('#__VIEWSTATEGENERATOR').attr('value'))
+      form.append('__EVENTVALIDATION', $('#__EVENTVALIDATION').attr('value'))
+      console.log(form._streams)
+
+      return r
     })
     .then(result => {
       console.log('GOT DATA', result.statusCode)
@@ -75,11 +92,11 @@ const updateCourseData = () => {
       })
     })
     .then(asd => {
-      console.log('ASD', asd.statusCode)
+      console.log('GOT HTML', asd.statusCode)
       console.dir(asd.body, {colors: true, depth: null})
     })
     .catch(err => {
-      Logger.error('Failed to parse links', err.message)
+      Logger.error('Failed to parse links', err.stack)
     })
 }
 

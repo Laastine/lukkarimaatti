@@ -9,6 +9,7 @@
     "npm": "3.10.10"
   },
   "dependencies": {
+    "@3846masa/axios-cookiejar-support": "0.0.5",
     "autoprefixer": "7.1.1",
     "axios": "0.16.2",
     "babel-core": "6.25.0",
@@ -34,12 +35,13 @@
     "path": "0.12.7",
     "pg-promise": "6.2.0",
     "postcss-cli": "4.1.0",
-    "prop-types": "https://registry.npmjs.org/prop-types/-/prop-types-15.5.8.tgz",
+    "prop-types": "15.5.8",
     "ramda": "0.24.1",
     "react": "15.6.1",
     "react-big-calendar": "0.14.4",
     "react-dom": "15.6.1",
     "react-router": "3.0.5",
+    "tough-cookie": "2.3.2",
     "uglify-js": "3.0.20",
     "winston": "2.3.1"
   },

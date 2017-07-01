@@ -6,28 +6,28 @@ const config = require('./config')
 const DB = require('./db')
 const Logger = require('./logger')
 
+const axiosCookieJarSupport = require('@3846masa/axios-cookiejar-support')
+const tough = require('tough-cookie')
+
+axiosCookieJarSupport(axios)
+
+const cookieJar = new tough.CookieJar()
+
 const links = []
 
 const updateCourseData = () => {
-  axios.get(config.uniUrl)
-    .then((res) => {
-      const $ = cheerio.load(res.data)
-      $($('.portlet-body .journal-content-article').children()[2])
-        .find('a')
-        .each(function (index, elem) {
-          const link = $(this).attr('href')
-          const data = elem.children[0].data
-          if (link.indexOf('/document_library/get_file?uuid=') > 0) {
-            Logger.info(`Department link ${index} https://uni.lut.fi${link} ${data}`)
-            links.push(link)
-          }
-        })
-      links.forEach((link) => {
-        parseCourseData(link)
-      })
+  const url = 'https://forms.lut.fi'
+  const path = '/scientia/sws/sylla1718/default.aspx'
+  axios.get(url + path, {
+    jar: cookieJar, // tough.CookieJar or boolean
+    withCredentials: true // If true, send cookie stored in jar
+  })
+    .then(res => {
+      console.dir(res, {colors:true, depth:null})
     })
-    .then(() => Logger.info('Update course worker finished'))
-    .catch((err) => Logger.error('Failed to parse links', err.stack))
+    .catch(err => {
+      Logger.error('Failed to parse links', err.message)
+    })
 }
 
 const parseBasicData = (course) => {

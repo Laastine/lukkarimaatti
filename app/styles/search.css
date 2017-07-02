@@ -164,7 +164,7 @@ body {
   display: inline-block;
   float: left;
   padding-left: 20px;
-  color: #CCC;
+  color: #AAA;
   text-decoration: none;
   font-weight: 500;
 }
@@ -287,7 +287,7 @@ body {
 
 #disclaimer {
   font-weight: 500;
-  color: #EEE;
+  color: #AAA;
   text-align: left;
   padding: 5px 5px 5px 25px;
 }
@@ -298,11 +298,11 @@ body {
   display: block;
   text-align: left;
   padding: 5px 5px 5px 25px;
-  color: #EEE;
+  color: #AAA;
 }
 
 #release-notes {
-  color: #EEE;
+  color: #AAA;
   float: left;
   padding: 5px 5px 5px 25px;
 }

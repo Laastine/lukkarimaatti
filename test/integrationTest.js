@@ -11,7 +11,7 @@ const DB = require('./../app/db')
 const Parser = require('./../app/parser')
 const Data = require('./unit/courseData')
 
-const titeData = Parser.parseHtml(Data.courseData)
+const titeData = Parser.parseHtml(Data.ctCourseData)
 
 function waitUntil(predicate, loop_timeout) {
   return new Promise((resolve, reject) => {

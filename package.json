@@ -29,7 +29,6 @@
     "express": "4.15.3",
     "express-force-ssl": "0.3.2",
     "forever": "0.15.3",
-    "form-data": "0.1.4",
     "moment": "2.18.1",
     "nodemailer": "4.0.1",
     "path": "0.12.7",

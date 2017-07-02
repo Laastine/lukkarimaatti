@@ -157,7 +157,7 @@ body {
   height: 50px;
   background: linear-gradient(
     45deg,
-    #333, #777);
+    #333, #555);
 }
 
 .header-element {
@@ -278,7 +278,7 @@ body {
   width: 100%;
   background: linear-gradient(
     45deg,
-    #333, #777);
+    #333, #555);
   position: fixed;
   bottom: 0;
   left: 0;

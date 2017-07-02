@@ -1,7 +1,7 @@
 const cheerio = require('cheerio')
 const Promise = require('bluebird')
 const rp = require('request-promise')
-const {assoc, contains, range, merge, concat, tail} = require('ramda')
+const {assoc, concat, contains, dissoc, drop, merge, range} = require('ramda')
 const config = require('./config')
 const DB = require('./db')
 const Logger = require('./logger')
@@ -112,16 +112,17 @@ const parseHtml = (data) => {
   const courses = $('td.object-cell-border').map(function () {
     let weekDay = $(this).siblings('td.row-label-one').text()
     if (!weekDay) {
-      const days =  $(this).parent().prevAll().find('td.row-label-one').first()
+      const days = $(this).parent().prevAll().find('td.row-label-one').first()
       weekDay = days.text()
     }
     return assoc('week_day', enToFi[weekDay], parseBasicData(sanitizeInput($(this).text())))
   }).get()
-    .map(c => assoc('week', parseWeeks(c.type), c))
-    .map(c => assoc('time_of_day', parseTimeOfDay(c.type), c))
-    .map(c => assoc('classroom', parseClassRoom(c.type), c))
+    .map(c => assoc('week', parseWeeks(c.text), c))
+    .map(c => assoc('time_of_day', parseTimeOfDay(c.text), c))
+    .map(c => assoc('classroom', parseClassRoom(c.text), c))
     .map(c => assoc('department', getDepartment(c.course_code), c))
-    .map(c => merge(c, {teacher: '', misc: '', group_name: '', type: parseType(c.type)}))
+    .map(c => merge(c, {teacher: '', misc: '', group_name: ''}))
+    .map(c => dissoc('text', c))
   return courses
 }
 
@@ -129,10 +130,12 @@ const parseBasicData = (course) => {
   const data = {
     course_code: '',
     course_name: '',
-    type: ''
+    type: '',
+    text: ''
   }
   const nameAndCode = course.split(' - ')
-  const type = course.split('/')
+  const type = parseType(nameAndCode)
+  const text = drop(1, course.split(/\s{2,}/).filter(e => e)).join('    ')
   if (nameAndCode.length >= 2) {
     data.course_code = nameAndCode[0]
     if (data.course_code.substr(0, 2) === 'FV') {
@@ -141,8 +144,11 @@ const parseBasicData = (course) => {
       data.course_name = nameAndCode[1].substr(0, nameAndCode[1].indexOf('/'))
     }
   }
-  if (type.length >= 2) {
-    data.type = type[type.length - 1]
+  if (type) {
+    data.type = type
+  }
+  if (data) {
+    data.text = text
   }
   return data
 }
@@ -163,13 +169,14 @@ const parseClassRoom = (input) => {
     .split(/([0-9]{1,2}):([0]{2})\s+([0-9]{1,2}):([0]{2})/)[0]
     .split(/\s/)
     .filter(e => e)
-  return tail(capture).join(' ')
+    .join(' ')
+  return capture
 }
 
 const parseType = (input) => {
-  const capture = input.match(/^[0-9A-Z]+/)
-  if (capture && capture.length > 0) {
-    return capture[0].trim()
+  const captures = input.join(' ').split('/')
+  if (captures && captures.length > 1) {
+    return captures[1].match(/[A-Z0-9]/)[0]
   }
   return ''
 }

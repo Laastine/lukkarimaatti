@@ -253,8 +253,7 @@ module.exports = {
 
   workerUpdateData: () => {
     Logger.info('Update course data by worker')
-    Promise.resolve(DB.cleanCourseTable())
-      .then(() => updateCourseData())
+    Promise.resolve(updateCourseData())
       .catch((err) => Logger.error('Error while updating DB data', err.stack))
   },
   parseHtml

@@ -89,32 +89,28 @@ const updateCourseData = () => {
     })
 }
 
+const enToFi = {
+  Mon: 'ma',
+  Tue: 'ti',
+  Wed: 'ke',
+  Thu: 'to',
+  Fri: 'pe',
+  Sat: 'la',
+  Sun: 'su'
+}
+
 const parseHtml = (data) => {
   const $ = cheerio.load(data)
   const courses = $('td.object-cell-border').map(function () {
     const weekDay = $(this).siblings('td.row-label-one').text()
-    return assoc('weekDay', weekDay, parseBasicData(sanitizeInput($(this).text())))
+    return assoc('week_day', enToFi[weekDay], parseBasicData(sanitizeInput($(this).text())))
   }).get()
-    .map(c => {
-      const capture = c.type.split(/\s{2,}/)
-      const weekData = capture.length > 0 ? capture : ''
-      return assoc('week', parseWeeks(weekData[weekData.length - 1]), c)
-    })
-    .map(c => {
-      return assoc('time_of_day', parseTimeOfDay(c.type), c)
-    })
-    .map(c => {
-      return assoc('classroom', parseClassRoom(c.type), c)
-    })
-    .map(c => {
-      return assoc('department', getDepartment(c.course_code), c)
-    })
-    .map(c => {
-      return merge(c, {teacher: '', misc: '', group_name: ''})
-    })
-    .map(c => {
-      return assoc('type', parseType(c.type), c)
-    })
+    .map(c => assoc('week', parseWeeks(c.type), c))
+    .map(c => assoc('time_of_day', parseTimeOfDay(c.type), c))
+    .map(c => assoc('classroom', parseClassRoom(c.type), c))
+    .map(c => assoc('department', getDepartment(c.course_code), c))
+    .map(c => merge(c, {teacher: '', misc: '', group_name: ''}))
+    .map(c => assoc('type', parseType(c.type), c))
   return courses
 }
 
@@ -172,7 +168,10 @@ const parseType = (input) => {
   return ''
 }
 
-const parseWeeks = (weeks) => {
+const parseWeeks = (input) => {
+  const capture = input.split(/\s{2,}/)
+  const weekData = capture && capture.length > 0 ? capture : ''
+  const weeks = weekData[weekData.length - 1]
   let weekSequence = []
   if (contains('-', weeks)) {
     weeks.match(/[0-9]{1,2}-[0-9]{1,2}/g).map((m) =>

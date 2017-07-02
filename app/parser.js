@@ -110,7 +110,11 @@ const enToFi = {
 const parseHtml = (data) => {
   const $ = cheerio.load(data)
   const courses = $('td.object-cell-border').map(function () {
-    const weekDay = $(this).siblings('td.row-label-one').text()
+    let weekDay = $(this).siblings('td.row-label-one').text()
+    if (!weekDay) {
+      const days =  $(this).parent().prevAll().find('td.row-label-one').first()
+      weekDay = days.text()
+    }
     return assoc('week_day', enToFi[weekDay], parseBasicData(sanitizeInput($(this).text())))
   }).get()
     .map(c => assoc('week', parseWeeks(c.type), c))

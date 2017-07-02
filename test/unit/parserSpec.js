@@ -1,11 +1,13 @@
 import assert from 'assert'
 import {contains, all} from 'ramda'
 import {parseHtml} from '../../app/parser'
-import {courseData} from './courseData'
+import {ctCourseData, bhCourseData, aCourseData} from './courseData'
 
-const titeData = parseHtml(courseData)
+const titeData = parseHtml(ctCourseData)
+const enteData = parseHtml(bhCourseData)
+const katiData = parseHtml(aCourseData)
 
-describe('Lukkarimaatti normal course parser', () => {
+describe('Lukkarimaatti tite course parser', () => {
   it('Check that every course gets parsed', () => {
     assert.equal(titeData.length, 3)
   })
@@ -35,6 +37,80 @@ describe('Lukkarimaatti normal course parser', () => {
       classroom: 'Aloitusluennot 4511',
       type: 'L',
       department: 'tite',
+      teacher: '',
+      misc: '',
+      group_name: '' })
+  })
+})
+
+describe('Lukkarimaatti ente course parser', () => {
+  it('Check that every course gets parsed', () => {
+    assert.equal(enteData.length, 7)
+  })
+
+  it('Check that correct object keys are found', () => {
+    assert.equal(all((e) => {
+      return contains('course_name')(Object.keys(e)) &&
+        contains('course_code')(Object.keys(e)) &&
+        contains('week')(Object.keys(e)) &&
+        contains('week_day')(Object.keys(e)) &&
+        contains('time_of_day')(Object.keys(e)) &&
+        contains('classroom')(Object.keys(e)) &&
+        contains('type')(Object.keys(e)) &&
+        contains('department')(Object.keys(e)) &&
+        contains('teacher')(Object.keys(e)) &&
+        contains('misc')(Object.keys(e)) &&
+        contains('group_name')(Object.keys(e))
+    })(enteData), true)
+  })
+
+  it('Check that correct object values are present', () => {
+    assert.deepEqual(enteData[2], { course_code: 'BH40A1550',
+      course_name: 'Computational Fluid Dynamics Workshop',
+      week: '50',
+      week_day: 'ti',
+      time_of_day: '14-16',
+      classroom: 'Yo-talo ML 213*',
+      type: 'H',
+      department: 'ente/ymte',
+      teacher: '',
+      misc: '',
+      group_name: '' })
+  })
+})
+
+
+
+describe('Lukkarimaatti kati course parser', () => {
+  it('Check that every course gets parsed', () => {
+    assert.equal(katiData.length, 12)
+  })
+
+  it('Check that correct object keys are found', () => {
+    assert.equal(all((e) => {
+      return contains('course_name')(Object.keys(e)) &&
+        contains('course_code')(Object.keys(e)) &&
+        contains('week')(Object.keys(e)) &&
+        contains('week_day')(Object.keys(e)) &&
+        contains('time_of_day')(Object.keys(e)) &&
+        contains('classroom')(Object.keys(e)) &&
+        contains('type')(Object.keys(e)) &&
+        contains('department')(Object.keys(e)) &&
+        contains('teacher')(Object.keys(e)) &&
+        contains('misc')(Object.keys(e)) &&
+        contains('group_name')(Object.keys(e))
+    })(katiData), true)
+  })
+
+  it('Check that correct object values are present', () => {
+    assert.deepEqual(katiData[6], { course_code: 'A130A0350',
+      course_name: 'Kvantitatiiviset tutkimusmenetelmät',
+      week: '16',
+      week_day: 'ti',
+      time_of_day: '8-14',
+      classroom: '2303*',
+      type: 'S',
+      department: 'kati',
       teacher: '',
       misc: '',
       group_name: '' })

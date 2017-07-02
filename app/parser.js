@@ -78,18 +78,22 @@ const updateCourseData = () => {
     })
     .then(dataBatch => {
       if (dataBatch.length > 0) {
-        Logger.info(`Inserting ${dataBatch.length}pcs courses`)
-        DB.insertCourse(dataBatch)
+        new Promise.resolve(DB.cleanCourseTable())
+          .then(() => {
+            Logger.info('DB cleaned')
+            Logger.info(`Inserting ${dataBatch.length}pcs courses`)
+            return DB.insertCourse(dataBatch)
+          })
+          .then(() => {
+            const endTime = new Date()
+            Logger.info(`UpdateCourseData finished in ${(endTime.getTime() - startTime.getTime()) / 1000} seconds`)
+          })
       } else {
-        Logger.warn('No courses inserted')
+        throw Error(`No courses inserted, dataBatch size ${dataBatch.length}`)
       }
     })
-    .then(() => {
-      const endTime = new Date()
-      Logger.info(`UpdateCourseData finished in ${(endTime.getTime() - startTime.getTime()) / 1000} seconds`)
-    })
     .catch(err => {
-      Logger.error('Failed to parse links', err.stack)
+      Logger.error('Failed to parse links', err.message)
     })
 }
 
@@ -239,11 +243,7 @@ module.exports = {
   updateCourseData: (req, res) => {
     Logger.info('Update course data from IP', req.client.remoteAddress)
     if (req.query.secret === config.appSecret) {
-      Promise.resolve(DB.cleanCourseTable())
-        .then((dbRes) => {
-          Logger.info('DB cleaned', dbRes)
-          return updateCourseData()
-        })
+      updateCourseData()
       res.status(200).json({status: 'ok'})
     } else {
       Logger.warn('Unauthorized update attempt from IP', req.client.remoteAddress)

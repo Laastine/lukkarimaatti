@@ -109,8 +109,7 @@ const parseHtml = (data) => {
     .map(c => assoc('time_of_day', parseTimeOfDay(c.type), c))
     .map(c => assoc('classroom', parseClassRoom(c.type), c))
     .map(c => assoc('department', getDepartment(c.course_code), c))
-    .map(c => merge(c, {teacher: '', misc: '', group_name: ''}))
-    .map(c => assoc('type', parseType(c.type), c))
+    .map(c => merge(c, {teacher: '', misc: '', group_name: '', type: parseType(c.type)}))
   return courses
 }
 
@@ -118,12 +117,10 @@ const parseBasicData = (course) => {
   const data = {
     course_code: '',
     course_name: '',
-    group: '',
     type: ''
   }
   const nameAndCode = course.split(' - ')
   const type = course.split('/')
-  const group = course.split(': ')
   if (nameAndCode.length >= 2) {
     data.course_code = nameAndCode[0]
     if (data.course_code.substr(0, 2) === 'FV') {
@@ -134,9 +131,6 @@ const parseBasicData = (course) => {
   }
   if (type.length >= 2) {
     data.type = type[type.length - 1]
-  }
-  if (group.length >= 2) {
-    data.group = group[group.length - 1]
   }
   return data
 }
@@ -258,5 +252,6 @@ module.exports = {
     Promise.resolve(DB.cleanCourseTable())
       .then(() => updateCourseData())
       .catch((err) => Logger.error('Error while updating DB data', err.stack))
-  }
+  },
+  parseHtml
 }

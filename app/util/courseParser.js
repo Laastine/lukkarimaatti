@@ -3,7 +3,7 @@ import moment from 'moment'
 require('moment/locale/fi')
 
 const getYearNumber = (courseWeekNumber) => {
-  const isSpringSemester = moment().week() === 53 || moment().week() < 27
+  const isSpringSemester = moment().week() === 53 || moment().week() < 26
   const week = parseInt(courseWeekNumber, 10)
   const springCourse = (week > 0 && week < 35 || week === 53)
   if (isSpringSemester) {

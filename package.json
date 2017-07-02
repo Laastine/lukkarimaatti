@@ -24,7 +24,6 @@
     "browserify": "14.4.0",
     "cheerio": "0.22.0",
     "compression": "1.6.2",
-    "cors": "2.8.3",
     "cssnano": "3.10.0",
     "cssnano-cli": "1.0.5",
     "express": "4.15.3",

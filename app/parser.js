@@ -11,6 +11,7 @@ require('tough-cookie')
 const cookieJar = rp.jar()
 
 const updateCourseData = () => {
+  const startTime = new Date()
   const url = 'https://forms.lut.fi'
   const pathDefault = '/scientia/sws/sylla1718/default.aspx'
   const pathShowTimetable = '/scientia/sws/sylla1718/showtimetable.aspx'
@@ -32,7 +33,7 @@ const updateCourseData = () => {
           {name: 'Referer', value: 'https://forms.lut.fi/scientia/sws/sylla1718/default.aspx'},
           {name: 'User-Agent', value: 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1'}
         ],
-        timeout: 5000,
+        timeout: 20000,
         jar: cookieJar,
         preambleCRLF: true,
         postambleCRLF: true,
@@ -43,7 +44,6 @@ const updateCourseData = () => {
       })
 
       const form = r.form()
-
       dlObject.map(e => {
         form.append('dlObject', e)
       })
@@ -83,6 +83,10 @@ const updateCourseData = () => {
       } else {
         Logger.warn('No courses inserted')
       }
+    })
+    .then(() => {
+      const endTime = new Date()
+      Logger.info(`UpdateCourseData finished in ${(endTime.getTime() - startTime.getTime()) / 1000} seconds`)
     })
     .catch(err => {
       Logger.error('Failed to parse links', err.stack)

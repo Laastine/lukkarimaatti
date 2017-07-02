@@ -1,4 +1,4 @@
-export const formData = {
+const formData = {
   __EVENTTARGET: '',
   __EVENTARGUMENT: '',
   __LASTFOCUS: '',
@@ -15,7 +15,7 @@ export const formData = {
   bGetTimetable: 'View timetable'
 }
 
-export const dlObject = [
+const dlObject = [
   'A130A0000',
   'A130A0050',
   'A130A0200',
@@ -651,3 +651,8 @@ export const dlObject = [
   'LM10A4000 (tite)',
   'LM10A4000 (tuta'
 ]
+
+module.exports = {
+  formData,
+  dlObject
+}

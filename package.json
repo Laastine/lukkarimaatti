@@ -32,9 +32,9 @@
     "moment": "2.18.1",
     "nodemailer": "4.0.1",
     "path": "0.12.7",
-    "pg-promise": "6.2.0",
+    "pg-promise": "6.3.0",
     "postcss-cli": "4.1.0",
-    "prop-types": "15.5.8",
+    "prop-types": "15.5.10",
     "ramda": "0.24.1",
     "react": "15.6.1",
     "react-big-calendar": "0.14.4",
@@ -43,7 +43,7 @@
     "request": "2.81.0",
     "request-promise": "4.2.1",
     "tough-cookie": "2.3.2",
-    "uglify-js": "3.0.20",
+    "uglify-js": "3.0.23",
     "winston": "2.3.1"
   },
   "devDependencies": {

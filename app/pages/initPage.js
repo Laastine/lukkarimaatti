@@ -12,7 +12,9 @@ export const renderFullPage = (initialState, options, renderProps) => {
         <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
         <link rel='stylesheet' href='/static/${options.cssChecksum}/styles.css'/>
         <link rel='shortcut icon' type='image/png' href='/img/favicon.png'/>
+        <meta name="description" content="Lukkarimaatti++ timetable tool for LUT students"/>
         ${googleAnalytics}
+        <title>Lukkarimaatti++</title>
       </head>
       <body>
         <div id='root'>${renderToString(<App state={initialState} renderProps={renderProps}></App>)}</div>

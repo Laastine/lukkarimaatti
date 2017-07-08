@@ -5,8 +5,9 @@ import SearchList from '../../partials/SearchList'
 import searchResults from '../../partials/searchResults'
 import {addDataToCalendar} from '../../util/courseParser'
 import {appState} from '../../store/lukkariStore'
-import BigCalendar from 'react-big-calendar' // eslint-disable-line
-require('moment/locale/fi')
+import BigCalendar from 'react-big-calendar'
+import 'moment/locale/fi'
+
 BigCalendar.momentLocalizer(moment)
 
 const stringToColor = (colorSeed) => {

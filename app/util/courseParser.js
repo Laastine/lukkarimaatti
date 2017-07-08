@@ -1,6 +1,6 @@
 import {flatten} from 'ramda'
 import moment from 'moment'
-require('moment/locale/fi')
+import 'moment/locale/fi'
 
 const getYearNumber = (courseWeekNumber) => {
   const isSpringSemester = moment().week() === 53 || moment().week() < 26

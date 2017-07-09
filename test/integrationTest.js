@@ -12,6 +12,7 @@ const Parser = require('./../app/parser')
 const Data = require('./unit/courseData')
 
 const titeData = Parser.parseHtml(Data.ctCourseData)
+const sateData = Parser.parseHtml(Data.blCourseData)
 
 function waitUntil(predicate, loop_timeout) {
   return new Promise((resolve, reject) => {
@@ -69,7 +70,9 @@ exec('npm i', {cwd: '.'})
   .then(() => waitUntil(pollLocalhost, 1000))
   .then(() => {
     console.log('Populate DB')
-    return DB.insertCourse(titeData)
+    return DB.cleanCourseTable()
+      .then(() => DB.insertCourse(titeData))
+      .then(() => DB.insertCourse(sateData))
   })
   .then(() => {
     console.log('Running tests...')

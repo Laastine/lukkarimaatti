@@ -36,7 +36,7 @@ class Lukkari extends React.Component {
     this.state = {
       dayFormat: 'DD.MM.YY',
       timeGutterFormat: 'HH.mm',
-      views: ['month', 'week', 'day', 'agenda']
+      views: ['month', 'work_week', 'day', 'agenda']
     }
   }
 
@@ -45,7 +45,7 @@ class Lukkari extends React.Component {
     this.setState({
       dayFormat: isMobile ? 'D.M' : 'DD.MM.YY',
       timeGutterFormat: isMobile ? 'HH' : 'HH.mm',
-      views: isMobile ? ['week', 'day'] : ['month', 'week', 'day', 'agenda']
+      views: isMobile ? ['work_week', 'day'] : ['month', 'work_week', 'day', 'agenda']
     })
   }
 
@@ -75,8 +75,12 @@ class Lukkari extends React.Component {
           {searchResults(state)}
         </div>
         <BigCalendar
-          formats={{dayFormat, timeGutterFormat, eventTimeRangeFormat: ({start, end}) => `${moment(start).format('HH.mm')}-${moment(end).format('HH.mm')}`}}
-          defaultView="week"
+          formats={{
+            dayFormat,
+            timeGutterFormat,
+            eventTimeRangeFormat: ({start, end}) => `${moment(start).format('HH.mm')}-${moment(end).format('HH.mm')}`
+          }}
+          defaultView="work_week"
           events={addDataToCalendar(state)}
           views={this.state.views}
           popup={false}

@@ -15,10 +15,12 @@ describe('Lukkarimaatti predicates tests', () => {
     assert.equal(isCourseLink('https://lukkarimaatti.ltky.fi/?courses={}'), false)
     assert.equal(isCourseLink('https://lukkarimaatti.ltky.fi/?courses=[]'), false)
     assert.equal(isCourseLink('http://localhost:8080/?courses=CT60A43[]02'), false)
+    assert.equal(isCourseLink('http://localhost:8080/?A130A0350'), false)
   })
 
   it('Check valid email address', () => {
     assert.equal(isEmail('lukkarimaatti@gmail.com'), true)
+    assert.equal(isEmail('lukkarimaatti+asd@gmail.com'), true)
     assert.equal(isEmail('jaska.jokunen@lut.fi'), true)
     assert.equal(isEmail('maija.mallikas@student.lut.fi'), true)
   })
@@ -26,5 +28,7 @@ describe('Lukkarimaatti predicates tests', () => {
   it('Check invalid email address', () => {
     assert.equal(isEmail('@student.lut.fi'), false)
     assert.equal(isEmail('asd@.fi'), false)
+    assert.equal(isEmail(), false)
+    assert.equal(isEmail(''), false)
   })
 })

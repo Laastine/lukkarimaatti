@@ -53,6 +53,7 @@ function setInputValue(el, index, elementValue) {
       .then(function () {
         $(S(el)[idx]).val(elementValue)
         triggerEvent(S(el)[idx], 'input')
+        triggerEvent(S(el)[idx], 'keyup')
       })
       .catch(function(err) {
         console.log(err)

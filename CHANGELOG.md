@@ -6,6 +6,9 @@ Version numbering:
 `<major>.<minor>.<patch>`
 
 ---
+### 1.4.1 July 9, 2017
+* Use work week default view instead whole week (monday-sunday)
+
 ### 1.4.0 July 2, 2017
 * New course data parsing logic
 

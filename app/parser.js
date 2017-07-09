@@ -55,23 +55,21 @@ const updateCourseData = () => {
       form.append('__EVENTVALIDATION', $('#__EVENTVALIDATION').attr('value'))
       return r
     })
-    .then(() => {
-      return rp({
-        headers: [
-          {name: 'Referer', value: 'https://forms.lut.fi/scientia/sws/sylla1718/default.aspx'},
-          {name: 'User-Agent', value: 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1'}
-        ],
-        method: 'GET',
-        uri: url + pathShowTimetable,
-        timeout: 30000,
-        jar: cookieJar,
-        maxRedirects: 20,
-        followAllRedirects: true,
-        followOriginalHttpMethod: true,
-        resolveWithFullResponse: true,
-        removeRefererHeader: true
-      })
-    })
+    .then(() => rp({
+      headers: [
+        {name: 'Referer', value: 'https://forms.lut.fi/scientia/sws/sylla1718/default.aspx'},
+        {name: 'User-Agent', value: 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1'}
+      ],
+      method: 'GET',
+      uri: url + pathShowTimetable,
+      timeout: 30000,
+      jar: cookieJar,
+      maxRedirects: 20,
+      followAllRedirects: true,
+      followOriginalHttpMethod: true,
+      resolveWithFullResponse: true,
+      removeRefererHeader: true
+    }))
     .then(res => {
       Logger.info('Parsing HTML', res.statusCode)
       return parseHtml(res.body)
@@ -137,9 +135,10 @@ const parseBasicData = (course) => {
   const type = parseType(nameAndCode)
   const text = drop(1, course.split(/\s{2,}/).filter(e => e)).join('    ')
   if (nameAndCode.length >= 2) {
-    data.course_code = nameAndCode[0]
+    const [code, name] = nameAndCode
+    data.course_code = code
     if (data.course_code.substr(0, 2) === 'FV') {
-      data.course_name = nameAndCode[1]
+      data.course_name = name
     } else {
       data.course_name = nameAndCode[1].substr(0, nameAndCode[1].indexOf('/'))
     }

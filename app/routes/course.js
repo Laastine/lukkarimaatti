@@ -7,9 +7,9 @@ import DB from '../db'
 const courseRoutes = express.Router()
 
 const buildErrorMessage = (functionName, query, ip, err) => {
-  const ipParam = ip ? ' IP: ' + ip : ''
+  const ipParam = ip ? ` IP: ${ip}` : ''
   const queryParam = typeof query === 'object' ? JSON.stringify(query) : query
-  Logger.error(functionName + ', request' + queryParam + ipParam + ' error', err.stack)
+  Logger.error(`${functionName}, request${queryParam}${ipParam} error`, err.stack)
 }
 
 const extractCourseParams = (params) => {

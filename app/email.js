@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer'
 import config from './config'
 import Logger from './logger'
-import {isEmail, isCourseLink} from './utils'
+import {isCourseLink, isEmail} from './utils'
 
 module.exports = {
   sendMail: (req, res) => {
@@ -14,12 +14,12 @@ module.exports = {
           pass: config.emailPassword
         }
       })
-      Logger.info('name=' + config.emailAddress)
+      Logger.info(`name=${config.emailAddress}`)
       const mailOptions = {
         from: 'lukkarimaatti@gmail.com',
         to: email,
         subject: 'Lukkarimaatti++ course url',
-        text: 'Your lukkarimaatti url=' + link
+        text: `Your lukkarimaatti url=${link}`
       }
       Logger.info('mailOptions', mailOptions)
 
@@ -28,7 +28,7 @@ module.exports = {
           Logger.error(error)
           res.status(500).json({status: 'email send error'})
         } else {
-          Logger.info('Message sent: ' + info.response)
+          Logger.info(`Message sent: ${info.response}`)
           res.status(200).json({status: 'ok'})
         }
       })

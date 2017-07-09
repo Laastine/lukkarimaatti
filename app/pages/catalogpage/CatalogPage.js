@@ -6,10 +6,6 @@ import Footer from '../../partials/footer'
 import {loadCourses, loadCoursesByDepartment} from '../frontApi/lukkariApi'
 
 class CatalogPage extends React.Component {
-  constructor(props, context) {
-    super(props, context)
-  }
-
   render() {
     return <div>
       <div className='content-container'>

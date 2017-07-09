@@ -1,7 +1,7 @@
 import 'babel-polyfill'
 import React from 'react'
 import {render} from 'react-dom'
-import {match, browserHistory} from 'react-router'
+import {browserHistory, match} from 'react-router'
 import Routes from './pages/routes'
 import App from './pages/app'
 
@@ -25,7 +25,7 @@ window.onload = () => {
     }
 
     sendMessageToServer({
-      error: {message: message, file: file, line: line, col: col, error: serializeError(error)},
+      error: {message, file, line, col, error: serializeError(error)},
       userAgent: window.navigator.userAgent
     })
     return false

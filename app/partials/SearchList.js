@@ -83,7 +83,7 @@ class SearchList extends React.Component {
   }
 
   render() {
-    const state = this.state
+    const {state} = this
     const indexCallback = (index) => {
       this.setState({selectedIndex: index})
     }

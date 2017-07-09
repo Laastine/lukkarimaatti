@@ -1,8 +1,8 @@
 import React from 'react'
 import {Link} from 'react-router'
 import {appState} from '../../store/lukkariStore'
-import {loadCourseByCodeAndGroup, loadCourseByCode} from '../frontApi/lukkariApi'
-import {any, partial, isEmpty} from 'ramda'
+import {loadCourseByCode, loadCourseByCodeAndGroup} from '../frontApi/lukkariApi'
+import {any, isEmpty, partial} from 'ramda'
 
 const DepartmentSelectorElement = (selectedDepartment) => {
   const departmentNames = ['ENTE-YMTE',
@@ -14,12 +14,10 @@ const DepartmentSelectorElement = (selectedDepartment) => {
     'SATE',
     'TITE',
     'TUTA']
-    .map((e, index) => {
-      return <span key={`${index}-${e}`}>
-        <Link className={`department-link${selectedDepartment === e ? '-selected' : ''}`}
-          to={`/catalog/${e}`}>{e}</Link>
-      </span>
-    })
+    .map((e, index) => <span key={`${index}-${e}`}>
+      <Link className={`department-link${selectedDepartment === e ? '-selected' : ''}`}
+        to={`/catalog/${e}`}>{e}</Link>
+    </span>)
 
   return <div className="department-link-container">{departmentNames}</div>
 }

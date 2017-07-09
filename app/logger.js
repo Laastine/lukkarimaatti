@@ -7,7 +7,7 @@ module.exports = new (winston.Logger)({
   transports: [
     new (winston.transports.Console)({
       timestamp: () => new Date().toISOString(),
-      formatter: (options) => `${options.timestamp()} ${options.level.toUpperCase()} ${options.message ? options.message : ''}  ${(options.meta && Object.keys(options.meta).length ? '\n\t' + util.inspect(options.meta) : '')}`
+      formatter: (options) => `${options.timestamp()} ${options.level.toUpperCase()} ${options.message ? options.message : ''}  ${(options.meta && Object.keys(options.meta).length ? `\n\t${util.inspect(options.meta)}` : '')}`
     })
   ]
 })

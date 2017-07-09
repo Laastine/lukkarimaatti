@@ -15,16 +15,12 @@ const getYearNumber = (courseWeekNumber) => {
 
 export const addDataToCalendar = (state) => {
   const getTimestamp = (course, weekNumber, hour) =>
-    moment(getYearNumber(course.week) + '-' + weekNumber + '-' + course.week_day + '-' + hour, 'YYYY-ww-dd-hh')
-  return state.selectedCourses && state.selectedCourses.length > 0 ? flatten(state.selectedCourses.map((course) => {
-    return JSON.parse('[' + course.week + ']').map((weekNumber) => {
-      return {
-        title: course.course_name,
-        description: '/' + course.type + '\n' + course.classroom,
-        start: new Date(getTimestamp(course, weekNumber, course.time_of_day.split('-')[0] || 6)),
-        end: new Date(getTimestamp(course, weekNumber, course.time_of_day.split('-')[1] || 6)),
-        id: course.course_code + '#' + course.type
-      }
-    })
-  })) : []
+    moment(`${getYearNumber(course.week)}-${weekNumber}-${course.week_day}-${hour}`, 'YYYY-ww-dd-hh')
+  return state.selectedCourses && state.selectedCourses.length > 0 ? flatten(state.selectedCourses.map((course) => JSON.parse(`[${course.week}]`).map((weekNumber) => ({
+    title: course.course_name,
+    description: `/${course.type}\n${course.classroom}`,
+    start: new Date(getTimestamp(course, weekNumber, course.time_of_day.split('-')[0] || 6)),
+    end: new Date(getTimestamp(course, weekNumber, course.time_of_day.split('-')[1] || 6)),
+    id: `${course.course_code}#${course.type}`
+  })))) : []
 }

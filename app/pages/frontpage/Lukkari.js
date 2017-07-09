@@ -19,7 +19,7 @@ const stringToColor = (colorSeed) => {
   })
   for (let j = 0; j < 3; j++) {
     value = (hash >> (j * 8)) & 0xFF
-    colour += ('00' + value.toString(16)).substr(-2)
+    colour += (`00${value.toString(16)}`).substr(-2)
   }
   return colour
 }
@@ -87,7 +87,7 @@ class Lukkari extends React.Component {
           timeslots={2}
           components={{event: Event}}
           onSelectEvent={(c) => {
-            const courses = filter((cc) => cc.course_code + '#' + cc.type === c.id, state.selectedCourses)
+            const courses = filter((cc) => `${cc.course_code}#${cc.type}` === c.id, state.selectedCourses)
             appState.dispatch({type: 'REMOVE_COURSE_BY_ID', courses})
           }}
           min={new Date(moment(state.currentDate).hours(8).minutes(0).format())}

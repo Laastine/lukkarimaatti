@@ -9,20 +9,20 @@ const Logger = require('./logger')
 const client = pgp(appConfig.postgresUrl)
 
 const buildInsertQueryString = (courseBatch) =>
-  reduce((a, course) => a + 'INSERT INTO course (' +
+  reduce((a, course) => `${a}INSERT INTO course (` +
     'course_code, course_name, week, week_day, time_of_day, classroom, type, department, teacher, misc, group_name) ' +
-    'VALUES (\'' +
-    course.course_code + '\',\'' +
-    course.course_name + '\',\'' +
-    course.week + '\',\'' +
-    course.week_day + '\',\'' +
-    course.time_of_day + '\',\'' +
-    course.classroom + '\',\'' +
-    course.type + '\',\'' +
-    course.department + '\',\'' +
-    course.teacher + '\',\'' +
-    course.misc + '\',\'' +
-    course.group_name + '\');', ''
+    `VALUES ('${
+      course.course_code}','${
+      course.course_name}','${
+      course.week}','${
+      course.week_day}','${
+      course.time_of_day}','${
+      course.classroom}','${
+      course.type}','${
+      course.department}','${
+      course.teacher}','${
+      course.misc}','${
+      course.group_name}');`, ''
     , courseBatch)
 
 module.exports = {
@@ -46,7 +46,7 @@ module.exports = {
     .then(() => client.any('CREATE INDEX course_name_search ON course (course_name)'))
     .catch((err) => Logger.error('initializeDb error', err.stack)),
 
-  getCourseByName: (courseName) => client.query('SELECT * FROM course WHERE LOWER(course_name) LIKE $1', ['%' + courseName + '%']),
+  getCourseByName: (courseName) => client.query('SELECT * FROM course WHERE LOWER(course_name) LIKE $1', [`%${courseName}%`]),
 
   getCourseByCodeAndGroup: (code, group) => client.query('SELECT * FROM course WHERE course_code = ${code} AND group_name = ${group}', {code: `${code}`, group: `${group}`}),
 
@@ -58,10 +58,10 @@ module.exports = {
     }),
 
   prefetchCoursesByCode: (params) => {
-    const insertGroupCondition = (groupName) => groupName ? ' AND group_name = \'' + groupName + '\'' : ''
-    const insertCodeCondition = (courseCode) => courseCode ? ' OR course_code = \'' + courseCode + '\'' : ''
+    const insertGroupCondition = groupName => groupName ? ` AND group_name = '${groupName}'` : ''
+    const insertCodeCondition = (courseCode) => courseCode ? ` OR course_code = '${courseCode}'` : ''
     if (params.length > 0) {
-      let query = 'SELECT * FROM course WHERE course_code = \'' + params[0].courseCode + '\'' + insertGroupCondition(params[0].groupName)
+      let query = `SELECT * FROM course WHERE course_code = '${params[0].courseCode}'${insertGroupCondition(params[0].groupName)}`
       if (params.length > 1) {
         query += reduce((a, b) => a + insertCodeCondition(b.courseCode) + insertGroupCondition(b.groupName), '', tail(params))
       }

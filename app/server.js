@@ -120,9 +120,7 @@ const getNeedFunctionParams = (displayName, params, queryParams) => {
 }
 
 const fetchComponentData = (components, pathParams, queryParams) => {
-  const needs = components.reduce((prev, current) => {
-    return current ? (current.needs || []).concat(prev) : prev
-  }, [])
+  const needs = components.reduce((prev, current) => current ? (current.needs || []).concat(prev) : prev, [])
   const promises = needs.reduce((prev, currNeed) => {
     const param = getNeedFunctionParams(components[1].displayName, pathParams, queryParams)
     if (param) {

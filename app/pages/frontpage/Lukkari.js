@@ -1,5 +1,4 @@
 import React from 'react'
-import moment from 'moment'
 import {filter} from 'ramda'
 import SearchList from '../../partials/SearchList'
 import searchResults from '../../partials/searchResults'
@@ -7,6 +6,7 @@ import {addDataToCalendar} from '../../util/courseParser'
 import {appState} from '../../store/lukkariStore'
 import BigCalendar from 'react-big-calendar'
 import 'moment/locale/fi'
+import moment from 'moment'
 
 BigCalendar.momentLocalizer(moment)
 

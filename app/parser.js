@@ -121,6 +121,7 @@ const parseHtml = (data) => {
     .map(c => assoc('department', getDepartment(c.course_code), c))
     .map(c => merge(c, {teacher: '', misc: '', group_name: ''}))
     .map(c => dissoc('text', c))
+    .filter(c => c.course_code && c.course_name && c.time_of_day)
   return courses
 }
 

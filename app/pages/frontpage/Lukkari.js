@@ -34,7 +34,7 @@ class Lukkari extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      dayFormat: 'DD.MM.YY',
+      dayFormat: 'dd DD.MM.YY',
       timeGutterFormat: 'HH.mm',
       views: ['month', 'work_week', 'day', 'agenda']
     }
@@ -43,7 +43,7 @@ class Lukkari extends React.Component {
   _handleResize = () => {
     const isMobile = window.innerWidth < 800
     this.setState({
-      dayFormat: isMobile ? 'D.M' : 'DD.MM.YY',
+      dayFormat: isMobile ? 'D.M' : 'dd DD.MM.YY',
       timeGutterFormat: isMobile ? 'HH' : 'HH.mm',
       views: isMobile ? ['work_week', 'day'] : ['month', 'work_week', 'day', 'agenda']
     })

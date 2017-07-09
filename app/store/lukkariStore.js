@@ -32,7 +32,7 @@ const promiseMiddleware = (event) => {
 }
 
 function rootReducer(previousState, action) {
-  let state = previousState   // eslint-disable-line
+  const state = previousState
   promiseMiddleware(action)
 
   switch (action.type) {

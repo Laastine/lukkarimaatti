@@ -1,6 +1,6 @@
 {
   "name": "lukkarimaatti",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "dependencies": {
     "abbrev": {
       "version": "1.1.0",
@@ -4123,9 +4123,9 @@
       }
     },
     "pg-promise": {
-      "version": "6.3.1",
-      "from": "pg-promise@6.3.1",
-      "resolved": "https://registry.npmjs.org/pg-promise/-/pg-promise-6.3.1.tgz"
+      "version": "6.3.4",
+      "from": "pg-promise@6.3.4",
+      "resolved": "https://registry.npmjs.org/pg-promise/-/pg-promise-6.3.4.tgz"
     },
     "pg-types": {
       "version": "1.12.0",

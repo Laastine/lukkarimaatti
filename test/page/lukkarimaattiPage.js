@@ -1,7 +1,8 @@
 function LukkarimaattiPage() {
   return {
-    openPage: function(pageLoadedCheck) {
-      return loadPage('http://localhost:8080/', pageLoadedCheck);
+    openPage: function(pageLoadedCheckFn, url) {
+      var addr = url ? url : 'http://localhost:8080/'
+      return loadPage(addr, pageLoadedCheckFn);
     }
   };
 }

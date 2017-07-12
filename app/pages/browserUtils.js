@@ -4,8 +4,10 @@ import {appState} from '../store/lukkariStore'
 
 const urlParamLength = 9
 
+const sanitizeUrlParam = () => window.location.search.indexOf('courses=') < 0 ? '' : window.location.search
+
 export const addUrlParameter = (courseCode, groupName) => {
-  const params = window.location.search
+  const params = sanitizeUrlParam()
   const urlParam = courseCode.substring(0, 2) === 'FV' ? `${courseCode}-${groupName}` : courseCode
   if (params.length > urlParamLength) {
     if (params.indexOf(courseCode) < 0) {
@@ -26,7 +28,7 @@ export const updateUrlParams = (selectedCourses) => {
 }
 
 export const removeUrlParameter = (courseCode) => {
-  const params = window.location.search
+  const params = sanitizeUrlParam()
   const updatedParams = params.substring(urlParamLength, params.length).split('+').filter((p) => {
     if (p.indexOf('-') > -1) {
       const groupLetterStripped = p.substring(0, p.indexOf('-'))

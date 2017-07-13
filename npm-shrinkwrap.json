@@ -805,9 +805,9 @@
       "dev": true
     },
     "chai": {
-      "version": "4.0.2",
-      "from": "chai@4.0.2",
-      "resolved": "https://registry.npmjs.org/chai/-/chai-4.0.2.tgz",
+      "version": "4.1.0",
+      "from": "chai@4.1.0",
+      "resolved": "https://registry.npmjs.org/chai/-/chai-4.1.0.tgz",
       "dev": true
     },
     "chalk": {
@@ -1001,24 +1001,14 @@
       "resolved": "https://registry.npmjs.org/compressible/-/compressible-2.0.10.tgz"
     },
     "compression": {
-      "version": "1.6.2",
-      "from": "compression@1.6.2",
-      "resolved": "https://registry.npmjs.org/compression/-/compression-1.6.2.tgz",
+      "version": "1.7.0",
+      "from": "compression@1.7.0",
+      "resolved": "https://registry.npmjs.org/compression/-/compression-1.7.0.tgz",
       "dependencies": {
         "bytes": {
-          "version": "2.3.0",
-          "from": "bytes@2.3.0",
-          "resolved": "https://registry.npmjs.org/bytes/-/bytes-2.3.0.tgz"
-        },
-        "debug": {
-          "version": "2.2.0",
-          "from": "debug@>=2.2.0 <2.3.0",
-          "resolved": "https://registry.npmjs.org/debug/-/debug-2.2.0.tgz"
-        },
-        "ms": {
-          "version": "0.7.1",
-          "from": "ms@0.7.1",
-          "resolved": "https://registry.npmjs.org/ms/-/ms-0.7.1.tgz"
+          "version": "2.5.0",
+          "from": "bytes@2.5.0",
+          "resolved": "https://registry.npmjs.org/bytes/-/bytes-2.5.0.tgz"
         }
       }
     },
@@ -4123,9 +4113,9 @@
       }
     },
     "pg-promise": {
-      "version": "6.3.4",
-      "from": "pg-promise@6.3.4",
-      "resolved": "https://registry.npmjs.org/pg-promise/-/pg-promise-6.3.4.tgz"
+      "version": "6.3.5",
+      "from": "pg-promise@6.3.5",
+      "resolved": "https://registry.npmjs.org/pg-promise/-/pg-promise-6.3.5.tgz"
     },
     "pg-types": {
       "version": "1.12.0",

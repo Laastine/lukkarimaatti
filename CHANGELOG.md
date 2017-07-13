@@ -6,6 +6,9 @@ Version numbering:
 `<major>.<minor>.<patch>`
 
 ---
+### 1.4.2 July 13, 2017
+* Clean url params if `courses` value is not found
+
 ### 1.4.1 July 9, 2017
 * Use work week default view instead whole week (monday-sunday)
 

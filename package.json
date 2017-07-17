@@ -6,7 +6,7 @@
   "private": true,
   "engines": {
     "node": "6.11.1",
-    "npm": "3.10.10"
+    "npm": "5.2.0"
   },
   "dependencies": {
     "autoprefixer": "7.1.2",

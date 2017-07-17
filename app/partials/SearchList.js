@@ -78,6 +78,8 @@ class SearchList extends React.Component {
                 isSearchListVisible: true
               })
             })
+        } else if (e.target.value.length === 0) {
+          this.setState({isSearchListVisible: false})
         }
       })
   }

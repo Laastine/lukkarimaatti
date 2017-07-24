@@ -43,14 +43,14 @@
     "request": "2.81.0",
     "request-promise": "4.2.1",
     "tough-cookie": "2.3.2",
-    "uglify-js": "3.0.25",
+    "uglify-js": "3.0.26",
     "winston": "2.3.1"
   },
   "devDependencies": {
     "babel-cli": "6.24.1",
     "babel-eslint": "7.2.3",
     "chai": "4.1.0",
-    "eslint": "4.2.0",
+    "eslint": "4.3.0",
     "eslint-plugin-react": "7.1.0",
     "jquery": "3.2.1",
     "mocha": "3.4.2",

@@ -2496,13 +2496,13 @@
         "esprima": {
           "version": "4.0.0",
           "resolved": "https://registry.npmjs.org/esprima/-/esprima-4.0.0.tgz",
-          "integrity": "sha512-oftTcaMu/EGrEIu904mWteKIv8vMuOgGYo7EhVJJN00R/EED9DCua/xxHRdYnKtcECzVg7xOWhflvJMnqcFZjw==",
+          "integrity": "sha1-RJnt3NERDgshi6zy+n9/WfVcqAQ=",
           "dev": true
         },
         "js-yaml": {
           "version": "3.9.0",
           "resolved": "https://registry.npmjs.org/js-yaml/-/js-yaml-3.9.0.tgz",
-          "integrity": "sha512-0LoUNELX4S+iofCT8f4uEHIiRBR+c2AINyC8qRWfC6QNruLtxVZRJaPcu/xwMgFIgDxF25tGHaDjvxzJCNE9yw==",
+          "integrity": "sha1-T/u/JcKsljuCmdx02n43QN4cGM4=",
           "dev": true,
           "requires": {
             "argparse": "1.0.9",
@@ -2572,7 +2572,7 @@
         "acorn": {
           "version": "5.1.1",
           "resolved": "https://registry.npmjs.org/acorn/-/acorn-5.1.1.tgz",
-          "integrity": "sha512-vOk6uEMctu0vQrvuSqFdJyqj1Q0S5VTDL79qtjo+DhRr+1mmaD+tluFSCZqhvi/JUhXSzoZN2BhtstaPEeE8cw==",
+          "integrity": "sha1-U/4WERH5EquZnuiHqQoLxSgi/XU=",
           "dev": true
         }
       }
@@ -2764,7 +2764,7 @@
         "iconv-lite": {
           "version": "0.4.18",
           "resolved": "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.18.tgz",
-          "integrity": "sha512-sr1ZQph3UwHTR0XftSbK85OvBbxe/abLGzEnPENCQwmHf7sck8Oyu4ob3LgBxWWxRoM+QszeUyl7jbqapu2TqA==",
+          "integrity": "sha1-I9hlaxaq5nQqwpcy6o8DNqR4nPI=",
           "dev": true
         }
       }
@@ -6106,9 +6106,9 @@
       "integrity": "sha1-M+8wxcd9TqIcWlOGnZG1bY8lVeU="
     },
     "pg": {
-      "version": "6.4.0",
-      "resolved": "https://registry.npmjs.org/pg/-/pg-6.4.0.tgz",
-      "integrity": "sha1-y3a6Lnwuq4n8ZL96n+ZIztckNtw=",
+      "version": "6.4.1",
+      "resolved": "https://registry.npmjs.org/pg/-/pg-6.4.1.tgz",
+      "integrity": "sha1-PqvYygVoFEN8dp8X/3oMNqxwI8U=",
       "requires": {
         "buffer-writer": "1.0.1",
         "packet-reader": "0.3.1",
@@ -6146,12 +6146,12 @@
       }
     },
     "pg-promise": {
-      "version": "6.3.5",
-      "resolved": "https://registry.npmjs.org/pg-promise/-/pg-promise-6.3.5.tgz",
-      "integrity": "sha1-YdtU5M0mnWx8eJ7omJrlsKp3jKo=",
+      "version": "6.3.6",
+      "resolved": "https://registry.npmjs.org/pg-promise/-/pg-promise-6.3.6.tgz",
+      "integrity": "sha512-X2zTectn1E55f48f+pJswL4NBxONQ02GHhwNxV+ttK3v7/nHommOVC4Cn2rK+BIqc1j3cq1NSpHxf5zW+98v9A==",
       "requires": {
         "manakin": "0.4.7",
-        "pg": "6.4.0",
+        "pg": "6.4.1",
         "pg-minify": "0.4.2",
         "spex": "1.2.0"
       }
@@ -6165,7 +6165,7 @@
         "postgres-array": "1.0.2",
         "postgres-bytea": "1.0.0",
         "postgres-date": "1.0.3",
-        "postgres-interval": "1.1.0"
+        "postgres-interval": "1.1.1"
       }
     },
     "pgpass": {
@@ -8064,9 +8064,9 @@
       "integrity": "sha1-4tiXAu/bJY/52c7g/pG9BpdSV6g="
     },
     "postgres-interval": {
-      "version": "1.1.0",
-      "resolved": "https://registry.npmjs.org/postgres-interval/-/postgres-interval-1.1.0.tgz",
-      "integrity": "sha1-EDHnusNFZBMoYq3J62xtLzqnW7Q=",
+      "version": "1.1.1",
+      "resolved": "https://registry.npmjs.org/postgres-interval/-/postgres-interval-1.1.1.tgz",
+      "integrity": "sha512-OkuCi9t/3CZmeQreutGgx/OVNv9MKHGIT5jH8KldQ4NLYXkvmT9nDVxEuCENlNwhlGPE374oA/xMqn05G49pHA==",
       "requires": {
         "xtend": "4.0.1"
       }

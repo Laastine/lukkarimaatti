@@ -43,7 +43,7 @@
     "request": "2.81.0",
     "request-promise": "4.2.1",
     "tough-cookie": "2.3.2",
-    "uglify-js": "3.0.26",
+    "uglify-js": "3.0.27",
     "winston": "2.3.1"
   },
   "devDependencies": {

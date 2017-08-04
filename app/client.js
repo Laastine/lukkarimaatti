@@ -1,12 +1,21 @@
 import 'babel-polyfill'
-import React from 'react'
-import {render} from 'react-dom'
-import {browserHistory, match} from 'react-router'
-import Routes from './pages/routes'
-import App from './pages/app'
+// import React from 'react'
+import ReactDOM from 'react-dom'
+import UniversalRouter from 'universal-router'
+import routes from './router'
+
+const router = new UniversalRouter(routes)
+
+function render(location) {
+  router.resolve({path: location.pathname})
+    .then(route => {
+      document.title = route.title
+      ReactDOM.render(route.component, document.body)
+    })
+}
 
 window.onload = () => {
-  window.onerror = function(message, file, line, col, error) {
+  window.onerror = function (message, file, line, col, error) {
     function serializeError(object) {
       const alt = {}
       if (object) {
@@ -31,7 +40,6 @@ window.onload = () => {
     return false
   }
 
-  match({routes: Routes, history: browserHistory}, (error, redirectLocation, renderProps) => {
-    render(<App renderProps={renderProps}></App>, document.getElementById('root'))
-  })
+  render(history.location)
+  history.listen(location => render(location))
 }

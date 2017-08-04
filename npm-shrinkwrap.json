@@ -2111,6 +2111,11 @@
       "resolved": "https://registry.npmjs.org/decamelize/-/decamelize-1.2.0.tgz",
       "integrity": "sha1-9lNNFRSCabIDUue+4m9QH5oZEpA="
     },
+    "decode-uri-component": {
+      "version": "0.2.0",
+      "resolved": "https://registry.npmjs.org/decode-uri-component/-/decode-uri-component-0.2.0.tgz",
+      "integrity": "sha1-6zkTMzRYd1y4TNGh+uBiEGu4dUU="
+    },
     "deep-eql": {
       "version": "2.0.2",
       "resolved": "https://registry.npmjs.org/deep-eql/-/deep-eql-2.0.2.tgz",
@@ -4293,6 +4298,15 @@
         "warning": "3.0.0"
       },
       "dependencies": {
+        "query-string": {
+          "version": "4.3.4",
+          "resolved": "https://registry.npmjs.org/query-string/-/query-string-4.3.4.tgz",
+          "integrity": "sha1-u7aTucqRXCMlFbIosaArYJBD2+s=",
+          "requires": {
+            "object-assign": "4.1.1",
+            "strict-uri-encode": "1.1.0"
+          }
+        },
         "warning": {
           "version": "3.0.0",
           "resolved": "https://registry.npmjs.org/warning/-/warning-3.0.0.tgz",
@@ -5681,6 +5695,17 @@
         "prepend-http": "1.0.4",
         "query-string": "4.3.4",
         "sort-keys": "1.1.2"
+      },
+      "dependencies": {
+        "query-string": {
+          "version": "4.3.4",
+          "resolved": "https://registry.npmjs.org/query-string/-/query-string-4.3.4.tgz",
+          "integrity": "sha1-u7aTucqRXCMlFbIosaArYJBD2+s=",
+          "requires": {
+            "object-assign": "4.1.1",
+            "strict-uri-encode": "1.1.0"
+          }
+        }
       }
     },
     "npm-run-path": {
@@ -8215,10 +8240,11 @@
       "integrity": "sha1-E+JtKK1rD/qpExLNO/cI7TUecjM="
     },
     "query-string": {
-      "version": "4.3.4",
-      "resolved": "https://registry.npmjs.org/query-string/-/query-string-4.3.4.tgz",
-      "integrity": "sha1-u7aTucqRXCMlFbIosaArYJBD2+s=",
+      "version": "5.0.0",
+      "resolved": "https://registry.npmjs.org/query-string/-/query-string-5.0.0.tgz",
+      "integrity": "sha1-+99wBLTSr/eS+YcZgbeieU9VWUc=",
       "requires": {
+        "decode-uri-component": "0.2.0",
         "object-assign": "4.1.1",
         "strict-uri-encode": "1.1.0"
       }
@@ -9471,6 +9497,29 @@
       "version": "2.0.0",
       "resolved": "https://registry.npmjs.org/uniqs/-/uniqs-2.0.0.tgz",
       "integrity": "sha1-/+3ks2slKQaW5uFl1KWe25mOawI="
+    },
+    "universal-router": {
+      "version": "3.2.0",
+      "resolved": "https://registry.npmjs.org/universal-router/-/universal-router-3.2.0.tgz",
+      "integrity": "sha1-RZDuQvVeKggYjGMgcNkGdbsvpA8=",
+      "requires": {
+        "path-to-regexp": "1.7.0"
+      },
+      "dependencies": {
+        "isarray": {
+          "version": "0.0.1",
+          "resolved": "https://registry.npmjs.org/isarray/-/isarray-0.0.1.tgz",
+          "integrity": "sha1-ihis/Kmo9Bd+Cav8YDiTmwXR7t8="
+        },
+        "path-to-regexp": {
+          "version": "1.7.0",
+          "resolved": "https://registry.npmjs.org/path-to-regexp/-/path-to-regexp-1.7.0.tgz",
+          "integrity": "sha1-Wf3g9DW62suhA6hOnTvGTpa5k30=",
+          "requires": {
+            "isarray": "0.0.1"
+          }
+        }
+      }
     },
     "universalify": {
       "version": "0.1.0",

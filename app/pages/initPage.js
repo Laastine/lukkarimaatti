@@ -5,7 +5,7 @@ import App from './app'
 const googleAnalytics = process.env.NODE_ENV === 'production' ? `<script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject'] = r;i[r]=i[r]||function(){(i[r].q = i[r].q || []).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create','UA-27895073-3','auto');ga('send','pageview');</script>` : ''
 
-export const renderFullPage = (initialState, options, renderProps) => `<!doctype html>
+export const renderFullPage = (component, initialState, options) => `<!doctype html>
     <html>
       <head>
         <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
@@ -16,7 +16,7 @@ export const renderFullPage = (initialState, options, renderProps) => `<!doctype
         <title>Lukkarimaatti++</title>
       </head>
       <body>
-        <div id='root'>${renderToString(<App state={initialState} renderProps={renderProps}></App>)}</div>
+        <div id='root'>${renderToString(<App component={component} state={initialState}></App>)}</div>
       </body>
         <script>
           window.STATE = ${JSON.stringify(initialState)}

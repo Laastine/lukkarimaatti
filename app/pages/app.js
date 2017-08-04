@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Router, RouterContext} from 'react-router'
 import {appState} from '../store/lukkariStore'
 import {isServer} from '../utils'
 
@@ -27,7 +26,7 @@ class App extends React.Component {
   }
 
   render() {
-    return isServer ? <RouterContext {...this.props.renderProps}/> : <Router {...this.props.renderProps}/>
+    return this.props.component
   }
 }
 

@@ -35,6 +35,7 @@
     "pg-promise": "6.3.6",
     "postcss-cli": "4.1.0",
     "prop-types": "15.5.10",
+    "query-string": "5.0.0",
     "ramda": "0.24.1",
     "react": "15.6.1",
     "react-big-calendar": "0.14.4",
@@ -44,6 +45,7 @@
     "request-promise": "4.2.1",
     "tough-cookie": "2.3.2",
     "uglify-js": "3.0.27",
+    "universal-router": "3.2.0",
     "winston": "2.3.1"
   },
   "devDependencies": {

@@ -1,7 +1,7 @@
 import express from 'express'
 import path from 'path'
 import {merge} from 'ramda'
-import {match} from 'react-router'
+// import {match} from 'react-router'
 import compression from 'compression'
 import appConfig from './config'
 import crypto from 'crypto'
@@ -12,10 +12,11 @@ import CourseRoutes from './routes/course'
 import ApiRoutes from './routes/api'
 import errorLoggerRoutes from './routes/errorLogger'
 import {appState} from './store/lukkariStore'
-import Routes from './pages/routes'
 import forceSSL from 'express-force-ssl'
 import {renderFullPage} from './pages/initPage'
 import Logger from './logger'
+import UniversalRouter from 'universal-router'
+import routes from './router'
 
 const fs = Promise.promisifyAll(require('fs'))
 
@@ -33,6 +34,7 @@ server.use('/course', CourseRoutes)
 server.use('/api', ApiRoutes)
 
 server.use('/favicon.png', express.static(`${__dirname}/img/favicon.png`))
+server.use('/favicon.ico', express.static(`${__dirname}/img/favicon.png`))
 server.use('/github.png', express.static(`${__dirname}/img/github.png`))
 server.use('/spinner.gif', express.static(`${__dirname}/img/spinner.gif`))
 
@@ -104,66 +106,58 @@ const buildInitialState = (displayName) => {
   }
 }
 
-const getNeedFunctionParams = (displayName, params, queryParams) => {
-  switch (displayName) {
-    case 'LukkariPage':
-      return {
-        courses: queryParams.courses
-      }
-    case 'CatalogPage':
-      return {
-        department: params.department ? params.department.toUpperCase() : 'TITE'
-      }
-    default:
-      return null
-  }
-}
+// const getNeedFunctionParams = (displayName, params, queryParams) => {
+//   switch (displayName) {
+//     case 'LukkariPage':
+//       return {
+//         courses: queryParams.courses
+//       }
+//     case 'CatalogPage':
+//       return {
+//         department: params.department ? params.department.toUpperCase() : 'TITE'
+//       }
+//     default:
+//       return null
+//   }
+// }
 
-const fetchComponentData = (components, pathParams, queryParams) => {
-  const needs = components.reduce((prev, current) => current ? (current.needs || []).concat(prev) : prev, [])
-  const promises = needs.reduce((prev, currNeed) => {
-    const param = getNeedFunctionParams(components[1].displayName, pathParams, queryParams)
-    if (param) {
-      const action = currNeed(param)
-      appState.dispatch(action)
-      return prev.concat(action.promise)
-    } else {
-      return prev
-    }
-  }, [])
-  return Promise.all(promises)
-}
+// const fetchComponentData = (components, pathParams, queryParams) => {
+//   const needs = components.reduce((prev, current) => current ? (current.needs || []).concat(prev) : prev, [])
+//   const promises = needs.reduce((prev, currNeed) => {
+//     const param = getNeedFunctionParams(components[1].displayName, pathParams, queryParams)
+//     if (param) {
+//       const action = currNeed(param)
+//       appState.dispatch(action)
+//       return prev.concat(action.promise)
+//     } else {
+//       return prev
+//     }
+//   }, [])
+//   return Promise.all(promises)
+// }
 
 server.get('/.well-known/acme-challenge/:content', (req, res) => res.send(appConfig.letsEncryptReponse))
 server.use('/errors', errorLoggerRoutes)
 
+const router = new UniversalRouter(routes)
+
 server.get('*', (req, res) => {
-  const urlPath = req.url
-  match({routes: Routes, location: urlPath}, (error, redirectLocation, renderProps) => {
-    if (error) {
-      return res.status(500).send('Server error')
-    } else if (redirectLocation) {
-      return res.redirect(302, redirectLocation.pathname + redirectLocation.search)
-    } else if (renderProps === null) {
-      return res.status(404).send('Not found')
-    } else {
-      return Promise
-        .all([checksumPromise(cssFilePath), checksumPromise(bundleJsFilePath), fetchComponentData(renderProps.components, renderProps.params, renderProps.location.query)])
-        .then(([cssChecksum, bundleJsChecksum]) => {
-          const initialState = merge(appState.currentState, buildInitialState(renderProps.components[1].displayName))
-          return Promise.resolve(renderFullPage(
-            initialState,
-            {cssChecksum, bundleJsChecksum},
-            renderProps
-          ))
-            .then((page) => res.send(page))
-        })
-        .catch((err) => {
-          res.status(500).send('Server error')
-          Logger.error('Server error', err.stack)
-        })
-    }
-  })
+  router.resolve({path: req.path/*, query: req.query, params: req.params*/})
+    .then((routeData) => Promise
+      .all([checksumPromise(cssFilePath), checksumPromise(bundleJsFilePath)])
+      .then(([cssChecksum, bundleJsChecksum]) => {
+        const initialState = merge(appState.currentState, buildInitialState('LukkariPage'))
+        return Promise.resolve(renderFullPage(
+          routeData.component,
+          initialState,
+          {cssChecksum, bundleJsChecksum}
+        ))
+          .then((page) => res.send(page))
+      })
+      .catch((err) => {
+        res.status(500).send('Server error')
+        Logger.error('Server error', err.stack)
+      }))
 })
 
 export const start = (port) => {

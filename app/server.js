@@ -141,7 +141,7 @@ server.use('/errors', errorLoggerRoutes)
 const router = new UniversalRouter(routes)
 
 server.get('*', (req, res) => {
-  router.resolve({path: req.path/*, query: req.query, params: req.params*/})
+  router.resolve({path: req.path, query: req.query, params: req.params})
     .then((routeData) => Promise
       .all([checksumPromise(cssFilePath), checksumPromise(bundleJsFilePath)])
       .then(([cssChecksum, bundleJsChecksum]) => {

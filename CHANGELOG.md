@@ -6,6 +6,10 @@ Version numbering:
 `<major>.<minor>.<patch>`
 
 ---
+### 1.4.3 July 13, 2017
+* Replace react-router with universal-router
+* Update nodejs version
+
 ### 1.4.2 July 13, 2017
 * Clean url params if `courses` value is not found
 

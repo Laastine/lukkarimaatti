@@ -1,5 +1,5 @@
 import React from 'react'
-import {onLinkClick} from '../../router'
+import {onLinkClick} from '../../routes'
 import {appState} from '../../store/lukkariStore'
 import {loadCourseByCode, loadCourseByCodeAndGroup} from '../frontApi/lukkariApi'
 import {any, isEmpty, partial} from 'ramda'

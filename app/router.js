@@ -1,6 +1,7 @@
 import React from 'react'
 import {appState} from './store/lukkariStore'
 import {isServer} from './utils'
+import history from './history'
 import LukkariPage from './pages/frontpage/LukkariPage'
 import NotFoundPage from './pages/notFoundPage'
 import CatalogPage from './pages/catalogpage/CatalogPage'
@@ -12,7 +13,7 @@ const fetchComponentData = (needs, params) => {
   })
 }
 
-export const onLinkClick = (event) => {
+export const onLinkClick = event => {
   event.preventDefault()
   history.push(event.currentTarget.getAttribute('href'))
 }
@@ -46,17 +47,3 @@ export const routes = {
     }
   ]
 }
-//
-// const getRouterParameters = isServer ?
-//   {
-//     path: '/',
-//     query: ''
-//   } :
-//   {
-//     path: location.pathname,
-//     query: queryString.parse(location.search)
-//   }
-//
-// export const Router = () => new UniversalRouter(routes)
-//   .resolve(getRouterParameters)
-//   .then(component => ReactDOM.render(component, document.getElementById('root'))) //eslint-disable-line react/no-render-return-value

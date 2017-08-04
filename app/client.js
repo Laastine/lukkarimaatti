@@ -1,22 +1,11 @@
 import 'babel-polyfill'
-// import React from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
 import UniversalRouter from 'universal-router'
 import QueryString from 'query-string'
 import {routes} from './router'
-
-const router = new UniversalRouter(routes)
-
-function render() {
-  router.resolve({
-    path: window.location.pathname,
-    query: QueryString.parse(window.location.search)
-  })
-    .then(route => {
-      document.title = route.title
-      ReactDOM.render(route.component, document.getElementById('root'))
-    })
-}
+import App from './pages/app'
+import history from './history'
 
 window.onload = () => {
   window.onerror = function (message, file, line, col, error) {
@@ -43,7 +32,19 @@ window.onload = () => {
     })
     return false
   }
-
-  render(history.location)
-  history.listen(location => render)
 }
+
+const router = new UniversalRouter(routes)
+
+function render(location) {
+  router.resolve({
+    path: location.pathname,
+    query: QueryString.parse(window.location.search)
+  })
+    .then(route => {
+      ReactDOM.render(<App component={route.component}/>, document.getElementById('root'))
+    })
+}
+
+render(history.location)
+history.listen(() => render)

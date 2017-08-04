@@ -2,15 +2,19 @@ import 'babel-polyfill'
 // import React from 'react'
 import ReactDOM from 'react-dom'
 import UniversalRouter from 'universal-router'
-import routes from './router'
+import QueryString from 'query-string'
+import {routes} from './router'
 
 const router = new UniversalRouter(routes)
 
-function render(location) {
-  router.resolve({path: location.pathname})
+function render() {
+  router.resolve({
+    path: window.location.pathname,
+    query: QueryString.parse(window.location.search)
+  })
     .then(route => {
       document.title = route.title
-      ReactDOM.render(route.component, document.body)
+      ReactDOM.render(route.component, document.getElementById('root'))
     })
 }
 
@@ -41,5 +45,5 @@ window.onload = () => {
   }
 
   render(history.location)
-  history.listen(location => render(location))
+  history.listen(location => render)
 }

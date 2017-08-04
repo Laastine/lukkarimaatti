@@ -1,7 +1,6 @@
 import express from 'express'
 import path from 'path'
 import {merge} from 'ramda'
-// import {match} from 'react-router'
 import compression from 'compression'
 import appConfig from './config'
 import crypto from 'crypto'
@@ -16,7 +15,7 @@ import forceSSL from 'express-force-ssl'
 import {renderFullPage} from './pages/initPage'
 import Logger from './logger'
 import UniversalRouter from 'universal-router'
-import routes from './router'
+import {routes} from './router'
 
 const fs = Promise.promisifyAll(require('fs'))
 

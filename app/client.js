@@ -7,6 +7,8 @@ import {routes} from './routes'
 import App from './pages/app'
 import history from './history'
 
+const router = new UniversalRouter(routes)
+
 window.onload = () => {
   window.onerror = function (message, file, line, col, error) {
     function serializeError(object) {
@@ -34,12 +36,10 @@ window.onload = () => {
   }
 }
 
-const router = new UniversalRouter(routes)
-
-function render(location) {
+export function render(location) {
   router.resolve({
     path: location.pathname,
-    query: QueryString.parse(window.location.search)
+    query: QueryString.parse(location.search)
   })
     .then(route => {
       ReactDOM.render(<App component={route.component}/>, document.getElementById('root'))

@@ -1,5 +1,6 @@
 import React from 'react'
 import {appState} from './store/lukkariStore'
+import {isServer} from './utils'
 import LukkariPage from './pages/frontpage/LukkariPage'
 import NotFoundPage from './pages/notFoundPage'
 import CatalogPage from './pages/catalogpage/CatalogPage'
@@ -11,24 +12,23 @@ const fetchComponentData = (needs, params) => {
   })
 }
 
-const onClick = (event) => {
+export const onLinkClick = (event) => {
   event.preventDefault()
   history.push(event.currentTarget.getAttribute('href'))
 }
 
-export default {
+export const routes = {
   path: '/',
   children: [
     {
       path: '/',
       action:
-      // ({query: {courses}}) =>
-      // new Promise((resolve) => {
-      //   fetchComponentData(LukkariPage.needs, {courses})
-      //   resolve()
-      // })
-      //   .then(() => )
-        () => ({component: <LukkariPage/>})
+        ({query}) =>
+          new Promise((resolve) => {
+            fetchComponentData(LukkariPage.needs, isServer ? {courses: []} : {courses: query.courses})
+            resolve()
+          })
+            .then(() => ({component: <LukkariPage/>}))
     },
     {
       path: '/catalog',

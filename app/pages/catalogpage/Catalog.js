@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link} from 'react-router'
+import {onLinkClick} from '../../router'
 import {appState} from '../../store/lukkariStore'
 import {loadCourseByCode, loadCourseByCodeAndGroup} from '../frontApi/lukkariApi'
 import {any, isEmpty, partial} from 'ramda'
@@ -15,8 +15,8 @@ const DepartmentSelectorElement = (selectedDepartment) => {
     'TITE',
     'TUTA']
     .map((e, index) => <span key={`${index}-${e}`}>
-      <Link className={`department-link${selectedDepartment === e ? '-selected' : ''}`}
-        to={`/catalog/${e}`}>{e}</Link>
+      <div className={`department-link${selectedDepartment === e ? '-selected' : ''}`}
+        href={`/catalog/${e}`} onClick={onLinkClick}>{e}</div>
     </span>)
 
   return <div className="department-link-container">{departmentNames}</div>

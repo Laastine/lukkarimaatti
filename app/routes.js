@@ -16,6 +16,10 @@ const fetchComponentData = (needs, params) => {
 export const onLinkClick = event => {
   event.preventDefault()
   history.push(event.currentTarget.getAttribute('href'))
+  if (!isServer) {
+    const client = require('./client')
+    client.render(history.location)
+  }
 }
 
 export const routes = {
@@ -24,10 +28,11 @@ export const routes = {
     {
       path: '/',
       action:
-        ({query}) =>
+        ({query: {courses}}) =>
           new Promise((resolve) => {
-            fetchComponentData(LukkariPage.needs, isServer ? {courses: []} : {courses: query.courses})
+            fetchComponentData(LukkariPage.needs, {courses: []})
             resolve()
+            window.scrollTo(0, 0)
           })
             .then(() => ({component: <LukkariPage/>}))
     },
@@ -35,11 +40,28 @@ export const routes = {
       path: '/catalog',
       children: [
         {
+          path: '/',
+          action:
+            ({query: {courses}}) =>
+              new Promise((resolve) => {
+                fetchComponentData(CatalogPage.needs, {courses, department: 'TITE'})
+                resolve()
+                window.scrollTo(0, 0)
+              })
+                .then(() => ({component: <CatalogPage/>}))
+        },
+        {
           path: '/:department',
-          action: () => ({component: <CatalogPage/>})
+          action: ({params: {department}, query: {courses}}) =>
+            new Promise((resolve) => {
+              fetchComponentData(CatalogPage.needs, {courses, department})
+              resolve()
+              window.scrollTo(0, 0)
+            })
+              .then(() => ({component: <CatalogPage/>}))
+
         }
-      ],
-      action: () => ({component: <CatalogPage/>})
+      ]
     },
     {
       path: '*',

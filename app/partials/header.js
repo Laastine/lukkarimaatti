@@ -1,5 +1,5 @@
 import React from 'react'
-import {onLinkClick} from '../router'
+import {onLinkClick} from '../routes'
 import Modal from './Modal'
 import {appState} from '../store/lukkariStore'
 

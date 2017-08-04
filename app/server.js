@@ -15,7 +15,7 @@ import forceSSL from 'express-force-ssl'
 import {renderFullPage} from './pages/initPage'
 import Logger from './logger'
 import UniversalRouter from 'universal-router'
-import {routes} from './router'
+import {routes} from './routes'
 
 const fs = Promise.promisifyAll(require('fs'))
 

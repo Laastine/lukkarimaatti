@@ -3,7 +3,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import UniversalRouter from 'universal-router'
 import QueryString from 'query-string'
-import {routes} from './router'
+import {routes} from './routes'
 import App from './pages/app'
 import history from './history'
 

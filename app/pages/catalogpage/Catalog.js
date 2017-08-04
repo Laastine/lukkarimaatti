@@ -15,8 +15,8 @@ const DepartmentSelectorElement = (selectedDepartment) => {
     'TITE',
     'TUTA']
     .map((e, index) => <span key={`${index}-${e}`}>
-      <div className={`department-link${selectedDepartment === e ? '-selected' : ''}`}
-        href={`/catalog/${e}`} onClick={onLinkClick}>{e}</div>
+      <a className={`department-link${selectedDepartment === e ? '-selected' : ''}`}
+        href={`/catalog/${e}`} onClick={onLinkClick}>{e}</a>
     </span>)
 
   return <div className="department-link-container">{departmentNames}</div>

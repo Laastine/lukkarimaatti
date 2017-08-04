@@ -30,7 +30,7 @@ export const routes = {
       action:
         ({query: {courses}}) =>
           new Promise((resolve) => {
-            fetchComponentData(LukkariPage.needs, {courses: []})
+            fetchComponentData(LukkariPage.needs, {courses})
             resolve()
             window.scrollTo(0, 0)
           })

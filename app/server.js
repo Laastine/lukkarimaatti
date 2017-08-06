@@ -105,36 +105,6 @@ const buildInitialState = (displayName) => {
   }
 }
 
-// const getNeedFunctionParams = (displayName, params, queryParams) => {
-//   switch (displayName) {
-//     case 'LukkariPage':
-//       return {
-//         courses: queryParams.courses
-//       }
-//     case 'CatalogPage':
-//       return {
-//         department: params.department ? params.department.toUpperCase() : 'TITE'
-//       }
-//     default:
-//       return null
-//   }
-// }
-
-// const fetchComponentData = (components, pathParams, queryParams) => {
-//   const needs = components.reduce((prev, current) => current ? (current.needs || []).concat(prev) : prev, [])
-//   const promises = needs.reduce((prev, currNeed) => {
-//     const param = getNeedFunctionParams(components[1].displayName, pathParams, queryParams)
-//     if (param) {
-//       const action = currNeed(param)
-//       appState.dispatch(action)
-//       return prev.concat(action.promise)
-//     } else {
-//       return prev
-//     }
-//   }, [])
-//   return Promise.all(promises)
-// }
-
 server.get('/.well-known/acme-challenge/:content', (req, res) => res.send(appConfig.letsEncryptReponse))
 server.use('/errors', errorLoggerRoutes)
 

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {forEach, pipe, uniqBy} from 'ramda'
 import {appState} from '../store/lukkariStore'
+import history from '../history'
 
 const urlParamLength = 9
 
@@ -11,12 +12,15 @@ export const addUrlParameter = (courseCode, groupName) => {
   const urlParam = courseCode.substring(0, 2) === 'FV' ? `${courseCode}-${groupName}` : courseCode
   if (params.length > urlParamLength) {
     if (params.indexOf(courseCode) < 0) {
-      history.pushState({}, '', `?courses=${params.substring(urlParamLength, params.length)}+${urlParam}`)
+      history.replace({
+        pathname: history.location.pathname,
+        search: `?courses=${params.substring(urlParamLength, params.length)}+${urlParam}`
+      })
     }
   } else if (params.indexOf('?courses=') < 0) {
-    history.pushState({}, '', `?courses=${params}${urlParam}`)
+    history.replace({pathname: history.location.pathname, search: `?courses=${params}${urlParam}`})
   } else {
-    history.pushState({}, '', `${params}${urlParam}`)
+    history.replace({pathname: history.location.pathname, search: `${params}${urlParam}`})
   }
 }
 
@@ -38,9 +42,9 @@ export const removeUrlParameter = (courseCode) => {
     }
   })
   if (updatedParams.length > 0) {
-    history.pushState({}, '', `?courses=${updatedParams.join('+')}`)
+    history.replace({pathname: history.location.pathname, search: `?courses=${updatedParams.join('+')}`})
   } else {
-    history.pushState({}, '', '?courses=')
+    history.replace({pathname: history.location.pathname, search: '?courses='})
   }
 }
 

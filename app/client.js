@@ -9,6 +9,16 @@ import history from './history'
 
 const router = new UniversalRouter(routes)
 
+export function render(location) {
+  router.resolve({
+    path: location.pathname,
+    query: QueryString.parse(location.search)
+  })
+    .then(route => {
+      ReactDOM.render(<App component={route.component}/>, document.getElementById('root'))
+    })
+}
+
 window.onload = () => {
   window.onerror = function (message, file, line, col, error) {
     function serializeError(object) {
@@ -36,15 +46,12 @@ window.onload = () => {
   }
 }
 
-export function render(location) {
-  router.resolve({
-    path: location.pathname,
-    query: QueryString.parse(location.search)
-  })
-    .then(route => {
-      ReactDOM.render(<App component={route.component}/>, document.getElementById('root'))
-    })
-}
-
 render(history.location)
-history.listen(() => render)
+
+history.listen((location, action) => {
+  if (action === 'POP') {
+    return render(history.location)
+  } else {
+    return render
+  }
+})

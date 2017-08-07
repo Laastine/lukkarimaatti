@@ -6,7 +6,10 @@ Version numbering:
 `<major>.<minor>.<patch>`
 
 ---
-### 1.4.3 July 13, 2017
+### 1.4.3, August 7, 2017
+* Fix browser history (back/forward) issue
+
+### 1.4.3 August 5, 2017
 * Replace react-router with universal-router
 * Update nodejs version
 

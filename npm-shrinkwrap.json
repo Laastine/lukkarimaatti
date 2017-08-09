@@ -1,6 +1,6 @@
 {
   "name": "lukkarimaatti",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "lockfileVersion": 1,
   "requires": true,
   "dependencies": {
@@ -6114,9 +6114,9 @@
       "integrity": "sha1-2hhHsglA5C7hSSvq9l1J2RskXfc="
     },
     "pg-minify": {
-      "version": "0.5.1",
-      "resolved": "https://registry.npmjs.org/pg-minify/-/pg-minify-0.5.1.tgz",
-      "integrity": "sha512-+pXZUPCPKsrUUjfy3Onozp/tTT3dcd3ccK2+gBS7VaHU8ehRvkwvC8wpoN+xdVorRN5HxTBZUZ2TtuJv1Tyvxg=="
+      "version": "0.5.2",
+      "resolved": "https://registry.npmjs.org/pg-minify/-/pg-minify-0.5.2.tgz",
+      "integrity": "sha512-NxolpovLgwjQG/daDYSCiHxJfIlo10DtGPUTVyF6ay5KxKhiJPGN8bqOxHje1MYEoefmtqdTLWKnDxSyvv0ykw=="
     },
     "pg-pool": {
       "version": "1.8.0",
@@ -6135,13 +6135,13 @@
       }
     },
     "pg-promise": {
-      "version": "6.3.7",
-      "resolved": "https://registry.npmjs.org/pg-promise/-/pg-promise-6.3.7.tgz",
-      "integrity": "sha512-qUGvluqVeJXIg8viJG2Oqd2iHJ0CNKuTvmRKdOMFjcbotglsj/MFMCMzluPUtb8Kb5XsBux4Gc1NnV7pi1q60w==",
+      "version": "6.3.8",
+      "resolved": "https://registry.npmjs.org/pg-promise/-/pg-promise-6.3.8.tgz",
+      "integrity": "sha512-3CJ/3B7mhjJ5LDOGXKuTJyRFDxfHMjBx0OAcT8R3aZ5do+lprpYFNCdje4cGcQucLRnaDy2DHAb01UFsanlsvg==",
       "requires": {
         "manakin": "0.4.7",
         "pg": "6.4.1",
-        "pg-minify": "0.5.1",
+        "pg-minify": "0.5.2",
         "spex": "1.2.0"
       }
     },

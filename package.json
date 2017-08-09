@@ -33,7 +33,7 @@
     "moment": "2.18.1",
     "nodemailer": "4.0.1",
     "path": "0.12.7",
-    "pg-promise": "6.3.7",
+    "pg-promise": "6.3.8",
     "postcss-cli": "4.1.0",
     "prop-types": "15.5.10",
     "query-string": "5.0.0",

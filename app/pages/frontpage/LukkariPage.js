@@ -23,7 +23,7 @@ LukkariPage.contextTypes = {
   appState: PropTypes.object
 }
 
-LukkariPage.PropTypes = {
+LukkariPage.propTypes = {
   appState: PropTypes.object
 }
 

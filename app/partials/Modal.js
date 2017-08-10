@@ -1,7 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {appState} from '../store/lukkariStore'
 
-const sendButton = (waitingAjax) => waitingAjax ?
+const sendButton = (isWaitingAjax) => isWaitingAjax ?
   <img className='modal-ajax-spinner' src='/spinner.gif'/> :
   <button type='button' id='saveId' className='modal-button' data-dismiss='modal'
     onClick={(e) => {
@@ -16,7 +17,7 @@ const sendButton = (waitingAjax) => waitingAjax ?
 
 class Modal extends React.Component {
   render() {
-    const {isModalOpen, waitingAjax} = this.props.state
+    const {isModalOpen, isWaitingAjax} = this.props.state
 
     return isModalOpen ? <div className='modal-dialog'>
       <div>
@@ -29,11 +30,17 @@ class Modal extends React.Component {
         <div>Send course selection URL to your email.</div>
         <form className='modal-input-container'>
           <input type='email' className='modal-input' id='saveEmail' placeholder='Email' autoFocus="true"/>
-          {sendButton(waitingAjax)}
+          {sendButton(isWaitingAjax)}
         </form>
       </div>
     </div> : null
   }
+}
+
+Modal.displayName = 'Modal'
+
+Modal.propTypes = {
+  state: PropTypes.object
 }
 
 export default Modal

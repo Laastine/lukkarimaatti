@@ -10,7 +10,7 @@ class AppPage extends React.Component {
 }
 
 AppPage.propTypes = {
-  appState: PropTypes.object
+  children: PropTypes.array
 }
 
 export default AppPage

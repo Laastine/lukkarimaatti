@@ -289,11 +289,15 @@
     "template-curly-spacing": 2,
     "yield-star-spacing": 2,
     "react/react-in-jsx-scope": 0,
-    "react/no-danger": 0,
-    "react/prop-types": 0,
-    "react/display-name": 0,
+    "react/no-danger": 2,
+    "react/prop-types": 2,
+    "react/display-name": 2,
     "react/jsx-no-duplicate-props": 2,
-    "react/jsx-indent-props": 0
+    "react/jsx-indent-props": 0,
+    "react/boolean-prop-naming": 2,
+    "react/no-typos": 2,
+    "react/no-will-update-set-state": 2,
+    "react/no-deprecated": 2
   },
   "parser": "babel-eslint"
 }

@@ -14,7 +14,8 @@ class NotFoundPage extends React.Component {
         |    |   |  |  \  |/ /  |/ /\__  \\_  __ \  |/     \\__  \ \__  \\   __\   __\  |
         |    |___|  |  /    &lt;|    &lt;  / __ \|  | \/  |  Y Y  \/ __ \_/ __ \|  |  |  | |  |
         |_______ \____/|__|_ \__|_ \(____  /__|  |__|__|_|  (____  (____  /__|  |__| |__|
-        \/          \/    \/     \/               \/     \/     \/</pre>
+        \/          \/    \/     \/               \/     \/     \/
+      </pre>
       <div className='no-match'>404 Page Not Found.</div>
       <a className='no-match-link' href='/'>Go to lukkarimaatti</a>
     </div>

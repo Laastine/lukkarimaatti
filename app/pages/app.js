@@ -35,7 +35,8 @@ App.childContextTypes = {
 }
 
 App.propTypes = {
-  appState: PropTypes.object
+  state: PropTypes.object,
+  component: PropTypes.object
 }
 
 export default App

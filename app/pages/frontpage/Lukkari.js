@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {filter} from 'ramda'
 import SearchList from '../../partials/SearchList'
 import searchResults from '../../partials/searchResults'
@@ -24,7 +25,7 @@ const stringToColor = (colorSeed) => {
   return colour
 }
 
-const Event = ({event}) => (
+const Event = ({event}) => ( //eslint-disable-line react/prop-types
   <div style={{backgroundColor: stringToColor(event.title)}} className='calendar-event'>
     {event.title}{event.description}
   </div>
@@ -97,6 +98,13 @@ class Lukkari extends React.Component {
       </div>
     </div>
   }
+}
+
+Lukkari.displayName = 'Lukkari'
+
+Lukkari.propTypes = {
+  state: PropTypes.object,
+  event: PropTypes.object
 }
 
 export default Lukkari

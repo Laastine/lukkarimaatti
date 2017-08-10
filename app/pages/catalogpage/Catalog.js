@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {onLinkClick} from '../../routes'
 import {appState} from '../../store/lukkariStore'
 import {loadCourseByCode, loadCourseByCodeAndGroup} from '../frontApi/lukkariApi'
@@ -16,7 +17,8 @@ const DepartmentSelectorElement = (selectedDepartment) => {
     'TUTA']
     .map((e, index) => <span key={`${index}-${e}`}>
       <a className={`department-link${selectedDepartment === e ? '-selected' : ''}`}
-        href={`/catalog/${e}`} onClick={onLinkClick}>{e}</a>
+        href={`/catalog/${e}`} onClick={onLinkClick}>{e}
+      </a>
     </span>)
 
   return <div className="department-link-container">{departmentNames}</div>
@@ -66,6 +68,14 @@ class Catalog extends React.Component {
       {DepartmentCoursesElement(this.props.state)}
     </div>
   }
+}
+
+Catalog.displayName = 'Catalog'
+
+Catalog.propTypes = {
+  state: PropTypes.objectOf([
+    PropTypes.array
+  ])
 }
 
 export default Catalog

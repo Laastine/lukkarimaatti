@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {addIndex, contains, map, partial, pipe, slice, uniq, uniqBy} from 'ramda'
 import Bacon from 'baconjs'
 import {searchCourses} from '../pages/frontApi/lukkariApi'
@@ -49,7 +50,8 @@ const searchList = (state, mouseEnterCallback, closeCallback) => {
           onClick={(event) => {
             closeCallback()
             addCourse(event, state)
-          }}>{c.course_name}</div>))(state.searchResults) : null
+          }}>{c.course_name}
+        </div>))(state.searchResults) : null
 }
 
 class SearchList extends React.Component {
@@ -102,7 +104,8 @@ class SearchList extends React.Component {
           onKeyDown={(event) => {
             this.setState({searchString: event.target.value})
             handleKeyInput(event, state, indexCallback, closeCallback)
-          }}></input>
+          }}>
+        </input>
       </div>
       <div className='search-list-container'
         onMouseLeave={() => {
@@ -112,6 +115,12 @@ class SearchList extends React.Component {
       </div>
     </div>
   }
+}
+
+SearchList.displayName = 'SearchList'
+
+SearchList.propTypes = {
+  state: PropTypes.object
 }
 
 export default SearchList

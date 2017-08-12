@@ -38,6 +38,15 @@ function waitUntil(predicate, timeout) {
   }
 }
 
+function browserBack() {
+  return function () {
+    return new Promise(function (resolve) {
+      $('#testframe').get(0).contentWindow.history.back()
+      resolve()
+    })
+  }
+}
+
 function triggerEvent(element, eventName) {
   var event = testFrame().document.createEvent('Event')
   event.initEvent(eventName, true, false)

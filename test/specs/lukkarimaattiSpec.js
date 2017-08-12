@@ -7,7 +7,7 @@ describe('Lukkarimaatti UI navigation', function () {
     }, '')
   })
 
-  it('Test navigation', function (done) {
+  it('Test link navigation', function (done) {
     waitUntil(function () {
       return $(S('.rbc-calendar')[0]).is(':visible')
     }, 3000)()
@@ -16,6 +16,24 @@ describe('Lukkarimaatti UI navigation', function () {
         expect($(S('.department-link-container')[0]).is(':visible')).to.equal(true)
       })
       .then(click('.header-element', 0))
+      .then(function () {
+        expect($(S('.rbc-calendar')[0]).is(':visible')).to.equal(true)
+        done()
+      })
+  })
+
+  it('Test browser navigation', function (done) {
+    waitUntil(function () {
+      return $(S('.rbc-calendar')[0]).is(':visible')
+    }, 3000)()
+      .then(click('.header-element', 2))
+      .then(function () {
+        expect($(S('.department-link-container')[0]).is(':visible')).to.equal(true)
+      })
+      .then(browserBack())
+      .then(waitUntil(function () {
+        return $(S('.rbc-calendar')[0]).is(':visible')
+      }, 3000))
       .then(function () {
         expect($(S('.rbc-calendar')[0]).is(':visible')).to.equal(true)
         done()

@@ -73,9 +73,7 @@ class Catalog extends React.Component {
 Catalog.displayName = 'Catalog'
 
 Catalog.propTypes = {
-  state: PropTypes.objectOf([
-    PropTypes.array
-  ])
+  state: PropTypes.object
 }
 
 export default Catalog

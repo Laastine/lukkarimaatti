@@ -17,20 +17,6 @@ Originally (late 2012) started as Java+Spring boilerplate + Backbone/jQuery proj
 Later converted to pure JavaScript project with Node.js server.<br>
 Today it's implemented with universal JavaScript (Node/React/Bacon) using "megablob" architecture.
 
-### Ingredients
-* [Node.js](https://nodejs.org)
-* [Express](http://expressjs.com/)
-* [Bacon](https://baconjs.github.io/)
-* [React](https://facebook.github.io/react/)
-* [Bluebird](https://github.com/petkaantonov/bluebird)
-* [Ramda](http://ramdajs.com/)
-* [cheerio](https://github.com/cheeriojs/cheerio)
-* [Moment.js](http://momentjs.com/)
-* [Mocha](http://mochajs.org/)
-* [PhantomJS](http://phantomjs.org/)
-* [Babel](https://babeljs.io/)
-* [Browserify](http://browserify.org/)
-
 ## Requirements
 Node.js 6 LTS
 

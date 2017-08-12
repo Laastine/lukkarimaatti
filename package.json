@@ -88,6 +88,7 @@
     "build-css": "mkdir -p .generated && cat app/styles/*.css > .generated/styles.css",
     "build-js": "browserify --entry app/client.js | uglifyjs --compress --mangle -o .generated/bundle.js &>/dev/null",
     "build": "npm run build-css && npm run autoprefixer && npm run minify-css && npm run build-js",
+    "postinstall": "npm run build",
     "watch-css": "watch \"npm run build-css\" app/styles/",
     "watch-js": "watchify app/client.js --debug -o .generated/bundle.js -v",
     "watch": "npm run watch-js & npm run watch-css & supervisor --quiet --ignore node_modules --watch app app/bootstrap.js",

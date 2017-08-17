@@ -18,7 +18,7 @@ Later converted to pure JavaScript project with Node.js server.<br>
 Today it's implemented with universal JavaScript (Node/React/Bacon) using "megablob" architecture.
 
 ## Requirements
-Node.js 8.x.y
+Node.js 8
 
 #### Local setup DB on OSX
 - OSX users use virtualbox or any other virtual machine provider for Docker

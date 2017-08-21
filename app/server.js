@@ -13,6 +13,7 @@ import errorLoggerRoutes from './routes/errorLogger'
 import {appState} from './store/lukkariStore'
 import forceSSL from 'express-force-ssl'
 import {renderFullPage} from './pages/initPage'
+import {hsts, frameOptions} from './httpUtils'
 import Logger from './logger'
 import UniversalRouter from 'universal-router'
 import {routes} from './routes'
@@ -26,6 +27,7 @@ process.on('unhandledRejection', (reason, p) => {
 const server = express()
 
 server.use(compression({threshold: 512}))
+server.use(hsts())
 server.use(bodyParser.json())
 server.use(bodyParser.urlencoded({extended: true}))
 server.disable('x-powered-by')
@@ -45,6 +47,7 @@ if (process.env.NODE_ENV !== 'production') {
   server.use('/node_modules/', express.static(path.resolve(`${__dirname}'/../node_modules`)))
 } else {
   server.use(forceSSL)
+  server.use(frameOptions())
   server.set('forceSSLOptions', {
     enable301Redirects: true,
     trustXFPHeader: true,

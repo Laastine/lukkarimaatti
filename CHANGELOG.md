@@ -6,6 +6,9 @@ Version numbering:
 `<major>.<minor>.<patch>`
 
 ---
+### 1.4.4, August 21, 2017
+* Add HSTS and X-Frame-Options: DENY HTTP header
+
 ### 1.4.3, August 7, 2017
 * Fix browser history (back/forward) issue
 

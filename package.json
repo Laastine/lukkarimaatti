@@ -29,7 +29,7 @@
     "express": "4.15.4",
     "express-force-ssl": "0.3.2",
     "forever": "0.15.3",
-    "history": "4.6.3",
+    "history": "4.7.2",
     "moment": "2.18.1",
     "nodemailer": "4.0.1",
     "path": "0.12.7",

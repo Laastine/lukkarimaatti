@@ -9,6 +9,7 @@ const {formData, dlObject} = require('./formData')
 
 require('tough-cookie')
 const cookieJar = rp.jar()
+const UPDATE_THRESHOLD = 1000
 
 const updateCourseData = () => {
   const startTime = new Date()
@@ -75,7 +76,7 @@ const updateCourseData = () => {
       return parseHtml(res.body)
     })
     .then(dataBatch => {
-      if (dataBatch.length > 0) {
+      if (dataBatch.length > UPDATE_THRESHOLD) {
         new Promise.resolve(DB.cleanCourseTable())
           .then(() => {
             Logger.info('DB cleaned')

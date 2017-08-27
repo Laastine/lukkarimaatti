@@ -9,7 +9,7 @@ export const renderFullPage = (component, initialState, options) => `<!doctype h
     <html>
       <head>
         <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
-        <link rel='stylesheet' href='/static/${options.cssChecksum}/styles.css'/>
+        <link rel='stylesheet' type="text/css" href='/static/${options.cssChecksum}/styles.css'/>
         <link rel='shortcut icon' type='image/png' href='/img/favicon.png'/>
         <meta name="description" content="Lukkarimaatti++ timetable tool for LUT students"/>
         ${googleAnalytics}

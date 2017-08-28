@@ -6,6 +6,9 @@ Version numbering:
 `<major>.<minor>.<patch>`
 
 ---
+### 1.4.5, August 28, 2017
+* Fix single course event removal by mouse click bug
+
 ### 1.4.4, August 21, 2017
 * Add HSTS and X-Frame-Options: DENY HTTP header
 

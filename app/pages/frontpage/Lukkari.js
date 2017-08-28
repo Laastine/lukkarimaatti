@@ -25,11 +25,10 @@ const stringToColor = (colorSeed) => {
   return colour
 }
 
-const Event = ({event}) => ( //eslint-disable-line react/prop-types
+const Event = ({event}) => //eslint-disable-line react/prop-types
   <div style={{backgroundColor: stringToColor(event.title)}} className='calendar-event'>
     {event.title}{event.description}
   </div>
-)
 
 class Lukkari extends React.Component {
   constructor(props) {
@@ -88,7 +87,8 @@ class Lukkari extends React.Component {
           timeslots={2}
           components={{event: Event}}
           onSelectEvent={(c) => {
-            const courses = filter((cc) => `${cc.course_code}#${cc.type}` === c.id, state.selectedCourses)
+            const courses =
+              filter((cc) => cc.course_id === c.course_id, state.selectedCourses)
             appState.dispatch({type: 'REMOVE_COURSE_BY_ID', courses})
           }}
           min={new Date(moment(state.currentDate).hours(8).minutes(0).format())}

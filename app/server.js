@@ -27,7 +27,7 @@ process.on('unhandledRejection', (reason, p) => {
 const server = express()
 
 server.use(compression({threshold: 512}))
-server.use(hsts())
+server.use(hsts)
 server.use(bodyParser.json())
 server.use(bodyParser.urlencoded({extended: true}))
 server.disable('x-powered-by')
@@ -47,7 +47,7 @@ if (process.env.NODE_ENV !== 'production') {
   server.use('/node_modules/', express.static(path.resolve(`${__dirname}'/../node_modules`)))
 } else {
   server.use(forceSSL)
-  server.use(frameOptions())
+  server.use(frameOptions)
   server.set('forceSSLOptions', {
     enable301Redirects: true,
     trustXFPHeader: true,

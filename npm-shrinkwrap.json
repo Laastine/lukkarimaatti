@@ -1,6 +1,6 @@
 {
   "name": "lukkarimaatti",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "lockfileVersion": 1,
   "requires": true,
   "dependencies": {
@@ -244,16 +244,33 @@
       "integrity": "sha1-x57Zf380y48robyXkLzDZkdLS3k="
     },
     "autoprefixer": {
-      "version": "7.1.2",
-      "resolved": "https://registry.npmjs.org/autoprefixer/-/autoprefixer-7.1.2.tgz",
-      "integrity": "sha1-++rwfUj9h44Ggr98vurecorbKxg=",
+      "version": "7.1.3",
+      "resolved": "https://registry.npmjs.org/autoprefixer/-/autoprefixer-7.1.3.tgz",
+      "integrity": "sha512-zGy6aRrZjWhR+25n89jYkpLXutg6xdDGKKnVNzkfamnnhK3mYchkKj5GJR14aJiU0x4UqZ1+N728tkFNUL5N2g==",
       "requires": {
-        "browserslist": "2.3.2",
-        "caniuse-lite": "1.0.30000715",
+        "browserslist": "2.4.0",
+        "caniuse-lite": "1.0.30000718",
         "normalize-range": "0.1.2",
         "num2fraction": "1.2.2",
-        "postcss": "6.0.9",
+        "postcss": "6.0.10",
         "postcss-value-parser": "3.3.0"
+      },
+      "dependencies": {
+        "postcss": {
+          "version": "6.0.10",
+          "resolved": "https://registry.npmjs.org/postcss/-/postcss-6.0.10.tgz",
+          "integrity": "sha512-7WOpqea/cQHH1XUXdN1mqoFFmhigW3KAXJ+ssMOk/f6mKmwqFgqqdwsnjLGH+wuY+kwaJvT4whHcfKt5kWga0A==",
+          "requires": {
+            "chalk": "2.1.0",
+            "source-map": "0.5.7",
+            "supports-color": "4.2.1"
+          }
+        },
+        "source-map": {
+          "version": "0.5.7",
+          "resolved": "https://registry.npmjs.org/source-map/-/source-map-0.5.7.tgz",
+          "integrity": "sha1-igOdLRAh0i0eoUyA2OpGi6LvP8w="
+        }
       }
     },
     "aws-sign2": {
@@ -1478,11 +1495,11 @@
       }
     },
     "browserslist": {
-      "version": "2.3.2",
-      "resolved": "https://registry.npmjs.org/browserslist/-/browserslist-2.3.2.tgz",
-      "integrity": "sha512-arvLUwBTsmpfmyMfoBQH8WWICiyaVkMxJsft73/rTRU80rAPSXsi3M0uYBcUH22w7MG475eET31F4M0+31w81g==",
+      "version": "2.4.0",
+      "resolved": "https://registry.npmjs.org/browserslist/-/browserslist-2.4.0.tgz",
+      "integrity": "sha512-aM2Gt4x9bVlCUteADBS6JP0F+2tMWKM1jQzUulVROtdFWFIcIVvY76AJbr7GDqy0eDhn+PcnpzzivGxY4qiaKQ==",
       "requires": {
-        "caniuse-lite": "1.0.30000715",
+        "caniuse-lite": "1.0.30000718",
         "electron-to-chromium": "1.3.18"
       }
     },
@@ -1586,9 +1603,9 @@
       "integrity": "sha1-C5tceVlQ37rzAaiAa6/ofxJtqMo="
     },
     "caniuse-lite": {
-      "version": "1.0.30000715",
-      "resolved": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30000715.tgz",
-      "integrity": "sha1-wyf15tkH687GLN5ZjDvw3Xk/uaA="
+      "version": "1.0.30000718",
+      "resolved": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30000718.tgz",
+      "integrity": "sha1-DdJCkL6xExCy2A9rcKgjwqZab60="
     },
     "chai": {
       "version": "4.1.1",
@@ -1608,7 +1625,6 @@
       "version": "2.1.0",
       "resolved": "https://registry.npmjs.org/chalk/-/chalk-2.1.0.tgz",
       "integrity": "sha512-LUHGS/dge4ujbXMJrnihYMcL4AoOweGnw9Tp3kQuqy1Kx5c1qKjqvMJZ6nVJPMWJtKCTN72ZogH3oeSO9g9rXQ==",
-      "dev": true,
       "requires": {
         "ansi-styles": "3.1.0",
         "escape-string-regexp": "1.0.5",
@@ -5807,9 +5823,9 @@
       }
     },
     "nodemailer": {
-      "version": "4.0.1",
-      "resolved": "https://registry.npmjs.org/nodemailer/-/nodemailer-4.0.1.tgz",
-      "integrity": "sha1-uVhksH+s7oKH6CMu/9bx1W7HWrI="
+      "version": "4.1.0",
+      "resolved": "https://registry.npmjs.org/nodemailer/-/nodemailer-4.1.0.tgz",
+      "integrity": "sha512-pZg74CNQgnC0gZTfH0btXCxjKj7/2v5pea6hmMJ/iKyT48Z81TXZua7c65clwqKIlWfMfYBQG3OkrKxycIdXTw=="
     },
     "nopt": {
       "version": "2.2.1",
@@ -9256,7 +9272,6 @@
       "version": "4.2.1",
       "resolved": "https://registry.npmjs.org/supports-color/-/supports-color-4.2.1.tgz",
       "integrity": "sha512-qxzYsob3yv6U+xMzPrv170y8AwGP7i74g+pbixCfD6rgso8BscLT2qXIuz6TpOaiJZ3mFgT5O9lyT9nMU4LfaA==",
-      "dev": true,
       "requires": {
         "has-flag": "2.0.0"
       }

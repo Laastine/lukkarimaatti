@@ -18,7 +18,7 @@ const updateCourseData = () => {
   const url = 'https://forms.lut.fi'
   const pathDefault = '/scientia/sws/sylla1718/default.aspx'
   const pathShowTimetable = '/scientia/sws/sylla1718/showtimetable.aspx'
-  rp({
+  return rp({
     method: 'GET',
     uri: url + pathDefault,
     jar: cookieJar,
@@ -328,7 +328,8 @@ module.exports = {
   updateCourseData: (req, res) => {
     Logger.info('Update course data from IP', req.client.remoteAddress)
     if (req.query.secret === config.appSecret) {
-      updateCourseData()
+      Promise.resolve(updateCourseData())
+        .then(kikeCourseParser)
       res.status(200).json({status: 'ok'})
     } else {
       Logger.warn('Unauthorized update attempt from IP', req.client.remoteAddress)
@@ -339,7 +340,9 @@ module.exports = {
   workerUpdateData: () => {
     Logger.info('Update course data by worker')
     Promise.resolve(updateCourseData())
+      .then(() => kikeCourseParser())
       .catch((err) => Logger.error('Error while updating DB data', err.stack))
   },
-  parseHtml
+  parseHtml,
+  kikeCourseParser
 }

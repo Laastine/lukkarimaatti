@@ -6,6 +6,9 @@ Version numbering:
 `<major>.<minor>.<patch>`
 
 ---
+### 1.5.0, August 30, 2017
+* Language lab courses added
+
 ### 1.4.5, August 28, 2017
 * Fix single course event removal by mouse click bug
 

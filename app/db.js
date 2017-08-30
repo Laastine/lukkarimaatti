@@ -75,6 +75,8 @@ module.exports = {
   insertCourse: (courseBatch) => client.query(buildInsertQueryString(courseBatch))
     .catch((error) => Logger.error('buildInsertQueryString error', error.stack)),
 
-  cleanCourseTable: () => client.query('TRUNCATE TABLE course')
+  cleanCourseTable: () => client.query('TRUNCATE TABLE course'),
+
+  cleanKikeCourseTable: () => client.query('DELETE FROM course WHERE department = \'kike\'')
 }
 

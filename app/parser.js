@@ -305,8 +305,8 @@ const kikeCourseParser = () => {
       if (dbData.length > UPDATE_THRESHOLD) {
         DB.cleanKikeCourseTable()
           .then(() => {
-            Logger.info('DB cleaned')
-            Logger.info(`Inserting ${dbData.length}pcs courses`)
+            Logger.info('DB cleaned (kike courses)')
+            Logger.info(`Inserting ${dbData.length}pcs kike courses`)
             new Promise.resolve(DB.insertCourse(dbData))
               .then(() => {
                 const endTime = new Date()
@@ -317,7 +317,7 @@ const kikeCourseParser = () => {
               })
           })
       } else {
-        throw Error(`No courses inserted, dataBatch size ${dbData.length}`)
+        throw Error(`No kike courses inserted, dataBatch size ${dbData.length}`)
       }
     })
     .catch(e => {

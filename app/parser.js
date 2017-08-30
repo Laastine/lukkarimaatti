@@ -1,11 +1,13 @@
 const cheerio = require('cheerio')
 const Promise = require('bluebird')
 const rp = require('request-promise')
-const {assoc, concat, contains, dissoc, drop, merge, range} = require('ramda')
+const moment = require('moment')
+const {assoc, concat, contains, dissoc, drop, merge, range, values} = require('ramda')
 const config = require('./config')
 const DB = require('./db')
 const Logger = require('./logger')
 const {formData, dlObject} = require('./formData')
+const CSV = require('csvtojson')
 
 require('tough-cookie')
 const cookieJar = rp.jar()
@@ -250,6 +252,77 @@ const getDepartment = (input) => {
 const sanitizeInput = (input) => input ? input.trim()
   .replace(/'/g, '')
   .replace(/(\r\n|\n|\r)/g, '') : ''
+
+const kikeCourseParser = () => {
+  const url = 'https://fi.timeedit.net/web/saimia/db1/public/ri15Z217X99Z07Q5Z56g6130yQ0Y6YQ5m07gQY5Q5957o5b.csv'
+  const startTime = new Date()
+  let dbData = []
+  return rp({
+    method: 'GET',
+    uri: url,
+    resolveWithFullResponse: true,
+    timeout: 10000
+  })
+    .then((result) => {
+      const asCommaSeparated = result.body.replace(/;/g, ',')
+
+      return new Promise((resolve, reject) => {
+        CSV({noheader: true})
+          .fromString(asCommaSeparated, (err, csvRows) => {
+            if (err) {
+              Logger.error('Failed to fetch kike data', err.message)
+              reject()
+            }
+            dbData = csvRows.map(csvRow => {
+              const stripMinutes = (input) => input ? input.replace(/:[0-9]+/g, '') : ''
+              const timeOfDay = `${stripMinutes(sanitizeInput(csvRow.field2))}-${stripMinutes(sanitizeInput(csvRow.field4))}`
+              const day = moment(csvRow.field1, 'YYYY-MM-DD')
+              const courseName = sanitizeInput(csvRow.field5)
+              return {
+                classroom: `${sanitizeInput(csvRow.field7)}`,
+                course_code: `FV-${courseName}`,
+                course_name: courseName,
+                department: 'kike',
+                group_name: `${sanitizeInput(csvRow.field6)}`,
+                misc: '',
+                period: null,
+                teacher: '',
+                time_of_day: timeOfDay,
+                type: '',
+                week: day.week(),
+                week_day: values(enToFi)[day.weekday()]
+              }
+            })
+              .filter((courseData) => courseData.course_name && courseData.course_code && courseData.week && courseData.week_day && courseData.classroom)
+          })
+          .on('end', () => {
+            resolve()
+          })
+      })
+    })
+    .then(() => {
+      if (dbData.length > UPDATE_THRESHOLD) {
+        DB.cleanKikeCourseTable()
+          .then(() => {
+            Logger.info('DB cleaned')
+            Logger.info(`Inserting ${dbData.length}pcs courses`)
+            new Promise.resolve(DB.insertCourse(dbData))
+              .then(() => {
+                const endTime = new Date()
+                Logger.info(`kikeCourseParser finished in ${(endTime.getTime() - startTime.getTime()) / 1000} seconds`)
+              })
+              .catch(e => {
+                Logger.error('Failed to update kike courses', e.message)
+              })
+          })
+      } else {
+        throw Error(`No courses inserted, dataBatch size ${dbData.length}`)
+      }
+    })
+    .catch(e => {
+      Logger.error('Failed to fetch kike courses', e.message)
+    })
+}
 
 module.exports = {
   updateCourseData: (req, res) => {

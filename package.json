@@ -26,6 +26,7 @@
     "compression": "1.7.0",
     "cssnano": "3.10.0",
     "cssnano-cli": "1.0.5",
+    "csvtojson": "1.1.7",
     "express": "4.15.4",
     "express-force-ssl": "0.3.2",
     "forever": "0.15.3",

@@ -32,7 +32,6 @@ export const updateUrlParams = (selectedCourses) => {
 
 export const removeUrlParameter = (courseCode) => {
   const params = sanitizeUrlParam()
-  console.log(params)
   const updatedParams = params.substring(urlParamLength, params.length).split('+').filter((p) => {
     if (p.indexOf('-') > -1) {
       const groupLetterStripped = p.substring(0, p.indexOf('-'))

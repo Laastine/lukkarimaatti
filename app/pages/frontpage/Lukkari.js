@@ -27,7 +27,7 @@ const stringToColor = (colorSeed) => {
 
 const Event = ({event}) => //eslint-disable-line react/prop-types
   <div style={{backgroundColor: stringToColor(event.title)}} className='calendar-event'>
-    {event.title}{event.description}
+    {event.title}{event.description} - {event.department === 'kike' ? event.group_name : ''}
   </div>
 
 class Lukkari extends React.Component {

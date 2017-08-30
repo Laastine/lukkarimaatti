@@ -7,7 +7,7 @@ Version numbering:
 
 ---
 ### 1.5.0, August 30, 2017
-* Language lab courses added
+* Language lab courses added without distinct
 
 ### 1.4.5, August 28, 2017
 * Fix single course event removal by mouse click bug

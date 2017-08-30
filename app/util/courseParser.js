@@ -22,6 +22,8 @@ export const addDataToCalendar = (state) => {
     start: new Date(getTimestamp(course, weekNumber, course.time_of_day.split('-')[0] || 6)),
     end: new Date(getTimestamp(course, weekNumber, course.time_of_day.split('-')[1] || 6)),
     id: `${course.course_code}#${course.type}`,
-    course_id: course.course_id
+    course_id: course.course_id,
+    group_name: course.group_name,
+    department: course.department
   })))) : []
 }

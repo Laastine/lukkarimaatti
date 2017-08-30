@@ -278,9 +278,10 @@ const kikeCourseParser = () => {
               const timeOfDay = `${stripMinutes(sanitizeInput(csvRow.field2))}-${stripMinutes(sanitizeInput(csvRow.field4))}`
               const day = moment(csvRow.field1, 'YYYY-MM-DD')
               const courseName = sanitizeInput(csvRow.field5)
+              const courseCode = `FV${courseName.replace(/[^\x00-\x7F]/g, '').replace(/\s/, '')}`
               return {
                 classroom: `${sanitizeInput(csvRow.field7)}`,
-                course_code: `FV-${courseName}`,
+                course_code: courseCode,
                 course_name: courseName,
                 department: 'kike',
                 group_name: `${sanitizeInput(csvRow.field6)}`,

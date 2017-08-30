@@ -7,32 +7,32 @@ const urlParamLength = 9
 
 const sanitizeUrlParam = () => window.location.search.indexOf('courses=') < 0 ? '' : window.location.search
 
-export const addUrlParameter = (courseCode, groupName) => {
+export const addUrlParameter = (courseCode) => {
   const params = sanitizeUrlParam()
-  const urlParam = courseCode.substring(0, 2) === 'FV' ? `${courseCode}-${groupName}` : courseCode
   if (params.length > urlParamLength) {
     if (params.indexOf(courseCode) < 0) {
       history.replace({
         pathname: history.location.pathname,
-        search: `?courses=${params.substring(urlParamLength, params.length)}+${urlParam}`
+        search: `?courses=${params.substring(urlParamLength, params.length)}+${courseCode}`
       })
     }
   } else if (params.indexOf('?courses=') < 0) {
-    history.replace({pathname: history.location.pathname, search: `?courses=${params}${urlParam}`})
+    history.replace({pathname: history.location.pathname, search: `?courses=${params}${courseCode}`})
   } else {
-    history.replace({pathname: history.location.pathname, search: `${params}${urlParam}`})
+    history.replace({pathname: history.location.pathname, search: `${params}${courseCode}`})
   }
 }
 
 export const updateUrlParams = (selectedCourses) => {
   pipe(
     uniqBy((c) => c.course_code),
-    forEach((c) => addUrlParameter(c.course_code, c.group_name))
+    forEach((c) => addUrlParameter(c.course_code))
   )(selectedCourses)
 }
 
 export const removeUrlParameter = (courseCode) => {
   const params = sanitizeUrlParam()
+  console.log(params)
   const updatedParams = params.substring(urlParamLength, params.length).split('+').filter((p) => {
     if (p.indexOf('-') > -1) {
       const groupLetterStripped = p.substring(0, p.indexOf('-'))

@@ -253,6 +253,43 @@ const sanitizeInput = (input) => input ? input.trim()
   .replace(/'/g, '')
   .replace(/(\r\n|\n|\r)/g, '') : ''
 
+const kikeCourseCodeParser = () => {
+  const url = 'https://ops.saimia.fi/opsnet/disp/fi/ops_KoulOhjOps/tab/tab/sea?valkiel=fi&ryhma_id=20448973&koulohj_id=20448943'
+  const startTime = new Date()
+  const separator = '#%#'
+  return rp({
+    method: 'GET',
+    uri: url,
+    resolveWithFullResponse: true,
+    timeout: 10000
+  })
+    .then((result) => {
+      const $ = cheerio.load(result.body)
+      return $('tr.datatable2').map(function () {
+        return `${$(this).find('td:nth-child(2)').text().split('\n')[0]}${separator}${$(this).find('td:nth-child(3)').text()}`
+      }).get()
+    })
+    .then((coursesWithCodes) =>
+      coursesWithCodes
+        .map(c => {
+          const [courseName, courseCode] = c.split(separator)
+          if (courseName && courseCode && /[\s ,.\-0-9]+/) {
+            return {courseName, courseCode}
+          } else {
+            return null
+          }
+        })
+        .filter(e => e))
+    .then((data) => Promise.all(data.map(d => DB.updateCourseCode(d.courseCode, d.courseName))))
+    .then(() => {
+      const endTime = new Date()
+      Logger.info(`kikeCourseCodeParser finished in ${(endTime.getTime() - startTime.getTime()) / 1000} seconds`)
+    })
+    .catch(e => {
+      Logger.error('Failed to update kike course codes', e.message)
+    })
+}
+
 const kikeCourseParser = () => {
   const url = 'https://fi.timeedit.net/web/saimia/db1/public/ri15Z217X99Z07Q5Z56g6130yQ0Y6YQ5m07gQY5Q5957o5b.csv'
   const startTime = new Date()
@@ -331,6 +368,7 @@ module.exports = {
     if (req.query.secret === config.appSecret) {
       Promise.resolve(updateCourseData())
         .then(kikeCourseParser)
+        .then(kikeCourseCodeParser)
       res.status(200).json({status: 'ok'})
     } else {
       Logger.warn('Unauthorized update attempt from IP', req.client.remoteAddress)
@@ -345,5 +383,6 @@ module.exports = {
       .catch((err) => Logger.error('Error while updating DB data', err.stack))
   },
   parseHtml,
-  kikeCourseParser
+  kikeCourseParser,
+  kikeCourseCodeParser
 }

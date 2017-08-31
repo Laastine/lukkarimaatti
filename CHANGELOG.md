@@ -6,6 +6,9 @@ Version numbering:
 `<major>.<minor>.<patch>`
 
 ---
+### 1.5.1, August 31, 2017
+* Add language lab course codes. Fixes reloading bug when language lab course is selected.
+
 ### 1.5.0, August 30, 2017
 * Language lab courses added without distinct
 

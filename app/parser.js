@@ -280,7 +280,7 @@ const kikeCourseCodeParser = () => {
           }
         })
         .filter(e => e))
-    .then((data) => Promise.all(data.map(d => DB.updateCourseCode(d.courseCode, d.courseName))))
+    .then((data) => Promise.all(data.map(d => DB.updateKikeCourseCode(d.courseCode, d.courseName))))
     .then(() => {
       const endTime = new Date()
       Logger.info(`kikeCourseCodeParser finished in ${(endTime.getTime() - startTime.getTime()) / 1000} seconds`)

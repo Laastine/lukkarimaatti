@@ -75,8 +75,8 @@ module.exports = {
   insertCourse: (courseBatch) => client.query(buildInsertQueryString(courseBatch))
     .catch((error) => Logger.error('buildInsertQueryString error', error.stack)),
 
-  updateCourseCode: (courseCode, courseName) =>
-    client.query(`UPDATE course SET course_code = '${courseCode}' WHERE course_name ILIKE '${courseName}';`)
+  updateKikeCourseCode: (courseCode, courseName) =>
+    client.query(`UPDATE course SET course_code = '${courseCode}' WHERE course_name ILIKE '${courseName}' AND department = 'kike';`)
       .catch((error) => Logger.error('updateCourseCode error', error.stack)),
 
   cleanCourseTable: () => client.query('TRUNCATE TABLE course;'),

@@ -27,11 +27,12 @@ class Modal extends React.Component {
           }}
           className='close'>X
         </div>
-        <div>Send course selection URL to your email.</div>
+        <div className="modal-text bigger-text">Send course selection URL to your email</div>
         <form className='modal-input-container'>
           <input type='email' className='modal-input' id='saveEmail' placeholder='Email' autoFocus="true"/>
           {sendButton(isWaitingAjax)}
         </form>
+        <div className="modal-text">You can also bookmark current address to view it later</div>
       </div>
     </div> : null
   }

@@ -192,6 +192,15 @@ body {
   background: rgba(0, 0, 0, 0.8);
 }
 
+.modal-text {
+  font-size: 11px;
+}
+
+.bigger-text {
+  font-size: 14px;
+  font-weight: 600;
+}
+
 .modal-dialog:target {
   opacity: 1;
 }

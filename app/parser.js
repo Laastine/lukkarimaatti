@@ -392,10 +392,9 @@ module.exports = {
   workerUpdateData: () => {
     Logger.info('Update course data by worker')
     Promise.resolve(updateCourseData())
-      .then(() => kikeCourseParser())
+      .then(kikeCourseParser)
+      .then(kikeCourseCodeParser)
       .catch((err) => Logger.error('Error while updating DB data', err.stack))
   },
-  parseHtml,
-  kikeCourseParser,
-  kikeCourseCodeParser
+  parseHtml
 }

@@ -68,7 +68,7 @@ const serveStaticResource = (filePath) => (req, res, next) =>
     .then(checksum => {
       if (req.params.checksum === checksum) {
         const twoHoursInSeconds = 60 * 60 * 2
-        res.setHeader('Cache-Control', `public, max-age=${twoHoursInSeconds}`)
+        res.setHeader('Cache-Control', `must-revalidate, max-age=${twoHoursInSeconds}`)
         res.setHeader('ETag', checksum)
         res.sendFile(filePath)
       } else {

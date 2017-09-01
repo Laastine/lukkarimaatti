@@ -99,6 +99,14 @@ button.rbc-input::-moz-focus-inner {
   padding: 0 10px;
   text-align: center;
 }
+@media screen and (max-width: 700px) {
+  .rbc-toolbar .rbc-toolbar-label {
+    min-width: 30px;
+    padding: 0 10px;
+    text-align: center;
+  }
+}
+
 .rbc-toolbar button {
   color: #373a3c;
   display: inline-block;

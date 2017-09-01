@@ -108,6 +108,18 @@ const enToFi = {
   Sun: 'su'
 }
 
+const handleCourseCodeSuffixes = course => {
+  if (course.course_code && /^[A-Z0-9]+\s\([A-Z0-9]+\)+$/gi.test(course.course_code)) {
+    const [suffix] = (course.course_code.match(/\([A-Z]+\)$/gi))
+    return merge(course, {
+      course_code: course.course_code.replace(/\s+/, ''),
+      course_name: `${course.course_name}${suffix}`
+    })
+  } else {
+    return course
+  }
+}
+
 const parseHtml = (data) => {
   const $ = cheerio.load(data)
   const courses = $('td.object-cell-border').map(function () {
@@ -122,6 +134,7 @@ const parseHtml = (data) => {
     .map(c => assoc('time_of_day', parseTimeOfDay(c.text), c))
     .map(c => assoc('classroom', parseClassRoom(c.text), c))
     .map(c => assoc('department', getDepartment(c.course_code), c))
+    .map(c => handleCourseCodeSuffixes(c))
     .map(c => merge(c, {teacher: '', misc: '', group_name: ''}))
     .map(c => dissoc('text', c))
     .filter(c => c.course_code && c.course_name && c.time_of_day)

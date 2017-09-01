@@ -6,6 +6,10 @@ Version numbering:
 `<major>.<minor>.<patch>`
 
 ---
+### 1.5.2, August 31, 2017
+* Fix mobile layout bug
+* Handle course code suffixes (tite/tuta/kati) properly. Fixes page reload with e.g. `LM10A2000 (tite)`
+
 ### 1.5.1, August 31, 2017
 * Add language lab course codes. Fixes reloading bug when language lab course is selected.
 

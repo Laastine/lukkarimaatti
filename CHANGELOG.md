@@ -19,7 +19,7 @@ Version numbering:
 * Add language lab course codes. Fixes reloading bug when language lab course is selected.
 
 ### 1.5.0, August 30, 2017
-* Language lab courses added without distinct
+* Language lab courses added without distinct course codes
 
 ### 1.4.5, August 28, 2017
 * Fix single course event removal by mouse click bug

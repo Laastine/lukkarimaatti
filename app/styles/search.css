@@ -347,41 +347,12 @@ body {
 @media screen and (max-width: 699px) {
   .department-link-container {
     background-color: #555;
-    padding: 10px 5px;
+    padding: 10px 2px;
     height: 20px;
-    font-size: 12px;
-    word-break: break-all;
-  }
-
-  .department-link {
-    text-decoration: none;
-    font-weight: 400;
-    margin: 4px;
-    color: #999;
-  }
-
-  .department-link-selected {
-    text-decoration: none;
-    font-weight: 600;
-    margin: 7px;
-    color: #FFF;
-  }
-
-  .department-course-list {
-    text-align: left;
-    margin: auto;
-    display: inline-block;
-    width: 300px;
-    font-size: 12px;
-  }
-}
-
-@media screen and (min-width: 700px) {
-  .department-link-container {
-    background-color: #555;
-    padding: 5px;
-    height: 30px;
-    word-break: break-all;
+    font-size: 11px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
   }
 
   .department-link {
@@ -394,16 +365,54 @@ body {
   .department-link-selected {
     text-decoration: none;
     font-weight: 700;
-    margin: 7px;
+    margin: 10px;
     color: #FFF;
   }
 
   .department-course-list {
     text-align: left;
     margin: auto;
-    display: inline-block;
-    width: 500px;
-    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0;
+    width: 300px;
+    font-size: 11px;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .department-link-container {
+    background-color: #555;
+    padding: 5px;
+    height: 25px;
+    word-break: break-all;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .department-link {
+    text-decoration: none;
+    font-weight: 500;
+    margin: 7px;
+    color: #999;
+  }
+
+  .department-link-selected {
+    text-decoration: none;
+    font-weight: 700;
+    margin: 10px;
+    color: #FFF;
+  }
+
+  .department-course-list {
+    text-align: left;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0;
+    width: 550px;
+    font-size: 14px;
   }
 }
 
@@ -412,19 +421,17 @@ body {
 }
 
 .department-course {
-  margin: 6px 0px 6px 0px;
-  display: block;
+  padding: 2px 0px 2px 0px;
+  display: flex;
+  margin: 0 auto;
+  width: 100%;
+  cursor: pointer;
 }
 
-.department-course-selected {
-  margin: 6px 0px 6px 0px;
-  display: block;
-  font-weight: 600;
-}
-
-.department-course-element {
+.selected {
+  font-weight: 500;
 }
 
 .department-course-checkbox {
-  float: left
+  float: left;
 }

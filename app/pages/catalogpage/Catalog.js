@@ -15,11 +15,11 @@ const DepartmentSelectorElement = (selectedDepartment) => {
     'SATE',
     'TITE',
     'TUTA']
-    .map((e, index) => <span key={`${index}-${e}`}>
+    .map((e, index) => <div key={`${index}-${e}`}>
       <a className={`department-link${selectedDepartment === e ? '-selected' : ''}`}
         href={`/catalog/${e}`} onClick={onLinkClick}>{e}
       </a>
-    </span>)
+    </div>)
 
   return <div className="department-link-container">{departmentNames}</div>
 }
@@ -64,9 +64,9 @@ const courseSelect = (c, isCourseSelected) => {
 const DepartmentCoursesElement = (state) => {
   const courses = state.departmentCourses ? state.departmentCourses.map((c) => {
     const selected = isSelected(state, c.course_code, c.group_name)
-    return <li key={c.course_code + c.course_name} className={`department-course${selected ? '-selected' : ''}`}
+    return <li key={c.course_code + c.course_name} className={`department-course ${selected ? 'selected' : ''}`}
       onClick={partial(courseSelect, [c, selected])}>
-      <input className='department-course-checkbox' type='checkbox' checked={selected}></input>
+      <input className='department-course-checkbox' type='checkbox' checked={selected} readOnly></input>
       <div className='department-course-element'>{c.course_code} - {c.course_name}: {getSemester(c.week)}</div>
     </li>
   }) : null
@@ -85,7 +85,11 @@ class Catalog extends React.Component {
 Catalog.displayName = 'Catalog'
 
 Catalog.propTypes = {
-  state: PropTypes.object
+  state: PropTypes.shape({
+    selected: PropTypes.bool,
+    departmentCourses: PropTypes.array,
+    department: PropTypes.string
+  })
 }
 
 export default Catalog

@@ -49,13 +49,25 @@ const selectCourse = (courseCode, groupName) => {
   }
 }
 
+const removeCourse = (courseCode) => {
+  appState.dispatch({type: 'REMOVE_COURSE', course_code: courseCode})
+}
+
+const courseSelect = (c, isCourseSelected) => {
+  if (isCourseSelected) {
+    removeCourse(c.course_code, c.group_name)
+  } else {
+    selectCourse(c.course_code)
+  }
+}
+
 const DepartmentCoursesElement = (state) => {
   const courses = state.departmentCourses ? state.departmentCourses.map((c) => {
     const selected = isSelected(state, c.course_code, c.group_name)
-    return <li key={c.course_code + c.course_name}
-      className={`department-course${selected ? '-selected' : ''}`}
-      onClick={partial(selectCourse, [c.course_code, c.group_name])}>
-      {c.course_code} - {c.course_name}: {getSemester(c.week)} {selected ? 'SELECTED' : null}
+    return <li key={c.course_code + c.course_name} className={`department-course${selected ? '-selected' : ''}`}
+      onClick={partial(courseSelect, [c, selected])}>
+      <input className='department-course-checkbox' type='checkbox' checked={selected}></input>
+      <div className='department-course-element'>{c.course_code} - {c.course_name}: {getSemester(c.week)}</div>
     </li>
   }) : null
   return <ul className='department-course-list'>{courses}</ul>

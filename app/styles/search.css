@@ -419,5 +419,12 @@ body {
 .department-course-selected {
   margin: 6px 0px 6px 0px;
   display: block;
-  font-weight: 700;
+  font-weight: 600;
+}
+
+.department-course-element {
+}
+
+.department-course-checkbox {
+  float: left
 }

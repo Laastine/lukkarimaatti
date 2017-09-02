@@ -45,7 +45,7 @@ class Lukkari extends React.Component {
     this.setState({
       dayFormat: isMobile ? 'D.M' : 'dd DD.MM.YY',
       timeGutterFormat: isMobile ? 'HH' : 'HH.mm',
-      views: isMobile ? ['work_week', 'day'] : ['month', 'work_week', 'day', 'agenda']
+      views: isMobile ? ['work_week', 'week', 'day'] : ['month', 'work_week', 'week', 'day', 'agenda']
     })
   }
 

@@ -6,6 +6,9 @@ Version numbering:
 `<major>.<minor>.<patch>`
 
 ---
+### 1.5.4, September 1, 2017
+* Show course events on weekends
+
 ### 1.5.3, September 1, 2017
 * Implement unselect course in catalog page
 * Update catalog page styles

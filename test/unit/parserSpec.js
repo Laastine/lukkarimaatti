@@ -8,7 +8,7 @@ const enteData = parseHtml(bhCourseData)
 const katiData = parseHtml(aCourseData)
 const sateData = parseHtml(blCourseData)
 
-describe('Lukkarimaatti tite course parser', () => {
+describe('Tite course parser', () => {
   it('Check that every course gets parsed', () => {
     assert.equal(titeData.length, 3)
   })

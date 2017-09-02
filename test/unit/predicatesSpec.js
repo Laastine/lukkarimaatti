@@ -1,7 +1,7 @@
 import assert from 'assert'
 import {isCourseLink, isEmail} from '../../app/utils'
 
-describe('Lukkarimaatti predicates tests', () => {
+describe('Predicates tests', () => {
   it('Check course link validity', () => {
     assert.equal(isCourseLink('https://lukkarimaatti.ltky.fi/?courses=FV12A1221-F+CT60A0220'), true)
     assert.equal(isCourseLink('https://lukkarimaatti.ltky.fi/?courses=BH60A2101+BH60A3001+BH60A4700+CS20A0002+CS30A0952+CS31A0551+CS34A0732'), true)

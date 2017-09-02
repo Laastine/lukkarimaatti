@@ -435,3 +435,52 @@ body {
 .department-course-checkbox {
   float: left;
 }
+
+.control {
+  display: block;
+  position: relative;
+  padding-left: 8px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.control input {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+
+.control__indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 14px;
+  width: 14px;
+  z-index: -1;
+  background: #e6e6e6;
+  border: 1px #222 solid;
+  border-radius: 2px;
+}
+
+.control input:checked ~ .control__indicator {
+  background: #555;
+}
+
+.control input:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+.control input:checked ~ .control__indicator:after {
+  display: block;
+}
+
+.control--checkbox {
+  margin-right: 15px;
+}
+
+.control--checkbox input:disabled ~ .control__indicator:after {
+  border-color: #7b7b7b;
+}

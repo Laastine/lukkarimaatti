@@ -64,7 +64,7 @@ const courseSelect = (c, isCourseSelected) => {
 const DepartmentCoursesElement = (state) => {
   const courses = state.departmentCourses ? state.departmentCourses.map((c, idx) => {
     const selected = isSelected(state, c.course_code, c.group_name)
-    return <li key={c.course_code + c.course_name} className={`department-course ${selected ? 'selected' : ''}`}
+    return <li key={c.course_code + c.course_name} className={`department-course${selected ? ' selected' : ''}`}
       onClick={partial(courseSelect, [c, selected])}>
       <label className='control control--checkbox' htmlFor={`course-box${idx}`}>
         <input id={`course-box${idx}`} className='department-course-checkbox' type='checkbox' checked={selected} readOnly></input>

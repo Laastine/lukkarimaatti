@@ -56,8 +56,7 @@
     "eslint-plugin-react": "7.3.0",
     "jquery": "3.2.1",
     "mocha": "3.5.0",
-    "mocha-phantomjs": "4.1.0",
-    "phantomjs-prebuilt": "2.1.15",
+    "mocha-chrome": "0.1.2",
     "supervisor": "0.12.0",
     "watch": "1.0.2",
     "watchify": "3.9.0"
@@ -95,7 +94,7 @@
     "start": "node app/bootstrap.js",
     "lint": "eslint app --fix",
     "clean": "rm .generated/*.js .generated/*.css",
-    "integration-test": "mocha-phantomjs -p node_modules/.bin/phantomjs http://localhost:8080/test/runner.html",
+    "integration-test": "mocha-chrome http://localhost:8080/test/runner.html",
     "test-unit": "mocha --compilers js:babel-register test/unit/*Spec.js",
     "test": "node test/integrationTest.js && npm run test-unit"
   }

@@ -6,7 +6,7 @@ import {isCourseLink, isEmail} from './utils'
 module.exports = {
   sendMail: (req, res) => {
     const {email, link} = req.body
-    if (isEmail(email) || isCourseLink(link)) {
+    if (isEmail(email) && isCourseLink(link)) {
       const transporter = nodemailer.createTransport({
         service: 'Gmail',
         auth: {

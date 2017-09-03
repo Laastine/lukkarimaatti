@@ -75,6 +75,25 @@ describe('Lukkarimaatti UI navigation', function () {
         expect(selectedCourses.some(function (e) {
           return e === 'BL20A1600 - Smart GridsX'
         })).to.equal(true)
+        expect(getSelectedCoursesFromUrl()).to.deep.equal(["BL20A1600", "CT60A2411"])
+        done()
+      })
+  })
+
+  it('Test course removal', function (done) {
+    waitUntil(function () {
+      return page.openPage(function () {
+        const el = testFrame().document.getElementsByClassName('rbc-calendar')
+        return el && el.length > 0;
+      }, 'http://localhost:8080/?courses=BL20A1600+CT60A2411')
+    }, 3000)()
+      .then(click('div:nth-child(3) > div.result-list-remove'))
+      .then(waitUntil(function () {
+        return S('.search-list-element').length === 1
+      }, 3000))
+      .then(function () {
+        expect(getSelectedCoursesFromUrl()).to.deep.equal(["CT60A2411"])
+        expect(S('.result-list-remove').length).to.equal(1)
         done()
       })
   })

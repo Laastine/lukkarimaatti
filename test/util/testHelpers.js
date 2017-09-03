@@ -38,6 +38,17 @@ function waitUntil(predicate, timeout) {
   }
 }
 
+function getWindowUrl() {
+  return testFrame().location.href
+}
+
+function getSelectedCoursesFromUrl() {
+  return getWindowUrl()
+    .replace(/[\w\/:]+\?courses=/, '')
+    .split('+')
+    .sort()
+}
+
 function browserBack() {
   return function () {
     return new Promise(function (resolve) {
@@ -64,7 +75,7 @@ function setInputValue(el, index, elementValue) {
         triggerEvent(S(el)[idx], 'input')
         triggerEvent(S(el)[idx], 'keyup')
       })
-      .catch(function(err) {
+      .catch(function (err) {
         console.log(err)
         console.log(el + ' ' + index + ' ' + elementValue)
       })
@@ -80,7 +91,7 @@ function click(el, index) {
         triggerEvent(S(el)[index ? index : 0], 'click')
       })
       .delay(500)
-      .catch(function(err) {
+      .catch(function (err) {
         console.log(err)
         console.log(el + ' ' + index)
       })

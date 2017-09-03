@@ -108,3 +108,39 @@ function change(el, index) {
       })
   }
 }
+
+function wait(duration) {
+  return function () {
+    return new Promise(function (resolve, reject) {
+      setTimeout(function () {
+        resolve();
+      }, duration)
+    });
+  }
+}
+
+function getElementWithText(selector, text) {
+  var elements = S(selector);
+  return Array.prototype.filter.call(elements, function (element) {
+    return RegExp(text).test(element.textContent);
+  })
+}
+
+
+function clickText(el, regex) {
+  return function () {
+    return waitUntil(function () {
+      return getElementWithText(el, regex).length > 0
+    }, eventTimeout)()
+      .then(function () {
+        triggerEvent(getElementWithText(el, regex)[0], 'click')
+      })
+      .delay(500)
+      .catch(function (err) {
+        console.log(err)
+        console.log(el)
+      })
+  }
+}
+
+

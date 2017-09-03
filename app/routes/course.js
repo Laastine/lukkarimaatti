@@ -33,7 +33,7 @@ const extractCourseParams = (params) => {
 }
 
 courseRoutes.get('/course', (req, res) =>
-  Promise.resolve(DB.getCourseByName(req.query.name.toLocaleLowerCase()))
+  Promise.resolve(DB.getCourseByName(req.query.name))
     .then((result) => res.json(result))
     .catch((err) => {
       buildErrorMessage('/course', req.query.name, req.client.remoteAddress, err)
@@ -72,7 +72,7 @@ courseRoutes.get('/courses', (req, res) => {
 })
 
 courseRoutes.get('/byDepartment/:department', (req, res) => {
-  const department = req.params.department === 'ENTE-YMTE' ? 'ente/ymte' : req.params.department.toLowerCase()
+  const department = req.params.department === 'ENTE-YMTE' ? 'ente/ymte' : req.params.department
   Promise.resolve(DB.getCourseByDepartment(department))
     .then((result) => res.json(uniqBy((c) => c.course_name.toUpperCase(), result)))
     .catch((err) => {

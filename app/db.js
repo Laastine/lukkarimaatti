@@ -86,13 +86,13 @@ module.exports = {
     .then(() => client.any('CREATE INDEX course_name_search ON course (course_name)'))
     .catch((err) => Logger.error('initializeDb error', err.stack)),
 
-  getCourseByName: (courseName) => client.query(`SELECT * FROM course WHERE LOWER(course_name) LIKE '%${courseName.toLocaleLowerCase()}%'`),
+  getCourseByName: (courseName) => client.query(`SELECT * FROM course WHERE LOWER(course_name) LIKE LOWER('%${courseName}%')`),
 
   getCourseByCodeAndGroup: (code, group) => client.query(SQL`SELECT * FROM course WHERE course_code = '${code}' AND group_name = '${group}'`),
 
   getCourseByCode: code => client.query(SQL`SELECT * FROM course WHERE course_code = '${code}'`),
 
-  getCourseByDepartment: department => client.query(SQL`SELECT * FROM course WHERE department = '${department}'`),
+  getCourseByDepartment: department => client.query(SQL`SELECT * FROM course WHERE department = LOWER('${department}')`),
 
   prefetchCoursesByCode: params => {
     const insertGroupCondition = groupName => groupName ? SQL` AND group_name = '${groupName}'` : ''

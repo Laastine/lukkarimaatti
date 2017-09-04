@@ -5,7 +5,7 @@ let uiChildProcess
 
 const Promise = require('bluebird')
 const {spawn} = require('child_process')
-const {exec} = Promise.promisify(require('child_process'))
+const exec = Promise.promisify(require('child_process').exec)
 const axios = require('axios')
 const DB = require('./../app/db')
 const Parser = require('./../app/parser')

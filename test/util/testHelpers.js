@@ -25,16 +25,17 @@ function S(selector) {
 }
 
 function waitUntil(predicate, timeout) {
+  const wait = timeout ? timeout : 3000
   return function () {
     const started = Date.now()
     return (function loop() {
       return Promise.resolve(predicate()).then((result) => {
         if (result) {
           return result
-        } else if (Date.now() - started < timeout) {
+        } else if (Date.now() - started < wait) {
           return Promise.delay(1000).then(loop)
         } else {
-          throw new Error(`Couldn't fill predicate in ${timeout / 1000} seconds`)
+          throw new Error(`Couldn't fill predicate in ${wait / 1000} seconds`)
         }
       })
     })()

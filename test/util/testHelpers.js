@@ -1,14 +1,17 @@
-var expect = chai.expect
+/* eslint-env jquery */
+/* global chai */
+/* eslint-disable no-unused-vars */
+const {expect} = chai
 chai.should()
 chai.config.truncateThreshold = 0
 
-var eventTimeout = 15000
+const eventTimeout = 15000
 
 function loadPage(path, predicate) {
   if (!predicate) {
     throw new Error('No predicate defined')
   }
-  var newTestFrame = $('<iframe/>').attr({src: path, width: 1200, height: 800, id: 'testframe'})
+  const newTestFrame = $('<iframe/>').attr({src: path, width: 1200, height: 800, id: 'testframe'})
   $('#testframe').replaceWith(newTestFrame)
   return waitUntil(predicate, eventTimeout)()
 }
@@ -23,15 +26,15 @@ function S(selector) {
 
 function waitUntil(predicate, timeout) {
   return function () {
-    var started = Date.now()
+    const started = Date.now()
     return (function loop() {
-      return Promise.resolve(predicate()).then(function (result) {
+      return Promise.resolve(predicate()).then((result) => {
         if (result) {
           return result
         } else if (Date.now() - started < timeout) {
           return Promise.delay(1000).then(loop)
         } else {
-          throw new Error('Couldn\'t fill predicate in ' + timeout / 1000 + ' seconds')
+          throw new Error(`Couldn't fill predicate in ${timeout / 1000} seconds`)
         }
       })
     })()
@@ -51,7 +54,7 @@ function getSelectedCoursesFromUrl() {
 
 function browserBack() {
   return function () {
-    return new Promise(function (resolve) {
+    return new Promise((resolve) => {
       $('#testframe').get(0).contentWindow.history.back()
       resolve()
     })
@@ -59,51 +62,43 @@ function browserBack() {
 }
 
 function triggerEvent(element, eventName) {
-  var event = testFrame().document.createEvent('Event')
+  const event = testFrame().document.createEvent('Event')
   event.initEvent(eventName, true, false)
   element.dispatchEvent(event)
 }
 
 function setInputValue(el, index, elementValue) {
-  var idx = index ? index : 0
+  const idx = index ? index : 0
   return function () {
-    return waitUntil(function () {
-      return S(el).length > 0
-    }, eventTimeout)()
-      .then(function () {
+    return waitUntil(() => S(el).length > 0, eventTimeout)()
+      .then(() => {
         $(S(el)[idx]).val(elementValue)
         triggerEvent(S(el)[idx], 'input')
         triggerEvent(S(el)[idx], 'keyup')
       })
-      .catch(function (err) {
-        console.log(err)
-        console.log(el + ' ' + index + ' ' + elementValue)
+      .catch((err) => {
+        console.log(`${err} ${el} ${index} ${elementValue}`) // eslint-disable-line no-console
       })
   }
 }
 
 function click(el, index) {
   return function () {
-    return waitUntil(function () {
-      return S(el).length > 0
-    }, eventTimeout)()
-      .then(function () {
+    return waitUntil(() => S(el).length > 0, eventTimeout)()
+      .then(() => {
         triggerEvent(S(el)[index ? index : 0], 'click')
       })
       .delay(500)
-      .catch(function (err) {
-        console.log(err)
-        console.log(el + ' ' + index)
+      .catch((err) => {
+        console.log(`${err} ${el} ${index}`) // eslint-disable-line no-console
       })
   }
 }
 
 function change(el, index) {
   return function () {
-    return waitUntil(function () {
-      return S(el).length > 0
-    }, eventTimeout)()
-      .then(function () {
+    return waitUntil(() => S(el).length > 0, eventTimeout)()
+      .then(() => {
         triggerEvent(S(el)[index ? index : 0], 'change')
       })
   }
@@ -111,36 +106,29 @@ function change(el, index) {
 
 function wait(duration) {
   return function () {
-    return new Promise(function (resolve, reject) {
-      setTimeout(function () {
-        resolve();
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve()
       }, duration)
-    });
+    })
   }
 }
 
 function getElementWithText(selector, text) {
-  var elements = S(selector);
-  return Array.prototype.filter.call(elements, function (element) {
-    return RegExp(text).test(element.textContent);
-  })
+  const elements = S(selector)
+  return Array.prototype.filter.call(elements, (element) => RegExp(text).test(element.textContent))
 }
-
 
 function clickText(el, regex) {
   return function () {
-    return waitUntil(function () {
-      return getElementWithText(el, regex).length > 0
-    }, eventTimeout)()
-      .then(function () {
+    return waitUntil(() => getElementWithText(el, regex).length > 0, eventTimeout)()
+      .then(() => {
         triggerEvent(getElementWithText(el, regex)[0], 'click')
       })
       .delay(500)
-      .catch(function (err) {
-        console.log(err)
-        console.log(el)
+      .catch((err) => {
+        console.log(err, el) // eslint-disable-line no-console
       })
   }
 }
-
-
+/* eslint-enable no-unused-vars */

@@ -1,7 +1,9 @@
-function LukkarimaattiPage() {
+/* global loadPage */
+
+function LukkarimaattiPage() { // eslint-disable-line no-unused-vars
   return {
-    openPage: function(pageLoadedCheckFn, url) {
-      var addr = url ? url : 'http://localhost:8080/'
+    openPage: (pageLoadedCheckFn, url) => {
+      const addr = url ? url : 'http://localhost:8080/'
       return loadPage(addr, pageLoadedCheckFn)
     }
   }

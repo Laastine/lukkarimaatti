@@ -68,9 +68,11 @@ describe('Lukkarimaatti UI navigation', () => {
     }, 'http://localhost:8080/?courses=BL20A1600+CT60A2411'))()
       .then(click('div:nth-child(3) > div.result-list-remove'))
       .then(waitUntil(() => S('.search-list-element').length === 1))
+      .then(click('div:nth-child(2) > div.result-list-remove'))
+      .then(waitUntil(() => S('.search-list-element').length === 0))
       .then(() => {
-        expect(getSelectedCoursesFromUrl()).to.deep.equal(['BL20A1600'])
-        expect(S('.result-list-remove').length).to.equal(1)
+        expect(getSelectedCoursesFromUrl()).to.deep.equal([''])
+        expect(S('.result-list-remove').length).to.equal(0)
         done()
       })
   })

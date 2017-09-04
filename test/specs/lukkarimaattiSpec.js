@@ -8,7 +8,7 @@ describe('Lukkarimaatti UI navigation', () => {
     return el && el.length > 0
   }, ''))
 
-  it('Test link navigation', (done) => {
+  it('Test link navigation', done => {
     waitUntil(() => $(S('.rbc-calendar')[0]).is(':visible'))()
       .then(click('.header-element', 2))
       .then(() => {
@@ -21,7 +21,7 @@ describe('Lukkarimaatti UI navigation', () => {
       })
   })
 
-  it('Test browser navigation', (done) => {
+  it('Test browser navigation', done => {
     waitUntil(() => $(S('.rbc-calendar')[0]).is(':visible'))()
       .then(click('.header-element', 2))
       .then(() => {
@@ -35,7 +35,7 @@ describe('Lukkarimaatti UI navigation', () => {
       })
   })
 
-  it('Test search autocomplete', (done) => {
+  it('Test search autocomplete', done => {
     waitUntil(() => $(S('.rbc-calendar')[0]).is(':visible'))()
       .then(setInputValue('#course-searchbox', 0, 'olio-ohjel'))
       .then(waitUntil(() => $(S('.search-list-coursename')[0]).is(':visible')))
@@ -46,7 +46,7 @@ describe('Lukkarimaatti UI navigation', () => {
       })
   })
 
-  it('Test url params selected courses', (done) => {
+  it('Test url params selected courses', done => {
     waitUntil(() => page.openPage(() => {
       const el = testFrame().document.getElementsByClassName('rbc-calendar')
       return el && el.length > 0
@@ -61,7 +61,7 @@ describe('Lukkarimaatti UI navigation', () => {
       })
   })
 
-  it('Test course removal', (done) => {
+  it('Test course removal', done => {
     waitUntil(() => page.openPage(() => {
       const el = testFrame().document.getElementsByClassName('rbc-calendar')
       return el && el.length > 0
@@ -69,13 +69,13 @@ describe('Lukkarimaatti UI navigation', () => {
       .then(click('div:nth-child(3) > div.result-list-remove'))
       .then(waitUntil(() => S('.search-list-element').length === 1))
       .then(() => {
-        expect(getSelectedCoursesFromUrl()).to.deep.equal(['CT60A2411'])
+        expect(getSelectedCoursesFromUrl()).to.deep.equal(['BL20A1600'])
         expect(S('.result-list-remove').length).to.equal(1)
         done()
       })
   })
 
-  it('Test course selection from catalog', (done) => {
+  it('Test course selection from catalog', done => {
     waitUntil(() => page.openPage(() => {
       const el = testFrame().document.getElementsByClassName('rbc-calendar')
       return el && el.length > 0
@@ -98,7 +98,7 @@ describe('Lukkarimaatti UI navigation', () => {
       })
   })
 
-  it('Test course removal from catalog', (done) => {
+  it('Test course removal from catalog', done => {
     waitUntil(() => page.openPage(() => {
       const el = testFrame().document.getElementsByClassName('rbc-calendar')
       return el && el.length > 0

@@ -6112,14 +6112,14 @@
       "integrity": "sha1-wCIDLIlJ8xKk+R+2QJzgQHa+Mlc="
     },
     "pg-promise": {
-      "version": "6.8.0",
-      "resolved": "https://registry.npmjs.org/pg-promise/-/pg-promise-6.8.0.tgz",
-      "integrity": "sha512-NgnCQ++5H2WusYWI9f9BrtkGYLzJQfvYYazyCL9PdQ+wo/iFPk8IL6jW7hH493c9XEAx+F5GEg/coFKR5ZvArA==",
+      "version": "6.9.0",
+      "resolved": "https://registry.npmjs.org/pg-promise/-/pg-promise-6.9.0.tgz",
+      "integrity": "sha512-3fqgiic2TVciJizfVKWUedClaWq/jH+DMZTHRhN3CtYHj3Os7OYjMgdnGAR+ub/RzmxSt5cCpE47bXgDniAFng==",
       "requires": {
         "manakin": "0.5.1",
         "pg": "7.3.0",
         "pg-minify": "0.5.3",
-        "spex": "1.2.0"
+        "spex": "2.0.0"
       }
     },
     "pg-types": {
@@ -8638,9 +8638,9 @@
       "integrity": "sha1-yd96NCRZSt5r0RkA1ZZpbcBrrFc="
     },
     "spex": {
-      "version": "1.2.0",
-      "resolved": "https://registry.npmjs.org/spex/-/spex-1.2.0.tgz",
-      "integrity": "sha1-YmSzuKy8RER38G27ZtQlwO4QdMA="
+      "version": "2.0.0",
+      "resolved": "https://registry.npmjs.org/spex/-/spex-2.0.0.tgz",
+      "integrity": "sha512-5npYBLvs/phhZXj0tDylT0FAOihrQF8/2vYPuvrSOyskJ16a800DsLayjcCAuSYj4+MvsFu0ETPvGaVTlq0urQ=="
     },
     "split": {
       "version": "1.0.1",

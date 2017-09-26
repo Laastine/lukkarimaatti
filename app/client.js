@@ -15,7 +15,7 @@ export function render(location) {
     query: QueryString.parse(location.search)
   })
     .then(route => {
-      ReactDOM.render(<App component={route.component}/>, document.getElementById('root'))
+      ReactDOM.hydrate(<App component={route.component}/>, document.getElementById('root'))
     })
 }
 

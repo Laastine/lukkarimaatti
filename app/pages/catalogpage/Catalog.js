@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {onLinkClick} from '../../routes'
 import {appState} from '../../store/lukkariStore'
-import {loadCourseByCode, loadCourseByCodeAndGroup} from '../frontApi/lukkariApi'
+import {loadCourseByCode} from '../frontApi/lukkariApi'
 import {any, isEmpty, partial} from 'ramda'
 
 const DepartmentSelectorElement = (selectedDepartment) => {
@@ -35,18 +35,11 @@ const isSelected = (state, courseCode, groupName) => {
   return groupNameExists && any((c) => c.course_code === courseCode, state.selectedCourses)
 }
 
-const selectCourse = (courseCode, groupName) => {
-  if (courseCode.substring(0, 2) === 'FV') {
-    loadCourseByCodeAndGroup(courseCode, groupName)
-      .then((course) => {
-        appState.dispatch({type: 'LOAD_COURSE_BY_CODE', course})
-      })
-  } else {
-    loadCourseByCode(courseCode)
-      .then((course) => {
-        appState.dispatch({type: 'LOAD_COURSE_BY_CODE', course})
-      })
-  }
+const selectCourse = courseCode => {
+  loadCourseByCode(courseCode)
+    .then((course) => {
+      appState.dispatch({type: 'LOAD_COURSE_BY_CODE', course})
+    })
 }
 
 const removeCourse = (courseCode) => {

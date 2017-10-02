@@ -78,7 +78,7 @@ class Lukkari extends React.Component {
           formats={{
             dayFormat,
             timeGutterFormat,
-            eventTimeRangeFormat: ({start, end}) => `${moment(start).format('HH.mm')}-${moment(end).format('HH.mm')}`
+            eventTimeRangeFormat: ({start, end}) => `${moment(start, 'HH').format('HH.mm')} - ${moment(end, 'HH').format('HH.mm')}`
           }}
           defaultView="work_week"
           events={addDataToCalendar(state)}

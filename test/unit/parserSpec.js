@@ -101,7 +101,7 @@ describe('Lukkarimaatti kati course parser', () => {
       course_name: 'Kvantitatiiviset tutkimusmenetelmät',
       week: '16',
       week_day: 'ti',
-      time_of_day: '8-14',
+      time_of_day: '08-14',
       classroom: '2303*',
       type: 'S',
       department: 'kati',

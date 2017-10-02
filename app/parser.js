@@ -172,7 +172,9 @@ const parseBasicData = (course) => {
 const parseTimeOfDay = (input) => {
   const groups = /([0-9]{1,2}):([0]{2})\s+([0-9]{1,2}):([0]{2})/.exec(input)
   if (groups && groups.length > 4) {
-    const times = groups.map(e => parseInt(e, 10)).filter(e => e > 0)
+    const times = groups.map(e => parseInt(e, 10))
+      .filter(e => e > 0)
+      .map(e => String(e).padStart(2, 0))
     if (times[1] < 24 && times[2] < 24) {
       return `${times[1]}-${times[2]}`
     }

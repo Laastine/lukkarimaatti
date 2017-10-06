@@ -34,9 +34,9 @@ Add env variable to your shell where you run docker cmds:
 `eval "$(docker-machine env lukkarimaatti)"`
 
 Install postgres DB to docker:
- `docker pull postgres:9.6`
+ `docker pull postgres:10.0`
 
-Start postgres in docker: `docker run --name lukkarimaatti-db -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -d postgres:9.6`
+Start postgres in docker: `docker run --name lukkarimaatti-db -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -d postgres:10.0`
 
 Set up config variables:
 ```

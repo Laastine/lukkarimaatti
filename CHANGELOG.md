@@ -6,6 +6,10 @@ Version numbering:
 `<major>.<minor>.<patch>`
 
 ---
+### 1.5.5, October 6, 2017
+* Sort courses alphabetically in catalog view
+* Fix `FV-` prefixed course selection bug
+
 ### 1.5.4, September 2, 2017
 * Show course events on weekends
 

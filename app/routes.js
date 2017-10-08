@@ -22,50 +22,42 @@ export const onLinkClick = event => {
   }
 }
 
-export const routes = {
-  path: '/',
-  children: [
-    {
-      path: '/',
-      action:
-        ({query: {courses}}) =>
-          new Promise((resolve) => {
-            fetchComponentData(LukkariPage.needs, {courses})
-            resolve()
-            window.scrollTo(0, 0)
-          })
-            .then(() => ({component: <LukkariPage/>}))
-    },
-    {
-      path: '/catalog',
-      children: [
-        {
-          path: '/',
-          action:
-            ({query: {courses}}) =>
-              new Promise((resolve) => {
-                fetchComponentData(CatalogPage.needs, {courses, department: 'TITE'})
-                resolve()
-                window.scrollTo(0, 0)
-              })
-                .then(() => ({component: <CatalogPage/>}))
-        },
-        {
-          path: '/:department',
-          action: ({params: {department}, query: {courses}}) =>
-            new Promise((resolve) => {
-              fetchComponentData(CatalogPage.needs, {courses, department})
-              resolve()
-              window.scrollTo(0, 0)
-            })
-              .then(() => ({component: <CatalogPage/>}))
+export const routes = [
+  {
+    path: '/',
+    action:
+      ({query: {courses}}) =>
+        new Promise((resolve) => {
+          fetchComponentData(LukkariPage.needs, {courses})
+          resolve()
+          window.scrollTo(0, 0)
+        })
+          .then(() => ({component: <LukkariPage/>}))
+  },
+  {
+    path: '/catalog',
+    action:
+      ({query: {courses}}) =>
+        new Promise((resolve) => {
+          fetchComponentData(CatalogPage.needs, {courses, department: 'TITE'})
+          resolve()
+          window.scrollTo(0, 0)
+        })
+          .then(() => ({component: <CatalogPage/>}))
+  },
+  {
+    path: '/catalog/:department',
+    action: ({params: {department}, query: {courses}}) =>
+      new Promise((resolve) => {
+        fetchComponentData(CatalogPage.needs, {courses, department})
+        resolve()
+        window.scrollTo(0, 0)
+      })
+        .then(() => ({component: <CatalogPage/>}))
 
-        }
-      ]
-    },
-    {
-      path: '*',
-      action: () => ({component: <NotFoundPage/>})
-    }
-  ]
-}
+  },
+  {
+    path: '(.*)',
+    action: () => ({component: <NotFoundPage/>})
+  }
+]

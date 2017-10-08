@@ -11,7 +11,7 @@ const router = new UniversalRouter(routes)
 
 export function render(location) {
   router.resolve({
-    path: location.pathname,
+    pathname: location.pathname,
     query: QueryString.parse(location.search)
   })
     .then(route => {

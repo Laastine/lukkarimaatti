@@ -9,7 +9,7 @@
     "npm": "5.4.2"
   },
   "dependencies": {
-    "autoprefixer": "7.1.4",
+    "autoprefixer": "7.1.5",
     "axios": "0.16.2",
     "babel-core": "6.26.0",
     "babel-plugin-transform-class-properties": "6.24.1",
@@ -26,14 +26,14 @@
     "compression": "1.7.1",
     "cssnano": "3.10.0",
     "cssnano-cli": "1.0.5",
-    "csvtojson": "1.1.8",
+    "csvtojson": "1.1.9",
     "express": "4.16.1",
     "express-force-ssl": "0.3.2",
     "history": "4.7.2",
     "moment": "2.18.1",
-    "nodemailer": "4.1.2",
+    "nodemailer": "4.1.3",
     "path": "0.12.7",
-    "pg-promise": "6.10.2",
+    "pg-promise": "6.10.3",
     "postcss-cli": "4.1.1",
     "prop-types": "15.6.0",
     "query-string": "5.0.0",
@@ -55,7 +55,7 @@
     "eslint": "4.8.0",
     "eslint-plugin-react": "7.4.0",
     "jquery": "3.2.1",
-    "mocha": "4.0.0",
+    "mocha": "4.0.1",
     "mocha-chrome": "0.2.1",
     "supervisor": "0.12.0",
     "watch": "1.0.2",
@@ -95,7 +95,7 @@
     "lint": "eslint --report-unused-disable-directives 'app/**/*.js' 'test/**/*.js' --fix",
     "clean": "rm .generated/*.js .generated/*.css",
     "integration-test": "mocha-chrome http://localhost:8080/test/runner.html",
-    "test-unit": "mocha --compilers js:babel-register test/unit/*Spec.js",
+    "test-unit": "mocha --require babel-register test/unit/*Spec.js",
     "test": "node test/integrationTest.js && npm run test-unit"
   }
 }

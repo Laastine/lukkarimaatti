@@ -9,8 +9,8 @@
     "npm": "5.4.2"
   },
   "dependencies": {
-    "autoprefixer": "7.1.5",
-    "axios": "0.16.2",
+    "autoprefixer": "7.1.6",
+    "axios": "0.17.0",
     "babel-core": "6.26.0",
     "babel-plugin-transform-class-properties": "6.24.1",
     "babel-plugin-transform-object-rest-spread": "6.26.0",
@@ -21,7 +21,7 @@
     "baconjs": "0.7.95",
     "bluebird": "3.5.1",
     "body-parser": "1.18.2",
-    "browserify": "14.4.0",
+    "browserify": "14.5.0",
     "cheerio": "0.22.0",
     "compression": "1.7.1",
     "cssnano": "3.10.0",
@@ -33,7 +33,7 @@
     "moment": "2.19.1",
     "nodemailer": "4.2.0",
     "path": "0.12.7",
-    "pg-promise": "7.0.2",
+    "pg-promise": "7.0.3",
     "postcss-cli": "4.1.1",
     "prop-types": "15.6.0",
     "query-string": "5.0.0",
@@ -44,7 +44,7 @@
     "request": "2.83.0",
     "request-promise": "4.2.2",
     "tough-cookie": "2.3.3",
-    "uglify-js": "3.1.4",
+    "uglify-js": "3.1.5",
     "universal-router": "4.2.1",
     "winston": "2.4.0"
   },
@@ -56,7 +56,7 @@
     "eslint-plugin-react": "7.4.0",
     "jquery": "3.2.1",
     "mocha": "4.0.1",
-    "mocha-chrome": "0.2.1",
+    "mocha-chrome": "1.0.0",
     "supervisor": "0.12.0",
     "watch": "1.0.2",
     "watchify": "3.9.0"

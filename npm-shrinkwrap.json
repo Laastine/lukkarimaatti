@@ -6287,9 +6287,9 @@
       "integrity": "sha1-wCIDLIlJ8xKk+R+2QJzgQHa+Mlc="
     },
     "pg-promise": {
-      "version": "7.0.3",
-      "resolved": "https://registry.npmjs.org/pg-promise/-/pg-promise-7.0.3.tgz",
-      "integrity": "sha512-YsUSOE7f+Hbh3trtCYJA1Vd0FwJRWbJGRmFnl9NCEEmyXZEqQdIjpXVlnDi6+cMx125OMeSwqVyE5b2TVBSQ+w==",
+      "version": "7.2.0",
+      "resolved": "https://registry.npmjs.org/pg-promise/-/pg-promise-7.2.0.tgz",
+      "integrity": "sha512-YSEMDmUdmjvzyCC9rki6zr8F493nuwOUiwhc+7tLqw9r2f5h9LxwXdX2mRGrfz6ktONG346+pKneOEMmKb0BuA==",
       "requires": {
         "manakin": "0.5.1",
         "pg": "7.3.0",
@@ -9249,9 +9249,9 @@
       "integrity": "sha1-EQ1T+kw/MmwSEpK76skE0uAzh8o="
     },
     "uglify-js": {
-      "version": "3.1.5",
-      "resolved": "https://registry.npmjs.org/uglify-js/-/uglify-js-3.1.5.tgz",
-      "integrity": "sha512-tSqlO7/GZHAVSw6mbtJt2kz0ZcUrKUH7Xg92o52aE+gL0r6cXiASZY4dpHqQ7RVGXmoQuPA2qAkG4TkP59f8XA==",
+      "version": "3.1.6",
+      "resolved": "https://registry.npmjs.org/uglify-js/-/uglify-js-3.1.6.tgz",
+      "integrity": "sha512-/rseyxEKEVMBo8279lqpoJgD6C/i/CIi+9TJDvWmb+Xo6mqMKwjA8Io3IMHlcXQzj99feR6zrN8m3wqqvm/nYA==",
       "requires": {
         "commander": "2.11.0",
         "source-map": "0.6.1"
@@ -9302,9 +9302,9 @@
       "integrity": "sha1-/+3ks2slKQaW5uFl1KWe25mOawI="
     },
     "universal-router": {
-      "version": "4.3.0",
-      "resolved": "https://registry.npmjs.org/universal-router/-/universal-router-4.3.0.tgz",
-      "integrity": "sha512-sw7de3TOtsWJypRydLATLlB8OUaiJyYFJMfuJwNlRl1urBIg6n9iY3oK4v+Ma41imQD0hog1lDigIdx3qibiOg==",
+      "version": "5.0.0",
+      "resolved": "https://registry.npmjs.org/universal-router/-/universal-router-5.0.0.tgz",
+      "integrity": "sha512-XrTIDk/9LfuSQ/WZOE/kzsgk5uUkIbGIPWAmG13G3DsVUGTbqWURF0tkPBEQ7KjQpE+xtyOxrLB+MdyZ8m6Yog==",
       "requires": {
         "path-to-regexp": "2.1.0"
       },

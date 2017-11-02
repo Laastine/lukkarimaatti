@@ -108,7 +108,7 @@ const buildInitialState = (displayName) => {
   }
 }
 
-server.get('/.well-known/acme-challenge/:content', (req, res) => res.send(appConfig.letsEncryptReponse))
+server.get('/.well-known/acme-challenge/:content', (req, res) => res.send(appConfig.letsEncryptResponse))
 server.use('/errors', errorLoggerRoutes)
 
 const router = new UniversalRouter(routes)

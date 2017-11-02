@@ -22,6 +22,6 @@ module.exports = {
   emailAddress: optional('EMAIL_USERNAME'),
   emailPassword: optional('EMAIL_PASSWORD'),
   appSecret: required('APP_SECRET'),
-  letsEncryptReponse: optional('CERTBOT_RESPONSE'),
+  letsEncryptResponse: optional('CERTBOT_RESPONSE'),
   logLevel: optional('LOG_LEVEL')
 }

@@ -40,7 +40,7 @@ courseRoutes.get('/course', (req, res) =>
       res.json([])
     }))
 
-courseRoutes.get('/codeAndGroup', (req, res) => {
+courseRoutes.get('/codeAndGroup', (req, res) =>
   Promise.resolve(DB.getCourseByCodeAndGroup(req.query.courseCode, req.query.groupName))
     .then((result) => {
       res.json(result)
@@ -48,10 +48,9 @@ courseRoutes.get('/codeAndGroup', (req, res) => {
     .catch((err) => {
       buildErrorMessage('/codeAndGroup', req.query.code, req.client.remoteAddress, err)
       res.status(500).json([])
-    })
-})
+    }))
 
-courseRoutes.get('/code', (req, res) => {
+courseRoutes.get('/code', (req, res) =>
   Promise.resolve(DB.getCourseByCode(req.query.courseCode))
     .then((result) => {
       res.json(result)
@@ -59,21 +58,19 @@ courseRoutes.get('/code', (req, res) => {
     .catch((err) => {
       buildErrorMessage('/code', req.query.code, req.client.remoteAddress, err)
       res.status(500).json([])
-    })
-})
+    }))
 
-courseRoutes.get('/courses', (req, res) => {
+courseRoutes.get('/courses', (req, res) =>
   Promise.resolve(DB.prefetchCoursesByCode(extractCourseParams(req.query.courses)))
     .then((result) => res.json(result))
     .catch((err) => {
       buildErrorMessage('/courses', req.query.courses, req.client.remoteAddress, err)
       res.status(500).json([])
-    })
-})
+    }))
 
 courseRoutes.get('/byDepartment/:department', (req, res) => {
   const department = req.params.department === 'ENTE-YMTE' ? 'ente/ymte' : req.params.department
-  Promise.resolve(DB.getCourseByDepartment(department))
+  return Promise.resolve(DB.getCourseByDepartment(department))
     .then((result) => res.json(uniqBy((c) => c.course_name.toUpperCase(), result)))
     .catch((err) => {
       buildErrorMessage('/byDepartment', req.params.department, req.client.remoteAddress, err)

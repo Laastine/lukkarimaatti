@@ -16,7 +16,7 @@ const checkStatus = (response) => {
 export const searchCourses = (courseName) =>
   lukkariApi.get(`${serverAddr}/course/course`, {
     params: {
-      name: courseName
+      name: courseName.replace(/'/g, '')
     }
   })
     .then(checkStatus)

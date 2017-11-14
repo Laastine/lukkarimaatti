@@ -28,10 +28,10 @@ Install docker-machine and docker:
 `brew install docker docker-machine`
 
 Create lukkarimaatti virtualbox image:
-`docker-machine create --driver virtualbox lukkarimaatti`
+`docker-machine create --driver virtualbox lukkarimaatti-db`
 
 Add env variable to your shell where you run docker cmds:
-`eval "$(docker-machine env lukkarimaatti)"`
+`eval "$(docker-machine env lukkarimaatti-db)"`
 
 Install postgres DB to docker:
  `docker pull postgres:10.0`
@@ -40,7 +40,7 @@ Start postgres in docker: `docker run --name lukkarimaatti-db -p 5432:5432 -e PO
 
 Set up config variables:
 ```
-echo -e export DATABASE_URL=postgresql://postgres:postgres@`docker-machine ip lukkarimaatti`:5432/postgres >> .env
+echo -e export DATABASE_URL=postgresql://postgres:postgres@`docker-machine ip lukkarimaatti-db`:5432/postgres >> .env
 echo -e export APP_SECRET=my-very-hard-app-secret >> .env
 echo -e export UNI_URL=https://uni.lut.fi/fi/web/guest/lukujarjestykset1 >> .env
 source .env

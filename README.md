@@ -54,7 +54,7 @@ npm run build
 - For quick browser testing `npm run watch` and `open http://localhost:8080` in your web browser.
 - Download course data with http://localhost:8080/api/update?secret=my-very-hard-app-secret
 - Shutdown docker with `docker-machine stop lukkarimaatti`
-- Start docker postgres `docker-machine start lukkarimaatti ; eval "$(docker-machine env lukkarimaatti)" ; docker start lukkarimaatti-db` after initial setup is done
+- Start docker postgres `docker-machine start lukkarimaatti-db && eval "$(docker-machine env lukkarimaatti-db)" && docker start lukkarimaatti-db` after initial setup is done
 
 ## Tests
 

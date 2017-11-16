@@ -450,9 +450,9 @@
       "integrity": "sha1-g+9cqGCysy5KDe7e6MdxudtXRx4="
     },
     "axios": {
-      "version": "0.17.0",
-      "resolved": "https://registry.npmjs.org/axios/-/axios-0.17.0.tgz",
-      "integrity": "sha1-fadHkW24A/dhZR1gkdcIeJuVPGo=",
+      "version": "0.17.1",
+      "resolved": "https://registry.npmjs.org/axios/-/axios-0.17.1.tgz",
+      "integrity": "sha1-LY4+XQvb1zJ/kbyBT1xXZg+Bgk0=",
       "requires": {
         "follow-redirects": "1.2.5",
         "is-buffer": "1.1.5"
@@ -5833,9 +5833,9 @@
       }
     },
     "moment": {
-      "version": "2.19.1",
-      "resolved": "https://registry.npmjs.org/moment/-/moment-2.19.1.tgz",
-      "integrity": "sha1-VtoaLRy/AdOLfhr8McELz6GSkWc="
+      "version": "2.19.2",
+      "resolved": "https://registry.npmjs.org/moment/-/moment-2.19.2.tgz",
+      "integrity": "sha512-Rf6jiHPEfxp9+dlzxPTmRHbvoFXsh2L/U8hOupUMpnuecHQmI6cF6lUbJl3QqKPko1u6ujO+FxtcajLVfLpAtA=="
     },
     "ms": {
       "version": "2.0.0",
@@ -8207,9 +8207,9 @@
       }
     },
     "react": {
-      "version": "16.1.0",
-      "resolved": "https://registry.npmjs.org/react/-/react-16.1.0.tgz",
-      "integrity": "sha512-hvKYlKqde2JNnNiEzORvSA0J1L7uSZ43l+J89ZNoP4EXxQrVNH0CFj8vorfPou3w+1ou1BNMBir2VVsuXtETRA==",
+      "version": "16.1.1",
+      "resolved": "https://registry.npmjs.org/react/-/react-16.1.1.tgz",
+      "integrity": "sha512-FQfiFfk2z2Fk87OngNJHT05KyC9DOVn8LPeB7ZX+9u5+yU1JK6o5ozRlU3PeOMr0IFkWNvgn9jU8/IhRxR1F0g==",
       "requires": {
         "fbjs": "0.8.16",
         "loose-envify": "1.3.1",
@@ -8235,9 +8235,9 @@
       }
     },
     "react-dom": {
-      "version": "16.1.0",
-      "resolved": "https://registry.npmjs.org/react-dom/-/react-dom-16.1.0.tgz",
-      "integrity": "sha512-i9in5qW3H2PDinUPD9bnQK7tLAD8LhjYQ+fXi3nJOvVnxOO3ErHq6RNEnKY7pbjTPt155e74q7al8eBUuyLtew==",
+      "version": "16.1.1",
+      "resolved": "https://registry.npmjs.org/react-dom/-/react-dom-16.1.1.tgz",
+      "integrity": "sha512-q06jiwST8SEPAMIEkAsu7BgynEZtqF87VrTc70XsW7nxVhWEu2Y4MF5UfxxHQO/mNtQHQWP0YcFxmwm9oMrMaQ==",
       "requires": {
         "fbjs": "0.8.16",
         "loose-envify": "1.3.1",
@@ -9261,9 +9261,9 @@
       "integrity": "sha1-EQ1T+kw/MmwSEpK76skE0uAzh8o="
     },
     "uglify-js": {
-      "version": "3.1.8",
-      "resolved": "https://registry.npmjs.org/uglify-js/-/uglify-js-3.1.8.tgz",
-      "integrity": "sha512-1lnTkrJWw6LJ7n43ZyYVXx0eN2PQh0c3Inb0nY/vj5fNfwykXQFif2kvNgm/Bf0ClLA8R6SKaMHFzo9io4Q+vg==",
+      "version": "3.1.9",
+      "resolved": "https://registry.npmjs.org/uglify-js/-/uglify-js-3.1.9.tgz",
+      "integrity": "sha512-ari2E89bD7f+fMU173NgF12JBcOhgoxeyuCs97h5K58IBENrnG9eVj2lFadrOPdqf0KifsxVmUQfzA2cHNxCZQ==",
       "requires": {
         "commander": "2.11.0",
         "source-map": "0.6.1"

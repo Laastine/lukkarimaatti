@@ -5,8 +5,6 @@
 Hobby project which offers course data in easy to use scheduling tool.<br>
 Information is retrieved from [the official LUT teaching schedule info site] (https://uni.lut.fi/fi/web/guest/lukujarjestykset1).
 
-**Lukkarimaatti is currently hosted by LTKY, please contact LTKY's admin in case of problems.**
-
 **[https://lukkarimaatti.ltky.fi](https://lukkarimaatti.ltky.fi)**
 
 Compatible with newest Firefox and Chrome
@@ -18,7 +16,7 @@ Later converted to pure JavaScript project with Node.js server.<br>
 Today it's implemented with universal JavaScript (Node/React/Bacon) using "megablob" architecture.
 
 ## Requirements
-Node.js 8
+Node.js 8 LTS
 
 #### Local setup DB on OSX
 - OSX users use virtualbox or any other virtual machine provider for Docker

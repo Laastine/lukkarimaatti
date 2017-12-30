@@ -6,6 +6,12 @@ Version numbering:
 `<major>.<minor>.<patch>`
 
 ---
+### 1.5.6, December 30, 2017
+* Improve DB API, handles single quotes like `Master's Thesis and Seminar`
+* Display department in search result list
+* Add semester filtering to catalog page
+
+---
 ### 1.5.5, October 6, 2017
 * Sort courses alphabetically in catalog view
 * Fix `FV-` prefixed course selection bug

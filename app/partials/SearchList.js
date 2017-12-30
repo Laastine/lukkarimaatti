@@ -50,7 +50,11 @@ const searchList = (state, mouseEnterCallback, closeCallback) => {
           onClick={(event) => {
             closeCallback()
             addCourse(event, state)
-          }}>{c.course_name}
+          }}>
+          <div className='search-result-element'>
+            <div className='search-result-list-department'>{c.department}</div>
+            <div className='search-result-list-coursename'>{c.course_name}</div>
+          </div>
         </div>))(state.searchResults) : null
 }
 

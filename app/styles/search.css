@@ -119,7 +119,7 @@ body {
 
 .search-list-element {
   display: inline-flex;
-  width: 400px;
+  width: 405px;
   text-align: left;
   border-top: 1px solid #333;
   font-size: 14px;
@@ -129,11 +129,29 @@ body {
   background-color: #555;
 }
 
-.search-list-coursename {
+.search-result-element {
   float: left;
-  width: 390px;
+  width: 400px;
+  display: flex;
+  flex-direction: row;
+  margin: 3px 0 3px 0;
+}
+
+.search-result-list-coursename {
   padding: 5px;
+  width: 370px;
   cursor: pointer;
+  float: left;
+  font-size: 14px;
+}
+
+.search-result-list-department {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 12px;
+  width: 14px;
+  margin: 0 5px 0 5px;
+  padding-top: 6px;
 }
 
 .result-list-coursename {

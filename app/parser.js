@@ -265,7 +265,6 @@ const getDepartment = (input) => {
 }
 
 const sanitizeInput = (input) => input ? input.trim()
-  .replace(/'/g, '')
   .replace(/(\r\n|\n|\r)/g, '') : ''
 
 const kikeCourseCodeParser = () => {

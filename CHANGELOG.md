@@ -11,7 +11,6 @@ Version numbering:
 * Display department in search result list
 * Add semester filtering to catalog page
 
----
 ### 1.5.5, October 6, 2017
 * Sort courses alphabetically in catalog view
 * Fix `FV-` prefixed course selection bug

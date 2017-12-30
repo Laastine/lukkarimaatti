@@ -33,11 +33,11 @@ const DepartmentSelectorElement = (selectedDepartment) => {
 const VisualizationOptions = (selectedVisualizationMode, cb) => {
   const displayModes = Object.keys(courseDisplayModes)
     .map((e, index) => <div key={`${index}-${e}`}>
-      <a className={`department-link${selectedVisualizationMode === e ? '-selected' : ''}`} onClick={() => cb(e)}>{e}
+      <a className={`visualization-link${selectedVisualizationMode === e ? '-selected' : ''}`} onClick={() => cb(e)}>{e}
       </a>
     </div>)
 
-  return <div className="department-link-container">{displayModes}</div>
+  return <div className="visualization-link-container">{displayModes}</div>
 }
 
 const getSemester = (week) => {

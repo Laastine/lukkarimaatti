@@ -67,11 +67,11 @@ const buildInsertQueryString = courseBatch => reduce((a, course) => {
 
 module.exports = {
 
-  isTableInitialized: table => client.query('SELECT ${columns^} IS NOT NULL AS exists', {columns: `to_regclass('${table}')`})
+  isTableInitialized: table => client.query(SQL`SELECT to_regclass('${table}') IS NOT NULL as EXISTS;`)
     .then((e) => prop('exists')(e[0]))
     .catch((err) => Logger.error('isTableInitialized error', err.stack)),
 
-  initializeDb: () => client.none(`
+  initializeDb: () => client.none(SQL`
   CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
   CREATE TABLE course(course_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   course_code TEXT NOT NULL,
@@ -88,7 +88,7 @@ module.exports = {
     .then(() => client.any('CREATE INDEX course_name_search ON course (course_name)'))
     .catch((err) => Logger.error('initializeDb error', err.stack)),
 
-  getCourseByName: (courseName) => client.query(`SELECT * FROM course WHERE LOWER(course_name) LIKE LOWER('%${courseName}%')`),
+  getCourseByName: (courseName) => client.query(SQL`SELECT * FROM course WHERE LOWER(course_name) LIKE LOWER('%${courseName}%')`),
 
   getCourseByCodeAndGroup: (code, group) => client.query(SQL`SELECT * FROM course WHERE course_code = '${code}' AND group_name = '${group}'`),
 
@@ -120,7 +120,7 @@ module.exports = {
 
   cleanCourseTable: () => client.query('TRUNCATE TABLE course;'),
 
-  cleanKikeCourseTable: () => client.query('DELETE FROM course WHERE department = \'kike\';'),
+  cleanKikeCourseTable: () => client.query(SQL`DELETE FROM course WHERE department = '${'kike'}';`),
 
   SQL
 }

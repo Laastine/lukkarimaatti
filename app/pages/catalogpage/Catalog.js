@@ -3,7 +3,13 @@ import PropTypes from 'prop-types'
 import {onLinkClick} from '../../routes'
 import {appState} from '../../store/lukkariStore'
 import {loadCourseByCode} from '../frontApi/lukkariApi'
-import {any, isEmpty, partial} from 'ramda'
+import {any, isEmpty, merge, partial} from 'ramda'
+
+const courseDisplayModes = {
+  AUTUMN: 'AUTUMN',
+  SPRING: 'SPRING',
+  ALL: 'ALL'
+}
 
 const DepartmentSelectorElement = (selectedDepartment) => {
   const departmentNames = ['ENTE-YMTE',
@@ -22,6 +28,16 @@ const DepartmentSelectorElement = (selectedDepartment) => {
     </div>)
 
   return <div className="department-link-container">{departmentNames}</div>
+}
+
+const VisualizationOptions = (selectedVisualizationMode, cb) => {
+  const displayModes = Object.keys(courseDisplayModes)
+    .map((e, index) => <div key={`${index}-${e}`}>
+      <a className={`department-link${selectedVisualizationMode === e ? '-selected' : ''}`} onClick={() => cb(e)}>{e}
+      </a>
+    </div>)
+
+  return <div className="department-link-container">{displayModes}</div>
 }
 
 const getSemester = (week) => {
@@ -56,6 +72,8 @@ const courseSelect = (c, isCourseSelected) => {
 
 const DepartmentCoursesElement = (state) => {
   const courses = state.departmentCourses ? state.departmentCourses
+    .filter(c => state.whichCoursesToDisplay === courseDisplayModes.ALL ||
+        getSemester(c.week).toUpperCase() === state.whichCoursesToDisplay)
     .sort((a, b) => {
       if (a.course_name > b.course_name) {
         return 1
@@ -79,10 +97,22 @@ const DepartmentCoursesElement = (state) => {
 }
 
 class Catalog extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      whichCoursesToDisplay: courseDisplayModes.ALL
+    }
+  }
+
+  visisualizationSelectCb = (whichCoursesToDisplay) => {
+    this.setState(() => ({whichCoursesToDisplay}))
+  }
+
   render() {
     return <div>
       {DepartmentSelectorElement(this.props.state.department)}
-      {DepartmentCoursesElement(this.props.state)}
+      {VisualizationOptions(this.state.whichCoursesToDisplay, this.visisualizationSelectCb)}
+      {DepartmentCoursesElement(merge(this.state, this.props.state))}
     </div>
   }
 }

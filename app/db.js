@@ -50,20 +50,20 @@ const SQL = (queryParts, ...values) =>
     return valueExists ? text + sanitize(values[i]) : text
   }, '')
 
-const buildInsertQueryString = courseBatch =>
-  reduce((a, course) => `${a}INSERT INTO course (course_code, course_name, week, week_day, time_of_day, classroom, type, department, teacher, misc, group_name) VALUES ('${
-    course.course_code}','${
-    course.course_name}','${
-    course.week}','${
-    course.week_day}','${
-    course.time_of_day}','${
-    course.classroom}','${
-    course.type}','${
-    course.department}','${
-    course.teacher}','${
-    course.misc}','${
-    course.group_name}');`, ''
-    , courseBatch)
+const buildInsertQueryString = courseBatch => reduce((a, course) => {
+  const insertQuery = SQL`INSERT INTO course (course_code, course_name, week, week_day, time_of_day, classroom, type, department, teacher, misc, group_name) VALUES ('${course.course_code}', 
+    '${course.course_name}', 
+    '${course.week}', 
+    '${course.week_day}', 
+    '${course.time_of_day}', 
+    '${course.classroom}', 
+    '${course.type}', 
+    '${course.department}', 
+    '${course.teacher}', 
+    '${course.misc}', 
+    '${course.group_name}');`
+  return `${a} ${insertQuery}`
+}, '', courseBatch)
 
 module.exports = {
 

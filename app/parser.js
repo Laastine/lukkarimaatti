@@ -36,7 +36,7 @@ const updateCourseData = () => {
           {name: 'Referer', value: 'https://forms.lut.fi/scientia/sws/sylla1718/default.aspx'},
           {name: 'User-Agent', value: 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1'}
         ],
-        timeout: 20000,
+        timeout: 25000,
         jar: cookieJar,
         preambleCRLF: true,
         postambleCRLF: true,

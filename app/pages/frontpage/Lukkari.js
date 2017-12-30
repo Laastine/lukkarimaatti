@@ -42,11 +42,11 @@ class Lukkari extends React.Component {
 
   _handleResize = () => {
     const isMobile = window.innerWidth < 800
-    this.setState({
+    this.setState(() => ({
       dayFormat: isMobile ? 'D.M' : 'dd DD.MM.YY',
       timeGutterFormat: isMobile ? 'HH' : 'HH.mm',
       views: isMobile ? ['work_week', 'week', 'day'] : ['month', 'work_week', 'week', 'day', 'agenda']
-    })
+    }))
   }
 
   componentDidMount() {

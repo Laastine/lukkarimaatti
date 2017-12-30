@@ -67,7 +67,7 @@ class SearchList extends React.Component {
 
   componentDidMount() {
     document.getElementsByClassName('search-container')[0].focus()
-    this.setState({searchResults: this.props.state.searchResults})
+    this.setState(() => ({searchResults: this.props.state.searchResults}))
     Bacon.fromEventTarget(this.searchinput, 'keyup')
       .debounce(250)
       .filter((e) => !contains(e.keyCode, [37, 38, 39, 40]))
@@ -75,13 +75,13 @@ class SearchList extends React.Component {
         if (e.target.value.length > 0) {
           searchCourses(e.target.value)
             .then((searchResults) => {
-              this.setState({
+              this.setState(() => ({
                 searchResults,
                 isSearchListVisible: true
-              })
+              }))
             })
         } else if (e.target.value.length === 0) {
-          this.setState({isSearchListVisible: false})
+          this.setState(() => ({isSearchListVisible: false}))
         }
       })
   }
@@ -89,10 +89,10 @@ class SearchList extends React.Component {
   render() {
     const {state} = this
     const indexCallback = (index) => {
-      this.setState({selectedIndex: index})
+      this.setState(() => ({selectedIndex: index}))
     }
     const closeCallback = () => {
-      this.setState({isSearchListVisible: false})
+      this.setState(() => ({isSearchListVisible: false}))
     }
 
     return <div>
@@ -109,7 +109,7 @@ class SearchList extends React.Component {
       </div>
       <div className='search-list-container'
         onMouseLeave={() => {
-          this.setState({selectedIndex: -1})
+          this.setState(() => ({selectedIndex: -1}))
         }}>
         {searchList(state, indexCallback, closeCallback)}
       </div>

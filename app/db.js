@@ -71,18 +71,20 @@ module.exports = {
     .then((e) => prop('exists')(e[0]))
     .catch((err) => Logger.error('isTableInitialized error', err.stack)),
 
-  initializeDb: () => client.none(`CREATE TABLE course(course_id SERIAL,
-  course_code VARCHAR(256) NOT NULL,
-  course_name VARCHAR(256) NOT NULL,
-  week VARCHAR(256),
-  week_day VARCHAR(256),
-  time_of_day VARCHAR(256),
-  classroom VARCHAR(256),
-  type VARCHAR(256),
-  department VARCHAR(256),
-  teacher VARCHAR(256),
-  misc VARCHAR(512),
-  group_name VARCHAR(256) DEFAULT '' NOT NULL)`)
+  initializeDb: () => client.none(`
+  CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+  CREATE TABLE course(course_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  course_code TEXT NOT NULL,
+  course_name TEXT NOT NULL,
+  week TEXT,
+  week_day TEXT,
+  time_of_day TEXT,
+  classroom TEXT,
+  type TEXT,
+  department TEXT NOT NULL,
+  teacher TEXT,
+  misc TEXT,
+  group_name TEXT DEFAULT '' NOT NULL)`)
     .then(() => client.any('CREATE INDEX course_name_search ON course (course_name)'))
     .catch((err) => Logger.error('initializeDb error', err.stack)),
 

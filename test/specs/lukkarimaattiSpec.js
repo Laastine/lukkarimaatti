@@ -41,7 +41,7 @@ describe('Lukkarimaatti UI navigation', () => {
       .then(waitUntil(() => $(S('.search-list-coursename')[0]).is(':visible')))
       .then(() => {
         expect($(S('.search-list-coursename')).is(':visible')).to.equal(true)
-        expect($(S('.search-list-coursename')).text()).to.equal('Olio-ohjelmointi')
+        expect($(S('.search-list-coursename')).text()).to.equal('titeOlio-ohjelmointi')
         done()
       })
   })

@@ -11,7 +11,7 @@ const CSV = require('csvtojson')
 
 require('tough-cookie')
 const cookieJar = rp.jar()
-const UPDATE_THRESHOLD = 1000
+const UPDATE_THRESHOLD = 100
 
 const updateCourseData = () => {
   const startTime = new Date()
@@ -348,6 +348,7 @@ const kikeCourseParser = () => {
               .filter((courseData) => courseData.course_name && courseData.course_code && courseData.week && courseData.week_day && courseData.classroom)
           })
           .on('end', () => {
+            Logger.info('Parsed kike CSV file')
             resolve()
           })
       })

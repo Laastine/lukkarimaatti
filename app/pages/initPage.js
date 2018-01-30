@@ -17,10 +17,10 @@ export const renderFullPage = (component, initialState, options) => `<!doctype h
       </head>
       <body>
         <div id='root'>${renderToString(<App component={component} state={initialState}></App>)}</div>
-      </body>
         <script>
           window.STATE = ${JSON.stringify(initialState)}
           window.OPTIONS = ${JSON.stringify(options)}
         </script>
-      <script src='/static/${options.bundleJsChecksum}/bundle.js' ></script>
+        <script src='/static/${options.bundleJsChecksum}/bundle.js' ></script>
+      </body>
     </html>`

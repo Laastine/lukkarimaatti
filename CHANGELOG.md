@@ -6,6 +6,10 @@ Version numbering:
 `<major>.<minor>.<patch>`
 
 ---
+### 1.5.7, February 7, 2018
+* Update project dependencies
+* Update Node.js version
+
 ### 1.5.6, December 30, 2017
 * Improve DB API, handles single quotes like `Master's Thesis and Seminar`
 * Display department in search result list

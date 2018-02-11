@@ -140,7 +140,6 @@ export const start = (port) => {
 
   return DB.isTableInitialized('course')
     .then((exists) => exists ? null : DB.initializeDb())
-    .then(() => new Promise((resolve) => {
-      server.listen(port, resolve)
-    })).then(reportPages)
+    .then(() => server.listen(port))
+    .then(reportPages)
 }

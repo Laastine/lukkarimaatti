@@ -1,0 +1,30 @@
+language: node_js
+
+node_js:
+- lts/*
+- node
+
+sudo: required
+dist: trusty
+addons:
+  chrome: stable
+before_install:
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost:8080 &
+
+services:
+  - postgresql
+
+addons:
+  postgresql: "9.6"
+
+postgres:
+  adapter: postgresql
+  database: lukkarimaatti
+  username: postgres
+
+before_script:
+  - psql -c 'create database lukkarimaatti;' -U postgres
+
+script:
+- npm run lint
+- npm test

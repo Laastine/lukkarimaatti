@@ -1,6 +1,7 @@
 # Lukkarimaatti++
 
 [![CircleCI](https://circleci.com/bb/laastine-ci/lukkarimaatti/tree/master.svg?style=svg&circle-token=7b36babd077a7ee08258f02d55ad7d2aa4b35eca)](https://circleci.com/bb/laastine-ci/lukkarimaatti/tree/master)
+[![Build Status](https://travis-ci.org/Laastine/lukkarimaatti.svg?branch=master)](https://travis-ci.org/Laastine/lukkarimaatti)
 
 Hobby project which offers course data in easy to use scheduling tool.<br>
 Information is retrieved from [the official LUT teaching schedule info site] (https://uni.lut.fi/fi/web/guest/lukujarjestykset1).

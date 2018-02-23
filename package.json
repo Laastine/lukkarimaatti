@@ -92,7 +92,7 @@
     "watch-js": "watchify app/client.js --debug -o .generated/bundle.js -v",
     "watch": "npm run watch-js & npm run watch-css & supervisor --quiet --ignore node_modules --watch app app/bootstrap.js",
     "start": "node app/bootstrap.js",
-    "lint": "eslint --cache true --report-unused-disable-directives 'app/**/*.js' 'test/**/*.js' --fix",
+    "lint": "eslint --cache true --report-unused-disable-directives 'app/**/*.js' 'test/unit/*.js' 'test/util/*.js' 'test/specs/*.js' 'test/page/*.js' --fix",
     "clean": "rm .generated/*.js .generated/*.css",
     "integration-test": "mocha-chrome http://localhost:8080/test/runner.html",
     "test-unit": "mocha --require babel-register test/unit/*Spec.js",

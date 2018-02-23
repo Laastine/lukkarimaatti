@@ -5,9 +5,11 @@
     "es6": true
   },
   "extends": "plugin:react/recommended",
+  "parser": "babel-eslint",
   "parserOptions": {
     "sourceType": "module",
-    "ecmaVersion": 6,
+    "allowImportExportEverywhere": false,
+    "ecmaVersion": 8,
     "ecmaFeatures": {
       "jsx": true,
       "experimentalObjectRestSpread": true
@@ -299,6 +301,5 @@
     "react/no-typos": 2,
     "react/no-will-update-set-state": 2,
     "react/no-deprecated": 2
-  },
-  "parser": "babel-eslint"
+  }
 }

@@ -13,7 +13,7 @@ import errorLoggerRoutes from './routes/errorLogger'
 import {appState} from './store/lukkariStore'
 import forceSSL from 'express-force-ssl'
 import {renderFullPage} from './pages/initPage'
-import {hsts, frameOptions} from './httpUtils'
+import {frameOptions, hsts} from './httpUtils'
 import Logger from './logger'
 import UniversalRouter from 'universal-router'
 import {routes} from './routes'
@@ -56,31 +56,31 @@ if (process.env.NODE_ENV !== 'production') {
   })
 }
 
-const checksumPromise = filePath =>
-  fs
-    .readFileAsync(filePath)
-    .then(fileContent => crypto.createHash('md5')
-      .update(fileContent)
-      .digest('hex'))
+async function checksumPromise(filePath) {
+  const fileContent = await fs.readFileAsync(filePath)
+  return await crypto.createHash('md5').update(fileContent).digest('hex')
+}
+
+function setHeaders(req, res, checksum, filePath) {
+  if (req.params.checksum === checksum) {
+    const twoHoursInSeconds = 60 * 60 * 2
+    res.setHeader('Cache-Control', `must-revalidate, max-age=${twoHoursInSeconds}`)
+    res.setHeader('ETag', checksum)
+    res.sendFile(filePath)
+  } else {
+    res.status(404).send()
+  }
+}
 
 const serveStaticResource = (filePath) => (req, res, next) =>
   checksumPromise(filePath)
-    .then(checksum => {
-      if (req.params.checksum === checksum) {
-        const twoHoursInSeconds = 60 * 60 * 2
-        res.setHeader('Cache-Control', `must-revalidate, max-age=${twoHoursInSeconds}`)
-        res.setHeader('ETag', checksum)
-        res.sendFile(filePath)
-      } else {
-        res.status(404).send()
-      }
-    })
+    .then(checksum => setHeaders(req, res, checksum, filePath))
     .catch(next)
 
 server.get('/static/:checksum/styles.css', serveStaticResource(cssFilePath))
 server.get('/static/:checksum/bundle.js', serveStaticResource(bundleJsFilePath))
 
-const buildInitialState = (displayName) => {
+function buildInitialState(displayName) {
   const pageState = () => {
     switch (displayName) {
       case 'LukkariPage':
@@ -132,14 +132,17 @@ server.get('*', (req, res) => {
       }))
 })
 
-export const start = (port) => {
+export async function start(port) {
   const env = process.env.NODE_ENV ? process.env.NODE_ENV : 'development'
   const reportPages = () => {
     Logger.info(`Page available at http://localhost:${port} in ${env}`)
   }
+  async function isDbInitialized(exists) {
+    return exists ? null : DB.initializeDb()
+  }
 
-  return DB.isTableInitialized('course')
-    .then((exists) => exists ? null : DB.initializeDb())
-    .then(() => server.listen(port))
-    .then(reportPages)
+  const exists = await DB.isTableInitialized('course')
+  await isDbInitialized(exists)
+  await server.listen(port)
+  await reportPages()
 }

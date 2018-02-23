@@ -2,7 +2,7 @@ import {flatten} from 'ramda'
 import moment from 'moment'
 import 'moment/locale/fi'
 
-const getYearNumber = (courseWeekNumber) => {
+const getYearNumber = courseWeekNumber => {
   const isSpringSemester = moment().week() === 53 || moment().week() < 26
   const week = parseInt(courseWeekNumber, 10)
   const springCourse = (week > 0 && week < 35 || week === 53)
@@ -13,10 +13,10 @@ const getYearNumber = (courseWeekNumber) => {
   }
 }
 
-export const addDataToCalendar = (state) => {
+export const addDataToCalendar = state => {
   const getTimestamp = (course, weekNumber, hour) =>
     moment(`${getYearNumber(course.week)}-${weekNumber}-${course.week_day}-${hour}`, 'YYYY-ww-dd-hh')
-  return state.selectedCourses && state.selectedCourses.length > 0 ? flatten(state.selectedCourses.map((course) => JSON.parse(`[${course.week}]`).map((weekNumber) => ({
+  return state.selectedCourses && state.selectedCourses.length > 0 ? flatten(state.selectedCourses.map(course => JSON.parse(`[${course.week}]`).map(weekNumber => ({
     title: course.course_name,
     description: `/${course.type}\n${course.classroom}`,
     start: new Date(getTimestamp(course, weekNumber, course.time_of_day.split('-')[0] || 6)),

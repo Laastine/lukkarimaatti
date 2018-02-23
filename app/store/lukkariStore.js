@@ -6,11 +6,11 @@ import {addUrlParameter, removeUrlParameter, sendEmail, updateUrlParams} from '.
 const createAppState = (reducer, initialState) => {
   const bus = Bacon.Bus()
   const store = bus.scan(initialState, (state, action) => reducer(state, action))
-  store.dispatch = (action) => {
+  store.dispatch = action => {
     bus.push(action)
   }
   store.currentState = initialState
-  store.onValue((state) => {
+  store.onValue(state => {
     store.currentState = state
   })
   return store
@@ -18,12 +18,12 @@ const createAppState = (reducer, initialState) => {
 
 const initial = isServer ? {} : window.STATE
 
-const promiseMiddleware = (event) => {
+const promiseMiddleware = event => {
   if (event && event.type && event.promise) {
     const {type, promise} = event
     const SUCCESS = `${type}_SUCCESS`
     promise
-      .then((data) => appState.dispatch({type: SUCCESS, data}))
+      .then(data => appState.dispatch({type: SUCCESS, data}))
       .catch(() => {
         const FAILURE = `${type}_FAILURE`
         appState.dispatch({type: FAILURE, data: event.data})
@@ -53,7 +53,7 @@ function rootReducer(previousState, action) {
       updateUrlParams(action.course)
       break
     case 'REMOVE_COURSE_BY_ID':
-      const coursesLeft = filter((c) => c.course_id !== action.courses[0].course_id, state.selectedCourses)
+      const coursesLeft = filter(c => c.course_id !== action.courses[0].course_id, state.selectedCourses)
       if (isEmpty(filter(whereEq({course_code: action.courses[0].course_code}), coursesLeft))) {
         removeUrlParameter(action.courses[0].course_code)
       }
@@ -61,7 +61,7 @@ function rootReducer(previousState, action) {
       break
     case 'REMOVE_COURSE':
       removeUrlParameter(action.course_code)
-      state.selectedCourses = state.selectedCourses.filter((e) => e.course_code !== action.course_code)
+      state.selectedCourses = state.selectedCourses.filter(e => e.course_code !== action.course_code)
       break
     case 'ADD_COURSE':
       state.selectedCourses = concat(state.selectedCourses, action.selectedCourses)

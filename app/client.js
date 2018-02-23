@@ -24,7 +24,7 @@ window.onload = () => {
     function serializeError(object) {
       const alt = {}
       if (object) {
-        Object.getOwnPropertyNames(object).forEach((key) => {
+        Object.getOwnPropertyNames(object).forEach(key => {
           alt[key] = object[key]
         }, object)
       }

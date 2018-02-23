@@ -12,7 +12,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    listener = appState.changes().onValue((state) => {
+    listener = appState.changes().onValue(state => {
       this.setState(state)
     })
   }

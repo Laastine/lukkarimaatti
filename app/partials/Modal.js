@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {appState} from '../store/lukkariStore'
 
-const sendButton = (isWaitingAjax) => isWaitingAjax ?
+const sendButton = isWaitingAjax => isWaitingAjax ?
   <img className='modal-ajax-spinner' src='/spinner.gif'/> :
   <button type='button' id='saveId' className='modal-button' data-dismiss='modal'
-    onClick={(e) => {
+    onClick={e => {
       appState.dispatch({
         type: 'SEND_EMAIL',
         waitingAjax: true,

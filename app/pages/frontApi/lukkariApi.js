@@ -5,7 +5,7 @@ const lukkariApi = axios.create({
   timeout: 5000 //5sec
 })
 
-const checkStatus = (response) => {
+const checkStatus = response => {
   if (response.status >= 200 && response.status < 300) {
     return response.data
   } else {
@@ -13,7 +13,7 @@ const checkStatus = (response) => {
   }
 }
 
-export const searchCourses = (courseName) =>
+export const searchCourses = courseName =>
   lukkariApi.get(`${serverAddr}/course/course`, {
     params: {
       name: courseName.replace(/'/g, '')
@@ -21,7 +21,7 @@ export const searchCourses = (courseName) =>
   })
     .then(checkStatus)
 
-export const loadCourses = (param) => ({
+export const loadCourses = param => ({
   type: 'LOAD_COURSES',
   promise: lukkariApi.get(`${serverAddr}/course/courses`, {
     params: {
@@ -31,7 +31,7 @@ export const loadCourses = (param) => ({
     .then(checkStatus)
 })
 
-export const loadCourseByCode = (courseCode) =>
+export const loadCourseByCode = courseCode =>
   lukkariApi.get(`${serverAddr}/course/code`, {
     params: {
       courseCode
@@ -48,11 +48,11 @@ export const loadCourseByCodeAndGroup = (courseCode, groupName) =>
   })
     .then(checkStatus)
 
-export const loadCoursesByDepartment = (param) => ({
+export const loadCoursesByDepartment = param => ({
   type: 'LOAD_COURSES_BY_DEPARTMENT',
   promise: lukkariApi.get(`${serverAddr}/course/byDepartment/${param.department}`)
     .then(checkStatus)
-    .then((data) => ({
+    .then(data => ({
       data,
       department: param.department
     }))

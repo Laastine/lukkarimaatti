@@ -29,7 +29,7 @@ function waitUntil(predicate, timeout) {
   return function () {
     const started = Date.now()
     return (function loop() {
-      return Promise.resolve(predicate()).then((result) => {
+      return Promise.resolve(predicate()).then(result => {
         if (result) {
           return result
         } else if (Date.now() - started < waitValue) {
@@ -55,7 +55,7 @@ function getSelectedCoursesFromUrl() {
 
 function browserBack() {
   return function () {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       $('#testframe').get(0).contentWindow.history.back()
       resolve()
     })
@@ -77,7 +77,7 @@ function setInputValue(el, index, elementValue) {
         triggerEvent(S(el)[idx], 'input')
         triggerEvent(S(el)[idx], 'keyup')
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(`${err} ${el} ${index} ${elementValue}`) // eslint-disable-line no-console
       })
   }
@@ -90,7 +90,7 @@ function click(el, index) {
         triggerEvent(S(el)[index ? index : 0], 'click')
       })
       .delay(500)
-      .catch((err) => {
+      .catch(err => {
         console.log(`${err} ${el} ${index}`) // eslint-disable-line no-console
       })
   }
@@ -117,7 +117,7 @@ function wait(duration) {
 
 function getElementWithText(selector, text) {
   const elements = S(selector)
-  return Array.prototype.filter.call(elements, (element) => RegExp(text).test(element.textContent))
+  return Array.prototype.filter.call(elements, element => RegExp(text).test(element.textContent))
 }
 
 function clickText(el, regex) {
@@ -127,7 +127,7 @@ function clickText(el, regex) {
         triggerEvent(getElementWithText(el, regex)[0], 'click')
       })
       .delay(500)
-      .catch((err) => {
+      .catch(err => {
         console.log(err, el) // eslint-disable-line no-console
       })
   }

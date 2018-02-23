@@ -120,7 +120,7 @@ const handleCourseCodeSuffixes = course => {
   }
 }
 
-const parseHtml = (data) => {
+const parseHtml = data => {
   const $ = cheerio.load(data)
   const courses = $('td.object-cell-border').map(function () {
     let weekDay = $(this).siblings('td.row-label-one').text()
@@ -141,7 +141,7 @@ const parseHtml = (data) => {
   return courses
 }
 
-const parseBasicData = (course) => {
+const parseBasicData = course => {
   const data = {
     course_code: '',
     course_name: '',
@@ -169,7 +169,7 @@ const parseBasicData = (course) => {
   return data
 }
 
-const parseTimeOfDay = (input) => {
+const parseTimeOfDay = input => {
   const groups = /([0-9]{1,2}):([0]{2})\s+([0-9]{1,2}):([0]{2})/.exec(input)
   if (groups && groups.length > 4) {
     const times = groups.map(e => parseInt(e, 10))
@@ -182,7 +182,7 @@ const parseTimeOfDay = (input) => {
   return ''
 }
 
-const parseClassRoom = (input) => {
+const parseClassRoom = input => {
   const capture = input
     .split(/([0-9]{1,2}):([0]{2})\s+([0-9]{1,2}):([0]{2})/)[0]
     .split(/\s/)
@@ -191,7 +191,7 @@ const parseClassRoom = (input) => {
   return capture
 }
 
-const parseType = (input) => {
+const parseType = input => {
   const captures = input.join(' ').split('/')
   if (captures && captures.length > 1) {
     return captures[1].match(/[A-Z0-9]/)[0]
@@ -199,23 +199,23 @@ const parseType = (input) => {
   return ''
 }
 
-const parseWeeks = (input) => {
+const parseWeeks = input => {
   const capture = input.split(/\s{2,}/)
   const weekData = capture && capture.length > 0 ? capture : ''
   const weeks = weekData[weekData.length - 1]
   let weekSequence = []
   if (contains('-', weeks)) {
-    weeks.match(/[0-9]{1,2}-[0-9]{1,2}/g).map((m) =>
+    weeks.match(/[0-9]{1,2}-[0-9]{1,2}/g).map(m =>
       range(
         parseInt(m.substring(0, m.indexOf('-')), 10),
         parseInt(m.substring(m.indexOf('-') + 1), 10) + 1
       ))
-      .forEach((r) => {
+      .forEach(r => {
         weekSequence = concat(weekSequence, r)
       })
   }
   if (contains(',', weeks)) {
-    weeks.match(/[0-9]{1,2}/g).forEach((w) => {
+    weeks.match(/[0-9]{1,2}/g).forEach(w => {
       const num = parseInt(w, 10)
       if (!contains(num, weekSequence)) {
         weekSequence = concat(weekSequence, [num])
@@ -228,7 +228,7 @@ const parseWeeks = (input) => {
   return weekSequence.join()
 }
 
-const getDepartment = (input) => {
+const getDepartment = input => {
   if (input.substring(0, 1) === 'A') {
     return 'kati'
   } else {
@@ -264,7 +264,7 @@ const getDepartment = (input) => {
   }
 }
 
-const sanitizeInput = (input) => input ? input.trim()
+const sanitizeInput = input => input ? input.trim()
   .replace(/(\r\n|\n|\r)/g, '') : ''
 
 const kikeCourseCodeParser = () => {
@@ -277,13 +277,13 @@ const kikeCourseCodeParser = () => {
     resolveWithFullResponse: true,
     timeout: 10000
   })
-    .then((result) => {
+    .then(result => {
       const $ = cheerio.load(result.body)
       return $('tr.datatable2').map(function () {
         return `${$(this).find('td:nth-child(2)').text().split('\n')[0]}${separator}${$(this).find('td:nth-child(3)').text()}`
       }).get()
     })
-    .then((coursesWithCodes) =>
+    .then(coursesWithCodes =>
       coursesWithCodes
         .map(c => {
           const [courseName, courseCode] = c.split(separator)
@@ -294,7 +294,7 @@ const kikeCourseCodeParser = () => {
           }
         })
         .filter(e => e))
-    .then((data) => Promise.all(data.map(d => DB.updateKikeCourseCode(d.courseCode, d.courseName))))
+    .then(data => Promise.all(data.map(d => DB.updateKikeCourseCode(d.courseCode, d.courseName))))
     .then(() => {
       const endTime = new Date()
       Logger.info(`kikeCourseCodeParser finished in ${(endTime.getTime() - startTime.getTime()) / 1000} seconds`)
@@ -314,7 +314,7 @@ const kikeCourseParser = () => {
     resolveWithFullResponse: true,
     timeout: 10000
   })
-    .then((result) => {
+    .then(result => {
       const asCommaSeparated = result.body.replace(/;/g, ',')
 
       return new Promise((resolve, reject) => {
@@ -325,7 +325,7 @@ const kikeCourseParser = () => {
               reject()
             }
             dbData = csvRows.map(csvRow => {
-              const stripMinutes = (input) => input ? input.replace(/:[0-9]+/g, '') : ''
+              const stripMinutes = input => input ? input.replace(/:[0-9]+/g, '') : ''
               const timeOfDay = `${stripMinutes(sanitizeInput(csvRow.field2))}-${stripMinutes(sanitizeInput(csvRow.field4))}`
               const day = moment(csvRow.field1, 'YYYY-MM-DD')
               const courseName = sanitizeInput(csvRow.field5)
@@ -345,7 +345,7 @@ const kikeCourseParser = () => {
                 week_day: values(enToFi)[day.weekday()]
               }
             })
-              .filter((courseData) => courseData.course_name && courseData.course_code && courseData.week && courseData.week_day && courseData.classroom)
+              .filter(courseData => courseData.course_name && courseData.course_code && courseData.week && courseData.week_day && courseData.classroom)
           })
           .on('end', () => {
             Logger.info('Parsed kike CSV file')
@@ -396,7 +396,7 @@ module.exports = {
     Promise.resolve(updateCourseData())
       .then(kikeCourseParser)
       .then(kikeCourseCodeParser)
-      .catch((err) => Logger.error('Error while updating DB data', err.stack))
+      .catch(err => Logger.error('Error while updating DB data', err.stack))
   },
   parseHtml
 }

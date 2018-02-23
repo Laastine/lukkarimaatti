@@ -15,7 +15,7 @@ describe('Tite course parser', () => {
   })
 
   it('Check that correct object keys are found', () => {
-    assert.equal(all((e) => contains('course_name')(Object.keys(e)) &&
+    assert.equal(all(e => contains('course_name')(Object.keys(e)) &&
         contains('course_code')(Object.keys(e)) &&
         contains('week')(Object.keys(e)) &&
         contains('week_day')(Object.keys(e)) &&
@@ -49,7 +49,7 @@ describe('Lukkarimaatti ente course parser', () => {
   })
 
   it('Check that correct object keys are found', () => {
-    assert.equal(all((e) => contains('course_name')(Object.keys(e)) &&
+    assert.equal(all(e => contains('course_name')(Object.keys(e)) &&
         contains('course_code')(Object.keys(e)) &&
         contains('week')(Object.keys(e)) &&
         contains('week_day')(Object.keys(e)) &&
@@ -83,7 +83,7 @@ describe('Lukkarimaatti kati course parser', () => {
   })
 
   it('Check that correct object keys are found', () => {
-    assert.equal(all((e) => contains('course_name')(Object.keys(e)) &&
+    assert.equal(all(e => contains('course_name')(Object.keys(e)) &&
         contains('course_code')(Object.keys(e)) &&
         contains('week')(Object.keys(e)) &&
         contains('week_day')(Object.keys(e)) &&
@@ -117,7 +117,7 @@ describe('Lukkarimaatti sate course parser', () => {
   })
 
   it('Check that correct object keys are found', () => {
-    assert.equal(all((e) => contains('course_name')(Object.keys(e)) &&
+    assert.equal(all(e => contains('course_name')(Object.keys(e)) &&
         contains('course_code')(Object.keys(e)) &&
         contains('week')(Object.keys(e)) &&
         contains('week_day')(Object.keys(e)) &&

@@ -72,7 +72,7 @@ function setHeaders(req, res, checksum, filePath) {
   }
 }
 
-const serveStaticResource = (filePath) => (req, res, next) =>
+const serveStaticResource = filePath => (req, res, next) =>
   checksumPromise(filePath)
     .then(checksum => setHeaders(req, res, checksum, filePath))
     .catch(next)
@@ -115,7 +115,7 @@ const router = new UniversalRouter(routes)
 
 server.get('*', (req, res) => {
   router.resolve({pathname: req.path, query: req.query})
-    .then((routeData) => Promise
+    .then(routeData => Promise
       .all([checksumPromise(cssFilePath), checksumPromise(bundleJsFilePath)])
       .then(([cssChecksum, bundleJsChecksum]) => {
         const initialState = merge(appState.currentState, buildInitialState(routeData.path))
@@ -124,9 +124,9 @@ server.get('*', (req, res) => {
           initialState,
           {cssChecksum, bundleJsChecksum}
         ))
-          .then((page) => res.send(page))
+          .then(page => res.send(page))
       })
-      .catch((err) => {
+      .catch(err => {
         res.status(500).send('Server error')
         Logger.error('Server error', err.stack)
       }))

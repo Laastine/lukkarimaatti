@@ -11,11 +11,11 @@ import moment from 'moment'
 
 BigCalendar.momentLocalizer(moment)
 
-const stringToColor = (colorSeed) => {
+const stringToColor = colorSeed => {
   let hash = 0
   let colour = '#'
   let value = null
-  colorSeed.split('').forEach((e) => {
+  colorSeed.split('').forEach(e => {
     hash = colorSeed.charCodeAt(e) + ((hash << 5) - hash)
   })
   for (let j = 0; j < 3; j++) {
@@ -86,9 +86,9 @@ class Lukkari extends React.Component {
           popup={false}
           timeslots={2}
           components={{event: Event}}
-          onSelectEvent={(c) => {
+          onSelectEvent={c => {
             const courses =
-              filter((cc) => cc.course_id === c.course_id, state.selectedCourses)
+              filter(cc => cc.course_id === c.course_id, state.selectedCourses)
             appState.dispatch({type: 'REMOVE_COURSE_BY_ID', courses})
           }}
           min={new Date(moment(state.currentDate).hours(8).minutes(0).format())}

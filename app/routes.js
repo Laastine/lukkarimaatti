@@ -7,7 +7,7 @@ import NotFoundPage from './pages/notFoundPage'
 import CatalogPage from './pages/catalogpage/CatalogPage'
 
 const fetchComponentData = (needs, params) => {
-  needs.forEach((need) => {
+  needs.forEach(need => {
     const action = need(params)
     appState.dispatch(action)
   })
@@ -27,7 +27,7 @@ export const routes = [
     path: '/',
     action:
       ({query: {courses}}) =>
-        new Promise((resolve) => {
+        new Promise(resolve => {
           if (!isServer) {
             window.scrollTo(0, 0)
           }
@@ -40,7 +40,7 @@ export const routes = [
     path: '/catalog',
     action:
       ({query: {courses}}) =>
-        new Promise((resolve) => {
+        new Promise(resolve => {
           if (!isServer) {
             window.scrollTo(0, 0)
           }
@@ -52,7 +52,7 @@ export const routes = [
   {
     path: '/catalog/:department',
     action: ({params: {department}, query: {courses}}) =>
-      new Promise((resolve) => {
+      new Promise(resolve => {
         if (!isServer) {
           window.scrollTo(0, 0)
         }

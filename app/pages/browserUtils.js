@@ -7,7 +7,7 @@ const urlParamLength = 9
 
 const sanitizeUrlParam = () => window.location.search.indexOf('courses=') < 0 ? '' : window.location.search
 
-export const addUrlParameter = (courseCode) => {
+export const addUrlParameter = courseCode => {
   const params = sanitizeUrlParam()
   if (params.length > urlParamLength) {
     if (params.indexOf(courseCode) < 0) {
@@ -23,16 +23,16 @@ export const addUrlParameter = (courseCode) => {
   }
 }
 
-export const updateUrlParams = (selectedCourses) => {
+export const updateUrlParams = selectedCourses => {
   pipe(
-    uniqBy((c) => c.course_code),
-    forEach((c) => addUrlParameter(c.course_code))
+    uniqBy(c => c.course_code),
+    forEach(c => addUrlParameter(c.course_code))
   )(selectedCourses)
 }
 
-export const removeUrlParameter = (courseCode) => {
+export const removeUrlParameter = courseCode => {
   const params = sanitizeUrlParam()
-  const updatedParams = params.substring(urlParamLength, params.length).split('+').filter((p) => {
+  const updatedParams = params.substring(urlParamLength, params.length).split('+').filter(p => {
     if (p.indexOf('-') > -1) {
       const groupLetterStripped = p.substring(0, p.indexOf('-'))
       return groupLetterStripped !== courseCode
@@ -47,7 +47,7 @@ export const removeUrlParameter = (courseCode) => {
   }
 }
 
-export const sendEmail = (email) => {
+export const sendEmail = email => {
   axios.post('api/save', {email, link: window.location.href.toString()})
     .then(() => {
       appState.dispatch({type: 'EMAIL_SEND_DONE', waitingAjax: false})

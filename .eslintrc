@@ -254,7 +254,7 @@
     ],
     //ES6
     "arrow-body-style": 2,
-    "arrow-parens": 0,
+    "arrow-parens": [2, "as-needed"],
     "arrow-spacing": [
       1,
       {

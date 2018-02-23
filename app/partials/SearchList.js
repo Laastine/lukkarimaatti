@@ -7,16 +7,16 @@ import {appState} from '../store/lukkariStore'
 
 const LIST_MAX_LEN = 10
 
-const visibleCourses = (state) => pipe(
+const visibleCourses = state => pipe(
   uniq,
-  slice(0, LIST_MAX_LEN))(state.searchResults.map((c) => c.course_name))
+  slice(0, LIST_MAX_LEN))(state.searchResults.map(c => c.course_name))
 
 const addCourse = (event, state) => {
   document.getElementById('course-searchbox').value = ''
   const courseName = visibleCourses(state)[state.selectedIndex]
   appState.dispatch({
     type: 'ADD_COURSE',
-    selectedCourses: state.searchResults.filter((e) => e.course_name === courseName)
+    selectedCourses: state.searchResults.filter(e => e.course_name === courseName)
   })
 }
 
@@ -41,13 +41,13 @@ const searchList = (state, mouseEnterCallback, closeCallback) => {
   const mapIndexed = addIndex(map)
   return state && state.isSearchListVisible ?
     pipe(
-      uniqBy((c) => c.course_name),
+      uniqBy(c => c.course_name),
       slice(0, LIST_MAX_LEN),
       mapIndexed((c, index) =>
         <div key={c.course_name}
           onMouseEnter={partial(mouseEnterCallback, [index])}
           className={index === state.selectedIndex ? 'search-list-coursename search-list-selected' : 'search-list-coursename'}
-          onClick={(event) => {
+          onClick={event => {
             closeCallback()
             addCourse(event, state)
           }}>
@@ -74,11 +74,11 @@ class SearchList extends React.Component {
     this.setState(() => ({searchResults: this.props.state.searchResults}))
     Bacon.fromEventTarget(this.searchinput, 'keyup')
       .debounce(250)
-      .filter((e) => !contains(e.keyCode, [37, 38, 39, 40]))
-      .onValue((e) => {
+      .filter(e => !contains(e.keyCode, [37, 38, 39, 40]))
+      .onValue(e => {
         if (e.target.value.length > 0) {
           searchCourses(e.target.value)
-            .then((searchResults) => {
+            .then(searchResults => {
               this.setState(() => ({
                 searchResults,
                 isSearchListVisible: true
@@ -92,7 +92,7 @@ class SearchList extends React.Component {
 
   render() {
     const {state} = this
-    const indexCallback = (index) => {
+    const indexCallback = index => {
       this.setState(() => ({selectedIndex: index}))
     }
     const closeCallback = () => {
@@ -102,10 +102,10 @@ class SearchList extends React.Component {
     return <div>
       <div className='search-container'>
         <input id='course-searchbox' autoFocus placeholder='Course name'
-          ref={(e) => {
+          ref={e => {
             this.searchinput = e
           }}
-          onKeyDown={(event) => {
+          onKeyDown={event => {
             this.setState({searchString: event.target.value})
             handleKeyInput(event, state, indexCallback, closeCallback)
           }}>

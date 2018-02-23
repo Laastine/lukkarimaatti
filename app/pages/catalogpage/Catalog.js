@@ -11,7 +11,7 @@ const courseDisplayModes = {
   ALL: 'ALL'
 }
 
-const DepartmentSelectorElement = (selectedDepartment) => {
+const DepartmentSelectorElement = selectedDepartment => {
   const departmentNames = ['ENTE-YMTE',
     'KETE',
     'KATI',
@@ -40,25 +40,25 @@ const VisualizationOptions = (selectedVisualizationMode, cb) => {
   return <div className="visualization-link-container">{displayModes}</div>
 }
 
-const getSemester = (week) => {
+const getSemester = week => {
   const endingWeekOfJune = 26
-  return any((w) => Number(w) > endingWeekOfJune, week.split(',')) ? 'Autumn' : 'Spring'
+  return any(w => Number(w) > endingWeekOfJune, week.split(',')) ? 'Autumn' : 'Spring'
 }
 
 const isSelected = (state, courseCode, groupName) => {
   const groupNameExists = !isEmpty(state.selectedCourses
-    .filter((c) => c.course_code === courseCode && c.group_name === groupName))
-  return groupNameExists && any((c) => c.course_code === courseCode, state.selectedCourses)
+    .filter(c => c.course_code === courseCode && c.group_name === groupName))
+  return groupNameExists && any(c => c.course_code === courseCode, state.selectedCourses)
 }
 
 const selectCourse = courseCode => {
   loadCourseByCode(courseCode)
-    .then((course) => {
+    .then(course => {
       appState.dispatch({type: 'LOAD_COURSE_BY_CODE', course})
     })
 }
 
-const removeCourse = (courseCode) => {
+const removeCourse = courseCode => {
   appState.dispatch({type: 'REMOVE_COURSE', course_code: courseCode})
 }
 
@@ -70,7 +70,7 @@ const courseSelect = (c, isCourseSelected) => {
   }
 }
 
-const DepartmentCoursesElement = (state) => {
+const DepartmentCoursesElement = state => {
   const courses = state.departmentCourses ? state.departmentCourses
     .filter(c => state.whichCoursesToDisplay === courseDisplayModes.ALL ||
         getSemester(c.week).toUpperCase() === state.whichCoursesToDisplay)
@@ -104,7 +104,7 @@ class Catalog extends React.Component {
     }
   }
 
-  visisualizationSelectCb = (whichCoursesToDisplay) => {
+  visisualizationSelectCb = whichCoursesToDisplay => {
     this.setState(() => ({whichCoursesToDisplay}))
   }
 

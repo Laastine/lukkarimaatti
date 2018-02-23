@@ -53,9 +53,9 @@ describe('Lukkarimaatti UI navigation', () => {
     }, 'http://localhost:8080/?courses=BL20A1600+CT60A2411'))()
       .then(waitUntil(() => $(S('.selected-courses-list')[0]).is(':visible')))
       .then(() => {
-        const selectedCourses = S('.selected-courses-list .search-list-element').map((e) => e.textContent)
-        expect(selectedCourses.some((e) => e === 'CT60A2411 - Olio-ohjelmointiX')).to.equal(true)
-        expect(selectedCourses.some((e) => e === 'BL20A1600 - Smart GridsX')).to.equal(true)
+        const selectedCourses = S('.selected-courses-list .search-list-element').map(e => e.textContent)
+        expect(selectedCourses.some(e => e === 'CT60A2411 - Olio-ohjelmointiX')).to.equal(true)
+        expect(selectedCourses.some(e => e === 'BL20A1600 - Smart GridsX')).to.equal(true)
         expect(getSelectedCoursesFromUrl()).to.deep.equal(['BL20A1600', 'CT60A2411'])
         done()
       })

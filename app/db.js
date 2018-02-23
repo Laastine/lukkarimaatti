@@ -21,7 +21,7 @@ const charsMap = {
   '\\': '\\\\'
 }
 
-const sanitize = (value) => {
+const sanitize = value => {
   let chunkIndex = charsRegex.lastIndex = 0
   let escapedVal = ''
   let match
@@ -68,8 +68,8 @@ const buildInsertQueryString = courseBatch => reduce((a, course) => {
 module.exports = {
 
   isTableInitialized: table => client.query(SQL`SELECT to_regclass('${table}') IS NOT NULL as EXISTS;`)
-    .then((e) => prop('exists')(e[0]))
-    .catch((err) => Logger.error('isTableInitialized error', err.stack)),
+    .then(e => prop('exists')(e[0]))
+    .catch(err => Logger.error('isTableInitialized error', err.stack)),
 
   initializeDb: () => client.none(SQL`
   CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -89,9 +89,9 @@ module.exports = {
       Logger.info('DB initialized')
       return client.any('CREATE INDEX course_name_search ON course (course_name)')
     })
-    .catch((err) => Logger.error('initializeDb error', err.stack)),
+    .catch(err => Logger.error('initializeDb error', err.stack)),
 
-  getCourseByName: (courseName) => client.query(SQL`SELECT * FROM course WHERE LOWER(course_name) LIKE LOWER('%${courseName}%')`),
+  getCourseByName: courseName => client.query(SQL`SELECT * FROM course WHERE LOWER(course_name) LIKE LOWER('%${courseName}%')`),
 
   getCourseByCodeAndGroup: (code, group) => client.query(SQL`SELECT * FROM course WHERE course_code = '${code}' AND group_name = '${group}'`),
 

@@ -28,9 +28,11 @@ export const routes = [
     action:
       ({query: {courses}}) =>
         new Promise((resolve) => {
+          if (!isServer) {
+            window.scrollTo(0, 0)
+          }
           fetchComponentData(LukkariPage.needs, {courses})
           resolve()
-          window.scrollTo(0, 0)
         })
           .then(() => ({component: <LukkariPage/>}))
   },
@@ -39,9 +41,11 @@ export const routes = [
     action:
       ({query: {courses}}) =>
         new Promise((resolve) => {
+          if (!isServer) {
+            window.scrollTo(0, 0)
+          }
           fetchComponentData(CatalogPage.needs, {courses, department: 'TITE'})
           resolve()
-          window.scrollTo(0, 0)
         })
           .then(() => ({component: <CatalogPage/>}))
   },
@@ -49,9 +53,11 @@ export const routes = [
     path: '/catalog/:department',
     action: ({params: {department}, query: {courses}}) =>
       new Promise((resolve) => {
+        if (!isServer) {
+          window.scrollTo(0, 0)
+        }
         fetchComponentData(CatalogPage.needs, {courses, department})
         resolve()
-        window.scrollTo(0, 0)
       })
         .then(() => ({component: <CatalogPage/>}))
 

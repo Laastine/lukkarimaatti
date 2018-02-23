@@ -85,7 +85,10 @@ module.exports = {
   teacher TEXT,
   misc TEXT,
   group_name TEXT DEFAULT '' NOT NULL)`)
-    .then(() => client.any('CREATE INDEX course_name_search ON course (course_name)'))
+    .then(() => {
+      Logger.info('DB initialized')
+      return client.any('CREATE INDEX course_name_search ON course (course_name)')
+    })
     .catch((err) => Logger.error('initializeDb error', err.stack)),
 
   getCourseByName: (courseName) => client.query(SQL`SELECT * FROM course WHERE LOWER(course_name) LIKE LOWER('%${courseName}%')`),

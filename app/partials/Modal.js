@@ -19,7 +19,7 @@ class Modal extends React.Component {
   render() {
     const {isModalOpen, isWaitingAjax} = this.props.state
 
-    return isModalOpen ? <div className='modal-dialog'>
+    return isModalOpen && <div className='modal-dialog'>
       <div>
         <div id='saveClose'
           onClick={() => {
@@ -34,7 +34,7 @@ class Modal extends React.Component {
         </form>
         <div className="modal-text">You can also bookmark current address to view it later</div>
       </div>
-    </div> : null
+    </div>
   }
 }
 

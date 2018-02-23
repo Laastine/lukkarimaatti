@@ -9017,9 +9017,9 @@
       }
     },
     "react-big-calendar": {
-      "version": "0.18.0",
-      "resolved": "https://registry.npmjs.org/react-big-calendar/-/react-big-calendar-0.18.0.tgz",
-      "integrity": "sha512-cDyayDlTn0BUtIfw9ruwlb1FXg2b+NMPpdlQjIIXI5wxlWFptZU2AMCDIefu9F0yx3xuKYFxmOwSlWo+82GIyA==",
+      "version": "0.15.0",
+      "resolved": "https://registry.npmjs.org/react-big-calendar/-/react-big-calendar-0.15.0.tgz",
+      "integrity": "sha512-F4RLErrdRlWIaHy7BH3vvaVvOnTizWOOPlmtxiqrKGVbpBbn79eCVtqEG5bXLVdQZR5potHwsi1tj8F2y45Hxg==",
       "requires": {
         "classnames": "2.2.5",
         "date-arithmetic": "3.1.0",

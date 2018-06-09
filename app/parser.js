@@ -131,9 +131,9 @@ const parseHtml = data => {
   }).get()
     .map(c => Object.assign(handleCourseCodeSuffixes(c),
       {week: parseWeeks(c.text)},
-      {'time_of_day': parseTimeOfDay(c.text)},
-      {'classroom': parseClassRoom(c.text)},
-      {'department': getDepartment(c.course_code)},
+      {time_of_day: parseTimeOfDay(c.text)},
+      {classroom: parseClassRoom(c.text)},
+      {department: getDepartment(c.course_code)},
       {teacher: '', misc: '', group_name: ''}))
     .map(c => dissoc('text', c))
     .filter(c => c.course_code && c.course_name && c.time_of_day)

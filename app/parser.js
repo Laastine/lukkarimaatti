@@ -115,9 +115,8 @@ const handleCourseCodeSuffixes = course => {
       course_code: course.course_code.replace(/\s+/, ''),
       course_name: `${course.course_name}${suffix}`
     })
-  } else {
-    return course
   }
+  return course
 }
 
 const parseHtml = data => {
@@ -130,12 +129,12 @@ const parseHtml = data => {
     }
     return assoc('week_day', enToFi[weekDay], parseBasicData(sanitizeInput($(this).text())))
   }).get()
-    .map(c => assoc('week', parseWeeks(c.text), c))
-    .map(c => assoc('time_of_day', parseTimeOfDay(c.text), c))
-    .map(c => assoc('classroom', parseClassRoom(c.text), c))
-    .map(c => assoc('department', getDepartment(c.course_code), c))
-    .map(c => handleCourseCodeSuffixes(c))
-    .map(c => merge(c, {teacher: '', misc: '', group_name: ''}))
+    .map(c => Object.assign(handleCourseCodeSuffixes(c),
+      {week: parseWeeks(c.text)},
+      {'time_of_day': parseTimeOfDay(c.text)},
+      {'classroom': parseClassRoom(c.text)},
+      {'department': getDepartment(c.course_code)},
+      {teacher: '', misc: '', group_name: ''}))
     .map(c => dissoc('text', c))
     .filter(c => c.course_code && c.course_name && c.time_of_day)
   return courses
@@ -258,7 +257,7 @@ const getDepartment = input => {
           return 'kati'
         }
       default:
-        Logger.warn('Unknow course code', input ? input : 'EMPTY')
+        Logger.warn('Unknow course code', input)
         return 'UNKNOWN'
     }
   }
@@ -289,9 +288,8 @@ const kikeCourseCodeParser = () => {
           const [courseName, courseCode] = c.split(separator)
           if (courseName && courseCode && /[\s ,.\-0-9]+/) {
             return {courseName, courseCode}
-          } else {
-            return null
           }
+          return null
         })
         .filter(e => e))
     .then(data => Promise.all(data.map(d => DB.updateKikeCourseCode(d.courseCode, d.courseName))))

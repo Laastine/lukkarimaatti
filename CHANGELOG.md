@@ -6,6 +6,11 @@ Version numbering:
 `<major>.<minor>.<patch>`
 
 ---
+### 1.5.8, June 9, 2019
+* Update project dependencies
+* Update Node.js and npm versions
+* Update course parser for fall 2019
+
 ### 1.5.7, February 7, 2018
 * Update project dependencies
 * Update Node.js version

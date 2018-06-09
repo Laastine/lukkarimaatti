@@ -27,15 +27,15 @@ Install docker-machine and docker:
 `brew install docker docker-machine`
 
 Create lukkarimaatti virtualbox image:
-`docker-machine create --driver virtualbox lukkarimaatti-db`
+`docker-machine create --driver virtualbox --virtualbox-disk-size 2000 lukkarimaatti-db`
 
-Add env variable to your shell where you run docker cmds:
+Add env variable to your shell where you run docker commands:
 `eval "$(docker-machine env lukkarimaatti-db)"`
 
 Install postgres DB to docker:
- `docker pull postgres:10.2`
+ `docker pull postgres:10.4`
 
-Start postgres in docker: `docker run --name lukkarimaatti-db -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -d postgres:10.2`
+Start postgres in docker: `docker run --name lukkarimaatti-db -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -d postgres:10.4`
 
 Set up config variables:
 ```

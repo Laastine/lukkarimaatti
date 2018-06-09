@@ -16,8 +16,8 @@ const UPDATE_THRESHOLD = 100
 const updateCourseData = () => {
   const startTime = new Date()
   const url = 'https://forms.lut.fi'
-  const pathDefault = '/scientia/sws/sylla1718/default.aspx'
-  const pathShowTimetable = '/scientia/sws/sylla1718/showtimetable.aspx'
+  const pathDefault = '/scientia/sws/sylla1819/default.aspx'
+  const pathShowTimetable = '/scientia/sws/sylla1819/showtimetable.aspx'
   return rp({
     method: 'GET',
     uri: url + pathDefault,
@@ -33,7 +33,7 @@ const updateCourseData = () => {
           {name: 'Content-Type', value: 'application/x-www-form-urlencoded'},
           {name: 'Host', value: 'forms.lut.fi'},
           {name: 'Origin', value: 'https://forms.lut.fi'},
-          {name: 'Referer', value: 'https://forms.lut.fi/scientia/sws/sylla1718/default.aspx'},
+          {name: 'Referer', value: 'https://forms.lut.fi/scientia/sws/sylla1819/default.aspx'},
           {name: 'User-Agent', value: 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1'}
         ],
         timeout: 25000,
@@ -60,8 +60,8 @@ const updateCourseData = () => {
     })
     .then(() => rp({
       headers: [
-        {name: 'Referer', value: 'https://forms.lut.fi/scientia/sws/sylla1718/default.aspx'},
-        {name: 'User-Agent', value: 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1'}
+        {name: 'Referer', value: 'https://forms.lut.fi/scientia/sws/sylla1819/default.aspx'},
+        {name: 'User-Agent', value: 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/60.1'}
       ],
       method: 'GET',
       uri: url + pathShowTimetable,
@@ -255,9 +255,11 @@ const getDepartment = input => {
           return 'tite'
         } else if (input.indexOf('kati') > 0) {
           return 'kati'
+        } else {
+          return 'tuta'
         }
       default:
-        Logger.warn('Unknow course code', input)
+        Logger.warn('Unknown course code', input)
         return 'UNKNOWN'
     }
   }
@@ -303,7 +305,7 @@ const kikeCourseCodeParser = () => {
 }
 
 const kikeCourseParser = () => {
-  const url = 'https://fi.timeedit.net/web/saimia/db1/public/ri15Z217X99Z07Q5Z56g6130yQ0Y6YQ5m07gQY5Q5957o5b.csv'
+  const url = 'https://fi.timeedit.net/web/saimia/db1/public/ri65Z997X71Z07Q5Z56g6100y50Y6YQ5n07gQY5Q575730Q91.csv'
   const startTime = new Date()
   let dbData = []
   return rp({

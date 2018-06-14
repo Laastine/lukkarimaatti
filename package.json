@@ -39,7 +39,7 @@
     "query-string": "6.1.0",
     "ramda": "0.25.0",
     "react": "16.4.0",
-    "react-big-calendar": "0.19.1",
+    "react-big-calendar": "0.15.0",
     "react-dom": "16.4.0",
     "request": "2.87.0",
     "request-promise": "4.2.2",

@@ -2,7 +2,7 @@ const winston = require('winston')
 const util = require('util')
 const config = require('./config')
 
-module.exports = new (winston.Logger)({
+module.exports = winston.createLogger({
   level: config.logLevel ? config.logLevel : 'info',
   transports: [
     new (winston.transports.Console)({

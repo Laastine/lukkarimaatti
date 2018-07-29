@@ -69,11 +69,10 @@ module.exports = {
 
   isTableInitialized: table => client.query(SQL`SELECT to_regclass('${table}') IS NOT NULL as EXISTS;`)
     .then(e => prop('exists')(e[0]))
-    .catch(err => Logger.error('isTableInitialized error', err.stack)),
+    .catch(err => Logger.error('isTableInitialized error', err)),
 
   initializeDb: () => client.none(SQL`
-  CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-  CREATE TABLE course(course_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  CREATE TABLE IF NOT EXISTS course(course_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   course_code TEXT NOT NULL,
   course_name TEXT NOT NULL,
   week TEXT,

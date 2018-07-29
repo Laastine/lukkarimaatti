@@ -1,9 +1,11 @@
 .DS_Store
 *.log
-.idea/
+.idea
 *.iml
 node_modules
 .env
 .generated
 .eslintcache
 test/gatling/searchtest*
+db/lukkarimaatti-db
+db/postgres.pid

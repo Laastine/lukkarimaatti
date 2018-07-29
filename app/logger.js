@@ -5,12 +5,13 @@ function timestamp() {
 }
 
 function logMsg(level, msg, args) {
+  // eslint-disable-next-line no-console
   console.log(`${timestamp()} INFO - ${msg}, ${args}`)
 }
 
 const Logger = {
   info: (msg, ...args) => {
-    if (config.logLevel === 'info'){
+    if (config.logLevel === 'info') {
       logMsg('INFO', msg, args)
     }
   },

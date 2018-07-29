@@ -1,13 +1,21 @@
-const winston = require('winston')
-const util = require('util')
 const config = require('./config')
 
-module.exports = winston.createLogger({
-  level: config.logLevel ? config.logLevel : 'info',
-  transports: [
-    new (winston.transports.Console)({
-      timestamp: () => new Date().toISOString(),
-      formatter: options => `${options.timestamp()} ${options.level.toUpperCase()} ${options.message ? options.message : ''}  ${(options.meta && Object.keys(options.meta).length ? `\n\t${util.inspect(options.meta)}` : '')}`
-    })
-  ]
-})
+function timestamp() {
+  return new Date().toISOString()
+}
+
+function logMsg(level, msg, args) {
+  console.log(`${timestamp()} INFO - ${msg}, ${args}`)
+}
+
+const Logger = {
+  info: (msg, ...args) => {
+    if (config.logLevel === 'info'){
+      logMsg('INFO', msg, args)
+    }
+  },
+
+  error: (msg, ...args) => logMsg('ERROR', msg, args)
+}
+
+module.exports = Logger

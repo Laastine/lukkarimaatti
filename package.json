@@ -44,8 +44,7 @@
     "request": "2.87.0",
     "request-promise": "4.2.2",
     "tough-cookie": "2.4.3",
-    "universal-router": "6.0.0",
-    "winston": "3.0.0"
+    "universal-router": "6.0.0"
   },
   "devDependencies": {
     "babel-cli": "6.26.0",

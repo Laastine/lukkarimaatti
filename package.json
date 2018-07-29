@@ -91,7 +91,7 @@
     "watch-js": "watchify app/client.js --debug -o .generated/bundle.js -v",
     "watch": "npm run watch-js & npm run watch-css & supervisor --quiet --ignore node_modules --watch app app/bootstrap.js",
     "start": "node app/bootstrap.js",
-    "init-db": "pushd db && ./init-database.sh && popd",
+    "init-db": "pushd db && ./database.sh init && popd",
     "start-db": "pushd db && ./database.sh start && popd",
     "stop-db": "pushd db && ./database.sh stop && popd",
     "lint": "eslint --cache --report-unused-disable-directives 'app/**/*.js' 'test/unit/*.js' 'test/util/*.js' 'test/specs/*.js' 'test/page/*.js' --fix",

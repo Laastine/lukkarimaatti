@@ -10,11 +10,7 @@ function logMsg(level, msg, args) {
 }
 
 const Logger = {
-  info: (msg, ...args) => {
-    if (config.logLevel === 'info') {
-      logMsg('INFO', msg, args)
-    }
-  },
+  info: (msg, ...args) => config.logLevel === 'info' ? logMsg('INFO', msg, args) : null,
 
   error: (msg, ...args) => logMsg('ERROR', msg, args)
 }

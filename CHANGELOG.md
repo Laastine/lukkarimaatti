@@ -6,6 +6,12 @@ Version numbering:
 `<major>.<minor>.<patch>`
 
 ---
+### 1.5.9, July 29, 2019
+* Update project dependencies
+* Update Node.js and npm versions
+* Replace local docker database with locally installed PostgreSQL
+* Replace winston logger with custom implementation
+
 ### 1.5.8, June 9, 2019
 * Update project dependencies
 * Update Node.js and npm versions

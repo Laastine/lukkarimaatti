@@ -1,7 +1,7 @@
 {
   "name": "lukkarimaatti",
   "description": "lukkarimaatti scheduling tool",
-  "version": "1.5.8",
+  "version": "1.5.9",
   "main": "app/bootstrap.js",
   "private": true,
   "engines": {

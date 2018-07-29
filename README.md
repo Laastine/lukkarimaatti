@@ -1,6 +1,5 @@
 # Lukkarimaatti++
 
-[![CircleCI](https://circleci.com/bb/laastine-ci/lukkarimaatti/tree/master.svg?style=svg&circle-token=7b36babd077a7ee08258f02d55ad7d2aa4b35eca)](https://circleci.com/bb/laastine-ci/lukkarimaatti/tree/master)
 [![Build Status](https://travis-ci.org/Laastine/lukkarimaatti.svg?branch=master)](https://travis-ci.org/Laastine/lukkarimaatti)
 
 Hobby project which offers course data in easy to use scheduling tool.<br>
@@ -19,8 +18,8 @@ Today it's implemented with universal JavaScript (Node/React/Bacon) using "megab
 ## Requirements
 Node.js 8 LTS
 
-#### Local setup DB on OSX
-- Install PostgreSQL via homebrew `brew install postgresql`
+#### Local setup DB on unix based OS
+- Install PostgreSQL via homebrew `brew install postgresql` on Mac OS 
 
 Start initialize PostgreSQL database: `npm run init-db`
 Start and stop PostgreSQL after initialization `npm run start-db` and `npm run stop-db`

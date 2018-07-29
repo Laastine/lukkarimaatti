@@ -20,26 +20,14 @@ Today it's implemented with universal JavaScript (Node/React/Bacon) using "megab
 Node.js 8 LTS
 
 #### Local setup DB on OSX
-- OSX users use virtualbox or any other virtual machine provider for Docker
-- Linux users can skip docker-machine commands
+- Install PostgreSQL via homebrew `brew install postgresql`
 
-Install docker-machine and docker:
-`brew install docker docker-machine`
-
-Create lukkarimaatti virtualbox image:
-`docker-machine create --driver virtualbox --virtualbox-disk-size 2000 lukkarimaatti-db`
-
-Add env variable to your shell where you run docker commands:
-`eval "$(docker-machine env lukkarimaatti-db)"`
-
-Install postgres DB to docker:
- `docker pull postgres:10.4`
-
-Start postgres in docker: `docker run --name lukkarimaatti-db -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -d postgres:10.4`
+Start initialize PostgreSQL database: `npm run init-db`
+Start and stop PostgreSQL after initialization `npm run start-db` and `npm run stop-db`
 
 Set up config variables:
 ```
-echo -e export DATABASE_URL=postgresql://postgres:postgres@`docker-machine ip lukkarimaatti-db`:5432/postgres >> .env
+echo -e export DATABASE_URL=postgresql://localhost:5432/postgres >> .env
 echo -e export APP_SECRET=my-very-hard-app-secret >> .env
 echo -e export UNI_URL=https://uni.lut.fi/fi/web/guest/lukujarjestykset1 >> .env
 source .env
@@ -51,9 +39,7 @@ npm install
 npm run build
 ```
 - For quick browser testing `npm run watch` and `open http://localhost:8080` in your web browser.
-- Download course data with http://localhost:8080/api/update?secret=my-very-hard-app-secret
-- Shutdown docker with `docker-machine stop lukkarimaatti`
-- Start docker postgres `docker-machine start lukkarimaatti-db && eval "$(docker-machine env lukkarimaatti-db)" && docker start lukkarimaatti-db` after initial setup is done
+- Download course data with HTTP POST to http://localhost:8080/api/update?secret=my-very-hard-app-secret
 
 ## Tests
 

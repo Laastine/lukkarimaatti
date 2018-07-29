@@ -84,7 +84,7 @@ module.exports = {
   department TEXT NOT NULL,
   teacher TEXT,
   misc TEXT,
-  group_name TEXT DEFAULT '' NOT NULL)`)
+  group_name TEXT DEFAULT '' NOT NULL);`)
     .then(() => {
       Logger.info('DB initialized')
       return client.any('CREATE INDEX course_name_search ON course (course_name)')

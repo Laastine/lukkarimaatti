@@ -381,7 +381,7 @@ module.exports = {
   updateCourseData: (req, res) => {
     Logger.info('Update course data from IP', req.client.remoteAddress)
     if (req.query.secret === config.appSecret) {
-      Promise.resolve(updateCourseData())
+      updateCourseData()
         .then(kikeCourseParser)
         .then(kikeCourseCodeParser)
       res.status(200).json({status: 'ok'})
@@ -393,7 +393,7 @@ module.exports = {
 
   workerUpdateData: () => {
     Logger.info('Update course data by worker')
-    Promise.resolve(updateCourseData())
+    updateCourseData()
       .then(kikeCourseParser)
       .then(kikeCourseCodeParser)
       .catch(err => Logger.error('Error while updating DB data', err.stack))

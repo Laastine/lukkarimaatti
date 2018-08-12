@@ -269,7 +269,7 @@ const sanitizeInput = input => input ? input.trim()
   .replace(/(\r\n|\n|\r)/g, '') : ''
 
 const kikeCourseCodeParser = () => {
-  const url = 'https://ops.saimia.fi/opsnet/disp/fi/ops_KoulOhjOps/tab/tab/sea?valkiel=fi&ryhma_id=20448973&koulohj_id=20448943'
+  const url = 'https://ops.saimia.fi/opsnet/disp/fi/ops_KoulOhjOps/tab/nop/sea?valkiel=fi&ryhma_id=21076741'
   const startTime = new Date()
   const separator = '#%#'
   return rp({
@@ -305,9 +305,8 @@ const kikeCourseCodeParser = () => {
 }
 
 const kikeCourseParser = () => {
-  const url = 'https://fi.timeedit.net/web/saimia/db1/public/ri65Z997X71Z07Q5Z56g6100y50Y6YQ5n07gQY5Q575730Q91.csv'
+  const url = 'https://fi.timeedit.net/web/saimia/db1/public/ri165397X52Z07Q5Z66g8140y70Y6YQ5703gQY5Q53.csv'
   const startTime = new Date()
-  let dbData = []
   return rp({
     method: 'GET',
     uri: url,
@@ -316,44 +315,39 @@ const kikeCourseParser = () => {
   })
     .then(result => {
       const asCommaSeparated = result.body.replace(/;/g, ',')
-
-      return new Promise((resolve, reject) => {
-        CSV({noheader: true})
-          .fromString(asCommaSeparated, (err, csvRows) => {
-            if (err) {
-              Logger.error('Failed to fetch kike data', err.message)
-              reject()
+      return CSV({noheader: true})
+        .fromString(asCommaSeparated)
+        .then(csvRows =>
+          csvRows.map(csvRow => {
+            const stripMinutes = input => input ? input.replace(/:[0-9]+/g, '') : ''
+            const timeOfDay = `${stripMinutes(sanitizeInput(csvRow.field2))}-${stripMinutes(sanitizeInput(csvRow.field4))}`
+            const day = moment(csvRow.field1, 'YYYY-MM-DD')
+            const courseName = sanitizeInput(csvRow.field5)
+            const courseCode = `FV${courseName.replace(/[^\x00-\x7F]/g, '').replace(/\s/, '')}`
+            return {
+              classroom: `${sanitizeInput(csvRow.field7)}`,
+              course_code: courseCode,
+              course_name: courseName,
+              department: 'kike',
+              group_name: `${sanitizeInput(csvRow.field6)}`,
+              misc: '',
+              period: null,
+              teacher: '',
+              time_of_day: timeOfDay,
+              type: '',
+              week: day.week(),
+              week_day: values(enToFi)[day.weekday()]
             }
-            dbData = csvRows.map(csvRow => {
-              const stripMinutes = input => input ? input.replace(/:[0-9]+/g, '') : ''
-              const timeOfDay = `${stripMinutes(sanitizeInput(csvRow.field2))}-${stripMinutes(sanitizeInput(csvRow.field4))}`
-              const day = moment(csvRow.field1, 'YYYY-MM-DD')
-              const courseName = sanitizeInput(csvRow.field5)
-              const courseCode = `FV${courseName.replace(/[^\x00-\x7F]/g, '').replace(/\s/, '')}`
-              return {
-                classroom: `${sanitizeInput(csvRow.field7)}`,
-                course_code: courseCode,
-                course_name: courseName,
-                department: 'kike',
-                group_name: `${sanitizeInput(csvRow.field6)}`,
-                misc: '',
-                period: null,
-                teacher: '',
-                time_of_day: timeOfDay,
-                type: '',
-                week: day.week(),
-                week_day: values(enToFi)[day.weekday()]
-              }
-            })
-              .filter(courseData => courseData.course_name && courseData.course_code && courseData.week && courseData.week_day && courseData.classroom)
-          })
-          .on('end', () => {
-            Logger.info('Parsed kike CSV file')
-            resolve()
-          })
-      })
+          }))
+        .filter(courseData => courseData.course_name && courseData.course_code && courseData.week && courseData.week_day && courseData.classroom)
+        .catch(err => {
+          Logger.error('Failed to fetch kike data', err.message)
+        })
+        .finally(() => {
+          Logger.info('Parsed kike CSV file')
+        })
     })
-    .then(() => {
+    .then(dbData => {
       if (dbData.length > UPDATE_THRESHOLD) {
         DB.cleanKikeCourseTable()
           .then(() => {

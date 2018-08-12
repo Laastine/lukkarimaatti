@@ -6,6 +6,9 @@ Version numbering:
 `<major>.<minor>.<patch>`
 
 ---
+### 1.5.11, August 2, 2019
+* Update language alb course parsing for Autumn 2018
+
 ### 1.5.10, August 2, 2019
 * Update project dependencies (XSS-vulnerability in React DOM Server)
 

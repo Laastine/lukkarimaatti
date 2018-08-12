@@ -4,7 +4,7 @@ const Footer = () =>
   <div className='footer-container'>
     <div className='footer'>
       <div id='disclaimer'>Use with your own risk!</div>
-      <div id='versionInfo'>v1.5.10</div>
+      <div id='versionInfo'>v1.5.11</div>
       <a id='release-notes' href='https://github.com/Laastine/lukkarimaatti/blob/master/CHANGELOG.md'>RELEASE NOTES</a>
     </div>
   </div>

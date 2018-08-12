@@ -12,7 +12,9 @@ function logMsg(level, msg, args) {
 const Logger = {
   info: (msg, ...args) => config.logLevel === 'info' ? logMsg('INFO', msg, args) : null,
 
-  error: (msg, ...args) => logMsg('ERROR', msg, args)
+  error: (msg, ...args) => logMsg('ERROR', msg, args),
+
+  warn: (msg, ...args) => logMsg('WARN', msg, args)
 }
 
 module.exports = Logger

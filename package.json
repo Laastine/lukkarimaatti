@@ -5,8 +5,8 @@
   "main": "app/bootstrap.js",
   "private": true,
   "engines": {
-    "node": "8.11.3",
-    "npm": "6.2.0"
+    "node": "8.11.4",
+    "npm": "6.4.0"
   },
   "dependencies": {
     "autoprefixer": "9.0.2",

@@ -1,5 +1,7 @@
 # Lukkarimaatti++
 
+**This project is not maintained anymore.**
+
 [![Build Status](https://travis-ci.org/Laastine/lukkarimaatti.svg?branch=master)](https://travis-ci.org/Laastine/lukkarimaatti)
 
 Hobby project which offers course data in easy to use scheduling tool.<br>
@@ -9,11 +11,11 @@ Information is retrieved from [the official LUT teaching schedule info site] (ht
 
 Compatible with newest Firefox and Chrome
 
-#### History
+#### History 2012-2018
 
 Originally (late 2012) started as Java+Spring boilerplate + Backbone/jQuery project.<br>
 Later converted to pure JavaScript project with Node.js server.<br>
-Today it's implemented with universal JavaScript (Node/React/Bacon) using "megablob" architecture.
+Currently it's implemented with universal JavaScript (Node/React/Bacon) using "megablob" architecture.
 
 ## Requirements
 Node.js 8 LTS

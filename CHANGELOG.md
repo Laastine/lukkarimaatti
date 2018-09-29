@@ -6,6 +6,9 @@ Version numbering:
 `<major>.<minor>.<patch>`
 
 ---
+### 1.5.12, September 29, 2019
+* Project is no longer maintained
+
 ### 1.5.11, August 2, 2019
 * Update language alb course parsing for Autumn 2018
 

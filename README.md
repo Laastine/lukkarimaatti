@@ -1,13 +1,11 @@
 # Lukkarimaatti++
 
-**This project is not maintained anymore.**
+**This project is not maintained anymore and production server has been shut down**
 
 [![Build Status](https://travis-ci.org/Laastine/lukkarimaatti.svg?branch=master)](https://travis-ci.org/Laastine/lukkarimaatti)
 
 Hobby project which offers course data in easy to use scheduling tool.<br>
 Information is retrieved from [the official LUT teaching schedule info site] (https://uni.lut.fi/fi/web/guest/lukujarjestykset1).
-
-**[https://lukkarimaatti.ltky.fi](https://lukkarimaatti.ltky.fi)**
 
 Compatible with newest Firefox and Chrome
 
